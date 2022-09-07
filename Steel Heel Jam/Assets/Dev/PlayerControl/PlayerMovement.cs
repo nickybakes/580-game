@@ -1,20 +1,13 @@
 using UnityEngine;
-#if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 using UnityEngine.InputSystem;
-#endif
 
 [RequireComponent(typeof(CharacterController))]
-#if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 [RequireComponent(typeof(PlayerInput))]
-#endif
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Player")]
     [Tooltip("Move speed of the character in m/s")]
     public float MoveSpeed = 2.0f;
-
-    [Tooltip("Sprint speed of the character in m/s")]
-    public float SprintSpeed = 5.335f;
 
     [Tooltip("How fast the character turns to face movement direction")]
     [Range(0.0f, 0.3f)]
@@ -66,7 +59,6 @@ public class PlayerMovement : MonoBehaviour
 
     // player
     private float _speed;
-    private float _animationBlend;
     private float _targetRotation = 0.0f;
     private float _rotationVelocity;
     private float _verticalVelocity;
@@ -76,51 +68,27 @@ public class PlayerMovement : MonoBehaviour
     private float _jumpTimeoutDelta;
     private float _fallTimeoutDelta;
 
-    // animation IDs
-    private int _animIDSpeed;
-    private int _animIDGrounded;
-    private int _animIDJump;
-    private int _animIDFreeFall;
-    private int _animIDMotionSpeed;
 
-#if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
     private PlayerInput _playerInput;
-#endif
-    private Animator _animator;
     private CharacterController _controller;
     private StarterAssetsInputs _input;
 
     private const float _threshold = 0.01f;
 
-    private bool _hasAnimator;
-
     private bool IsCurrentDeviceMouse
     {
         get
         {
-#if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
             return _playerInput.currentControlScheme == "KeyboardMouse";
-#else
-            return false;
-#endif
         }
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        _hasAnimator = TryGetComponent(out _animator);
         _controller = GetComponent<CharacterController>();
         _input = GetComponent<StarterAssetsInputs>();
-#if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
         _playerInput = GetComponent<PlayerInput>();
-#else
-        Debug.LogError(
-            "Starter Assets package is missing dependencies. Please use Tools/Starter Assets/Reinstall Dependencies to fix it"
-        );
-#endif
-
-        AssignAnimationIDs();
 
         // reset our timeouts on start
         _jumpTimeoutDelta = JumpTimeout;
@@ -129,20 +97,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        _hasAnimator = TryGetComponent(out _animator);
-
         JumpAndGravity();
         GroundedCheck();
         Move();
-    }
-
-    private void AssignAnimationIDs()
-    {
-        _animIDSpeed = Animator.StringToHash("Speed");
-        _animIDGrounded = Animator.StringToHash("Grounded");
-        _animIDJump = Animator.StringToHash("Jump");
-        _animIDFreeFall = Animator.StringToHash("FreeFall");
-        _animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
     }
 
     private void GroundedCheck()
@@ -153,24 +110,19 @@ public class PlayerMovement : MonoBehaviour
             transform.position.y - GroundedOffset,
             transform.position.z
         );
+        
         Grounded = Physics.CheckSphere(
             spherePosition,
             GroundedRadius,
             GroundLayers,
             QueryTriggerInteraction.Ignore
         );
-
-        // update animator if using character
-        if (_hasAnimator)
-        {
-            _animator.SetBool(_animIDGrounded, Grounded);
-        }
     }
 
     private void Move()
     {
         // set target speed based on move speed, sprint speed and if sprint is pressed
-        float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
+        float targetSpeed = MoveSpeed;
 
         // a simplistic acceleration and deceleration designed to be easy to remove, replace, or iterate upon
 
@@ -211,13 +163,6 @@ public class PlayerMovement : MonoBehaviour
             _speed = targetSpeed;
         }
 
-        _animationBlend = Mathf.Lerp(
-            _animationBlend,
-            targetSpeed,
-            Time.deltaTime * SpeedChangeRate
-        );
-        if (_animationBlend < 0.01f)
-            _animationBlend = 0f;
 
         // normalise input direction
         Vector3 inputDirection = new Vector3(_input.move.x, 0.0f, _input.move.y).normalized;
@@ -246,13 +191,6 @@ public class PlayerMovement : MonoBehaviour
             targetDirection.normalized * (_speed * Time.deltaTime)
                 + new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime
         );
-
-        // update animator if using character
-        if (_hasAnimator)
-        {
-            _animator.SetFloat(_animIDSpeed, _animationBlend);
-            _animator.SetFloat(_animIDMotionSpeed, inputMagnitude);
-        }
     }
 
     private void JumpAndGravity()
@@ -261,13 +199,6 @@ public class PlayerMovement : MonoBehaviour
         {
             // reset the fall timeout timer
             _fallTimeoutDelta = FallTimeout;
-
-            // update animator if using character
-            if (_hasAnimator)
-            {
-                _animator.SetBool(_animIDJump, false);
-                _animator.SetBool(_animIDFreeFall, false);
-            }
 
             // stop our velocity dropping infinitely when grounded
             if (_verticalVelocity < 0.0f)
@@ -280,12 +211,6 @@ public class PlayerMovement : MonoBehaviour
             {
                 // the square root of H * -2 * G = how much velocity needed to reach desired height
                 _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
-
-                // update animator if using character
-                if (_hasAnimator)
-                {
-                    _animator.SetBool(_animIDJump, true);
-                }
             }
 
             // jump timeout
@@ -303,14 +228,6 @@ public class PlayerMovement : MonoBehaviour
             if (_fallTimeoutDelta >= 0.0f)
             {
                 _fallTimeoutDelta -= Time.deltaTime;
-            }
-            else
-            {
-                // update animator if using character
-                if (_hasAnimator)
-                {
-                    _animator.SetBool(_animIDFreeFall, true);
-                }
             }
 
             // if we are not grounded, do not jump
@@ -354,31 +271,31 @@ public class PlayerMovement : MonoBehaviour
         );
     }
 
-    private void OnFootstep(AnimationEvent animationEvent)
-    {
-        if (animationEvent.animatorClipInfo.weight > 0.5f)
-        {
-            if (FootstepAudioClips.Length > 0)
-            {
-                var index = Random.Range(0, FootstepAudioClips.Length);
-                AudioSource.PlayClipAtPoint(
-                    FootstepAudioClips[index],
-                    transform.TransformPoint(_controller.center),
-                    FootstepAudioVolume
-                );
-            }
-        }
-    }
+    // private void OnFootstep(AnimationEvent animationEvent)
+    // {
+    //     if (animationEvent.animatorClipInfo.weight > 0.5f)
+    //     {
+    //         if (FootstepAudioClips.Length > 0)
+    //         {
+    //             var index = Random.Range(0, FootstepAudioClips.Length);
+    //             AudioSource.PlayClipAtPoint(
+    //                 FootstepAudioClips[index],
+    //                 transform.TransformPoint(_controller.center),
+    //                 FootstepAudioVolume
+    //             );
+    //         }
+    //     }
+    // }
 
-    private void OnLand(AnimationEvent animationEvent)
-    {
-        if (animationEvent.animatorClipInfo.weight > 0.5f)
-        {
-            AudioSource.PlayClipAtPoint(
-                LandingAudioClip,
-                transform.TransformPoint(_controller.center),
-                FootstepAudioVolume
-            );
-        }
-    }
+    // private void OnLand(AnimationEvent animationEvent)
+    // {
+    //     if (animationEvent.animatorClipInfo.weight > 0.5f)
+    //     {
+    //         AudioSource.PlayClipAtPoint(
+    //             LandingAudioClip,
+    //             transform.TransformPoint(_controller.center),
+    //             FootstepAudioVolume
+    //         );
+    //     }
+    // }
 }

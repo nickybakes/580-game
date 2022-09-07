@@ -1,7 +1,5 @@
 using UnityEngine;
-#if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 using UnityEngine.InputSystem;
-#endif
 
 public class StarterAssetsInputs : MonoBehaviour
 {
@@ -18,7 +16,6 @@ public class StarterAssetsInputs : MonoBehaviour
     public bool cursorLocked = true;
     public bool cursorInputForLook = true;
 
-#if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
     public void OnMove(InputValue value)
     {
         MoveInput(value.Get<Vector2>());
@@ -37,12 +34,6 @@ public class StarterAssetsInputs : MonoBehaviour
         JumpInput(value.isPressed);
     }
 
-    public void OnSprint(InputValue value)
-    {
-        SprintInput(value.isPressed);
-    }
-#endif
-
 
     public void MoveInput(Vector2 newMoveDirection)
     {
@@ -57,11 +48,6 @@ public class StarterAssetsInputs : MonoBehaviour
     public void JumpInput(bool newJumpState)
     {
         jump = newJumpState;
-    }
-
-    public void SprintInput(bool newSprintState)
-    {
-        sprint = newSprintState;
     }
 
     private void OnApplicationFocus(bool hasFocus)
