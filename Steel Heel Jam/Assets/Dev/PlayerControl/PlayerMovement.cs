@@ -7,38 +7,38 @@ public class PlayerMovement : MonoBehaviour
 {
     [Header("Player")]
     [Tooltip("Move speed of the character in m/s")]
-    public float MoveSpeed = 2.0f;
+    public float moveSpeed = 2.0f;
 
     [Tooltip("How fast the character turns to face movement direction")]
     [Range(0.0f, 0.3f)]
-    public float RotationSmoothTime = 0.12f;
+    public float rotationSmoothTime = 0.12f;
 
     [Tooltip("Acceleration and deceleration")]
-    public float SpeedChangeRate = 10.0f;
+    public float speedChangeRate = 10.0f;
 
-    public AudioClip LandingAudioClip;
-    public AudioClip[] FootstepAudioClips;
+    public AudioClip landingAudioClip;
+    public AudioClip[] footstepAudioClips;
 
     [Range(0, 1)]
     public float FootstepAudioVolume = 0.5f;
 
     [Space(10)]
     [Tooltip("The height the player can jump")]
-    public float JumpHeight = 1.2f;
+    public float jumpHeight = 1.2f;
 
     [Tooltip("The character uses its own gravity value. The engine default is -9.81f")]
-    public float Gravity = -15.0f;
+    public float gravity = -15.0f;
 
     [Space(10)]
     [Tooltip(
         "Time required to pass before being able to jump again. Set to 0f to instantly jump again"
     )]
-    public float JumpTimeout = 0.50f;
+    public float jumpTimeout = 0.50f;
 
     [Tooltip(
         "Time required to pass before entering the fall state. Useful for walking down stairs"
     )]
-    public float FallTimeout = 0.15f;
+    public float fallTimeout = 0.15f;
 
     [Tooltip(
     "The amount of time you can be off the edge of a platform while still being able to count as grounded"
@@ -48,27 +48,29 @@ public class PlayerMovement : MonoBehaviour
     [Tooltip(
     "The amount of time spent in the air, resets to 0 when you land."
     )]
-    public float timeInAir;
-
-    //true if the player has jumped, resets when the player lets go of jump input
-    private bool hasJumped;
+    private float timeInAir;
 
     [Header("Player Grounded")]
     [Tooltip(
         "If the character is grounded or not. Not part of the CharacterController built in grounded check"
     )]
-    public bool Grounded = true;
+    public bool grounded = true;
+
+    //if the player was grounded in the previous frame
+    private bool wasGrounded = true;
 
     [Tooltip("Useful for rough ground")]
-    public float GroundedOffset = -0.14f;
+    public float groundedOffset = -0.14f;
 
     [Tooltip(
         "The radius of the grounded check. Should match the radius of the CharacterController"
     )]
-    public float GroundedRadius = 0.28f;
+    public float groundedRadius = 0.28f;
 
     [Tooltip("What layers the character uses as ground")]
-    public LayerMask GroundLayers;
+    public LayerMask groundLayers;
+
+    private RaycastHit groundRaycastHit;
 
     // player
     private float _speed;
@@ -104,8 +106,10 @@ public class PlayerMovement : MonoBehaviour
         _playerInput = GetComponent<PlayerInput>();
 
         // reset our timeouts on start
-        _jumpTimeoutDelta = JumpTimeout;
-        _fallTimeoutDelta = FallTimeout;
+        _jumpTimeoutDelta = jumpTimeout;
+        _fallTimeoutDelta = fallTimeout;
+
+        groundRaycastHit = new RaycastHit();
     }
 
     private void Update()
@@ -120,14 +124,19 @@ public class PlayerMovement : MonoBehaviour
         // set sphere position, with offset
         Vector3 spherePosition = new Vector3(
             transform.position.x,
-            transform.position.y - GroundedOffset,
+            transform.position.y - groundedOffset,
             transform.position.z
         );
 
-        Grounded = Physics.CheckSphere(
+        wasGrounded = grounded;
+
+
+        grounded = Physics.SphereCast(spherePosition, groundedRadius, Vector3.down, out groundRaycastHit, groundedRadius, groundLayers, QueryTriggerInteraction.Ignore);
+        
+        grounded = Physics.CheckSphere(
             spherePosition,
-            GroundedRadius,
-            GroundLayers,
+            groundedRadius,
+            groundLayers,
             QueryTriggerInteraction.Ignore
         );
     }
@@ -135,7 +144,7 @@ public class PlayerMovement : MonoBehaviour
     private void Move()
     {
         // set target speed based on move speed, sprint speed and if sprint is pressed
-        float targetSpeed = MoveSpeed;
+        float targetSpeed = moveSpeed;
 
         // a simplistic acceleration and deceleration designed to be easy to remove, replace, or iterate upon
 
@@ -165,7 +174,7 @@ public class PlayerMovement : MonoBehaviour
             _speed = Mathf.Lerp(
                 currentHorizontalSpeed,
                 targetSpeed * inputMagnitude,
-                Time.deltaTime * SpeedChangeRate
+                Time.deltaTime * speedChangeRate
             );
 
             // round speed to 3 decimal places
@@ -190,7 +199,7 @@ public class PlayerMovement : MonoBehaviour
                 transform.eulerAngles.y,
                 _targetRotation,
                 ref _rotationVelocity,
-                RotationSmoothTime
+                rotationSmoothTime
             );
 
             // rotate to face input direction relative to camera position
@@ -208,13 +217,18 @@ public class PlayerMovement : MonoBehaviour
 
     private void JumpAndGravity()
     {
-        if (Grounded)
+
+        if (!wasGrounded && grounded)
+            // reset the jump timeout timer
+            _jumpTimeoutDelta = jumpTimeout;
+
+        if (grounded)
         {
             //reset time in air
             timeInAir = 0;
 
             // reset the fall timeout timer
-            _fallTimeoutDelta = FallTimeout;
+            _fallTimeoutDelta = fallTimeout;
 
             // stop our velocity dropping infinitely when grounded
             if (_verticalVelocity < 0.0f)
@@ -222,14 +236,11 @@ public class PlayerMovement : MonoBehaviour
                 _verticalVelocity = -2f;
             }
 
-            if (_input.jump)
-                hasJumped = true;
-
             // Jump
-            if (_input.jump && _jumpTimeoutDelta <= 0.0f)
+            if (_input.jump && !_input.wasJumping && _jumpTimeoutDelta <= 0.0f)
             {
                 // the square root of H * -2 * G = how much velocity needed to reach desired height
-                _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
+                _verticalVelocity = Mathf.Sqrt(jumpHeight * -2f * gravity);
             }
 
             // jump timeout
@@ -244,14 +255,13 @@ public class PlayerMovement : MonoBehaviour
             timeInAir += Time.deltaTime;
 
             // allow player to Jump with road runner time
-            if (timeInAir < roadRunnerTimeMax && _input.jump && _jumpTimeoutDelta <= 0.0f)
+            if (timeInAir < roadRunnerTimeMax && _input.jump && !_input.wasJumping && _jumpTimeoutDelta <= 0.0f)
             {
                 // the square root of H * -2 * G = how much velocity needed to reach desired height
-                _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
+                _verticalVelocity = Mathf.Sqrt(jumpHeight * -2f * gravity);
             }
 
-            // reset the jump timeout timer
-            _jumpTimeoutDelta = JumpTimeout;
+
 
             // fall timeout
             if (_fallTimeoutDelta >= 0.0f)
@@ -269,7 +279,7 @@ public class PlayerMovement : MonoBehaviour
         // apply gravity over time if under terminal (multiply by delta time twice to linearly speed up over time)
         if (_verticalVelocity < _terminalVelocity)
         {
-            _verticalVelocity += Gravity * Time.deltaTime;
+            _verticalVelocity += gravity * Time.deltaTime;
         }
     }
 
@@ -287,7 +297,7 @@ public class PlayerMovement : MonoBehaviour
         Color transparentGreen = new Color(0.0f, 1.0f, 0.0f, 0.35f);
         Color transparentRed = new Color(1.0f, 0.0f, 0.0f, 0.35f);
 
-        if (Grounded)
+        if (grounded)
             Gizmos.color = transparentGreen;
         else
             Gizmos.color = transparentRed;
@@ -296,10 +306,22 @@ public class PlayerMovement : MonoBehaviour
         Gizmos.DrawSphere(
             new Vector3(
                 transform.position.x,
-                transform.position.y - GroundedOffset,
+                transform.position.y - groundedOffset,
                 transform.position.z
             ),
-            GroundedRadius
+            groundedRadius
+        );
+
+
+        Gizmos.color = Color.blue;
+
+        Gizmos.DrawSphere(
+            new Vector3(
+                groundRaycastHit.point.x,
+                groundRaycastHit.point.y,
+                groundRaycastHit.point.z
+            ),
+            1
         );
     }
 

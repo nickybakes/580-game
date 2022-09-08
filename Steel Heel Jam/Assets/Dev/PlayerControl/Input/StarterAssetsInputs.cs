@@ -5,28 +5,22 @@ public class StarterAssetsInputs : MonoBehaviour
 {
     [Header("Character Input Values")]
     public Vector2 move;
-    public Vector2 look;
     public bool jump;
+
+    //true if the player was holding jump in the previous frame
+    public bool wasJumping;
     public bool sprint;
 
     [Header("Movement Settings")]
     public bool analogMovement;
 
-    [Header("Mouse Cursor Settings")]
-    public bool cursorLocked = true;
-    public bool cursorInputForLook = true;
+    // [Header("Mouse Cursor Settings")]
+    // public bool cursorLocked = true;
+    // public bool cursorInputForLook = true;
 
     public void OnMove(InputValue value)
     {
         MoveInput(value.Get<Vector2>());
-    }
-
-    public void OnLook(InputValue value)
-    {
-        if (cursorInputForLook)
-        {
-            LookInput(value.Get<Vector2>());
-        }
     }
 
     public void OnJump(InputValue value)
@@ -40,23 +34,19 @@ public class StarterAssetsInputs : MonoBehaviour
         move = newMoveDirection;
     }
 
-    public void LookInput(Vector2 newLookDirection)
-    {
-        look = newLookDirection;
-    }
-
     public void JumpInput(bool newJumpState)
     {
+        wasJumping = jump;
         jump = newJumpState;
     }
 
-    private void OnApplicationFocus(bool hasFocus)
-    {
-        SetCursorState(cursorLocked);
-    }
+    // private void OnApplicationFocus(bool hasFocus)
+    // {
+    //     SetCursorState(cursorLocked);
+    // }
 
-    private void SetCursorState(bool newState)
-    {
-        Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;
-    }
+    // private void SetCursorState(bool newState)
+    // {
+    //     Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;
+    // }
 }
