@@ -2,17 +2,64 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DefaultState : MonoBehaviour
+public class DefaultState
 {
-    // Start is called before the first frame update
-    void Start()
+    //*********
+    // Fields
+    //*********
+    protected int playerNumber;
+    private float damage = 20;
+    protected float damageMultiplier;
+    private float knockback = 15;
+    protected float knockbackMultiplier;
+    private float radius = 5;
+    protected float radiusMultiplier;
+    private float startup = 0.25f; //TIME IS IN SECONDS
+    protected float startupMultiplier;
+    private float duration = 0.1f;
+    protected float durationMultiplier;
+    private float recovery = 0.15f;
+    protected float recoveryMultiplier;
+    private float forwardDisplacement = 1;
+    protected float forwardDisplacementMultiplier;
+    public int comboCount = 3;
+    //private float backwardDisplacement;
+    //protected float backwardDisplacementMultiplier;
+
+    // NOTE MAKE COMBO SYSTEM
+    // NOTE DEFINE PRIVATES
+
+    public float Startup
     {
-        
+        get
+        {
+            return startup * startupMultiplier;
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public float Recovery
     {
-        
+        get
+        {
+            return recovery * recoveryMultiplier;
+        }
     }
+
+    //***************
+    // Constructor
+    //***************
+    public DefaultState(int _playerNumber)
+    {
+        playerNumber = _playerNumber;
+    }
+
+    //**********
+    // Methods
+    //**********
+    public virtual void Attack()
+    {
+        //TURN ON THE HITBOX
+    }
+
+
 }
