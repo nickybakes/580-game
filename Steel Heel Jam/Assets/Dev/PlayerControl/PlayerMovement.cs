@@ -40,6 +40,19 @@ public class PlayerMovement : MonoBehaviour
     )]
     public float FallTimeout = 0.15f;
 
+    [Tooltip(
+    "The amount of time you can be off the edge of a platform while still being able to count as grounded"
+    )]
+    public float roadRunnerTimeMax = 0.15f;
+
+    [Tooltip(
+    "The amount of time spent in the air, resets to 0 when you land."
+    )]
+    public float timeInAir;
+
+    //true if the player has jumped, resets when the player lets go of jump input
+    private bool hasJumped;
+
     [Header("Player Grounded")]
     [Tooltip(
         "If the character is grounded or not. Not part of the CharacterController built in grounded check"
@@ -110,7 +123,7 @@ public class PlayerMovement : MonoBehaviour
             transform.position.y - GroundedOffset,
             transform.position.z
         );
-        
+
         Grounded = Physics.CheckSphere(
             spherePosition,
             GroundedRadius,
@@ -197,6 +210,9 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Grounded)
         {
+            //reset time in air
+            timeInAir = 0;
+
             // reset the fall timeout timer
             _fallTimeoutDelta = FallTimeout;
 
@@ -205,6 +221,9 @@ public class PlayerMovement : MonoBehaviour
             {
                 _verticalVelocity = -2f;
             }
+
+            if (_input.jump)
+                hasJumped = true;
 
             // Jump
             if (_input.jump && _jumpTimeoutDelta <= 0.0f)
@@ -221,6 +240,16 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
+            //increment time in air
+            timeInAir += Time.deltaTime;
+
+            // allow player to Jump with road runner time
+            if (timeInAir < roadRunnerTimeMax && _input.jump && _jumpTimeoutDelta <= 0.0f)
+            {
+                // the square root of H * -2 * G = how much velocity needed to reach desired height
+                _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
+            }
+
             // reset the jump timeout timer
             _jumpTimeoutDelta = JumpTimeout;
 
@@ -230,8 +259,11 @@ public class PlayerMovement : MonoBehaviour
                 _fallTimeoutDelta -= Time.deltaTime;
             }
 
-            // if we are not grounded, do not jump
-            _input.jump = false;
+            if (timeInAir >= roadRunnerTimeMax)
+            {
+                // if we are not grounded, do not jump
+                _input.jump = false;
+            }
         }
 
         // apply gravity over time if under terminal (multiply by delta time twice to linearly speed up over time)
