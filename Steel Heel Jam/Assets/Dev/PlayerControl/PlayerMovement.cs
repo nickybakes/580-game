@@ -48,6 +48,11 @@ public class PlayerMovement : MonoBehaviour
     )]
     public float roadRunnerTimeMax = 0.15f;
 
+    [Tooltip(
+        "How quickly to change the current velocity of the player (while in the air) to the inputed direction/velocity of the player"
+        )]
+    public float airSpeedChangeAmount = 1;
+
     //if you jump using the road runner time, then disbale the ability to jump with road runner time until you land
     private bool roadRunnerJumpAvailable;
 
@@ -198,7 +203,12 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            float newCurrentSpeed = Mathf.Max(moveSpeed, currentHorizontalSpeed - (moveSpeed * 8) * Time.deltaTime);
+            // float newCurrentSpeed = Mathf.Max(moveSpeed, currentHorizontalSpeed - (moveSpeed * 8) * Time.deltaTime);
+            float differenceX = velocity.x - (moveSpeed * inputDirection.x);
+            float differenceZ = velocity.z - (moveSpeed * inputDirection.z);
+            Vector2 speedDecayDirection = new Vector2(differenceX, differenceZ).normalized;
+            velocity.x = velocity.x + speedDecayDirection.x * Mathf.Sign(differenceX) * airSpeedChangeAmount * Time.deltaTime;
+            velocity.z = velocity.z + speedDecayDirection.y * Mathf.Sign(differenceZ) * airSpeedChangeAmount * Time.deltaTime;
             // velocity.x = Mathf.Sign(velocity.x) * newCurrentSpeed;
             // if (inputDirection.x != 0)
             // {
