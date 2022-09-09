@@ -88,7 +88,6 @@ public class PlayerMovement : MonoBehaviour
     //stores direction and speed of where the player is moving in each axis
     private Vector3 velocity;
     private float _rotationVelocity;
-    private float _verticalVelocity;
     private float _terminalVelocity = 53.0f;
 
     // timeout deltatime
@@ -152,7 +151,7 @@ public class PlayerMovement : MonoBehaviour
     private void Move()
     {
         // set target speed based on move speed, sprint speed and if sprint is pressed
-        float targetSpeed = moveSpeed;
+        // float targetSpeed = moveSpeed;
 
         // a simplistic acceleration and deceleration designed to be easy to remove, replace, or iterate upon
 
@@ -162,11 +161,11 @@ public class PlayerMovement : MonoBehaviour
         //     targetSpeed = 0.0f;
 
         // a reference to the players current horizontal speed
-        float currentHorizontalSpeed = new Vector3(
-            _controller.velocity.x,
-            0.0f,
-            _controller.velocity.z
-        ).magnitude;
+        // float currentHorizontalSpeed = new Vector3(
+        //     _controller.velocity.x,
+        //     0.0f,
+        //     _controller.velocity.z
+        // ).magnitude;
 
         // float speedOffset = 0.1f;
         // float inputMagnitude = _input.analogMovement ? _input.move.magnitude : 1f;
@@ -196,6 +195,7 @@ public class PlayerMovement : MonoBehaviour
         // normalise input direction
         Vector3 inputDirection = new Vector3(_input.move.x, 0.0f, _input.move.y).normalized;
 
+        //while you are grounded, you have immediate control of your movement
         if (grounded)
         {
             velocity.x = moveSpeed * inputDirection.x;
@@ -203,77 +203,17 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            // float newCurrentSpeed = Mathf.Max(moveSpeed, currentHorizontalSpeed - (moveSpeed * 8) * Time.deltaTime);
+            //while in the air, you have less control of your movement
+            //to do this, we find the difference between your current velocity and your requested velocity (what you are inputting)
+            //then, over time, we 'slowly' interpolate toward your requested velocity
+            //how quickly this is (how much control you have over your character) is proportional to the airSpeedChangeAmount variable
             float differenceX = velocity.x - (moveSpeed * inputDirection.x);
             float differenceZ = velocity.z - (moveSpeed * inputDirection.z);
-            Vector2 speedDecayDirection = new Vector2(differenceX, differenceZ).normalized;
-            velocity.x = velocity.x + speedDecayDirection.x * Mathf.Sign(differenceX) * airSpeedChangeAmount * Time.deltaTime;
-            velocity.z = velocity.z + speedDecayDirection.y * Mathf.Sign(differenceZ) * airSpeedChangeAmount * Time.deltaTime;
-            // velocity.x = Mathf.Sign(velocity.x) * newCurrentSpeed;
-            // if (inputDirection.x != 0)
-            // {
-            //     float newCurrentSpeed = Mathf.Max(moveSpeed, currentHorizontalSpeed - (moveSpeed * 8) * Time.deltaTime);
-            //     velocity.x = newCurrentSpeed * inputDirection.x;
-            // }
-            // else
-            // {
-            //     float newCurrentSpeed = Mathf.Max(moveSpeed, currentHorizontalSpeed - (moveSpeed * 8) * Time.deltaTime);
-            //     velocity.x = Mathf.Sign(velocity.x) * newCurrentSpeed;
-            // }
-
-            // float newCurrentSpeed = Mathf.Max(moveSpeed, currentHorizontalSpeed - (moveSpeed * 8) * Time.deltaTime);
-            // velocity.z = Mathf.Sign(velocity.z) * newCurrentSpeed;
-            // if (inputDirection.z != 0)
-            // {
-            //     float newCurrentSpeed = Mathf.Max(moveSpeed, currentHorizontalSpeed - (moveSpeed * 8) * Time.deltaTime);
-            //     velocity.z = newCurrentSpeed * inputDirection.z;
-            // }
-            // else
-            // {
-            //     float newCurrentSpeed = Mathf.Max(moveSpeed, currentHorizontalSpeed - (moveSpeed * 8) * Time.deltaTime);
-            //     velocity.z = Mathf.Sign(velocity.z) * newCurrentSpeed;
-            // }
+            Vector2 speedDecayDirection = new Vector2(differenceX, differenceZ)/moveSpeed;
+            
+            velocity.x = velocity.x - speedDecayDirection.x * airSpeedChangeAmount * Time.deltaTime;
+            velocity.z = velocity.z - speedDecayDirection.y * airSpeedChangeAmount * Time.deltaTime;
         }
-
-        /*
- if (grounded)
-        {
-            if (runningLeft)
-            {
-                velocity.x = -1 * baseRunSpeed;
-            }
-            if (runningRight)
-            {
-                velocity.x = baseRunSpeed;
-            }
-            if (!runningLeft && !runningRight)
-            {
-                velocity.x = 0;
-            }
-        }
-        else
-        {
-            if (runningLeft)
-            {
-                velocity.x = Mathf.Max(-baseRunSpeed, velocity.x -= (baseRunSpeed * 8) * Time.deltaTime);
-            }
-            if (runningRight)
-            {
-                velocity.x = Mathf.Min(baseRunSpeed, velocity.x += (baseRunSpeed * 8) * Time.deltaTime);
-            }
-            if (!runningLeft && !runningRight)
-            {
-                if (velocity.x > 0)
-                {
-                    velocity.x = Mathf.Max(0, velocity.x -= (baseRunSpeed) * Time.deltaTime);
-                }
-                else if (velocity.x < 0)
-                {
-                    velocity.x = Mathf.Min(0, velocity.x += (baseRunSpeed) * Time.deltaTime);
-                }
-            }
-        }
-        */
 
         // note: Vector2's != operator uses approximation so is not floating point error prone, and is cheaper than magnitude
         // if there is a move input rotate player when the player is moving
@@ -299,7 +239,7 @@ public class PlayerMovement : MonoBehaviour
         // move the player
         _controller.Move(new Vector3(
             velocity.x * Time.deltaTime,
-                _verticalVelocity * Time.deltaTime,
+                velocity.y * Time.deltaTime,
                 velocity.z * Time.deltaTime
         ));
     }
@@ -338,16 +278,16 @@ public class PlayerMovement : MonoBehaviour
             _fallTimeoutDelta = fallTimeout;
 
             // stop our velocity dropping infinitely when grounded
-            if (_verticalVelocity < 0.0f)
+            if (velocity.y < 0.0f)
             {
-                _verticalVelocity = -10f;
+                velocity.y = -10f;
             }
 
             // Jump
             if (_input.jump && !_input.wasJumping && _jumpTimeoutDelta <= 0.0f)
             {
                 // the square root of H * -2 * G = how much velocity needed to reach desired height
-                _verticalVelocity = Mathf.Sqrt(jumpHeight * -2f * gravity);
+                velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
                 grounded = false;
             }
 
@@ -359,8 +299,8 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            if (wasGrounded && _verticalVelocity < 0)
-                _verticalVelocity = 0;
+            if (wasGrounded && velocity.y < 0)
+                velocity.y = 0;
 
             //increment time in air
             timeInAir += Time.deltaTime;
@@ -369,7 +309,7 @@ public class PlayerMovement : MonoBehaviour
             if (roadRunnerJumpAvailable && timeInAir < roadRunnerTimeMax && _input.jump && !_input.wasJumping && _jumpTimeoutDelta <= 0.0f)
             {
                 // the square root of H * -2 * G = how much velocity needed to reach desired height
-                _verticalVelocity = Mathf.Sqrt(jumpHeight * -2f * gravity);
+                velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
                 roadRunnerJumpAvailable = false;
             }
 
@@ -389,16 +329,16 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // apply gravity over time if under terminal (multiply by delta time twice to linearly speed up over time)
-        if (_verticalVelocity < _terminalVelocity)
+        if (velocity.y < _terminalVelocity)
         {
-            if (_verticalVelocity < 0)
+            if (velocity.y < 0)
             {
                 //when falling, make gravity stronger (multiply it by a multiplier value) to give a better feel to jumps
-                _verticalVelocity += gravity * fallGravityMultiplier * Time.deltaTime;
+                velocity.y += gravity * fallGravityMultiplier * Time.deltaTime;
             }
             else
             {
-                _verticalVelocity += gravity * Time.deltaTime;
+                velocity.y += gravity * Time.deltaTime;
             }
         }
     }
