@@ -8,6 +8,7 @@ public class StarterAssetsInputs : MonoBehaviour
     public Vector2 look;
     public bool jump;
     public bool sprint;
+    public bool pickUpPutDownPressed;
 
     [Header("Movement Settings")]
     public bool analogMovement;
@@ -34,6 +35,24 @@ public class StarterAssetsInputs : MonoBehaviour
         JumpInput(value.isPressed);
     }
 
+    public void OnPickUpPutDown(InputValue value)
+    {
+        /*if(pickUpPutDownPressed == false)
+        {
+            pickUpPutDownPressed = true;
+        }
+        else if(pickUpPutDownPressed == true)
+        {
+            pickUpPutDownPressed = false;
+        }*/
+
+        PickUpPutDownInput(value.isPressed);
+    }
+
+    public void PickUpPutDownInput(bool newPickUpPutDownState)
+    {
+        pickUpPutDownPressed = newPickUpPutDownState;
+    }
 
     public void MoveInput(Vector2 newMoveDirection)
     {

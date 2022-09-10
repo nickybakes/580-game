@@ -1,0 +1,73 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.InputSystem;
+
+public class PickUpPutDownThrowItem : MonoBehaviour
+{
+    private Transform pickUpLocation;
+    private Transform player;
+
+    public float pickUpDistance;
+    public float forceMultiplier;
+
+    public bool readyToThrow;
+    public bool itemPickedUp;
+
+    private Rigidbody rb;
+
+    private StarterAssetsInputs _input;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+        player = GameObject.Find("PlayerPrefab").transform;
+        pickUpLocation = GameObject.Find("PickUpLocation").transform;
+        _input = GetComponent<StarterAssetsInputs>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        /*if (_input.pickUpPutDownPressed && itemPickedUp == true && readyToThrow == true)
+        {
+            forceMultiplier += 300 * Time.deltaTime;
+        }*/
+
+        pickUpDistance = Vector3.Distance(player.position, transform.position);
+        if (pickUpDistance <= 2)
+        {
+            if (_input.pickUpPutDownPressed /*&& itemPickedUp == false && pickUpLocation.childCount < 1*/)
+            {
+                Debug.Log("test");
+                GetComponent<Rigidbody>().useGravity = false;
+                GetComponent<BoxCollider>().enabled = false;
+                this.transform.position = pickUpLocation.position;
+                this.transform.parent = GameObject.Find("PickUpLocation").transform;
+
+                itemPickedUp = true;
+                forceMultiplier = 0;
+            }
+        }
+
+        /*if (_input.pickUpPutDownPressed == false && itemPickedUp == true)
+        {
+            readyToThrow = true;
+
+            if (forceMultiplier > 10)
+            {
+                rb.AddForce(player.transform.forward * forceMultiplier);
+                this.transform.parent = null;
+                GetComponent<Rigidbody>().useGravity = true;
+                GetComponent<BoxCollider>().enabled = true;
+                itemPickedUp = false;
+
+                forceMultiplier = 0;
+                readyToThrow = false;
+            }
+
+            forceMultiplier = 0;
+        }*/
+    }
+}
