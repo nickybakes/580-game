@@ -7,38 +7,41 @@ public class PlayerMovement : MonoBehaviour
 {
     [Header("Player")]
     [Tooltip("Move speed of the character in m/s")]
-    public float MoveSpeed = 2.0f;
+    public float moveSpeed = 2.0f;
 
     [Tooltip("How fast the character turns to face movement direction")]
     [Range(0.0f, 0.3f)]
-    public float RotationSmoothTime = 0.12f;
+    public float rotationSmoothTime = 0.12f;
 
     [Tooltip("Acceleration and deceleration")]
-    public float SpeedChangeRate = 10.0f;
+    public float speedChangeRate = 10.0f;
 
-    public AudioClip LandingAudioClip;
-    public AudioClip[] FootstepAudioClips;
+    public AudioClip landingAudioClip;
+    public AudioClip[] footstepAudioClips;
 
     [Range(0, 1)]
     public float FootstepAudioVolume = 0.5f;
 
     [Space(10)]
     [Tooltip("The height the player can jump")]
-    public float JumpHeight = 1.2f;
+    public float jumpHeight = 1.2f;
 
     [Tooltip("The character uses its own gravity value. The engine default is -9.81f")]
-    public float Gravity = -15.0f;
+    public float gravity = -15.0f;
+
+    [Tooltip("Platformer jumps feel better when they fall faster after their apex. This multiplies gravity whe nthe player is falling")]
+    public float fallGravityMultiplier = 2;
 
     [Space(10)]
     [Tooltip(
         "Time required to pass before being able to jump again. Set to 0f to instantly jump again"
     )]
-    public float JumpTimeout = 0.50f;
+    public float jumpTimeout = 0.50f;
 
     [Tooltip(
         "Time required to pass before entering the fall state. Useful for walking down stairs"
     )]
-    public float FallTimeout = 0.15f;
+    public float fallTimeout = 0.15f;
 
     [Tooltip(
     "The amount of time you can be off the edge of a platform while still being able to count as grounded"
@@ -46,35 +49,45 @@ public class PlayerMovement : MonoBehaviour
     public float roadRunnerTimeMax = 0.15f;
 
     [Tooltip(
+        "How quickly to change the current velocity of the player (while in the air) to the inputed direction/velocity of the player"
+        )]
+    public float airSpeedChangeAmount = 1;
+
+    //if you jump using the road runner time, then disbale the ability to jump with road runner time until you land
+    private bool roadRunnerJumpAvailable;
+
+    [Tooltip(
     "The amount of time spent in the air, resets to 0 when you land."
     )]
-    public float timeInAir;
-
-    //true if the player has jumped, resets when the player lets go of jump input
-    private bool hasJumped;
+    private float timeInAir;
 
     [Header("Player Grounded")]
     [Tooltip(
         "If the character is grounded or not. Not part of the CharacterController built in grounded check"
     )]
-    public bool Grounded = true;
+    public bool grounded = true;
+
+    //if the player was grounded in the previous frame
+    private bool wasGrounded = true;
 
     [Tooltip("Useful for rough ground")]
-    public float GroundedOffset = -0.14f;
+    public float groundedOffset = -0.14f;
 
     [Tooltip(
         "The radius of the grounded check. Should match the radius of the CharacterController"
     )]
-    public float GroundedRadius = 0.28f;
+    public float groundedRadius = 0.28f;
 
     [Tooltip("What layers the character uses as ground")]
-    public LayerMask GroundLayers;
+    public LayerMask groundLayers;
 
     // player
     private float _speed;
     private float _targetRotation = 0.0f;
+
+    //stores direction and speed of where the player is moving in each axis
+    private Vector3 velocity;
     private float _rotationVelocity;
-    private float _verticalVelocity;
     private float _terminalVelocity = 53.0f;
 
     // timeout deltatime
@@ -104,8 +117,9 @@ public class PlayerMovement : MonoBehaviour
         _playerInput = GetComponent<PlayerInput>();
 
         // reset our timeouts on start
-        _jumpTimeoutDelta = JumpTimeout;
-        _fallTimeoutDelta = FallTimeout;
+        _jumpTimeoutDelta = jumpTimeout;
+        _fallTimeoutDelta = fallTimeout;
+        velocity = new Vector3();
     }
 
     private void Update()
@@ -120,14 +134,16 @@ public class PlayerMovement : MonoBehaviour
         // set sphere position, with offset
         Vector3 spherePosition = new Vector3(
             transform.position.x,
-            transform.position.y - GroundedOffset,
+            transform.position.y - groundedOffset,
             transform.position.z
         );
 
-        Grounded = Physics.CheckSphere(
+        wasGrounded = grounded;
+
+        grounded = Physics.CheckSphere(
             spherePosition,
-            GroundedRadius,
-            GroundLayers,
+            groundedRadius,
+            groundLayers,
             QueryTriggerInteraction.Ignore
         );
     }
@@ -135,50 +151,69 @@ public class PlayerMovement : MonoBehaviour
     private void Move()
     {
         // set target speed based on move speed, sprint speed and if sprint is pressed
-        float targetSpeed = MoveSpeed;
+        // float targetSpeed = moveSpeed;
 
         // a simplistic acceleration and deceleration designed to be easy to remove, replace, or iterate upon
 
-        // note: Vector2's == operator uses approximation so is not floating point error prone, and is cheaper than magnitude
-        // if there is no input, set the target speed to 0
-        if (_input.move == Vector2.zero)
-            targetSpeed = 0.0f;
+        // // note: Vector2's == operator uses approximation so is not floating point error prone, and is cheaper than magnitude
+        // // if there is no input, set the target speed to 0
+        // if (_input.move == Vector2.zero)
+        //     targetSpeed = 0.0f;
 
-        // a reference to the players current horizontal velocity
-        float currentHorizontalSpeed = new Vector3(
-            _controller.velocity.x,
-            0.0f,
-            _controller.velocity.z
-        ).magnitude;
+        // a reference to the players current horizontal speed
+        // float currentHorizontalSpeed = new Vector3(
+        //     _controller.velocity.x,
+        //     0.0f,
+        //     _controller.velocity.z
+        // ).magnitude;
 
-        float speedOffset = 0.1f;
-        float inputMagnitude = _input.analogMovement ? _input.move.magnitude : 1f;
+        // float speedOffset = 0.1f;
+        // float inputMagnitude = _input.analogMovement ? _input.move.magnitude : 1f;
 
-        // accelerate or decelerate to target speed
-        if (
-            currentHorizontalSpeed < targetSpeed - speedOffset
-            || currentHorizontalSpeed > targetSpeed + speedOffset
-        )
-        {
-            // creates curved result rather than a linear one giving a more organic speed change
-            // note T in Lerp is clamped, so we don't need to clamp our speed
-            _speed = Mathf.Lerp(
-                currentHorizontalSpeed,
-                targetSpeed * inputMagnitude,
-                Time.deltaTime * SpeedChangeRate
-            );
+        // // accelerate or decelerate to target speed
+        // if (
+        //     currentHorizontalSpeed < targetSpeed - speedOffset
+        //     || currentHorizontalSpeed > targetSpeed + speedOffset
+        // )
+        // {
+        //     // creates curved result rather than a linear one giving a more organic speed change
+        //     // note T in Lerp is clamped, so we don't need to clamp our speed
+        //     _speed = Mathf.Lerp(
+        //         currentHorizontalSpeed,
+        //         targetSpeed * inputMagnitude,
+        //         Time.deltaTime * speedChangeRate
+        //     );
 
-            // round speed to 3 decimal places
-            _speed = Mathf.Round(_speed * 1000f) / 1000f;
-        }
-        else
-        {
-            _speed = targetSpeed;
-        }
-
+        //     // round speed to 3 decimal places
+        //     _speed = Mathf.Round(_speed * 1000f) / 1000f;
+        // }
+        // else
+        // {
+        //     _speed = targetSpeed;
+        // }
 
         // normalise input direction
         Vector3 inputDirection = new Vector3(_input.move.x, 0.0f, _input.move.y).normalized;
+
+        //while you are grounded, you have immediate control of your movement
+        if (grounded)
+        {
+            velocity.x = moveSpeed * inputDirection.x;
+            velocity.z = moveSpeed * inputDirection.z;
+        }
+        else
+        {
+            //while in the air, you have less control of your movement
+            //to do this, we find the difference between your current velocity and your requested velocity (what you are inputting)
+            //then, over time, we 'slowly' interpolate toward your requested velocity
+            //how quickly this is (how much control you have over your character) is proportional to the airSpeedChangeAmount variable
+            float differenceX = velocity.x - (moveSpeed * inputDirection.x);
+            float differenceZ = velocity.z - (moveSpeed * inputDirection.z);
+            Vector2 speedDecayDirection = new Vector2(differenceX, differenceZ)/moveSpeed;
+            
+            velocity.x = velocity.x - speedDecayDirection.x * airSpeedChangeAmount * Time.deltaTime;
+            velocity.z = velocity.z - speedDecayDirection.y * airSpeedChangeAmount * Time.deltaTime;
+        }
 
         // note: Vector2's != operator uses approximation so is not floating point error prone, and is cheaper than magnitude
         // if there is a move input rotate player when the player is moving
@@ -190,7 +225,7 @@ public class PlayerMovement : MonoBehaviour
                 transform.eulerAngles.y,
                 _targetRotation,
                 ref _rotationVelocity,
-                RotationSmoothTime
+                rotationSmoothTime
             );
 
             // rotate to face input direction relative to camera position
@@ -199,37 +234,61 @@ public class PlayerMovement : MonoBehaviour
 
         Vector3 targetDirection = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
 
+        // targetDirection = AdjustVelocityToDownwardSlope(targetDirection);
+
         // move the player
-        _controller.Move(
-            targetDirection.normalized * (_speed * Time.deltaTime)
-                + new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime
-        );
+        _controller.Move(new Vector3(
+            velocity.x * Time.deltaTime,
+                velocity.y * Time.deltaTime,
+                velocity.z * Time.deltaTime
+        ));
+    }
+
+    private Vector3 AdjustVelocityToDownwardSlope(Vector3 vel)
+    {
+        Ray ray = new Ray(transform.position, Vector3.down);
+
+        if (Physics.Raycast(ray, out RaycastHit hitInfo, groundedRadius, groundLayers, QueryTriggerInteraction.Ignore))
+        {
+            Quaternion slopeRotation = Quaternion.FromToRotation(Vector3.up, hitInfo.normal);
+            Vector3 adjustedVelocity = slopeRotation * vel;
+            // adjustedVelocity.x = vel.x;
+            // adjustedVelocity.z = vel.z;
+            if (adjustedVelocity.y < 0)
+                return adjustedVelocity;
+        }
+
+        return vel;
     }
 
     private void JumpAndGravity()
     {
-        if (Grounded)
+
+        if (!wasGrounded && grounded)
+            // reset the jump timeout timer
+            _jumpTimeoutDelta = jumpTimeout;
+
+        if (grounded)
         {
             //reset time in air
             timeInAir = 0;
+            roadRunnerJumpAvailable = true;
 
             // reset the fall timeout timer
-            _fallTimeoutDelta = FallTimeout;
+            _fallTimeoutDelta = fallTimeout;
 
             // stop our velocity dropping infinitely when grounded
-            if (_verticalVelocity < 0.0f)
+            if (velocity.y < 0.0f)
             {
-                _verticalVelocity = -2f;
+                velocity.y = -10f;
             }
 
-            if (_input.jump)
-                hasJumped = true;
-
             // Jump
-            if (_input.jump && _jumpTimeoutDelta <= 0.0f)
+            if (_input.jump && !_input.wasJumping && _jumpTimeoutDelta <= 0.0f)
             {
                 // the square root of H * -2 * G = how much velocity needed to reach desired height
-                _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
+                velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+                grounded = false;
             }
 
             // jump timeout
@@ -240,18 +299,21 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
+            if (wasGrounded && velocity.y < 0)
+                velocity.y = 0;
+
             //increment time in air
             timeInAir += Time.deltaTime;
 
             // allow player to Jump with road runner time
-            if (timeInAir < roadRunnerTimeMax && _input.jump && _jumpTimeoutDelta <= 0.0f)
+            if (roadRunnerJumpAvailable && timeInAir < roadRunnerTimeMax && _input.jump && !_input.wasJumping && _jumpTimeoutDelta <= 0.0f)
             {
                 // the square root of H * -2 * G = how much velocity needed to reach desired height
-                _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
+                velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+                roadRunnerJumpAvailable = false;
             }
 
-            // reset the jump timeout timer
-            _jumpTimeoutDelta = JumpTimeout;
+
 
             // fall timeout
             if (_fallTimeoutDelta >= 0.0f)
@@ -267,9 +329,17 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // apply gravity over time if under terminal (multiply by delta time twice to linearly speed up over time)
-        if (_verticalVelocity < _terminalVelocity)
+        if (velocity.y < _terminalVelocity)
         {
-            _verticalVelocity += Gravity * Time.deltaTime;
+            if (velocity.y < 0)
+            {
+                //when falling, make gravity stronger (multiply it by a multiplier value) to give a better feel to jumps
+                velocity.y += gravity * fallGravityMultiplier * Time.deltaTime;
+            }
+            else
+            {
+                velocity.y += gravity * Time.deltaTime;
+            }
         }
     }
 
@@ -287,7 +357,7 @@ public class PlayerMovement : MonoBehaviour
         Color transparentGreen = new Color(0.0f, 1.0f, 0.0f, 0.35f);
         Color transparentRed = new Color(1.0f, 0.0f, 0.0f, 0.35f);
 
-        if (Grounded)
+        if (grounded)
             Gizmos.color = transparentGreen;
         else
             Gizmos.color = transparentRed;
@@ -296,10 +366,10 @@ public class PlayerMovement : MonoBehaviour
         Gizmos.DrawSphere(
             new Vector3(
                 transform.position.x,
-                transform.position.y - GroundedOffset,
+                transform.position.y - groundedOffset,
                 transform.position.z
             ),
-            GroundedRadius
+            groundedRadius
         );
     }
 
