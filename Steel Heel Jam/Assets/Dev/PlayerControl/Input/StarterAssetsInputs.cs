@@ -9,6 +9,7 @@ public class StarterAssetsInputs : MonoBehaviour
     public bool jump;
     public bool sprint;
     public bool pickUpPutDownPressed;
+    public bool throwIsHeld;
 
     [Header("Movement Settings")]
     public bool analogMovement;
@@ -45,13 +46,25 @@ public class StarterAssetsInputs : MonoBehaviour
         {
             pickUpPutDownPressed = false;
         }*/
-
         PickUpPutDownInput(value.isPressed);
+
     }
 
     public void PickUpPutDownInput(bool newPickUpPutDownState)
     {
         pickUpPutDownPressed = newPickUpPutDownState;
+    }
+
+    public void OnThrow(InputValue value)
+    {
+        if(value.isPressed) // Key pressed
+        {
+            throwIsHeld = true;
+        }
+        if(value.isPressed == false) // Key released
+        {
+            throwIsHeld = false;
+        }
     }
 
     public void MoveInput(Vector2 newMoveDirection)

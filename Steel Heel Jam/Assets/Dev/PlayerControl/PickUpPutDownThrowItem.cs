@@ -10,13 +10,14 @@ public class PickUpPutDownThrowItem : MonoBehaviour
 
     public float pickUpDistance;
     public float forceMultiplier;
+    public float forceMultiplierLimit;
 
     public bool readyToThrow;
     public bool itemPickedUp;
 
     private Rigidbody rb;
 
-    private StarterAssetsInputs _input;
+    public StarterAssetsInputs _input;
 
     // Start is called before the first frame update
     void Start()
@@ -24,21 +25,16 @@ public class PickUpPutDownThrowItem : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         player = GameObject.Find("PlayerPrefab").transform;
         pickUpLocation = GameObject.Find("PickUpLocation").transform;
-        _input = GetComponent<StarterAssetsInputs>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        /*if (_input.pickUpPutDownPressed && itemPickedUp == true && readyToThrow == true)
-        {
-            forceMultiplier += 300 * Time.deltaTime;
-        }*/
-
+        // Pick Up Item
         pickUpDistance = Vector3.Distance(player.position, transform.position);
         if (pickUpDistance <= 2)
         {
-            if (_input.pickUpPutDownPressed /*&& itemPickedUp == false && pickUpLocation.childCount < 1*/)
+            if (_input.pickUpPutDownPressed && itemPickedUp == false && pickUpLocation.childCount < 1)
             {
                 Debug.Log("test");
                 GetComponent<Rigidbody>().useGravity = false;
@@ -51,7 +47,14 @@ public class PickUpPutDownThrowItem : MonoBehaviour
             }
         }
 
-        /*if (_input.pickUpPutDownPressed == false && itemPickedUp == true)
+        // Charge Up Throw
+        if (_input.throwIsHeld && itemPickedUp == true && readyToThrow == true && forceMultiplier < forceMultiplierLimit)
+        {
+            forceMultiplier += 300 * Time.deltaTime;
+        }
+
+        // Throw Item
+        if (_input.throwIsHeld == false && itemPickedUp == true)
         {
             readyToThrow = true;
 
@@ -68,6 +71,6 @@ public class PickUpPutDownThrowItem : MonoBehaviour
             }
 
             forceMultiplier = 0;
-        }*/
+        }
     }
 }

@@ -361,6 +361,7 @@ MonoBehaviour:
   jump: 0
   sprint: 0
   pickUpPutDownPressed: 0
+  throwIsHeld: 0
   analogMovement: 0
   cursorLocked: 1
   cursorInputForLook: 1
@@ -506,7 +507,6 @@ GameObject:
   - component: {fileID: 1003838095}
   - component: {fileID: 1003838094}
   - component: {fileID: 1003838099}
-  - component: {fileID: 1003838101}
   m_Layer: 0
   m_Name: ThrowableObjectTest
   m_TagString: Untagged
@@ -528,7 +528,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!65 &1003838095
 BoxCollider:
@@ -622,28 +622,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pickUpDistance: 0
   forceMultiplier: 0
+  forceMultiplierLimit: 1000
   readyToThrow: 0
   itemPickedUp: 0
---- !u!114 &1003838101
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1003838092}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 27c72c78bedcded46a352b9607873af6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  move: {x: 0, y: 0}
-  look: {x: 0, y: 0}
-  jump: 0
-  sprint: 0
-  pickUpPutDownPressed: 0
-  analogMovement: 0
-  cursorLocked: 1
-  cursorInputForLook: 1
+  _input: {fileID: 662631242}
 --- !u!1 &1312035950
 GameObject:
   m_ObjectHideFlags: 0
