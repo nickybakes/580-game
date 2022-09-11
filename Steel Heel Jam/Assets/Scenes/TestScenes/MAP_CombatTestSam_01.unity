@@ -200,14 +200,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 467894890}
-  m_LocalRotation: {x: 0.40598696, y: -0, z: -0, w: 0.9138789}
-  m_LocalPosition: {x: 0, y: 7.32, z: -10}
+  m_LocalRotation: {x: 0.42458615, y: -0, z: -0, w: 0.90538764}
+  m_LocalPosition: {x: 1.2, y: 37.9, z: -39.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 47.906, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 50.249, y: 0, z: 0}
 --- !u!114 &467894894
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -337,6 +337,7 @@ GameObject:
   - component: {fileID: 662631244}
   - component: {fileID: 662631243}
   - component: {fileID: 662631242}
+  - component: {fileID: 662631247}
   m_Layer: 3
   m_Name: PlayerPrefab
   m_TagString: Untagged
@@ -357,14 +358,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   move: {x: 0, y: 0}
-  look: {x: 0, y: 0}
   jump: 0
+  wasJumping: 0
   sprint: 0
   pickUpPutDownPressed: 0
   throwIsHeld: 0
   analogMovement: 0
-  cursorLocked: 1
-  cursorInputForLook: 1
 --- !u!114 &662631243
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -377,24 +376,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5329c894691c5145a5666968dab2efd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveSpeed: 10
-  RotationSmoothTime: 0.05
-  SpeedChangeRate: 16.39
-  LandingAudioClip: {fileID: 0}
-  FootstepAudioClips: []
+  moveSpeed: 13
+  rotationSmoothTime: 0.051
+  speedChangeRate: 16
+  landingAudioClip: {fileID: 0}
+  footstepAudioClips: []
   FootstepAudioVolume: 0.5
-  JumpHeight: 3
-  Gravity: -50
-  JumpTimeout: 0.05
-  FallTimeout: 0.15
-  roadRunnerTimeMax: 0.15
-  timeInAir: 0
-  Grounded: 1
-  GroundedOffset: 0.04
-  GroundedRadius: 0.53
-  GroundLayers:
+  jumpHeight: 3.4
+  gravity: -70
+  fallGravityMultiplier: 1.7
+  jumpTimeout: 0.05
+  fallTimeout: 0.15
+  roadRunnerTimeMax: 0.12
+  airSpeedChangeAmount: 30
+  grounded: 1
+  groundedOffset: -0.17
+  groundedRadius: 0.4
+  groundLayers:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 65
 --- !u!114 &662631244
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -462,6 +462,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &662631247
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 662631241}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7cb1247224ed184c8485afd8e5cd846, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentEquipState: 0
 --- !u!1 &762598130
 GameObject:
   m_ObjectHideFlags: 0
@@ -509,7 +522,7 @@ GameObject:
   - component: {fileID: 1003838099}
   m_Layer: 0
   m_Name: ThrowableObjectTest
-  m_TagString: Untagged
+  m_TagString: TestCube
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -622,10 +635,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pickUpDistance: 0
   forceMultiplier: 0
-  forceMultiplierLimit: 1000
+  forceMultiplierLimit: 3000
   readyToThrow: 0
   itemPickedUp: 0
   _input: {fileID: 662631242}
+  _playerStatus: {fileID: 662631247}
 --- !u!1 &1312035950
 GameObject:
   m_ObjectHideFlags: 0
@@ -832,7 +846,7 @@ Transform:
   m_GameObject: {fileID: 1331279717}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.67975426, y: -0.32312965, z: -1.92}
-  m_LocalScale: {x: 10.663, y: 1, z: 12.939225}
+  m_LocalScale: {x: 91.69858, y: 1, z: 85.1488}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}

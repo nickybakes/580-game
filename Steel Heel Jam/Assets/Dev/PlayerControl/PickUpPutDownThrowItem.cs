@@ -18,6 +18,7 @@ public class PickUpPutDownThrowItem : MonoBehaviour
     private Rigidbody rb;
 
     public StarterAssetsInputs _input;
+    public PlayerStatus _playerStatus;
 
     // Start is called before the first frame update
     void Start()
@@ -44,13 +45,21 @@ public class PickUpPutDownThrowItem : MonoBehaviour
 
                 itemPickedUp = true;
                 forceMultiplier = 0;
+
+                // Check tag of picked up Item and set playerstatus enum accordingly
+                switch(this.tag)
+                {
+                    case "TestCube":
+                        _playerStatus.currentEquipState = PlayerStatus.EquipState.TestCubeState;
+                        break;
+                }
             }
         }
 
         // Charge Up Throw
         if (_input.throwIsHeld && itemPickedUp == true && readyToThrow == true && forceMultiplier < forceMultiplierLimit)
         {
-            forceMultiplier += 300 * Time.deltaTime;
+            forceMultiplier += 500 * Time.deltaTime;
         }
 
         // Throw Item
@@ -68,6 +77,9 @@ public class PickUpPutDownThrowItem : MonoBehaviour
 
                 forceMultiplier = 0;
                 readyToThrow = false;
+
+                // Since item has been thrown, set playerStatus enum back to default
+                _playerStatus.currentEquipState = PlayerStatus.EquipState.DefaultState;
             }
 
             forceMultiplier = 0;
