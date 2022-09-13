@@ -2,17 +2,42 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BasicState : MonoBehaviour
+public enum AnimationState {
+    Idle,
+    Run,
+    Jump,
+    Fall,
+    DodgeRoll
+}
+
+public class BasicState
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    /// <summary>
+    /// awdhawfadawo
+    /// </summary>
+    public float timeToChangingState;
+
+    private float timeInThisState;
+
+    public bool canPlayerMove;
+    
+    public bool canPlayerSpin;
+
+    public AnimationState animationState; 
+
+    public BasicState(){
+        timeToChangingState = 0;
+        canPlayerMove = true;
+        canPlayerSpin = true;
+        animationState = AnimationState.Idle;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public virtual void Update(){
+        if(timeToChangingState != 0){
+            timeInThisState += Time.deltaTime;
+            if(timeInThisState >= timeToChangingState){
+                //change state
+            }
+        }
     }
 }
