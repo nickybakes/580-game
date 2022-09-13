@@ -50,7 +50,7 @@ public class PickUpPutDownThrowItem : MonoBehaviour
                 switch(this.tag)
                 {
                     case "TestCube":
-                        _playerStatus.currentEquipState = PlayerStatus.EquipState.TestCubeState;
+                        _playerStatus.currentEquipState = EquipState.TestCubeState;
                         break;
                 }
             }
@@ -79,7 +79,7 @@ public class PickUpPutDownThrowItem : MonoBehaviour
                 readyToThrow = false;
 
                 // Since item has been thrown, set playerStatus enum back to default
-                _playerStatus.currentEquipState = PlayerStatus.EquipState.DefaultState;
+                _playerStatus.currentEquipState = EquipState.DefaultState;
             }
 
             forceMultiplier = 0;

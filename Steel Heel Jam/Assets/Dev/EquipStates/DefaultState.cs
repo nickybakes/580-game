@@ -2,6 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum EquipState
+{
+    DefaultState,
+    TestCubeState
+};
+
+/// <summary>
+/// The base class for Weapon States
+/// </summary>
 public class DefaultState
 {
     //*********

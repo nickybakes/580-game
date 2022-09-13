@@ -5,21 +5,25 @@ using UnityEngine;
 public class PlayerStatus : MonoBehaviour
 {
     private float stamina = 100f;
-    public enum EquipState { DefaultState, TestCubeState };
     public EquipState currentEquipState;
 
     public BasicState currentPlayerState;
+
+    public PlayerMovement movement;
 
     // Start is called before the first frame update
     void Start()
     {
         currentEquipState = EquipState.DefaultState;
         currentPlayerState = new Idle();
+        movement = GetComponent<PlayerMovement>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        movement.UpdateManual(currentPlayerState.updateMovement, currentPlayerState.canPlayerControlMove, currentPlayerState.canPlayerControlRotate);
+
         switch (currentEquipState)
         {
             case EquipState.DefaultState:

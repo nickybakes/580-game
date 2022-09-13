@@ -8,8 +8,8 @@ public class Idle : BasicState
     public Idle()
     {
         timeToChangingState = 0;
-        canPlayerMove = true;
-        canPlayerSpin = true;
+        canPlayerControlMove = true;
+        canPlayerControlRotate = true;
         animationState = AnimationState.Idle;
     }
 

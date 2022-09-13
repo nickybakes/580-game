@@ -122,11 +122,65 @@ public class PlayerMovement : MonoBehaviour
         velocity = new Vector3();
     }
 
-    private void Update()
+    public void UpdateManual(bool updateMovement, bool controlMovement, bool controlRotation)
     {
-        JumpAndGravity();
-        GroundedCheck();
-        Move();
+        if (updateMovement)
+        {
+            JumpAndGravity(controlMovement);
+            GroundedCheck();
+            // normalise input direction
+            Vector3 inputDirection = new Vector3(_input.move.x, 0.0f, _input.move.y).normalized;
+            if (controlMovement)
+                ControlMovement(inputDirection);
+            if (controlRotation)
+                ControlRotation(inputDirection);
+            Move();
+        }
+    }
+
+    public void ControlMovement(Vector3 inputDirection)
+    {
+        //while you are grounded, you have immediate control of your movement
+        if (grounded)
+        {
+            velocity.x = moveSpeed * inputDirection.x;
+            velocity.z = moveSpeed * inputDirection.z;
+        }
+        else
+        {
+            //while in the air, you have less control of your movement
+            //to do this, we find the difference between your current velocity and your requested velocity (what you are inputting)
+            //then, over time, we 'slowly' interpolate toward your requested velocity
+            //how quickly this is (how much control you have over your character) is proportional to the airSpeedChangeAmount variable
+            float differenceX = velocity.x - (moveSpeed * inputDirection.x);
+            float differenceZ = velocity.z - (moveSpeed * inputDirection.z);
+            Vector2 speedDecayDirection = new Vector2(differenceX, differenceZ) / moveSpeed;
+
+            velocity.x = velocity.x - speedDecayDirection.x * airSpeedChangeAmount * Time.deltaTime;
+            velocity.z = velocity.z - speedDecayDirection.y * airSpeedChangeAmount * Time.deltaTime;
+        }
+    }
+
+    public void ControlRotation(Vector3 inputDirection)
+    {
+        // note: Vector2's != operator uses approximation so is not floating point error prone, and is cheaper than magnitude
+        // if there is a move input rotate player when the player is moving
+        if (_input.move != Vector2.zero)
+        {
+            _targetRotation =
+                Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg;
+            float rotation = Mathf.SmoothDampAngle(
+                transform.eulerAngles.y,
+                _targetRotation,
+                ref _rotationVelocity,
+                rotationSmoothTime
+            );
+
+            // rotate to face input direction relative to camera position
+            transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
+        }
+
+        Vector3 targetDirection = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
     }
 
     private void GroundedCheck()
@@ -150,92 +204,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void Move()
     {
-        // set target speed based on move speed, sprint speed and if sprint is pressed
-        // float targetSpeed = moveSpeed;
-
-        // a simplistic acceleration and deceleration designed to be easy to remove, replace, or iterate upon
-
-        // // note: Vector2's == operator uses approximation so is not floating point error prone, and is cheaper than magnitude
-        // // if there is no input, set the target speed to 0
-        // if (_input.move == Vector2.zero)
-        //     targetSpeed = 0.0f;
-
-        // a reference to the players current horizontal speed
-        // float currentHorizontalSpeed = new Vector3(
-        //     _controller.velocity.x,
-        //     0.0f,
-        //     _controller.velocity.z
-        // ).magnitude;
-
-        // float speedOffset = 0.1f;
-        // float inputMagnitude = _input.analogMovement ? _input.move.magnitude : 1f;
-
-        // // accelerate or decelerate to target speed
-        // if (
-        //     currentHorizontalSpeed < targetSpeed - speedOffset
-        //     || currentHorizontalSpeed > targetSpeed + speedOffset
-        // )
-        // {
-        //     // creates curved result rather than a linear one giving a more organic speed change
-        //     // note T in Lerp is clamped, so we don't need to clamp our speed
-        //     _speed = Mathf.Lerp(
-        //         currentHorizontalSpeed,
-        //         targetSpeed * inputMagnitude,
-        //         Time.deltaTime * speedChangeRate
-        //     );
-
-        //     // round speed to 3 decimal places
-        //     _speed = Mathf.Round(_speed * 1000f) / 1000f;
-        // }
-        // else
-        // {
-        //     _speed = targetSpeed;
-        // }
-
-        // normalise input direction
-        Vector3 inputDirection = new Vector3(_input.move.x, 0.0f, _input.move.y).normalized;
-
-        //while you are grounded, you have immediate control of your movement
-        if (grounded)
-        {
-            velocity.x = moveSpeed * inputDirection.x;
-            velocity.z = moveSpeed * inputDirection.z;
-        }
-        else
-        {
-            //while in the air, you have less control of your movement
-            //to do this, we find the difference between your current velocity and your requested velocity (what you are inputting)
-            //then, over time, we 'slowly' interpolate toward your requested velocity
-            //how quickly this is (how much control you have over your character) is proportional to the airSpeedChangeAmount variable
-            float differenceX = velocity.x - (moveSpeed * inputDirection.x);
-            float differenceZ = velocity.z - (moveSpeed * inputDirection.z);
-            Vector2 speedDecayDirection = new Vector2(differenceX, differenceZ)/moveSpeed;
-            
-            velocity.x = velocity.x - speedDecayDirection.x * airSpeedChangeAmount * Time.deltaTime;
-            velocity.z = velocity.z - speedDecayDirection.y * airSpeedChangeAmount * Time.deltaTime;
-        }
-
-        // note: Vector2's != operator uses approximation so is not floating point error prone, and is cheaper than magnitude
-        // if there is a move input rotate player when the player is moving
-        if (_input.move != Vector2.zero)
-        {
-            _targetRotation =
-                Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg;
-            float rotation = Mathf.SmoothDampAngle(
-                transform.eulerAngles.y,
-                _targetRotation,
-                ref _rotationVelocity,
-                rotationSmoothTime
-            );
-
-            // rotate to face input direction relative to camera position
-            transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
-        }
-
-        Vector3 targetDirection = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
-
-        // targetDirection = AdjustVelocityToDownwardSlope(targetDirection);
-
         // move the player
         _controller.Move(new Vector3(
             velocity.x * Time.deltaTime,
@@ -261,7 +229,7 @@ public class PlayerMovement : MonoBehaviour
         return vel;
     }
 
-    private void JumpAndGravity()
+    private void JumpAndGravity(bool controlMovement)
     {
 
         if (!wasGrounded && grounded)
@@ -284,7 +252,7 @@ public class PlayerMovement : MonoBehaviour
             }
 
             // Jump
-            if (_input.jump && !_input.wasJumping && _jumpTimeoutDelta <= 0.0f)
+            if (controlMovement && _input.jump && !_input.wasJumping && _jumpTimeoutDelta <= 0.0f)
             {
                 // the square root of H * -2 * G = how much velocity needed to reach desired height
                 velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
@@ -306,7 +274,7 @@ public class PlayerMovement : MonoBehaviour
             timeInAir += Time.deltaTime;
 
             // allow player to Jump with road runner time
-            if (roadRunnerJumpAvailable && timeInAir < roadRunnerTimeMax && _input.jump && !_input.wasJumping && _jumpTimeoutDelta <= 0.0f)
+            if (controlMovement && roadRunnerJumpAvailable && timeInAir < roadRunnerTimeMax && _input.jump && !_input.wasJumping && _jumpTimeoutDelta <= 0.0f)
             {
                 // the square root of H * -2 * G = how much velocity needed to reach desired height
                 velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);

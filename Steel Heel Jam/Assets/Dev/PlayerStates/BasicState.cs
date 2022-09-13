@@ -7,9 +7,13 @@ public enum AnimationState {
     Run,
     Jump,
     Fall,
-    DodgeRoll
+    DodgeRoll,
+
 }
 
+/// <summary>
+/// The base class for Player States
+/// </summary>
 public class BasicState
 {
     /// <summary>
@@ -19,16 +23,19 @@ public class BasicState
 
     private float timeInThisState;
 
-    public bool canPlayerMove;
+    public bool updateMovement;
+
+    public bool canPlayerControlMove;
     
-    public bool canPlayerSpin;
+    public bool canPlayerControlRotate;
 
     public AnimationState animationState; 
 
     public BasicState(){
         timeToChangingState = 0;
-        canPlayerMove = true;
-        canPlayerSpin = true;
+        updateMovement = true;
+        canPlayerControlMove = true;
+        canPlayerControlRotate = true;
         animationState = AnimationState.Idle;
     }
 
