@@ -2655,6 +2655,7 @@ GameObject:
   - component: {fileID: 1872669212}
   - component: {fileID: 1872669211}
   - component: {fileID: 1872669210}
+  - component: {fileID: 1872669216}
   - component: {fileID: 1872669209}
   - component: {fileID: 1872669214}
   - component: {fileID: 1872669215}
@@ -2778,6 +2779,8 @@ MonoBehaviour:
   jump: 0
   wasJumping: 0
   sprint: 0
+  pickUpPutDownPressed: 0
+  throwIsHeld: 0
   analogMovement: 0
 --- !u!114 &1872669215
 MonoBehaviour:
@@ -2796,6 +2799,20 @@ MonoBehaviour:
     m_Bits: 64
   canPush: 1
   strength: 0.81
+--- !u!114 &1872669216
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1872669208}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7cb1247224ed184c8485afd8e5cd846, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentEquipState: 0
+  movement: {fileID: 0}
 --- !u!1 &1944248093
 GameObject:
   m_ObjectHideFlags: 0
