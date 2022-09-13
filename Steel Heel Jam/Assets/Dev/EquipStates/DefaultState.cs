@@ -13,27 +13,31 @@ public enum EquipState
 /// </summary>
 public class DefaultState
 {
-    //*********
+    //**********
     // Fields
-    //*********
-    protected int playerNumber;
+    //**********
+    public int playerNumber = 1;
     private float damage = 20;
-    protected float damageMultiplier;
+    [SerializeField] protected float damageMultiplier = 1;
     private float knockback = 15;
-    protected float knockbackMultiplier;
-    private float radius = 5;
-    protected float radiusMultiplier;
+    [SerializeField] protected float knockbackMultiplier = 1;
+    private float radius = 1;
+    [SerializeField] protected float radiusMultiplier = 1;
     private float startup = 0.25f; //TIME IS IN SECONDS
-    protected float startupMultiplier;
+    [SerializeField] protected float startupMultiplier = 1;
     private float duration = 0.1f;
-    protected float durationMultiplier;
+    [SerializeField] protected float durationMultiplier = 1;
     private float recovery = 0.15f;
-    protected float recoveryMultiplier;
+    [SerializeField] protected float recoveryMultiplier = 1;
     private float forwardDisplacement = 1;
-    protected float forwardDisplacementMultiplier;
-    public int comboCount = 3;
+    [SerializeField] protected float forwardDisplacementMultiplier = 1;
+    [SerializeField] public int comboCount = 3;
     //private float backwardDisplacement;
     //protected float backwardDisplacementMultiplier;
+
+    [SerializeField] public GameObject hitbox;
+    private Hitbox hitboxScript;
+    private SphereCollider hitboxCollider;
 
     // NOTE MAKE COMBO SYSTEM
     // NOTE DEFINE PRIVATES
@@ -57,18 +61,46 @@ public class DefaultState
     //***************
     // Constructor
     //***************
-    public DefaultState(int _playerNumber)
+    /// <summary>
+    /// Generates an instance of a DefaultState object.
+    /// </summary>
+    /// <param name="_playerNumber">The number of the controlling player.</param>
+    /// <param name="_hitbox">A reference to the player's hitbox prefab.</param>
+    public DefaultState(int _playerNumber, GameObject _hitbox)
     {
         playerNumber = _playerNumber;
+        hitbox = _hitbox;
+
+        // Initialize hitbox references
+        hitboxScript = hitbox.GetComponent<Hitbox>();
+        hitboxCollider = hitbox.GetComponent<SphereCollider>();
     }
 
     //**********
     // Methods
     //**********
+    /// <summary>
+    /// Activates the hitbox prefab attached to the player.
+    /// </summary>
     public virtual void Attack()
     {
-        //TURN ON THE HITBOX
+        hitbox.SetActive(true);
     }
 
+    /// <summary>
+    /// Sets the hitbox size and duration. Must be called each time the equip state is changed.
+    /// </summary>
+    public virtual void InitHitbox()
+    {
+        // Set up hitbox values
+        hitboxScript.damage = damage * damageMultiplier;
+        hitboxScript.knockback = knockback * knockbackMultiplier;
+        hitboxScript.radius = radius * radiusMultiplier; // Radius is only passed through for gizmo drawing
+        hitboxScript.playerNumber = playerNumber;
+        hitboxScript.duration = duration * durationMultiplier;
 
+        // Resize hitbox
+        hitboxCollider.radius = radius * radiusMultiplier;
+        hitbox.transform.position = new Vector3(0, 1, 1 + (radius * radiusMultiplier) / 2); // Experimental
+    }
 }

@@ -10,6 +10,7 @@ public class Idle : BasicState
         timeToChangingState = 0;
         canPlayerControlMove = true;
         canPlayerControlRotate = true;
+        updateMovement = true;
         animationState = AnimationState.Idle;
     }
 
