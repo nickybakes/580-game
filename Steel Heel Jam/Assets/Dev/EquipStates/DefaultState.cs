@@ -19,8 +19,12 @@ public class DefaultState
     public int playerNumber = 1;
     private float damage = 20;
     [SerializeField] protected float damageMultiplier = 1;
-    private float knockback = 15;
+    private float knockback = 5;
     [SerializeField] protected float knockbackMultiplier = 1;
+    private float knockbackHeight = 20;
+    [SerializeField] protected float knockbackHeightMultiplier = 1;
+    private float hitstun = .75f;
+    [SerializeField] protected float hitstunMultiplier = 1;
     private float radius = 1;
     [SerializeField] protected float radiusMultiplier = 1;
     private float startup = 0.25f; //TIME IS IN SECONDS
@@ -97,6 +101,8 @@ public class DefaultState
         // Set up hitbox values
         hitboxScript.damage = damage * damageMultiplier;
         hitboxScript.knockback = knockback * knockbackMultiplier;
+        hitboxScript.knockbackHeight = knockbackHeight * knockbackHeightMultiplier;
+        hitboxScript.hitstun = hitstun * hitstunMultiplier;
         hitboxScript.radius = radius * radiusMultiplier; // Radius is only passed through for gizmo drawing
         hitboxScript.playerNumber = playerNumber;
         //hitboxScript.duration = duration * durationMultiplier;

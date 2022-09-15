@@ -8,8 +8,20 @@ public enum AnimationState {
     Jump,
     Fall,
     DodgeRoll,
-
+    Knockback,
 }
+
+//public enum PlayerState
+//{
+//    Idle,
+//    Run,
+//    Jump,
+//    Fall,
+//    DodgeRoll,
+//    ImpactStun,
+//    HitStun,
+//    Knockback,
+//}
 
 /// <summary>
 /// The base class for Player States
@@ -29,7 +41,11 @@ public class BasicState
     
     public bool canPlayerControlRotate;
 
-    public AnimationState animationState; 
+    public AnimationState animationState;
+
+    public BasicState stateToChangeTo;
+
+    public bool changeStateNow;
 
     public BasicState(){
         timeToChangingState = 0;
@@ -43,7 +59,7 @@ public class BasicState
         if(timeToChangingState != 0){
             timeInThisState += Time.deltaTime;
             if(timeInThisState >= timeToChangingState){
-                //change state
+                changeStateNow = true;
             }
         }
     }

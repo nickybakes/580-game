@@ -86,7 +86,7 @@ public class PlayerMovement : MonoBehaviour
     private float _targetRotation = 0.0f;
 
     //stores direction and speed of where the player is moving in each axis
-    private Vector3 velocity;
+    public Vector3 velocity;
     private float _rotationVelocity;
     private float _terminalVelocity = 53.0f;
 

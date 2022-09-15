@@ -7,6 +7,11 @@ public enum PlayerChild
     Hitbox = 2
 }
 
+public enum Tag
+{
+    Player
+}
+
 public class PlayerStatus : MonoBehaviour
 {
     private float stamina = 100f;
@@ -15,6 +20,10 @@ public class PlayerStatus : MonoBehaviour
     public BasicState currentPlayerState;
 
     public PlayerMovement movement;
+
+    public int playerNumber;
+
+    public int PlayerNumber { get { return playerNumber; } }
 
     // Start is called before the first frame update
     void Start()
@@ -29,14 +38,31 @@ public class PlayerStatus : MonoBehaviour
     {
         movement.UpdateManual(currentPlayerState.updateMovement, currentPlayerState.canPlayerControlMove, currentPlayerState.canPlayerControlRotate);
 
+        currentPlayerState.Update();
+
+        if (currentPlayerState.changeStateNow)
+            currentPlayerState = currentPlayerState.stateToChangeTo;
+
         switch (currentEquipState)
         {
             case EquipState.DefaultState:
-                Debug.Log("Default State");
+                //Debug.Log("Default State");
                 break;
             case EquipState.TestCubeState:
-                Debug.Log("TestCubeState");
+                //Debug.Log("TestCubeState");
                 break;
         }
+    }
+
+    public void GetHit(Vector3 hitboxPos, Vector3 collisionPos, float damage, float knockback, float knockbackHeight, float hitstun)
+    {
+
+        Vector3 knockbackDir = (collisionPos - hitboxPos).normalized;
+        knockback = knockback * (2 + stamina / 100);
+        movement.velocity = new Vector3(knockbackDir.x * knockback, knockbackHeight, knockbackDir.z * knockback);
+        movement.grounded = false;
+
+        currentPlayerState = new ImpactStun();
+        currentPlayerState.stateToChangeTo.timeToChangingState = hitstun;
     }
 }
