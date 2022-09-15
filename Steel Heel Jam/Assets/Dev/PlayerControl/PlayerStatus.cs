@@ -2,6 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum PlayerChild
+{
+    Hitbox = 2
+}
+
 public class PlayerStatus : MonoBehaviour
 {
     private float stamina = 100f;

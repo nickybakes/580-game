@@ -10,6 +10,9 @@ public class StarterAssetsInputs : MonoBehaviour
     //true if the player was holding jump in the previous frame
     public bool wasJumping;
     public bool sprint;
+
+    // Combat Controls
+    public bool attack;
     public bool pickUpPutDownPressed;
     public bool throwIsHeld;
 
@@ -42,6 +45,16 @@ public class StarterAssetsInputs : MonoBehaviour
         }*/
         PickUpPutDownInput(value.isPressed);
 
+    }
+
+    public void OnAttack(InputValue value)
+    {
+        AttackInput(value.isPressed);
+    }
+
+    public void AttackInput(bool newAttackState)
+    {
+        attack = newAttackState;
     }
 
     public void PickUpPutDownInput(bool newPickUpPutDownState)

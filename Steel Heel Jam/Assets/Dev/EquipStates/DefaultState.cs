@@ -25,7 +25,7 @@ public class DefaultState
     [SerializeField] protected float radiusMultiplier = 1;
     private float startup = 0.25f; //TIME IS IN SECONDS
     [SerializeField] protected float startupMultiplier = 1;
-    private float duration = 0.1f;
+    private float duration = 0.15f;
     [SerializeField] protected float durationMultiplier = 1;
     private float recovery = 0.15f;
     [SerializeField] protected float recoveryMultiplier = 1;
@@ -41,6 +41,7 @@ public class DefaultState
 
     // NOTE MAKE COMBO SYSTEM
     // NOTE DEFINE PRIVATES
+    // NOTE MOVE MULTIPLIERS TO CONSTRUCTOR
 
     public float Startup
     {
@@ -84,6 +85,7 @@ public class DefaultState
     /// </summary>
     public virtual void Attack()
     {
+        hitboxScript.duration = duration * durationMultiplier;
         hitbox.SetActive(true);
     }
 
@@ -97,10 +99,10 @@ public class DefaultState
         hitboxScript.knockback = knockback * knockbackMultiplier;
         hitboxScript.radius = radius * radiusMultiplier; // Radius is only passed through for gizmo drawing
         hitboxScript.playerNumber = playerNumber;
-        hitboxScript.duration = duration * durationMultiplier;
+        //hitboxScript.duration = duration * durationMultiplier;
 
         // Resize hitbox
         hitboxCollider.radius = radius * radiusMultiplier;
-        hitbox.transform.position = new Vector3(0, 1, 1 + (radius * radiusMultiplier) / 2); // Experimental
+        hitbox.transform.localPosition = new Vector3(0, 1, 1 + (radius * radiusMultiplier) / 2); // Experimental
     }
 }

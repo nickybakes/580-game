@@ -24,7 +24,7 @@ public class Hitbox : MonoBehaviour
     {
         duration -= Time.deltaTime;
 
-        if (duration >= 0)
+        if (duration <= 0)
         {
             gameObject.SetActive(false);
         }

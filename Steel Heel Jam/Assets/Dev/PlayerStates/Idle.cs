@@ -5,6 +5,7 @@ using UnityEngine;
 public class Idle : BasicState
 {
 
+
     public Idle()
     {
         timeToChangingState = 0;
@@ -12,6 +13,7 @@ public class Idle : BasicState
         canPlayerControlRotate = true;
         updateMovement = true;
         animationState = AnimationState.Idle;
+
     }
 
 }
