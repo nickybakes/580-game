@@ -21,11 +21,13 @@ public class DodgeRoll : BasicState
     }
 
     
-    public override void Update() {
-        base.Update();
+    public override void Update(PlayerStatus status) {
+        base.Update(status);
 
-        if(!grounded && wasGrounded) {
-            InterruptState(new Idle());
+        status.movement.SetVelocityToMoveSpeedTimesFowardDirection();
+        
+        if(!status.movement.grounded && status.movement.wasGrounded) {
+            status.SetPlayerStateImmediately(new DodgeRollFall());
         }
     }
 

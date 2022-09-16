@@ -2,35 +2,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DodgeRollRecovery : BasicState
+public class DodgeRollFall : BasicState
 {
 
 
-    public DodgeRollRecovery()
+    public DodgeRollFall()
     {
-        timeToChangingState = .15f;
+        timeToChangingState = 0;
         canPlayerControlMove = false;
         canPlayerControlRotate = false;
         canAttack = false;
         canDodgeRoll = false;
         canBlock = false;
         updateMovement = true;
-        moveSpeedMultiplier = 1.6f;
+        moveSpeedMultiplier = 2.1f;
+        extraFallGravityMultiplier = .6f;
         animationState = AnimationState.DodgeRoll;
         stateToChangeTo = new Idle();
     }
 
-    public override void Update(PlayerStatus status)
-    {
+    
+    public override void Update(PlayerStatus status) {
         base.Update(status);
 
-        moveSpeedMultiplier = Mathf.Lerp(1.6f, .4f, timeInThisState/timeToChangingState); 
+        extraFallGravityMultiplier = Mathf.Lerp(.6f, 1, Mathf.Min(1, timeInThisState/.4f));
 
         status.movement.SetVelocityToMoveSpeedTimesFowardDirection();
 
-        if (!status.movement.grounded && status.movement.wasGrounded)
-        {
-            status.SetPlayerStateImmediately(new DodgeRollFall());
+        if(status.movement.grounded) {
+            status.SetPlayerStateImmediately(new Idle());
         }
     }
 

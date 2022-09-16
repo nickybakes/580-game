@@ -45,8 +45,8 @@ public class PlayerCombat : MonoBehaviour
     }
 
     private void DodgeRoll(){
-        _status.ChangePlayerStateImmediately(new DodgeRoll());
-        _status.Direction = transform.forward;
+        _status.SetPlayerStateImmediately(new DodgeRoll());
+        _status.movement.SetVelocityToMoveSpeedTimesFowardDirection();
     }
 
 

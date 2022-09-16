@@ -10,6 +10,11 @@ public class PlayerMovement : MonoBehaviour
     [Tooltip("Move speed of the character in m/s")]
     public float moveSpeed = 13;
 
+    /// <summary>
+    /// Multiply the default moveSpeed by this, useful for temporarily increasing player's speed (such as while dodge rolling)
+    /// </summary>
+    private float moveSpeedMultiplier;
+
     [Tooltip("How fast the character turns to face movement direction")]
     [Range(0.0f, 0.3f)]
     public float rotationSmoothTime = 0.051f;
@@ -30,8 +35,10 @@ public class PlayerMovement : MonoBehaviour
     [Tooltip("The character uses its own gravity value. The engine default is -9.81f")]
     public float gravity = -70;
 
-    [Tooltip("Platformer jumps feel better when they fall faster after their apex. This multiplies gravity whe nthe player is falling")]
+    [Tooltip("Platformer jumps feel better when they fall faster after their apex. This multiplies gravity when the player is falling")]
     public float fallGravityMultiplier = 1.7f;
+
+    private float extraFallMultiplier = 1;
 
     [Space(10)]
     [Tooltip(
@@ -99,6 +106,8 @@ public class PlayerMovement : MonoBehaviour
     private PlayerInput _playerInput;
     private CharacterController _controller;
     private StarterAssetsInputs _input;
+    private PlayerStatus _status;
+
 
     private const float _threshold = 0.01f;
 
@@ -110,12 +119,22 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Gives you the current moveSpeed of the character (base move speed multiplied by the current state's move speed multiplier)
+    /// </summary>
+    /// <value>the current moveSpeed of the character</value>
+    public float CurrentMoveSpeed
+    {
+        get { return moveSpeed * moveSpeedMultiplier; }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         _controller = GetComponent<CharacterController>();
         _input = GetComponent<StarterAssetsInputs>();
         _playerInput = GetComponent<PlayerInput>();
+        _status = GetComponent<PlayerStatus>();
 
         // reset our timeouts on start
         _jumpTimeoutDelta = jumpTimeout;
@@ -130,9 +149,10 @@ public class PlayerMovement : MonoBehaviour
     /// <param name="updateMovement">True if we should overall update the player's movement (gravity, position with velocity, etc)</param>
     /// <param name="controlMovement">True if the player can affect their movement velocity and if they can jump with their inputs</param>
     /// <param name="controlRotation">True if the player can change the direction they are facing, regardless of their current velocity</param>
-    /// <param name="moveSpeedMultiplier">Multiply the default moveSpeed by this, useful for temporarily increasing player's speed (such as while dodge rolling)</param>
-    public void UpdateManual(bool updateMovement, bool controlMovement, bool controlRotation, float moveSpeedMultiplier)
+    public void UpdateManual(bool updateMovement, bool controlMovement, bool controlRotation)
     {
+        moveSpeedMultiplier = _status.CurrentPlayerState.moveSpeedMultiplier;
+        extraFallMultiplier = _status.CurrentPlayerState.extraFallGravityMultiplier;
         if (updateMovement)
         {
             JumpAndGravity(controlMovement);
@@ -140,20 +160,22 @@ public class PlayerMovement : MonoBehaviour
             // normalise input direction
             Vector3 inputDirection = new Vector3(_input.move.x, 0.0f, _input.move.y).normalized;
             if (controlMovement)
-                ControlMovement(inputDirection, moveSpeed * moveSpeedMultiplier);
+                ControlMovement(inputDirection);
+            else if (controlMovement)
+                ControlMovement(inputDirection);
             if (controlRotation)
                 ControlRotation(inputDirection);
             Move();
         }
     }
 
-    public void ControlMovement(Vector3 inputDirection, float currentMoveSpeed)
+    public void ControlMovement(Vector3 inputDirection)
     {
         //while you are grounded, you have immediate control of your movement
         if (grounded)
         {
-            velocity.x = currentMoveSpeed * inputDirection.x;
-            velocity.z = currentMoveSpeed * inputDirection.z;
+            velocity.x = CurrentMoveSpeed * inputDirection.x;
+            velocity.z = CurrentMoveSpeed * inputDirection.z;
         }
         else
         {
@@ -161,13 +183,19 @@ public class PlayerMovement : MonoBehaviour
             //to do this, we find the difference between your current velocity and your requested velocity (what you are inputting)
             //then, over time, we 'slowly' interpolate toward your requested velocity
             //how quickly this is (how much control you have over your character) is proportional to the airSpeedChangeAmount variable
-            float differenceX = velocity.x - (currentMoveSpeed * inputDirection.x);
-            float differenceZ = velocity.z - (currentMoveSpeed * inputDirection.z);
-            Vector2 speedDecayDirection = new Vector2(differenceX, differenceZ) / currentMoveSpeed;
+            float differenceX = velocity.x - (CurrentMoveSpeed * inputDirection.x);
+            float differenceZ = velocity.z - (CurrentMoveSpeed * inputDirection.z);
+            Vector2 speedDecayDirection = new Vector2(differenceX, differenceZ) / CurrentMoveSpeed;
 
             velocity.x = velocity.x - speedDecayDirection.x * airSpeedChangeAmount * Time.deltaTime;
             velocity.z = velocity.z - speedDecayDirection.y * airSpeedChangeAmount * Time.deltaTime;
         }
+    }
+
+    public void SetVelocityToMoveSpeedTimesFowardDirection()
+    {
+        Vector3 v = transform.forward * CurrentMoveSpeed;
+        velocity = new Vector3(v.x, velocity.y, v.z);
     }
 
     public void ControlRotation(Vector3 inputDirection)
@@ -318,7 +346,7 @@ public class PlayerMovement : MonoBehaviour
             if (velocity.y < 0)
             {
                 //when falling, make gravity stronger (multiply it by a multiplier value) to give a better feel to jumps
-                velocity.y += gravity * fallGravityMultiplier * Time.deltaTime;
+                velocity.y += gravity * fallGravityMultiplier * extraFallMultiplier * Time.deltaTime;
             }
             else
             {

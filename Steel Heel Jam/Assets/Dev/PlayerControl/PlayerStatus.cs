@@ -22,32 +22,23 @@ public class PlayerStatus : MonoBehaviour
 
     private BasicState currentPlayerState;
 
+    [HideInInspector]
     public PlayerMovement movement;
 
+    [HideInInspector]
     public PlayerCombat combat;
 
     public int playerNumber;
 
     public int PlayerNumber { get { return playerNumber; } }
 
+    public BasicState CurrentPlayerState { get { return currentPlayerState; }}
+
     /// <summary>
     /// Gives you the current moveSpeed of the character (base move speed multiplied by the current state's move speed multiplier)
     /// </summary>
     /// <value>the current moveSpeed of the character</value>
     public float CurrentMoveSpeed { get { return movement.moveSpeed * currentPlayerState.moveSpeedMultiplier; } }
-
-    /// <summary>
-    /// Gets the direction the player is facing visually in Vector3
-    /// </summary>
-    /// <returns>the direction the player is facing visually in Vector3</returns>
-    // public Vector3 FacingDirection { get { return movement.RotationToVector3(); } }
-
-    /// <summary>
-    /// Set the direction of the velocity. Automatically multiplies it by the current moveSpeed
-    /// </summary>
-    /// <value>the direction of the velocity (normalized)</value>
-    public Vector3 Direction { set { movement.velocity = value * CurrentMoveSpeed; } }
-
 
     // Start is called before the first frame update
     void Start()
@@ -61,16 +52,14 @@ public class PlayerStatus : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        movement.UpdateManual(currentPlayerState.updateMovement, currentPlayerState.canPlayerControlMove, currentPlayerState.canPlayerControlRotate, currentPlayerState.moveSpeedMultiplier);
+        movement.UpdateManual(currentPlayerState.updateMovement, currentPlayerState.canPlayerControlMove, currentPlayerState.canPlayerControlRotate);
 
         combat.UpdateManual(currentPlayerState.canAttack, currentPlayerState.canDodgeRoll, currentPlayerState.canBlock);
 
-        currentPlayerState.grounded = movement.grounded;
-        currentPlayerState.wasGrounded = movement.wasGrounded;
-        currentPlayerState.Update();
+        currentPlayerState.Update(this);
 
         if (currentPlayerState.changeStateNow)
-            ChangePlayerStateImmediately(currentPlayerState.stateToChangeTo);
+            SetPlayerStateImmediately(currentPlayerState.stateToChangeTo);
 
         switch (currentEquipState)
         {
@@ -83,12 +72,12 @@ public class PlayerStatus : MonoBehaviour
         }
     }
 
-    public void ChangePlayerStateImmediately(BasicState state)
+    public void SetPlayerStateImmediately(BasicState state)
     {
         currentPlayerState = state;
 
         if(state is DodgeRollRecovery)
-            movement.velocity = movement.velocity.normalized * CurrentMoveSpeed;
+            movement.velocity = movement.velocity.normalized * movement.CurrentMoveSpeed;
             
     }
 
