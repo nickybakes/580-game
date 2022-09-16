@@ -11,6 +11,9 @@ public class ImpactStun : BasicState
         timeToChangingState = .2f;
         canPlayerControlMove = false;
         canPlayerControlRotate = false;
+        canAttack = false;
+        canDodgeRoll = false;
+        canBlock = false;
         updateMovement = false;
         animationState = AnimationState.Knockback;
         stateToChangeTo = new Knockback();

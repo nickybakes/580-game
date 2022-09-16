@@ -2,20 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Knockback : BasicState
+public class DodgeRollRecovery : BasicState
 {
 
 
-    public Knockback()
+    public DodgeRollRecovery()
     {
-        timeToChangingState = 0;
+        timeToChangingState = .15f;
         canPlayerControlMove = false;
         canPlayerControlRotate = false;
         canAttack = false;
         canDodgeRoll = false;
         canBlock = false;
         updateMovement = true;
-        animationState = AnimationState.Knockback;
+        moveSpeedMultiplier = .6f;
+        animationState = AnimationState.DodgeRoll;
         stateToChangeTo = new Idle();
     }
 

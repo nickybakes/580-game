@@ -129,7 +129,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh30890
+  m_Name: pb_Mesh28490
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -1977,7 +1977,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh30920
+  m_Name: pb_Mesh28544
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -2486,7 +2486,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh30950
+  m_Name: pb_Mesh28626
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -2657,6 +2657,7 @@ GameObject:
   - component: {fileID: 1872669210}
   - component: {fileID: 1872669216}
   - component: {fileID: 1872669209}
+  - component: {fileID: 1872669217}
   - component: {fileID: 1872669214}
   - component: {fileID: 1872669215}
   m_Layer: 3
@@ -2697,6 +2698,7 @@ MonoBehaviour:
   groundLayers:
     serializedVersion: 2
     m_Bits: 65
+  velocity: {x: 0, y: 0, z: 0}
 --- !u!114 &1872669210
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2779,8 +2781,11 @@ MonoBehaviour:
   jump: 0
   wasJumping: 0
   sprint: 0
+  attack: 0
   pickUpPutDownPressed: 0
   throwIsHeld: 0
+  dodgeRoll: 0
+  wasDodgeRolling: 0
   analogMovement: 0
 --- !u!114 &1872669215
 MonoBehaviour:
@@ -2813,6 +2818,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentEquipState: 0
   movement: {fileID: 0}
+  playerNumber: 0
+--- !u!114 &1872669217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1872669208}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a61014d941a91b46829c834df370fec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1944248093
 GameObject:
   m_ObjectHideFlags: 0

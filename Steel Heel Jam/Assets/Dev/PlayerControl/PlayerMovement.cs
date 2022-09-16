@@ -3,18 +3,19 @@ using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(CharacterController))]
 [RequireComponent(typeof(PlayerInput))]
+[RequireComponent(typeof(StarterAssetsInputs))]
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Player")]
     [Tooltip("Move speed of the character in m/s")]
-    public float moveSpeed = 2.0f;
+    public float moveSpeed = 13;
 
     [Tooltip("How fast the character turns to face movement direction")]
     [Range(0.0f, 0.3f)]
-    public float rotationSmoothTime = 0.12f;
+    public float rotationSmoothTime = 0.051f;
 
     [Tooltip("Acceleration and deceleration")]
-    public float speedChangeRate = 10.0f;
+    public float speedChangeRate = 16;
 
     public AudioClip landingAudioClip;
     public AudioClip[] footstepAudioClips;
@@ -24,19 +25,19 @@ public class PlayerMovement : MonoBehaviour
 
     [Space(10)]
     [Tooltip("The height the player can jump")]
-    public float jumpHeight = 1.2f;
+    public float jumpHeight = 3.4f;
 
     [Tooltip("The character uses its own gravity value. The engine default is -9.81f")]
-    public float gravity = -15.0f;
+    public float gravity = -70;
 
     [Tooltip("Platformer jumps feel better when they fall faster after their apex. This multiplies gravity whe nthe player is falling")]
-    public float fallGravityMultiplier = 2;
+    public float fallGravityMultiplier = 1.7f;
 
     [Space(10)]
     [Tooltip(
         "Time required to pass before being able to jump again. Set to 0f to instantly jump again"
     )]
-    public float jumpTimeout = 0.50f;
+    public float jumpTimeout = 0.05f;
 
     [Tooltip(
         "Time required to pass before entering the fall state. Useful for walking down stairs"
@@ -46,12 +47,12 @@ public class PlayerMovement : MonoBehaviour
     [Tooltip(
     "The amount of time you can be off the edge of a platform while still being able to count as grounded"
     )]
-    public float roadRunnerTimeMax = 0.15f;
+    public float roadRunnerTimeMax = 0.12f;
 
     [Tooltip(
         "How quickly to change the current velocity of the player (while in the air) to the inputed direction/velocity of the player"
         )]
-    public float airSpeedChangeAmount = 1;
+    public float airSpeedChangeAmount = 30;
 
     //if you jump using the road runner time, then disbale the ability to jump with road runner time until you land
     private bool roadRunnerJumpAvailable;
@@ -68,15 +69,15 @@ public class PlayerMovement : MonoBehaviour
     public bool grounded = true;
 
     //if the player was grounded in the previous frame
-    private bool wasGrounded = true;
+    public bool wasGrounded = true;
 
     [Tooltip("Useful for rough ground")]
-    public float groundedOffset = -0.14f;
+    public float groundedOffset = -0.17f;
 
     [Tooltip(
         "The radius of the grounded check. Should match the radius of the CharacterController"
     )]
-    public float groundedRadius = 0.28f;
+    public float groundedRadius = 0.4f;
 
     [Tooltip("What layers the character uses as ground")]
     public LayerMask groundLayers;
@@ -122,7 +123,15 @@ public class PlayerMovement : MonoBehaviour
         velocity = new Vector3();
     }
 
-    public void UpdateManual(bool updateMovement, bool controlMovement, bool controlRotation)
+    /// <summary>
+    /// This is to be updated via the PlayerStatus script's Update method. The parameters should be recieved from the Player's
+    /// current PlayerState
+    /// </summary>
+    /// <param name="updateMovement">True if we should overall update the player's movement (gravity, position with velocity, etc)</param>
+    /// <param name="controlMovement">True if the player can affect their movement velocity and if they can jump with their inputs</param>
+    /// <param name="controlRotation">True if the player can change the direction they are facing, regardless of their current velocity</param>
+    /// <param name="moveSpeedMultiplier">Multiply the default moveSpeed by this, useful for temporarily increasing player's speed (such as while dodge rolling)</param>
+    public void UpdateManual(bool updateMovement, bool controlMovement, bool controlRotation, float moveSpeedMultiplier)
     {
         if (updateMovement)
         {

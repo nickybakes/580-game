@@ -16,6 +16,10 @@ public class StarterAssetsInputs : MonoBehaviour
     public bool pickUpPutDownPressed;
     public bool throwIsHeld;
 
+    public bool dodgeRoll;
+
+    public bool wasDodgeRolling;
+
     [Header("Movement Settings")]
     public bool analogMovement;
 
@@ -31,6 +35,11 @@ public class StarterAssetsInputs : MonoBehaviour
     public void OnJump(InputValue value)
     {
         JumpInput(value.isPressed);
+    }
+
+    public void OnDodgeRoll(InputValue value)
+    {
+        DodgeRollInput(value.isPressed);
     }
 
     public void OnPickUpPutDown(InputValue value)
@@ -64,11 +73,11 @@ public class StarterAssetsInputs : MonoBehaviour
 
     public void OnThrow(InputValue value)
     {
-        if(value.isPressed) // Key pressed
+        if (value.isPressed) // Key pressed
         {
             throwIsHeld = true;
         }
-        if(value.isPressed == false) // Key released
+        if (value.isPressed == false) // Key released
         {
             throwIsHeld = false;
         }
@@ -83,6 +92,12 @@ public class StarterAssetsInputs : MonoBehaviour
     {
         wasJumping = jump;
         jump = newJumpState;
+    }
+
+    public void DodgeRollInput(bool newDodgeRollState)
+    {
+        wasDodgeRolling = dodgeRoll;
+        dodgeRoll = newDodgeRollState;
     }
 
     // private void OnApplicationFocus(bool hasFocus)

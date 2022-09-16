@@ -12,6 +12,9 @@ public enum Tag
     Player
 }
 
+
+[RequireComponent(typeof(PlayerMovement))]
+[RequireComponent(typeof(PlayerCombat))]
 public class PlayerStatus : MonoBehaviour
 {
     private float stamina = 100f;
@@ -20,6 +23,8 @@ public class PlayerStatus : MonoBehaviour
     public BasicState currentPlayerState;
 
     public PlayerMovement movement;
+
+    public PlayerCombat combat;
 
     public int playerNumber;
 
@@ -31,13 +36,18 @@ public class PlayerStatus : MonoBehaviour
         currentEquipState = EquipState.DefaultState;
         currentPlayerState = new Idle();
         movement = GetComponent<PlayerMovement>();
+        combat = GetComponent<PlayerCombat>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        movement.UpdateManual(currentPlayerState.updateMovement, currentPlayerState.canPlayerControlMove, currentPlayerState.canPlayerControlRotate);
+        movement.UpdateManual(currentPlayerState.updateMovement, currentPlayerState.canPlayerControlMove, currentPlayerState.canPlayerControlRotate, currentPlayerState.moveSpeedMultiplier);
 
+        combat.UpdateManual(currentPlayerState.canAttack, currentPlayerState.canDodgeRoll, currentPlayerState.canBlock);
+
+        currentPlayerState.grounded = movement.grounded;
+        currentPlayerState.wasGrounded = movement.wasGrounded;
         currentPlayerState.Update();
 
         if (currentPlayerState.changeStateNow)
