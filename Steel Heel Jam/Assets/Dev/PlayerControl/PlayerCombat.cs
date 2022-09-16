@@ -17,6 +17,8 @@ public class PlayerCombat : MonoBehaviour
         _input = GetComponent<StarterAssetsInputs>();
         _hitbox = transform.GetChild((int)PlayerChild.Hitbox).gameObject;
 
+        _status = GetComponent<PlayerStatus>();
+
         weaponState = new DefaultState(1, _hitbox);
         weaponState.InitHitbox();
     }
@@ -35,12 +37,16 @@ public class PlayerCombat : MonoBehaviour
             weaponState.Attack();
             _input.attack = false;
         }
+
+        if (canDodgeRoll && _input.dodgeRoll && !_input.wasDodgeRolling)
+        {
+            DodgeRoll();
+        }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
+    private void DodgeRoll(){
+        _status.ChangePlayerStateImmediately(new DodgeRoll());
+        _status.Direction = transform.forward;
     }
 
 

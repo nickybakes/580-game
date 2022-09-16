@@ -20,7 +20,7 @@ public class PlayerStatus : MonoBehaviour
     private float stamina = 100f;
     public EquipState currentEquipState;
 
-    public BasicState currentPlayerState;
+    private BasicState currentPlayerState;
 
     public PlayerMovement movement;
 
@@ -29,6 +29,25 @@ public class PlayerStatus : MonoBehaviour
     public int playerNumber;
 
     public int PlayerNumber { get { return playerNumber; } }
+
+    /// <summary>
+    /// Gives you the current moveSpeed of the character (base move speed multiplied by the current state's move speed multiplier)
+    /// </summary>
+    /// <value>the current moveSpeed of the character</value>
+    public float CurrentMoveSpeed { get { return movement.moveSpeed * currentPlayerState.moveSpeedMultiplier; } }
+
+    /// <summary>
+    /// Gets the direction the player is facing visually in Vector3
+    /// </summary>
+    /// <returns>the direction the player is facing visually in Vector3</returns>
+    // public Vector3 FacingDirection { get { return movement.RotationToVector3(); } }
+
+    /// <summary>
+    /// Set the direction of the velocity. Automatically multiplies it by the current moveSpeed
+    /// </summary>
+    /// <value>the direction of the velocity (normalized)</value>
+    public Vector3 Direction { set { movement.velocity = value * CurrentMoveSpeed; } }
+
 
     // Start is called before the first frame update
     void Start()
@@ -51,7 +70,7 @@ public class PlayerStatus : MonoBehaviour
         currentPlayerState.Update();
 
         if (currentPlayerState.changeStateNow)
-            currentPlayerState = currentPlayerState.stateToChangeTo;
+            ChangePlayerStateImmediately(currentPlayerState.stateToChangeTo);
 
         switch (currentEquipState)
         {
@@ -62,6 +81,15 @@ public class PlayerStatus : MonoBehaviour
                 //Debug.Log("TestCubeState");
                 break;
         }
+    }
+
+    public void ChangePlayerStateImmediately(BasicState state)
+    {
+        currentPlayerState = state;
+
+        if(state is DodgeRollRecovery)
+            movement.velocity = movement.velocity.normalized * CurrentMoveSpeed;
+            
     }
 
     public void GetHit(Vector3 hitboxPos, Vector3 collisionPos, float damage, float knockback, float knockbackHeight, float hitstun)

@@ -140,20 +140,20 @@ public class PlayerMovement : MonoBehaviour
             // normalise input direction
             Vector3 inputDirection = new Vector3(_input.move.x, 0.0f, _input.move.y).normalized;
             if (controlMovement)
-                ControlMovement(inputDirection);
+                ControlMovement(inputDirection, moveSpeed * moveSpeedMultiplier);
             if (controlRotation)
                 ControlRotation(inputDirection);
             Move();
         }
     }
 
-    public void ControlMovement(Vector3 inputDirection)
+    public void ControlMovement(Vector3 inputDirection, float currentMoveSpeed)
     {
         //while you are grounded, you have immediate control of your movement
         if (grounded)
         {
-            velocity.x = moveSpeed * inputDirection.x;
-            velocity.z = moveSpeed * inputDirection.z;
+            velocity.x = currentMoveSpeed * inputDirection.x;
+            velocity.z = currentMoveSpeed * inputDirection.z;
         }
         else
         {
@@ -161,9 +161,9 @@ public class PlayerMovement : MonoBehaviour
             //to do this, we find the difference between your current velocity and your requested velocity (what you are inputting)
             //then, over time, we 'slowly' interpolate toward your requested velocity
             //how quickly this is (how much control you have over your character) is proportional to the airSpeedChangeAmount variable
-            float differenceX = velocity.x - (moveSpeed * inputDirection.x);
-            float differenceZ = velocity.z - (moveSpeed * inputDirection.z);
-            Vector2 speedDecayDirection = new Vector2(differenceX, differenceZ) / moveSpeed;
+            float differenceX = velocity.x - (currentMoveSpeed * inputDirection.x);
+            float differenceZ = velocity.z - (currentMoveSpeed * inputDirection.z);
+            Vector2 speedDecayDirection = new Vector2(differenceX, differenceZ) / currentMoveSpeed;
 
             velocity.x = velocity.x - speedDecayDirection.x * airSpeedChangeAmount * Time.deltaTime;
             velocity.z = velocity.z - speedDecayDirection.y * airSpeedChangeAmount * Time.deltaTime;
@@ -189,8 +189,15 @@ public class PlayerMovement : MonoBehaviour
             transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
         }
 
-        Vector3 targetDirection = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
     }
+
+    /// <summary>
+    /// should return the direction that player last moved in (not the direction they are visually facing)
+    /// </summary>
+    /// <returns></returns>
+    // public Vector3 RotationToVector3(){
+    //     return Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
+    // }
 
     private void GroundedCheck()
     {
