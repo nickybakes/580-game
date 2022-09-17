@@ -35,6 +35,18 @@ public class PlayerStatus : MonoBehaviour
     public BasicState CurrentPlayerState { get { return currentPlayerState; } }
 
     /// <summary>
+    /// Use this to check if the player is currently dodging when you want to hit them with an attack
+    /// </summary>
+    /// <value>True if the player is currently dodging on this frame</value>
+    public bool IsDodgeRolling
+    {
+        get
+        {
+            return (currentPlayerState is DodgeRoll);
+        }
+    }
+
+    /// <summary>
     /// Gives you the current moveSpeed of the character (base move speed multiplied by the current state's move speed multiplier)
     /// </summary>
     /// <value>the current moveSpeed of the character</value>

@@ -108,10 +108,17 @@ public class PlayerMovement : MonoBehaviour
     private float _fallTimeoutDelta;
 
 
+    new private Transform transform;
+
     private PlayerInput _playerInput;
     private CharacterController _controller;
     private StarterAssetsInputs _input;
     private PlayerStatus _status;
+
+    /// <summary>
+    /// a set forward direction we want to player to be moving toward
+    /// </summary>
+    private Vector3 setForwardDirection;
 
 
     private const float _threshold = 0.01f;
@@ -133,9 +140,22 @@ public class PlayerMovement : MonoBehaviour
         get { return moveSpeed * moveSpeedMultiplier; }
     }
 
+    public Vector3 ActualFowardDirection
+    {
+        get
+        {
+            if (_input.move != Vector2.zero)
+                return new Vector3(_input.move.x, 0.0f, _input.move.y).normalized;
+            else
+                return transform.forward;
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
+        transform = gameObject.transform;
+
         _controller = GetComponent<CharacterController>();
         _input = GetComponent<StarterAssetsInputs>();
         _playerInput = GetComponent<PlayerInput>();
@@ -188,7 +208,7 @@ public class PlayerMovement : MonoBehaviour
 
                 if (currentActualSpeed > .2f)
                 {
-                    Vector2 currentVelocityDirection = topDownVelocity/currentActualSpeed;
+                    Vector2 currentVelocityDirection = topDownVelocity / currentActualSpeed;
                     currentActualSpeed -= decelerationAmount * Time.deltaTime;
 
                     velocity.x = currentVelocityDirection.x * currentActualSpeed;
@@ -211,7 +231,7 @@ public class PlayerMovement : MonoBehaviour
 
                 if (currentActualSpeed > CurrentMoveSpeed)
                 {
-                    Vector2 currentVelocityDirection = topDownVelocity/currentActualSpeed;
+                    Vector2 currentVelocityDirection = topDownVelocity / currentActualSpeed;
                     currentActualSpeed -= decelerationAmount * Time.deltaTime;
 
                     velocity.x = currentVelocityDirection.x * currentActualSpeed;
@@ -229,7 +249,7 @@ public class PlayerMovement : MonoBehaviour
             float decelerationAmount = 10;
             Vector2 topDownVelocity = new Vector2(velocity.x, velocity.z);
             float currentActualSpeed = topDownVelocity.magnitude;
-            Vector2 currentVelocityDirection = topDownVelocity/currentActualSpeed;
+            Vector2 currentVelocityDirection = topDownVelocity / currentActualSpeed;
 
             //if the player is moving faster than their currentMoveSpeed, and they are holding i the same direction
             //then keep them going that direction, very slowly decelerate them
@@ -262,8 +282,14 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     public void SetVelocityToMoveSpeedTimesFowardDirection()
     {
-        Vector3 v = transform.forward * CurrentMoveSpeed;
+        Vector3 v = setForwardDirection * CurrentMoveSpeed;
         velocity = new Vector3(v.x, velocity.y, v.z);
+    }
+
+    public void SetTheSetForwardDirection()
+    {
+        transform.forward = ActualFowardDirection;
+        setForwardDirection = ActualFowardDirection;
     }
 
     public void ControlRotation(Vector3 inputDirection)
