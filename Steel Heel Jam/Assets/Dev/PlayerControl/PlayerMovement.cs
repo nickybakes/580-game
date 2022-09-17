@@ -17,7 +17,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Tooltip("How fast the character turns to face movement direction")]
     [Range(0.0f, 0.3f)]
-    public float rotationSmoothTime = 0.051f;
+    public float rotationSmoothTime = 0.027f;
 
     [Tooltip("Acceleration and deceleration")]
     public float speedChangeRate = 16;
@@ -68,6 +68,11 @@ public class PlayerMovement : MonoBehaviour
     "The amount of time spent in the air, resets to 0 when you land."
     )]
     private float timeInAir;
+
+    [Tooltip(
+    "The amount of time spent grounded, resets to 0 when you land"
+    )]
+    private float timeGrounded;
 
     [Header("Player Grounded")]
     [Tooltip(
@@ -174,24 +179,87 @@ public class PlayerMovement : MonoBehaviour
         //while you are grounded, you have immediate control of your movement
         if (grounded)
         {
-            velocity.x = CurrentMoveSpeed * inputDirection.x;
-            velocity.z = CurrentMoveSpeed * inputDirection.z;
+            //if the player is not pressing anything, then this code decelerates the player quickly
+            if (inputDirection.x == 0 && inputDirection.z == 0)
+            {
+                float decelerationAmount = 100;
+                Vector2 topDownVelocity = new Vector2(velocity.x, velocity.z);
+                float currentActualSpeed = topDownVelocity.magnitude;
+
+                if (currentActualSpeed > .2f)
+                {
+                    Vector2 currentVelocityDirection = topDownVelocity/currentActualSpeed;
+                    currentActualSpeed -= decelerationAmount * Time.deltaTime;
+
+                    velocity.x = currentVelocityDirection.x * currentActualSpeed;
+                    velocity.z = currentVelocityDirection.y * currentActualSpeed;
+                }
+                else
+                {
+                    velocity.x = 0;
+                    velocity.z = 0;
+                }
+            }
+            //if the player is holding a direction then they get immediate control of their player
+            //but if their current actual speed is higher than their current set move speed then this code will slowly decelerate them 
+            //to that current set move speed
+            else
+            {
+                float decelerationAmount = 70;
+                Vector2 topDownVelocity = new Vector2(velocity.x, velocity.z);
+                float currentActualSpeed = topDownVelocity.magnitude;
+
+                if (currentActualSpeed > CurrentMoveSpeed)
+                {
+                    Vector2 currentVelocityDirection = topDownVelocity/currentActualSpeed;
+                    currentActualSpeed -= decelerationAmount * Time.deltaTime;
+
+                    velocity.x = currentVelocityDirection.x * currentActualSpeed;
+                    velocity.z = currentVelocityDirection.y * currentActualSpeed;
+                }
+                else
+                {
+                    velocity.x = CurrentMoveSpeed * inputDirection.x;
+                    velocity.z = CurrentMoveSpeed * inputDirection.z;
+                }
+            }
         }
         else
         {
-            //while in the air, you have less control of your movement
-            //to do this, we find the difference between your current velocity and your requested velocity (what you are inputting)
-            //then, over time, we 'slowly' interpolate toward your requested velocity
-            //how quickly this is (how much control you have over your character) is proportional to the airSpeedChangeAmount variable
-            float differenceX = velocity.x - (CurrentMoveSpeed * inputDirection.x);
-            float differenceZ = velocity.z - (CurrentMoveSpeed * inputDirection.z);
-            Vector2 speedDecayDirection = new Vector2(differenceX, differenceZ) / CurrentMoveSpeed;
+            float decelerationAmount = 10;
+            Vector2 topDownVelocity = new Vector2(velocity.x, velocity.z);
+            float currentActualSpeed = topDownVelocity.magnitude;
+            Vector2 currentVelocityDirection = topDownVelocity/currentActualSpeed;
 
-            velocity.x = velocity.x - speedDecayDirection.x * airSpeedChangeAmount * Time.deltaTime;
-            velocity.z = velocity.z - speedDecayDirection.y * airSpeedChangeAmount * Time.deltaTime;
+            //if the player is moving faster than their currentMoveSpeed, and they are holding i the same direction
+            //then keep them going that direction, very slowly decelerate them
+            if (Vector2.Dot(currentVelocityDirection, new Vector2(inputDirection.x, inputDirection.z)) > .9f && currentActualSpeed > CurrentMoveSpeed)
+            {
+                currentActualSpeed -= decelerationAmount * Time.deltaTime;
+
+                velocity.x = currentVelocityDirection.x * currentActualSpeed;
+                velocity.z = currentVelocityDirection.y * currentActualSpeed;
+            }
+            else
+            {
+                //while in the air, you have less control of your movement
+                //to do this, we find the difference between your current velocity and your requested velocity (what you are inputting)
+                //then, over time, we 'slowly' interpolate toward your requested velocity
+                //how quickly this is (how much control you have over your character) is proportional to the airSpeedChangeAmount variable
+                float differenceX = velocity.x - (CurrentMoveSpeed * inputDirection.x);
+                float differenceZ = velocity.z - (CurrentMoveSpeed * inputDirection.z);
+                Vector2 speedDecayDirection = new Vector2(differenceX, differenceZ) / CurrentMoveSpeed;
+
+                velocity.x = velocity.x - speedDecayDirection.x * airSpeedChangeAmount * Time.deltaTime;
+                velocity.z = velocity.z - speedDecayDirection.y * airSpeedChangeAmount * Time.deltaTime;
+            }
+
         }
     }
 
+    /// <summary>
+    /// Gets the forward vector of the player and makes their top down velocity equal to that times their current set move speed
+    /// </summary>
     public void SetVelocityToMoveSpeedTimesFowardDirection()
     {
         Vector3 v = transform.forward * CurrentMoveSpeed;
@@ -277,14 +345,17 @@ public class PlayerMovement : MonoBehaviour
     {
 
         if (!wasGrounded && grounded)
-            // reset the jump timeout timer
-            _jumpTimeoutDelta = jumpTimeout;
+            timeGrounded = 0;
 
         if (grounded)
         {
             //reset time in air
             timeInAir = 0;
-            roadRunnerJumpAvailable = true;
+
+            timeGrounded += Time.deltaTime;
+
+            if (timeGrounded > .14)
+                roadRunnerJumpAvailable = true;
 
             // reset the fall timeout timer
             _fallTimeoutDelta = fallTimeout;
@@ -296,11 +367,13 @@ public class PlayerMovement : MonoBehaviour
             }
 
             // Jump
-            if (controlMovement && _input.jump && !_input.wasJumping && _jumpTimeoutDelta <= 0.0f)
+            if (controlMovement && _input.Jump)
             {
                 // the square root of H * -2 * G = how much velocity needed to reach desired height
                 velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+                _input.Jump = false;
                 grounded = false;
+                roadRunnerJumpAvailable = false;
             }
 
             // jump timeout
@@ -318,11 +391,12 @@ public class PlayerMovement : MonoBehaviour
             timeInAir += Time.deltaTime;
 
             // allow player to Jump with road runner time
-            if (controlMovement && roadRunnerJumpAvailable && timeInAir < roadRunnerTimeMax && _input.jump && !_input.wasJumping && _jumpTimeoutDelta <= 0.0f)
+            if (controlMovement && roadRunnerJumpAvailable && timeInAir < roadRunnerTimeMax && _input.Jump)
             {
                 // the square root of H * -2 * G = how much velocity needed to reach desired height
                 velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
                 roadRunnerJumpAvailable = false;
+                _input.Jump = false;
             }
 
 
@@ -331,12 +405,6 @@ public class PlayerMovement : MonoBehaviour
             if (_fallTimeoutDelta >= 0.0f)
             {
                 _fallTimeoutDelta -= Time.deltaTime;
-            }
-
-            if (timeInAir >= roadRunnerTimeMax)
-            {
-                // if we are not grounded, do not jump
-                _input.jump = false;
             }
         }
 

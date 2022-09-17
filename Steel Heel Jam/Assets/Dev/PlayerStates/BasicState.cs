@@ -50,6 +50,18 @@ public class BasicState
 
     public bool canDodgeRoll = true;
 
+    /// <summary>
+    /// True if we should increment our block cool down timer while in this state.
+    /// Basically, only have this be true if this state is not related to blocking
+    /// </summary>
+    public bool countBlockdown = true;
+
+    /// <summary>
+    /// True if we should increment our dodge roll cool down timer while in this state.
+    /// Basically, only have this be true if this state is not related to DodgeRolling
+    /// </summary>
+    public bool countDodgeRollCooldown = true;
+
     public bool canBlock = true;
 
     public AnimationState animationState = AnimationState.Idle;

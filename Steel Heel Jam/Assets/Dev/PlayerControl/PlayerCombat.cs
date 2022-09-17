@@ -11,6 +11,9 @@ public class PlayerCombat : MonoBehaviour
 
     private DefaultState weaponState;
 
+    private float dodgeRollCoolDown;
+    private const float dodgeRollCoolDownMax = .2f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -32,19 +35,34 @@ public class PlayerCombat : MonoBehaviour
     /// 
     public void UpdateManual(bool canAttack, bool canDodgeRoll, bool canBlock)
     {
+        //fixes the null ref exception when recompiling in the Editor
+#if UNITY_EDITOR
+        if (weaponState == null)
+        {
+            weaponState = new DefaultState(1, _hitbox);
+            weaponState.InitHitbox();
+        }
+#endif
+
         if (_input.attack)
         {
             weaponState.Attack();
             _input.attack = false;
         }
 
-        if (canDodgeRoll && _input.dodgeRoll && !_input.wasDodgeRolling)
+        if(_status.CurrentPlayerState.countDodgeRollCooldown && dodgeRollCoolDown < dodgeRollCoolDownMax)
+            dodgeRollCoolDown += Time.deltaTime;
+
+        if (canDodgeRoll && dodgeRollCoolDown > dodgeRollCoolDownMax && _input.dodgeRoll && !_input.wasDodgeRolling)
         {
             DodgeRoll();
         }
     }
 
-    private void DodgeRoll(){
+    private void DodgeRoll()
+    {
+        _input.dodgeRoll = false;
+        dodgeRollCoolDown = 0;
         _status.SetPlayerStateImmediately(new DodgeRoll());
         _status.movement.SetVelocityToMoveSpeedTimesFowardDirection();
     }

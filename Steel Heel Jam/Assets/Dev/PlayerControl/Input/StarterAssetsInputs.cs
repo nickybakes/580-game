@@ -5,11 +5,14 @@ public class StarterAssetsInputs : MonoBehaviour
 {
     [Header("Character Input Values")]
     public Vector2 move;
-    public bool jump;
+
+    // private bool jump;
 
     //true if the player was holding jump in the previous frame
-    public bool wasJumping;
-    public bool sprint;
+    // private bool wasJumping;
+
+    private float timeSinceJumpWasPressed;
+    private float timeSinceJumpWasPressedMax = .24f;
 
     // Combat Controls
     public bool attack;
@@ -26,6 +29,32 @@ public class StarterAssetsInputs : MonoBehaviour
     // [Header("Mouse Cursor Settings")]
     // public bool cursorLocked = true;
     // public bool cursorInputForLook = true;
+
+    public bool Jump
+    {
+        get
+        {
+            return timeSinceJumpWasPressed < timeSinceJumpWasPressedMax;
+        }
+
+        set
+        {
+            if (value)
+            {
+                timeSinceJumpWasPressed = 0;
+            }
+            else
+            {
+                timeSinceJumpWasPressed = timeSinceJumpWasPressedMax;
+            }
+        }
+    }
+
+    private void Update()
+    {
+        if (timeSinceJumpWasPressed <= timeSinceJumpWasPressedMax)
+            timeSinceJumpWasPressed += Time.deltaTime;
+    }
 
     public void OnMove(InputValue value)
     {
@@ -90,8 +119,10 @@ public class StarterAssetsInputs : MonoBehaviour
 
     public void JumpInput(bool newJumpState)
     {
-        wasJumping = jump;
-        jump = newJumpState;
+        // wasJumping = jump;
+        // jump = newJumpState;
+        if (newJumpState)
+            Jump = true;
     }
 
     public void DodgeRollInput(bool newDodgeRollState)

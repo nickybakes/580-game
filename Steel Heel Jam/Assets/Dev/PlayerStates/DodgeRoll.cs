@@ -16,6 +16,7 @@ public class DodgeRoll : BasicState
         canBlock = false;
         updateMovement = true;
         moveSpeedMultiplier = 1.6f;
+        countDodgeRollCooldown = false;
         animationState = AnimationState.DodgeRoll;
         stateToChangeTo = new DodgeRollRecovery();
     }

@@ -1287,10 +1287,13 @@ MonoBehaviour:
   move: {x: 0, y: 0}
   jump: 0
   wasJumping: 0
+  timeSinceJumpWasPressed: 0
   sprint: 0
   attack: 0
   pickUpPutDownPressed: 0
   throwIsHeld: 0
+  dodgeRoll: 0
+  wasDodgeRolling: 0
   analogMovement: 0
 --- !u!114 &1640908809
 MonoBehaviour:
@@ -1304,8 +1307,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5329c894691c5145a5666968dab2efd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 13
-  rotationSmoothTime: 0.051
+  moveSpeed: 10
+  rotationSmoothTime: 0.026
   speedChangeRate: 16
   landingAudioClip: {fileID: 0}
   footstepAudioClips: []
@@ -1318,6 +1321,7 @@ MonoBehaviour:
   roadRunnerTimeMax: 0.12
   airSpeedChangeAmount: 30
   grounded: 1
+  wasGrounded: 1
   groundedOffset: -0.17
   groundedRadius: 0.4
   groundLayers:
@@ -1338,6 +1342,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentEquipState: 0
   movement: {fileID: 0}
+  combat: {fileID: 0}
   playerNumber: 2
 --- !u!114 &1640908811
 MonoBehaviour:
@@ -1461,10 +1466,13 @@ MonoBehaviour:
   move: {x: 0, y: 0}
   jump: 0
   wasJumping: 0
+  timeSinceJumpWasPressed: 0
   sprint: 0
   attack: 0
   pickUpPutDownPressed: 0
   throwIsHeld: 0
+  dodgeRoll: 0
+  wasDodgeRolling: 0
   analogMovement: 0
 --- !u!114 &1668816528
 MonoBehaviour:
@@ -1478,8 +1486,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5329c894691c5145a5666968dab2efd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 13
-  rotationSmoothTime: 0.051
+  moveSpeed: 10
+  rotationSmoothTime: 0.026
   speedChangeRate: 16
   landingAudioClip: {fileID: 0}
   footstepAudioClips: []
@@ -1492,6 +1500,7 @@ MonoBehaviour:
   roadRunnerTimeMax: 0.12
   airSpeedChangeAmount: 30
   grounded: 1
+  wasGrounded: 1
   groundedOffset: -0.17
   groundedRadius: 0.4
   groundLayers:
@@ -1579,6 +1588,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentEquipState: 0
   movement: {fileID: 0}
+  combat: {fileID: 0}
   playerNumber: 1
 --- !u!114 &1668816533
 MonoBehaviour:

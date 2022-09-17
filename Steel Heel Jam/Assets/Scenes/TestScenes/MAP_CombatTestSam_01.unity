@@ -338,6 +338,7 @@ GameObject:
   - component: {fileID: 662631243}
   - component: {fileID: 662631242}
   - component: {fileID: 662631247}
+  - component: {fileID: 662631248}
   m_Layer: 3
   m_Name: PlayerPrefab
   m_TagString: Untagged
@@ -360,9 +361,13 @@ MonoBehaviour:
   move: {x: 0, y: 0}
   jump: 0
   wasJumping: 0
+  timeSinceJumpWasPressed: 0
   sprint: 0
+  attack: 0
   pickUpPutDownPressed: 0
   throwIsHeld: 0
+  dodgeRoll: 0
+  wasDodgeRolling: 0
   analogMovement: 0
 --- !u!114 &662631243
 MonoBehaviour:
@@ -376,8 +381,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5329c894691c5145a5666968dab2efd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 13
-  rotationSmoothTime: 0.051
+  moveSpeed: 10
+  rotationSmoothTime: 0.026
   speedChangeRate: 16
   landingAudioClip: {fileID: 0}
   footstepAudioClips: []
@@ -390,11 +395,13 @@ MonoBehaviour:
   roadRunnerTimeMax: 0.12
   airSpeedChangeAmount: 30
   grounded: 1
+  wasGrounded: 1
   groundedOffset: -0.17
   groundedRadius: 0.4
   groundLayers:
     serializedVersion: 2
     m_Bits: 65
+  velocity: {x: 0, y: 0, z: 0}
 --- !u!114 &662631244
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -476,6 +483,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentEquipState: 0
   movement: {fileID: 0}
+  combat: {fileID: 0}
+  playerNumber: 0
+--- !u!114 &662631248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 662631241}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a61014d941a91b46829c834df370fec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &762598130
 GameObject:
   m_ObjectHideFlags: 0

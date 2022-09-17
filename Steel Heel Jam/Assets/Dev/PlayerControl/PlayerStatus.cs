@@ -32,7 +32,7 @@ public class PlayerStatus : MonoBehaviour
 
     public int PlayerNumber { get { return playerNumber; } }
 
-    public BasicState CurrentPlayerState { get { return currentPlayerState; }}
+    public BasicState CurrentPlayerState { get { return currentPlayerState; } }
 
     /// <summary>
     /// Gives you the current moveSpeed of the character (base move speed multiplied by the current state's move speed multiplier)
@@ -52,9 +52,16 @@ public class PlayerStatus : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //fixes the null ref exception when recompiling in the Editor
+#if UNITY_EDITOR
+        if (currentPlayerState == null)
+            currentPlayerState = new Idle();
+#endif
+
         movement.UpdateManual(currentPlayerState.updateMovement, currentPlayerState.canPlayerControlMove, currentPlayerState.canPlayerControlRotate);
 
         combat.UpdateManual(currentPlayerState.canAttack, currentPlayerState.canDodgeRoll, currentPlayerState.canBlock);
+
 
         currentPlayerState.Update(this);
 
@@ -76,9 +83,9 @@ public class PlayerStatus : MonoBehaviour
     {
         currentPlayerState = state;
 
-        if(state is DodgeRollRecovery)
+        if (state is DodgeRollRecovery)
             movement.velocity = movement.velocity.normalized * movement.CurrentMoveSpeed;
-            
+
     }
 
     public void GetHit(Vector3 hitboxPos, Vector3 collisionPos, float damage, float knockback, float knockbackHeight, float hitstun)
