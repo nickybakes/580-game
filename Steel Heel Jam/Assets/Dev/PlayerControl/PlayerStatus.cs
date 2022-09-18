@@ -102,13 +102,16 @@ public class PlayerStatus : MonoBehaviour
 
     public void GetHit(Vector3 hitboxPos, Vector3 collisionPos, float damage, float knockback, float knockbackHeight, float hitstun)
     {
+        if(!(currentPlayerState is Block))
+        {
+            Vector3 knockbackDir = (collisionPos - hitboxPos).normalized;
+            knockback = knockback * (2 + stamina / 100);
+            movement.velocity = new Vector3(knockbackDir.x * knockback, knockbackHeight, knockbackDir.z * knockback);
+            movement.grounded = false;
 
-        Vector3 knockbackDir = (collisionPos - hitboxPos).normalized;
-        knockback = knockback * (2 + stamina / 100);
-        movement.velocity = new Vector3(knockbackDir.x * knockback, knockbackHeight, knockbackDir.z * knockback);
-        movement.grounded = false;
-
-        currentPlayerState = new ImpactStun();
-        currentPlayerState.stateToChangeTo.timeToChangingState = hitstun;
+            currentPlayerState = new ImpactStun();
+            currentPlayerState.stateToChangeTo.timeToChangingState = hitstun;
+        }
+        
     }
 }

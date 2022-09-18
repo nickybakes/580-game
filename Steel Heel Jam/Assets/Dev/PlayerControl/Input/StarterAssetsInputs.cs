@@ -23,6 +23,9 @@ public class StarterAssetsInputs : MonoBehaviour
 
     public bool wasDodgeRolling;
 
+    public bool block;
+    public bool wasBlocking;
+
     [Header("Movement Settings")]
     public bool analogMovement;
 
@@ -88,6 +91,17 @@ public class StarterAssetsInputs : MonoBehaviour
     public void OnAttack(InputValue value)
     {
         AttackInput(value.isPressed);
+    }
+
+    public void OnBlock(InputValue value)
+    {
+        BlockInput(value.isPressed);
+    }
+
+    public void BlockInput(bool newBlockState)
+    {
+        wasBlocking = block;
+        block = newBlockState;
     }
 
     public void AttackInput(bool newAttackState)

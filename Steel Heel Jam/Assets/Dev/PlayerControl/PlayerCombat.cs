@@ -14,6 +14,9 @@ public class PlayerCombat : MonoBehaviour
     private float dodgeRollCoolDown;
     private const float dodgeRollCoolDownMax = .2f;
 
+    private float blockCoolDown;
+    private const float blockCoolDownMax = 0.5f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -53,9 +56,17 @@ public class PlayerCombat : MonoBehaviour
         if(_status.CurrentPlayerState.countDodgeRollCooldown && dodgeRollCoolDown < dodgeRollCoolDownMax)
             dodgeRollCoolDown += Time.deltaTime;
 
+        if (_status.CurrentPlayerState.countBlockdown && blockCoolDown < blockCoolDownMax)
+            blockCoolDown += Time.deltaTime;
+
         if (canDodgeRoll && dodgeRollCoolDown > dodgeRollCoolDownMax && _input.dodgeRoll && !_input.wasDodgeRolling)
         {
             DodgeRoll();
+        }
+
+        if(canBlock && blockCoolDown > blockCoolDownMax && _input.block && !_input.wasBlocking)
+        {
+            Block();
         }
     }
 
@@ -66,6 +77,13 @@ public class PlayerCombat : MonoBehaviour
         _status.SetPlayerStateImmediately(new DodgeRoll());
         _status.movement.SetTheSetForwardDirection();
         _status.movement.SetVelocityToMoveSpeedTimesFowardDirection();
+    }
+
+    private void Block()
+    {
+        _input.block = false;
+        blockCoolDown = 0;
+        _status.SetPlayerStateImmediately(new Block());
     }
 
 
