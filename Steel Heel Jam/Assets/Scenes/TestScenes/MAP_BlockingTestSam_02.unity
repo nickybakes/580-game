@@ -133,7 +133,7 @@ PrefabInstance:
     - target: {fileID: 2295276495909386336, guid: aadce769ff4519044b76ad34195f7df0,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2295276495909386336, guid: aadce769ff4519044b76ad34195f7df0,
         type: 3}
@@ -231,7 +231,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1792472738}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &330139143 stripped
 GameObject:
@@ -318,7 +318,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1811405910}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &495388328
 GameObject:
@@ -709,7 +709,7 @@ PrefabInstance:
     - target: {fileID: 2295276495909386336, guid: aadce769ff4519044b76ad34195f7df0,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2295276495909386336, guid: aadce769ff4519044b76ad34195f7df0,
         type: 3}
@@ -1299,6 +1299,8 @@ MonoBehaviour:
   throwIsHeld: 0
   dodgeRoll: 0
   wasDodgeRolling: 0
+  block: 0
+  wasBlocking: 0
   analogMovement: 0
 --- !u!114 &1792472734
 MonoBehaviour:
@@ -1412,8 +1414,8 @@ Transform:
   m_Children:
   - {fileID: 919113260}
   - {fileID: 1783770642}
-  - {fileID: 136692072}
   - {fileID: 330139144}
+  - {fileID: 136692072}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1487,6 +1489,8 @@ MonoBehaviour:
   throwIsHeld: 0
   dodgeRoll: 0
   wasDodgeRolling: 0
+  block: 0
+  wasBlocking: 0
   analogMovement: 0
 --- !u!114 &1811405906
 MonoBehaviour:
@@ -1600,8 +1604,8 @@ Transform:
   m_Children:
   - {fileID: 495388329}
   - {fileID: 1875666093}
-  - {fileID: 448889189}
   - {fileID: 345367178}
+  - {fileID: 448889189}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
