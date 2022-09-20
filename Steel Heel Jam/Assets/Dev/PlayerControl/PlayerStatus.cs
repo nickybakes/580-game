@@ -46,6 +46,14 @@ public class PlayerStatus : MonoBehaviour
         }
     }
 
+    public bool IsBlocking
+    {
+        get
+        {
+            return (currentPlayerState is Block);
+        }
+    }
+
     /// <summary>
     /// Gives you the current moveSpeed of the character (base move speed multiplied by the current state's move speed multiplier)
     /// </summary>
@@ -102,7 +110,7 @@ public class PlayerStatus : MonoBehaviour
 
     public void GetHit(Vector3 hitboxPos, Vector3 collisionPos, float damage, float knockback, float knockbackHeight, float hitstun)
     {
-        if(!(currentPlayerState is Block))
+        if (!(currentPlayerState is Block))
         {
             Vector3 knockbackDir = (collisionPos - hitboxPos).normalized;
             knockback = knockback * (2 + stamina / 100);
@@ -112,6 +120,6 @@ public class PlayerStatus : MonoBehaviour
             currentPlayerState = new ImpactStun();
             currentPlayerState.stateToChangeTo.timeToChangingState = hitstun;
         }
-        
+
     }
 }

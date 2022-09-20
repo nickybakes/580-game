@@ -53,7 +53,7 @@ public class PlayerCombat : MonoBehaviour
             _input.attack = false;
         }
 
-        if(_status.CurrentPlayerState.countDodgeRollCooldown && dodgeRollCoolDown < dodgeRollCoolDownMax)
+        if (_status.CurrentPlayerState.countDodgeRollCooldown && dodgeRollCoolDown < dodgeRollCoolDownMax)
             dodgeRollCoolDown += Time.deltaTime;
 
         if (_status.CurrentPlayerState.countBlockdown && blockCoolDown < blockCoolDownMax)
@@ -64,10 +64,22 @@ public class PlayerCombat : MonoBehaviour
             DodgeRoll();
         }
 
-        if(canBlock && blockCoolDown > blockCoolDownMax && _input.block && !_input.wasBlocking)
+        if (canBlock && blockCoolDown > blockCoolDownMax && _input.block && !_input.wasBlocking)
         {
             Block();
         }
+    }
+
+    private void AttackGround()
+    {
+        /*
+        _input.attack = false;
+        attackCoolDown = 0;
+        AttackGround a = new AttackGroundStartup(eq);
+        a.time = equipState.time
+        _status.SetPlayerStateImmediately(new AttackGroundStartup());
+
+        */
     }
 
     private void DodgeRoll()
