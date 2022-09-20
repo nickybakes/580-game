@@ -27,7 +27,7 @@ public class DefaultState
     [SerializeField] protected float hitstunMultiplier = 1;
     private float radius = 1;
     [SerializeField] protected float radiusMultiplier = 1;
-    private float startup = 0.25f; //TIME IS IN SECONDS
+    private float startup = 0.15f; //TIME IS IN SECONDS
     [SerializeField] protected float startupMultiplier = 1;
     private float duration = 0.15f;
     [SerializeField] protected float durationMultiplier = 1;
@@ -55,11 +55,27 @@ public class DefaultState
         }
     }
 
+    public float Duration
+    {
+        get
+        {
+            return duration * durationMultiplier;
+        }
+    }
+
     public float Recovery
     {
         get
         {
             return recovery * recoveryMultiplier;
+        }
+    }
+
+    public float ForwardDisplacement
+    {
+        get
+        {
+            return forwardDisplacement * forwardDisplacementMultiplier;
         }
     }
 
@@ -96,7 +112,8 @@ public class DefaultState
     /// <summary>
     /// Sets the hitbox size and duration. Must be called each time the equip state is changed.
     /// </summary>
-    public virtual void InitHitbox()
+    /// <returns>A reference to the hitbox script.</returns>
+    public virtual Hitbox InitHitbox()
     {
         // Set up hitbox values
         hitboxScript.damage = damage * damageMultiplier;
@@ -110,5 +127,7 @@ public class DefaultState
         // Resize hitbox
         hitboxCollider.radius = radius * radiusMultiplier;
         hitbox.transform.localPosition = new Vector3(0, 1, 1 + (radius * radiusMultiplier) / 2); // Experimental
+
+        return hitboxScript;
     }
 }

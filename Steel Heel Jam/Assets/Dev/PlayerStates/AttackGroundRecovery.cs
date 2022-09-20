@@ -23,13 +23,15 @@ public class AttackGroundRecovery : BasicState
 
     public override void Update(PlayerStatus status)
     {
-        base.Update(status);
-
-        //status.movement.SetVelocityToMoveSpeedTimesFowardDirection();
-
-        //if (!status.movement.grounded && status.movement.wasGrounded)
-        //{
-        //    status.SetPlayerStateImmediately(new DodgeRollFall());
-        //}
+        if (timeToChangingState != 0)
+        {
+            timeInThisState += Time.deltaTime;
+            if (timeInThisState >= timeToChangingState)
+            {
+                changeStateNow = true;
+            }
+        }
+        //status.combat.weaponState.ForwardDisplacement;
+        //status.combat.weaponState.Duration;
     }
 }

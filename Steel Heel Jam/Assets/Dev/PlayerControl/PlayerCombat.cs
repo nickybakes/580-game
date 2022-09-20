@@ -7,9 +7,10 @@ public class PlayerCombat : MonoBehaviour
 {
     private StarterAssetsInputs _input;
     private GameObject _hitbox;
+    private Hitbox _hitboxScript;
     private PlayerStatus _status;
 
-    private DefaultState weaponState;
+    public DefaultState weaponState;
 
     private float dodgeRollCoolDown;
     private const float dodgeRollCoolDownMax = .2f;
@@ -26,7 +27,7 @@ public class PlayerCombat : MonoBehaviour
         _status = GetComponent<PlayerStatus>();
 
         weaponState = new DefaultState(1, _hitbox);
-        weaponState.InitHitbox();
+        _hitboxScript = weaponState.InitHitbox();
     }
 
     /// <summary>
@@ -49,8 +50,15 @@ public class PlayerCombat : MonoBehaviour
 
         if (_input.attack)
         {
-            weaponState.Attack();
-            _input.attack = false;
+            if (_status.movement.grounded)
+            {
+                AttackGround();
+                _input.attack = false;
+            } else
+            {
+                //AttackAir();
+            }
+            
         }
 
         if (_status.CurrentPlayerState.countDodgeRollCooldown && dodgeRollCoolDown < dodgeRollCoolDownMax)
@@ -72,14 +80,12 @@ public class PlayerCombat : MonoBehaviour
 
     private void AttackGround()
     {
-        /*
         _input.attack = false;
-        attackCoolDown = 0;
-        AttackGround a = new AttackGroundStartup(eq);
-        a.time = equipState.time
-        _status.SetPlayerStateImmediately(new AttackGroundStartup());
-
-        */
+        //attackCoolDown = 0;
+        //AttackGround a = new AttackGroundStartup(eq);
+        //a.time = equipState.time
+        _status.movement.velocity = Vector3.zero;
+        _status.SetPlayerStateImmediately(new AttackGroundStartup(weaponState.Startup, weaponState.Recovery));
     }
 
     private void DodgeRoll()
