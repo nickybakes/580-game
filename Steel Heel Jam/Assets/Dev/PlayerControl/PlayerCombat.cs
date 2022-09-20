@@ -19,14 +19,14 @@ public class PlayerCombat : MonoBehaviour
     private const float blockCoolDownMax = 0.5f;
 
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
         _input = GetComponent<StarterAssetsInputs>();
         _hitbox = transform.GetChild((int)PlayerChild.Hitbox).gameObject;
 
         _status = GetComponent<PlayerStatus>();
 
-        weaponState = new DefaultState(1, _hitbox);
+        weaponState = new DefaultState(_status.playerNumber, _hitbox);
         _hitboxScript = weaponState.InitHitbox();
     }
 
@@ -43,7 +43,7 @@ public class PlayerCombat : MonoBehaviour
 #if UNITY_EDITOR
         if (weaponState == null)
         {
-            weaponState = new DefaultState(1, _hitbox);
+            weaponState = new DefaultState(_status.playerNumber, _hitbox);
             weaponState.InitHitbox();
         }
 #endif

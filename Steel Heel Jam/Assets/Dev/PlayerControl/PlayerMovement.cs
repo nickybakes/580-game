@@ -151,8 +151,12 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    // public void SetStatus(PlayerStatus status){
+    //     _status = status;
+    // }
+
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
         transform = gameObject.transform;
 
@@ -458,26 +462,26 @@ public class PlayerMovement : MonoBehaviour
         return Mathf.Clamp(lfAngle, lfMin, lfMax);
     }
 
-    private void OnDrawGizmosSelected()
-    {
-        Color transparentGreen = new Color(0.0f, 1.0f, 0.0f, 0.35f);
-        Color transparentRed = new Color(1.0f, 0.0f, 0.0f, 0.35f);
+    // private void OnDrawGizmosSelected()
+    // {
+    //     Color transparentGreen = new Color(0.0f, 1.0f, 0.0f, 0.35f);
+    //     Color transparentRed = new Color(1.0f, 0.0f, 0.0f, 0.35f);
 
-        if (grounded)
-            Gizmos.color = transparentGreen;
-        else
-            Gizmos.color = transparentRed;
+    //     if (grounded)
+    //         Gizmos.color = transparentGreen;
+    //     else
+    //         Gizmos.color = transparentRed;
 
-        // when selected, draw a gizmo in the position of, and matching radius of, the grounded collider
-        Gizmos.DrawSphere(
-            new Vector3(
-                transform.position.x,
-                transform.position.y - groundedOffset,
-                transform.position.z
-            ),
-            groundedRadius
-        );
-    }
+    //     // when selected, draw a gizmo in the position of, and matching radius of, the grounded collider
+    //     Gizmos.DrawSphere(
+    //         new Vector3(
+    //             transform.position.x,
+    //             transform.position.y - groundedOffset,
+    //             transform.position.z
+    //         ),
+    //         groundedRadius
+    //     );
+    // }
 
     // private void OnFootstep(AnimationEvent animationEvent)
     // {

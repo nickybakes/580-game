@@ -16,7 +16,7 @@ public class DefaultState
     //**********
     // Fields
     //**********
-    public int playerNumber = 1;
+    public int playerNumber;
     private float damage = 20;
     [SerializeField] protected float damageMultiplier = 1;
     private float knockback = 5;

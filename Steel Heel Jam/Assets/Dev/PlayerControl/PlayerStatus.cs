@@ -67,6 +67,9 @@ public class PlayerStatus : MonoBehaviour
         currentPlayerState = new Idle();
         movement = GetComponent<PlayerMovement>();
         combat = GetComponent<PlayerCombat>();
+
+        movement.Start();
+        combat.Start();
     }
 
     // Update is called once per frame
