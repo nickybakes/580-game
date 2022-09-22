@@ -9,7 +9,7 @@ public class AttackGroundRecovery : BasicState
         timeToChangingState = recovery;
         canPlayerControlMove = false;
         canPlayerControlRotate = false;
-        canAttack = true;
+        canAttack = false;
         canDodgeRoll = true;
         canBlock = true;
         updateMovement = true;
@@ -31,7 +31,5 @@ public class AttackGroundRecovery : BasicState
                 changeStateNow = true;
             }
         }
-        //status.combat.weaponState.ForwardDisplacement;
-        //status.combat.weaponState.Duration;
     }
 }

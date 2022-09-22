@@ -27,15 +27,16 @@ public class DefaultState
     [SerializeField] protected float hitstunMultiplier = 1;
     private float radius = 1;
     [SerializeField] protected float radiusMultiplier = 1;
-    private float startup = 0.15f; //TIME IS IN SECONDS
+    private float startup = 0.10f; //TIME IS IN SECONDS
     [SerializeField] protected float startupMultiplier = 1;
     private float duration = 0.15f;
     [SerializeField] protected float durationMultiplier = 1;
     private float recovery = 0.15f;
     [SerializeField] protected float recoveryMultiplier = 1;
-    private float forwardDisplacement = 1;
+    private float forwardDisplacement = 15;
     [SerializeField] protected float forwardDisplacementMultiplier = 1;
     [SerializeField] public int comboCount = 3;
+    protected int currentHit;
     //private float backwardDisplacement;
     //protected float backwardDisplacementMultiplier;
 
@@ -92,20 +93,28 @@ public class DefaultState
         playerNumber = _playerNumber;
         hitbox = _hitbox;
 
-        // Initialize hitbox references
-        hitboxScript = hitbox.GetComponent<Hitbox>();
-        hitboxCollider = hitbox.GetComponent<SphereCollider>();
+        SetupHitboxReferences(_hitbox);
     }
 
     //**********
     // Methods
     //**********
+    protected void SetupHitboxReferences(GameObject _hitbox)
+    {
+        // Initialize hitbox references
+        hitboxScript = hitbox.GetComponent<Hitbox>();
+        hitboxCollider = hitbox.GetComponent<SphereCollider>();
+    }
+
     /// <summary>
     /// Activates the hitbox prefab attached to the player.
     /// </summary>
     public virtual void Attack()
     {
         hitboxScript.duration = duration * durationMultiplier;
+
+        if (currentHit > comboCount) currentHit = 1;
+
         hitbox.SetActive(true);
     }
 
