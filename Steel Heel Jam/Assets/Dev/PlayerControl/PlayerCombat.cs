@@ -29,7 +29,7 @@ public class PlayerCombat : MonoBehaviour
 
         _status = GetComponent<PlayerStatus>();
 
-        weaponState = new DefaultState(_status.playerNumber, _hitbox);
+        weaponState = new Unarmed(_status.playerNumber, _hitbox);
         _hitboxScript = weaponState.InitHitbox();
     }
 

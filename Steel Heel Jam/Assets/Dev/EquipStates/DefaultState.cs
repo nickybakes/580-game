@@ -36,6 +36,7 @@ public class DefaultState
     private float forwardDisplacement = 15;
     [SerializeField] protected float forwardDisplacementMultiplier = 1;
     [SerializeField] public int comboCount = 3;
+    protected int currentHit;
     //private float backwardDisplacement;
     //protected float backwardDisplacementMultiplier;
 
@@ -92,20 +93,28 @@ public class DefaultState
         playerNumber = _playerNumber;
         hitbox = _hitbox;
 
-        // Initialize hitbox references
-        hitboxScript = hitbox.GetComponent<Hitbox>();
-        hitboxCollider = hitbox.GetComponent<SphereCollider>();
+        SetupHitboxReferences(_hitbox);
     }
 
     //**********
     // Methods
     //**********
+    protected void SetupHitboxReferences(GameObject _hitbox)
+    {
+        // Initialize hitbox references
+        hitboxScript = hitbox.GetComponent<Hitbox>();
+        hitboxCollider = hitbox.GetComponent<SphereCollider>();
+    }
+
     /// <summary>
     /// Activates the hitbox prefab attached to the player.
     /// </summary>
     public virtual void Attack()
     {
         hitboxScript.duration = duration * durationMultiplier;
+
+        if (currentHit > comboCount) currentHit = 1;
+
         hitbox.SetActive(true);
     }
 
