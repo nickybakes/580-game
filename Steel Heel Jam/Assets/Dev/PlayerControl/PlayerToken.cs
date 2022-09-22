@@ -42,7 +42,7 @@ public class PlayerToken : MonoBehaviour
 
     public void OnPickUpPutDown(InputValue value)
     {
-        playerPrefabInputsComp.OnPickUpPutDown(value);
+        playerPrefabInputsComp.OnPickUp(value);
     }
 
     public void OnAttack(InputValue value)

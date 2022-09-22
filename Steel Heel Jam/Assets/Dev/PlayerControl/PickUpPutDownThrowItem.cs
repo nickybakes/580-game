@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class PickUpPutDownThrowItem : MonoBehaviour
 {
-    private Transform pickUpLocation;
+    /*private Transform pickUpLocation;
     private Transform player;
 
     public float pickUpDistance;
@@ -84,5 +84,5 @@ public class PickUpPutDownThrowItem : MonoBehaviour
 
             forceMultiplier = 0;
         }
-    }
+    }*/
 }

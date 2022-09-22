@@ -16,7 +16,7 @@ public class StarterAssetsInputs : MonoBehaviour
 
     // Combat Controls
     public bool attack;
-    public bool pickUpPutDownPressed;
+    public bool pickUpPressed;
     public bool throwIsHeld;
 
     public bool dodgeRoll;
@@ -74,7 +74,7 @@ public class StarterAssetsInputs : MonoBehaviour
         DodgeRollInput(value.isPressed);
     }
 
-    public void OnPickUpPutDown(InputValue value)
+    public void OnPickUp(InputValue value)
     {
         /*if(pickUpPutDownPressed == false)
         {
@@ -84,7 +84,8 @@ public class StarterAssetsInputs : MonoBehaviour
         {
             pickUpPutDownPressed = false;
         }*/
-        PickUpPutDownInput(value.isPressed);
+        PickUpInput(value.isPressed);
+        Debug.Log("dfdsfds");
 
     }
 
@@ -109,9 +110,9 @@ public class StarterAssetsInputs : MonoBehaviour
         attack = newAttackState;
     }
 
-    public void PickUpPutDownInput(bool newPickUpPutDownState)
+    public void PickUpInput(bool newPickUpState)
     {
-        pickUpPutDownPressed = newPickUpPutDownState;
+        pickUpPressed = newPickUpState;
     }
 
     public void OnThrow(InputValue value)
@@ -124,6 +125,7 @@ public class StarterAssetsInputs : MonoBehaviour
         {
             throwIsHeld = false;
         }
+        Debug.Log("test");
     }
 
     public void MoveInput(Vector2 newMoveDirection)
