@@ -32,7 +32,7 @@ public class PlayerStatus : MonoBehaviour
 
     public int PlayerNumber { get { return playerNumber; } }
 
-    public BasicState CurrentPlayerState { get { return currentPlayerState; } }
+    public BasicState CurrentPlayerState { get { return currentPlayerState; }}
 
     /// <summary>
     /// Use this to check if the player is currently dodging when you want to hit them with an attack
@@ -111,8 +111,14 @@ public class PlayerStatus : MonoBehaviour
 
     }
 
-    public void GetHit(Vector3 hitboxPos, Vector3 collisionPos, float damage, float knockback, float knockbackHeight, float hitstun)
+    public void GetHit(Vector3 hitboxPos, Vector3 collisionPos, float damage, float knockback, float knockbackHeight, float hitstun, PlayerStatus attackingPlayerStatus)
     {
+        if(CurrentPlayerState is Block)
+        {
+            Debug.Log("blocked");
+            attackingPlayerStatus.SetPlayerStateImmediately(new BlockedStun());
+        }
+
         if (!(currentPlayerState is Block))
         {
             Vector3 knockbackDir = (collisionPos - hitboxPos).normalized;
