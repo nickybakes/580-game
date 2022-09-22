@@ -25,13 +25,11 @@ public class AttackGroundStartup : BasicState
     {
         if (timeToChangingState != 0)
         {
-#if UNITY_EDITOR
-            //status.
-#endif
             timeInThisState += Time.deltaTime;
             if (timeInThisState >= timeToChangingState)
             {
                 status.combat.weaponState.Attack();
+                status.movement.SetVelocityToMoveSpeedTimesFowardDirection(status.combat.weaponState.ForwardDisplacement);
                 changeStateNow = true;
             }
         }

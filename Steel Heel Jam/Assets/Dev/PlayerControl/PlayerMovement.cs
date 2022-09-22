@@ -290,6 +290,12 @@ public class PlayerMovement : MonoBehaviour
         velocity = new Vector3(v.x, velocity.y, v.z);
     }
 
+    public void SetVelocityToMoveSpeedTimesFowardDirection(float moveSpeed)
+    {
+        Vector3 v = setForwardDirection * moveSpeed;
+        velocity = new Vector3(v.x, velocity.y, v.z);
+    }
+
     public void SetTheSetForwardDirection()
     {
         transform.forward = ActualFowardDirection;

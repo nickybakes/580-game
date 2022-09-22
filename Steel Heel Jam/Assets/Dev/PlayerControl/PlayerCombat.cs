@@ -12,6 +12,9 @@ public class PlayerCombat : MonoBehaviour
 
     public DefaultState weaponState;
 
+    private float attackCooldown;
+    private const float attackCooldownMax = .2f;
+
     private float dodgeRollCoolDown;
     private const float dodgeRollCoolDownMax = .2f;
 
@@ -48,24 +51,26 @@ public class PlayerCombat : MonoBehaviour
         }
 #endif
 
-        if (_input.attack)
-        {
-            if (_status.movement.grounded)
-            {
-                AttackGround();
-                _input.attack = false;
-            } else
-            {
-                //AttackAir();
-            }
-            
-        }
+        if (_status.CurrentPlayerState.countAttackCooldown && attackCooldown < attackCooldownMax)
+            attackCooldown += Time.deltaTime;
 
         if (_status.CurrentPlayerState.countDodgeRollCooldown && dodgeRollCoolDown < dodgeRollCoolDownMax)
             dodgeRollCoolDown += Time.deltaTime;
 
-        if (_status.CurrentPlayerState.countBlockdown && blockCoolDown < blockCoolDownMax)
+        if (_status.CurrentPlayerState.countBlockCooldown && blockCoolDown < blockCoolDownMax)
             blockCoolDown += Time.deltaTime;
+
+        if (canAttack && attackCooldown > attackCooldownMax && _input.Attack)
+        {
+            if (_status.movement.grounded)
+            {
+                AttackGround();
+            }
+            else
+            {
+                //AttackAir();
+            }
+        }
 
         if (canDodgeRoll && dodgeRollCoolDown > dodgeRollCoolDownMax && _input.dodgeRoll && !_input.wasDodgeRolling)
         {
@@ -80,12 +85,13 @@ public class PlayerCombat : MonoBehaviour
 
     private void AttackGround()
     {
-        _input.attack = false;
+        _input.Attack = false;
         //attackCoolDown = 0;
         //AttackGround a = new AttackGroundStartup(eq);
         //a.time = equipState.time
         _status.movement.velocity = Vector3.zero;
         _status.SetPlayerStateImmediately(new AttackGroundStartup(weaponState.Startup, weaponState.Recovery));
+        _status.movement.SetTheSetForwardDirection();
     }
 
     private void DodgeRoll()

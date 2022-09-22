@@ -27,13 +27,13 @@ public class DefaultState
     [SerializeField] protected float hitstunMultiplier = 1;
     private float radius = 1;
     [SerializeField] protected float radiusMultiplier = 1;
-    private float startup = 0.15f; //TIME IS IN SECONDS
+    private float startup = 0.10f; //TIME IS IN SECONDS
     [SerializeField] protected float startupMultiplier = 1;
     private float duration = 0.15f;
     [SerializeField] protected float durationMultiplier = 1;
     private float recovery = 0.15f;
     [SerializeField] protected float recoveryMultiplier = 1;
-    private float forwardDisplacement = 1;
+    private float forwardDisplacement = 15;
     [SerializeField] protected float forwardDisplacementMultiplier = 1;
     [SerializeField] public int comboCount = 3;
     //private float backwardDisplacement;
