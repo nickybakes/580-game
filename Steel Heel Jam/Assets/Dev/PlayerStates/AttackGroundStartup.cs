@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class AttackGroundStartup : BasicState
 {
-    public AttackGroundStartup(float startup, float recovery)
+    public AttackGroundStartup()
     {
-        timeToChangingState = startup;
         canPlayerControlMove = false;
         canPlayerControlRotate = false;
         canAttack = false;
@@ -15,17 +14,6 @@ public class AttackGroundStartup : BasicState
         updateMovement = false;
         countAttackCooldown = false;
         animationState = AnimationState.AttackGroundStartup;
-        stateToChangeTo = new AttackGroundRecovery(recovery);
-    }
-
-    public override void OnExitThisState(BasicState nextState, PlayerStatus status)
-    {
-        status.combat.weaponState.Attack();
-        status.movement.SetVelocityToMoveSpeedTimesFowardDirection(status.combat.weaponState.ForwardDisplacement);
-
-        if (!status.combat.weaponState.CanCombo)
-        {
-            status.combat.attackCooldown = 0;
-        }
+        stateToChangeTo = new AttackGroundDuration();
     }
 }

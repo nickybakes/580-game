@@ -2,12 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AttackGroundRecovery : BasicState
+public class AttackGroundDuration : BasicState
 {
-
-    private float prevSpeedModifier;
-
-    public AttackGroundRecovery()
+    public AttackGroundDuration()
     {
         canPlayerControlMove = false;
         canPlayerControlRotate = false;
@@ -16,46 +13,34 @@ public class AttackGroundRecovery : BasicState
         canBlock = false;
         updateMovement = true;
         countAttackCooldown = false;
-        visual = VisualChild.Recovery;
         animationState = AnimationState.AttackGroundRecovery;
-        stateToChangeTo = new Idle();
+        stateToChangeTo = new AttackGroundRecovery();
     }
 
-    private bool canCombo;
+    private bool gotAHitAlready;
 
 
     public override void Update(PlayerStatus status)
     {
         base.Update(status);
 
-        //adds a very tiny cooldown at the end of attack duration and start of recovery
-        if (timeInThisState < .1f && canCombo)
-        {
-            canAttack = true;
+        if(!gotAHitAlready && status.combat.weaponState.gotAHit){
+            gotAHitAlready = true;
+            moveSpeedMultiplier = moveSpeedMultiplier * .3f;
         }
 
-        moveSpeedMultiplier = Mathf.Lerp(prevSpeedModifier, 0, timeInThisState / timeToChangeState);
         status.movement.SetVelocityToMoveSpeedTimesFowardDirection();
     }
 
     public override void OnEnterThisState(BasicState prevState, PlayerStatus status)
     {
         base.OnEnterThisState(prevState, status);
-
-        prevSpeedModifier = prevState.moveSpeedMultiplier;
-
-        if (status.combat.weaponState.CanCombo)
-            canCombo = true;
+        status.combat.weaponState.Attack();
+        status.movement.SetVelocityToMoveSpeedTimesFowardDirection();
     }
 
     public override void OnExitThisState(BasicState nextState, PlayerStatus status)
     {
         base.OnExitThisState(nextState, status);
-
-        if (changeStateNow)
-        {
-            status.combat.weaponState.currentComboCount = 0;
-            status.combat.attackCooldown = 0;
-        }
     }
 }

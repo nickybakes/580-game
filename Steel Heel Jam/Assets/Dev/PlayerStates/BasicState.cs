@@ -10,6 +10,7 @@ public enum AnimationState
     Fall,
     DodgeRoll,
     AttackGroundStartup,
+    AttackGroundDuration,
     AttackGroundRecovery,
     Knockback,
 }
@@ -32,9 +33,9 @@ public enum AnimationState
 public class BasicState
 {
     /// <summary>
-    /// awdhawfadawo
+    /// The amount of time to stay in this state before automatically changing to the next state. 0 means no limit
     /// </summary>
-    public float timeToChangingState = 0;
+    public float timeToChangeState = 0;
 
     protected float timeInThisState;
 
@@ -78,6 +79,8 @@ public class BasicState
 
     public bool changeStateNow;
 
+    public VisualChild visual = VisualChild.None;
+
     public BasicState()
     {
         //if we need to set anything up for states to work, we can do it here
@@ -88,10 +91,10 @@ public class BasicState
 
     public virtual void Update(PlayerStatus status)
     {
-        if (timeToChangingState != 0)
+        if (timeToChangeState != 0)
         {
             timeInThisState += Time.deltaTime;
-            if (timeInThisState >= timeToChangingState)
+            if (timeInThisState >= timeToChangeState)
             {
                 changeStateNow = true;
             }
@@ -99,11 +102,22 @@ public class BasicState
     }
 
     /// <summary>
-    /// This is called when we change the player's state
+    /// This is called when we change TO this state
     /// </summary>
-    /// <param name="nextState"></param>
+    /// <param name="nextState">the previous state we were in before this one</param>
+    public virtual void OnEnterThisState(BasicState prevState, PlayerStatus status)
+    {
+
+    }
+
+    /// <summary>
+    /// This is called when we change FROM this state
+    /// </summary>
+    /// <param name="nextState">the state to come after this one</param>
     public virtual void OnExitThisState(BasicState nextState, PlayerStatus status)
     {
-        
+
     }
+
+
 }

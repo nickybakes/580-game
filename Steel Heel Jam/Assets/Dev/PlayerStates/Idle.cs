@@ -8,7 +8,7 @@ public class Idle : BasicState
 
     public Idle()
     {
-        timeToChangingState = 0;
+        timeToChangeState = 0;
         canPlayerControlMove = true;
         canPlayerControlRotate = true;
         updateMovement = true;

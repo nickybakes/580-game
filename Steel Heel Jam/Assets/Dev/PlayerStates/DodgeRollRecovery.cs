@@ -8,7 +8,7 @@ public class DodgeRollRecovery : BasicState
 
     public DodgeRollRecovery()
     {
-        timeToChangingState = .15f;
+        timeToChangeState = .15f;
         canPlayerControlMove = false;
         canPlayerControlRotate = false;
         canAttack = false;
@@ -17,6 +17,8 @@ public class DodgeRollRecovery : BasicState
         updateMovement = true;
         moveSpeedMultiplier = 1.6f;
         countDodgeRollCooldown = false;
+        visual = VisualChild.Recovery;
+
         animationState = AnimationState.DodgeRoll;
         stateToChangeTo = new Idle();
     }
@@ -25,7 +27,7 @@ public class DodgeRollRecovery : BasicState
     {
         base.Update(status);
 
-        moveSpeedMultiplier = Mathf.Lerp(1.6f, .4f, timeInThisState/timeToChangingState); 
+        moveSpeedMultiplier = Mathf.Lerp(1.6f, .4f, timeInThisState/timeToChangeState); 
 
         status.movement.SetVelocityToMoveSpeedTimesFowardDirection();
 
@@ -33,6 +35,13 @@ public class DodgeRollRecovery : BasicState
         {
             status.SetPlayerStateImmediately(new DodgeRollFall());
         }
+    }
+
+    public override void OnEnterThisState(BasicState prevState, PlayerStatus status)
+    {
+        base.OnEnterThisState(prevState, status);
+
+        status.movement.velocity = status.movement.velocity.normalized * status.movement.CurrentMoveSpeed;
     }
 
 }

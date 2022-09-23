@@ -4,7 +4,8 @@ using UnityEngine;
 
 public enum PlayerChild
 {
-    Hitbox = 2
+    Hitbox = 2,
+    Visuals = 4
 }
 
 public enum Tag
@@ -18,7 +19,6 @@ public enum Tag
 public class PlayerStatus : MonoBehaviour
 {
     private float stamina = 100f;
-    public EquipState currentEquipState;
 
     private BasicState currentPlayerState;
 
@@ -27,6 +27,8 @@ public class PlayerStatus : MonoBehaviour
 
     [HideInInspector]
     public PlayerCombat combat;
+
+    private PlayerVisuals visuals;
 
     public int playerNumber;
 
@@ -63,13 +65,14 @@ public class PlayerStatus : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        currentEquipState = EquipState.DefaultState;
         currentPlayerState = new Idle();
         movement = GetComponent<PlayerMovement>();
         combat = GetComponent<PlayerCombat>();
 
         movement.Start();
         combat.Start();
+
+        visuals = new PlayerVisuals(this, transform);
     }
 
     // Update is called once per frame
@@ -91,45 +94,39 @@ public class PlayerStatus : MonoBehaviour
         if (currentPlayerState.changeStateNow)
             SetPlayerStateImmediately(currentPlayerState.stateToChangeTo);
 
-        switch (currentEquipState)
-        {
-            case EquipState.DefaultState:
-                //Debug.Log("Default State");
-                break;
-            case EquipState.TestCubeState:
-                //Debug.Log("TestCubeState");
-                break;
-        }
     }
 
     public void SetPlayerStateImmediately(BasicState state)
     {
         currentPlayerState.OnExitThisState(state, this);
+        state.OnEnterThisState(currentPlayerState, this);
+
+        visuals.EnableVisual(state.visual);
 
         currentPlayerState = state;
-
-        if (state is DodgeRollRecovery)
-            movement.velocity = movement.velocity.normalized * movement.CurrentMoveSpeed;
-
     }
 
     public void GetHit(Vector3 hitboxPos, Vector3 collisionPos, float damage, float knockback, float knockbackHeight, float hitstun, PlayerStatus attackingPlayerStatus)
     {
-        if(CurrentPlayerState is Block)
+        if(IsBlocking)
         {
-            Debug.Log("blocked");
             attackingPlayerStatus.SetPlayerStateImmediately(new BlockedStun());
+            attackingPlayerStatus.movement.velocity = attackingPlayerStatus.transform.position - transform.position;
+            SetPlayerStateImmediately(new Idle());
+            return;
         }
 
-        if (!(currentPlayerState is Block))
+        if (!IsDodgeRolling)
         {
             Vector3 knockbackDir = (collisionPos - hitboxPos).normalized;
             knockback = knockback * (2 + stamina / 100);
-            movement.velocity = new Vector3(knockbackDir.x * knockback, knockbackHeight, knockbackDir.z * knockback);
+            Vector3 knockbackVelocity = new Vector3(knockbackDir.x * knockback, knockbackHeight, knockbackDir.z * knockback);
             movement.grounded = false;
 
-            currentPlayerState = new ImpactStun();
-            currentPlayerState.stateToChangeTo.timeToChangingState = hitstun;
+            attackingPlayerStatus.combat.weaponState.gotAHit = true;
+
+            SetPlayerStateImmediately(new ImpactStun(attackingPlayerStatus, knockbackVelocity));
+            currentPlayerState.stateToChangeTo.timeToChangeState = hitstun;
         }
 
     }

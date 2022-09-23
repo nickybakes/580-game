@@ -151,6 +151,11 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    public float ActualTopDownSpeed
+    {
+        get { return new Vector2(velocity.x, velocity.z).magnitude; }
+    }
+
     // public void SetStatus(PlayerStatus status){
     //     _status = status;
     // }
@@ -189,8 +194,6 @@ public class PlayerMovement : MonoBehaviour
             // normalise input direction
             Vector3 inputDirection = new Vector3(_input.move.x, 0.0f, _input.move.y).normalized;
             if (controlMovement)
-                ControlMovement(inputDirection);
-            else if (controlMovement)
                 ControlMovement(inputDirection);
             if (controlRotation)
                 ControlRotation(inputDirection);
@@ -273,6 +276,8 @@ public class PlayerMovement : MonoBehaviour
                 float differenceX = velocity.x - (CurrentMoveSpeed * inputDirection.x);
                 float differenceZ = velocity.z - (CurrentMoveSpeed * inputDirection.z);
                 Vector2 speedDecayDirection = new Vector2(differenceX, differenceZ) / CurrentMoveSpeed;
+                if(CurrentMoveSpeed == 0)
+                    speedDecayDirection = Vector2.zero;
 
                 velocity.x = velocity.x - speedDecayDirection.x * airSpeedChangeAmount * Time.deltaTime;
                 velocity.z = velocity.z - speedDecayDirection.y * airSpeedChangeAmount * Time.deltaTime;
@@ -300,6 +305,15 @@ public class PlayerMovement : MonoBehaviour
     {
         transform.forward = ActualFowardDirection;
         setForwardDirection = ActualFowardDirection;
+    }
+
+    /// <summary>
+    /// Sets velocity's x and z to 0, but keeps y (vertical movement, gravity, etc) unchanged
+    /// </summary>
+    public void SetTopDownVelocityToZero()
+    {
+        velocity.x = 0;
+        velocity.z = 0;
     }
 
     public void ControlRotation(Vector3 inputDirection)

@@ -13,13 +13,14 @@ public class PlayerCombat : MonoBehaviour
     public DefaultState weaponState;
 
     public float attackCooldown;
-    private const float attackCooldownMax = .3f;
+    public const float attackCooldownMax = .35f;
 
     private float dodgeRollCoolDown;
     private const float dodgeRollCoolDownMax = .2f;
 
     private float blockCoolDown;
-    private const float blockCoolDownMax = 0.5f;
+    private const float blockCoolDownMax = 1f;
+
 
     // Start is called before the first frame update
     public void Start()
@@ -58,7 +59,7 @@ public class PlayerCombat : MonoBehaviour
         if (_status.CurrentPlayerState.countBlockCooldown && blockCoolDown < blockCoolDownMax)
             blockCoolDown += Time.deltaTime;
 
-        if (canAttack && (attackCooldown > attackCooldownMax) && _input.Attack)
+        if (canAttack && attackCooldown > attackCooldownMax && _input.Attack)
         {
             if (_status.movement.grounded)
             {
@@ -85,7 +86,14 @@ public class PlayerCombat : MonoBehaviour
     {
         _input.Attack = false;
         _status.movement.velocity = Vector3.zero;
-        _status.SetPlayerStateImmediately(new AttackGroundStartup(weaponState.Startup, weaponState.Recovery));
+        _status.SetPlayerStateImmediately(new AttackGroundStartup());
+
+        weaponState.UpdateValues();
+
+        _status.CurrentPlayerState.timeToChangeState = weaponState.Startup;
+        _status.CurrentPlayerState.stateToChangeTo.timeToChangeState = weaponState.Duration;
+        _status.CurrentPlayerState.stateToChangeTo.moveSpeedMultiplier = weaponState.ForwardSpeedModifier;
+        _status.CurrentPlayerState.stateToChangeTo.stateToChangeTo.timeToChangeState = weaponState.Recovery;
         _status.movement.SetTheSetForwardDirection();
     }
 

@@ -8,27 +8,32 @@ public class DodgeRoll : BasicState
 
     public DodgeRoll()
     {
-        timeToChangingState = .25f;
+        timeToChangeState = .3f;
         canPlayerControlMove = false;
         canPlayerControlRotate = false;
         canAttack = false;
         canDodgeRoll = false;
         canBlock = false;
         updateMovement = true;
-        moveSpeedMultiplier = 1.6f;
+        moveSpeedMultiplier = 1.7f;
         extraFallGravityMultiplier = .8f;
         countDodgeRollCooldown = false;
+
+        visual = VisualChild.DodgeRoll;
+
         animationState = AnimationState.DodgeRoll;
         stateToChangeTo = new DodgeRollRecovery();
     }
 
-    
-    public override void Update(PlayerStatus status) {
+
+    public override void Update(PlayerStatus status)
+    {
         base.Update(status);
 
         status.movement.SetVelocityToMoveSpeedTimesFowardDirection();
-        
-        if(!status.movement.grounded && status.movement.wasGrounded) {
+
+        if (!status.movement.grounded && status.movement.wasGrounded)
+        {
             status.SetPlayerStateImmediately(new DodgeRollFall());
         }
     }

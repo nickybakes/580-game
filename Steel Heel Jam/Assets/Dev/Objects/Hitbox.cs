@@ -28,7 +28,8 @@ public class Hitbox : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        duration -= Time.deltaTime;
+        if(duration >= 0)
+            duration -= Time.deltaTime;
 
         if (duration <= 0)
         {
@@ -49,9 +50,9 @@ public class Hitbox : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawSphere(transform.position, radius);
-    }
+    // private void OnDrawGizmos()
+    // {
+    //     Gizmos.color = Color.red;
+    //     Gizmos.DrawSphere(transform.position, radius);
+    // }
 }

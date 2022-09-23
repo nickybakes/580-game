@@ -25,7 +25,7 @@ public class Unarmed : DefaultState
         recoveryMultiplier = 1.0f;
     }
 
-    public override void Attack()
+    public override void UpdateValues()
     {
         switch (currentComboCount)
         {
@@ -33,29 +33,21 @@ public class Unarmed : DefaultState
                 SetInitialHit();
                 break;
             case 1:
-                damageMultiplier = 0.7f;
+                damageMultiplier = 0.8f;
                 knockbackMultiplier = 0.7f;
                 knockbackHeightMultiplier = 0.5f;
-                hitstunMultiplier = 0.5f;
                 radiusMultiplier = 1.5f;
-                startupMultiplier = 0.5f;
-                durationMultiplier = 0.7f;
-                recoveryMultiplier = 0.7f;
-                forwardDisplacementMultiplier = 0.5f;
+                startupMultiplier = 0.7f;
+                forwardSpeedModifierMultiplier = 1.1f;
                 break;
             case 2:
                 damageMultiplier = 1.5f;
                 knockbackMultiplier = 1.5f;
                 knockbackHeightMultiplier = 1.5f;
-                hitstunMultiplier = 1.0f;
                 radiusMultiplier = 2.5f;
-                startupMultiplier = 0.5f;
-                durationMultiplier = 1.0f;
-                recoveryMultiplier = 1.0f;
-                forwardDisplacementMultiplier = 1.0f;
+                startupMultiplier = 0.7f;
+                forwardSpeedModifierMultiplier = 1.3f;
                 break;
         }
-
-        base.Attack();
     }
 }

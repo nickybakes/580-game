@@ -6,15 +6,17 @@ public class Block : BasicState
 {
     public Block()
     {
-        Debug.Log("block");
-        timeToChangingState = .25f;
+        timeToChangeState = .25f;
         canPlayerControlMove = false;
         canPlayerControlRotate = false;
         canAttack = false;
         canDodgeRoll = false;
         canBlock = false;
         updateMovement = true;
+        countBlockCooldown = false;
         stateToChangeTo = new BlockRecovery();
+
+        visual = VisualChild.Block;
 
         // For testing
         /*canPlayerControlMove = true;

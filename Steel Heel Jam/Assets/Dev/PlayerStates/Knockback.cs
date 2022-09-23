@@ -5,10 +5,11 @@ using UnityEngine;
 public class Knockback : BasicState
 {
 
+    private Vector3 velocity;
 
-    public Knockback()
+    public Knockback(Vector3 _velocity)
     {
-        timeToChangingState = 0;
+        timeToChangeState = 0;
         canPlayerControlMove = false;
         canPlayerControlRotate = false;
         canAttack = false;
@@ -17,6 +18,18 @@ public class Knockback : BasicState
         updateMovement = true;
         animationState = AnimationState.Knockback;
         stateToChangeTo = new Idle();
+
+        visual = VisualChild.Knockback;
+
+        velocity = _velocity;
+    }
+
+    public override void OnEnterThisState(BasicState prevState, PlayerStatus status)
+    {
+        base.OnEnterThisState(prevState, status);
+        
+        status.movement.velocity = velocity;
+        status.movement.grounded = false;
     }
 
 }

@@ -27,14 +27,14 @@ public class DefaultState
     [SerializeField] protected float hitstunMultiplier = 1;
     private float radius = 1;
     [SerializeField] protected float radiusMultiplier = 1;
-    private float startup = 0.10f; //TIME IS IN SECONDS
+    private float startup = 0.1f; //TIME IS IN SECONDS
     [SerializeField] protected float startupMultiplier = 1;
-    private float duration = 0.15f;
+    private float duration = 0.2f;
     [SerializeField] protected float durationMultiplier = 1;
-    private float recovery = 0.15f;
+    private float recovery = 0.35f;
     [SerializeField] protected float recoveryMultiplier = 1;
-    private float forwardDisplacement = 15;
-    [SerializeField] protected float forwardDisplacementMultiplier = 1;
+    private float forwardSpeedModifier = 1.4f;
+    [SerializeField] protected float forwardSpeedModifierMultiplier = 1;
     [SerializeField] public int maxComboCount = 3;
     public int currentComboCount = 0;
     //private float backwardDisplacement;
@@ -43,6 +43,14 @@ public class DefaultState
     [SerializeField] public GameObject hitbox;
     private Hitbox hitboxScript;
     private SphereCollider hitboxCollider;
+
+    /// <summary>
+    /// set this to true for when doing a single attack, we got a hit.
+    /// this is used to tell the player's state to slow down their forward displacement to make the impact
+    /// feel more IMPACTFUL!!
+    /// </summary>
+    public bool gotAHit;
+
 
     // NOTE MAKE COMBO SYSTEM
     // NOTE DEFINE PRIVATES
@@ -80,11 +88,11 @@ public class DefaultState
         }
     }
 
-    public float ForwardDisplacement
+    public float ForwardSpeedModifier
     {
         get
         {
-            return forwardDisplacement * forwardDisplacementMultiplier;
+            return forwardSpeedModifier * forwardSpeedModifierMultiplier;
         }
     }
 
@@ -126,12 +134,17 @@ public class DefaultState
         recoveryMultiplier = 1.0f;
     }
 
+    public virtual void UpdateValues()
+    {
+        SetInitialHit();
+    }
+
     /// <summary>
     /// Activates the hitbox prefab attached to the player.
     /// </summary>
     public virtual void Attack()
     {
-        if (currentComboCount >= maxComboCount) currentComboCount = 0;
+        gotAHit = false;
 
         currentComboCount += 1;
 
@@ -159,6 +172,7 @@ public class DefaultState
         // Resize hitbox
         hitboxCollider.radius = radius * radiusMultiplier;
         hitbox.transform.localPosition = new Vector3(0, 1, 1 + (radius * radiusMultiplier) / 2); // Experimental
+        hitbox.transform.GetChild(0).localScale = new Vector3(hitboxCollider.radius * 2, hitboxCollider.radius * 2, hitboxCollider.radius * 2);
 
         return hitboxScript;
     }

@@ -11,12 +11,15 @@ public class BlockedStun : BasicState
     public BlockedStun()
     {
         Debug.Log("block recovery");
-        timeToChangingState = 1f;
+        timeToChangeState = .5f;
         canPlayerControlMove = false;
         canPlayerControlRotate = false;
         canAttack = false;
         canDodgeRoll = false;
         canBlock = false;
+
+        visual = VisualChild.Stun;
+
         stateToChangeTo = new Idle();
     }
 }
