@@ -13,23 +13,15 @@ public class AttackGroundRecovery : BasicState
         canDodgeRoll = true;
         canBlock = true;
         updateMovement = true;
-        moveSpeedMultiplier = 1.6f;
-        extraFallGravityMultiplier = .8f;
-        countDodgeRollCooldown = false;
-        animationState = AnimationState.DodgeRoll; // TODO: CHANGE THIS
+        countAttackCooldown = false;
+        animationState = AnimationState.AttackGroundRecovery; // TODO: CHANGE THIS
         stateToChangeTo = new Idle();
     }
 
 
     public override void Update(PlayerStatus status)
     {
-        if (timeToChangingState != 0)
-        {
-            timeInThisState += Time.deltaTime;
-            if (timeInThisState >= timeToChangingState)
-            {
-                changeStateNow = true;
-            }
-        }
+        base.Update(status);
+
     }
 }

@@ -35,8 +35,8 @@ public class DefaultState
     [SerializeField] protected float recoveryMultiplier = 1;
     private float forwardDisplacement = 15;
     [SerializeField] protected float forwardDisplacementMultiplier = 1;
-    [SerializeField] public int comboCount = 3;
-    public int currentHit;
+    [SerializeField] public int maxComboCount = 3;
+    public int currentComboCount;
     //private float backwardDisplacement;
     //protected float backwardDisplacementMultiplier;
 
@@ -52,7 +52,7 @@ public class DefaultState
     {
         get
         {
-            return currentHit <= comboCount;
+            return currentComboCount < maxComboCount;
         }
     }
 
@@ -133,9 +133,9 @@ public class DefaultState
     {
         hitboxScript.duration = duration * durationMultiplier;
 
-        if (currentHit > comboCount) currentHit = 1;
+        // if (currentComboCount > maxComboCount) currentComboCount = 0;
 
-        currentHit += 1;
+        currentComboCount += 1;
 
         hitbox.SetActive(true);
     }

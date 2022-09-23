@@ -9,6 +9,8 @@ public enum AnimationState
     Jump,
     Fall,
     DodgeRoll,
+    AttackGroundStartup,
+    AttackGroundRecovery,
     Knockback,
 }
 
@@ -94,5 +96,14 @@ public class BasicState
                 changeStateNow = true;
             }
         }
+    }
+
+    /// <summary>
+    /// This is called when we change the player's state
+    /// </summary>
+    /// <param name="nextState"></param>
+    public virtual void OnExitThisState(BasicState nextState, PlayerStatus status)
+    {
+        
     }
 }

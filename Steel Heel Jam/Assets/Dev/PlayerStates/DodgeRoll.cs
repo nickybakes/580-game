@@ -33,4 +33,11 @@ public class DodgeRoll : BasicState
         }
     }
 
+    public override void OnExitThisState(BasicState nextState, PlayerStatus status)
+    {
+        base.OnExitThisState(nextState, status);
+
+        status.movement.velocity = status.movement.velocity.normalized * status.movement.CurrentMoveSpeed;
+    }
+
 }

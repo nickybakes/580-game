@@ -10,7 +10,7 @@ public class Unarmed : DefaultState
         //SetupHitboxReferences(_hitbox);
 
         SetInitialHit();
-        comboCount = 3;
+        maxComboCount = 3;
     }
 
     protected override void SetInitialHit()
@@ -27,12 +27,12 @@ public class Unarmed : DefaultState
 
     public override void Attack()
     {
-        switch (currentHit)
+        switch (currentComboCount)
         {
-            case 1:
+            case 0:
                 SetInitialHit();
                 break;
-            case 2:
+            case 1:
                 damageMultiplier = 0.7f;
                 knockbackMultiplier = 0.7f;
                 knockbackHeightMultiplier = 0.5f;
@@ -43,7 +43,7 @@ public class Unarmed : DefaultState
                 recoveryMultiplier = 0.7f;
                 forwardDisplacementMultiplier = 0.5f;
                 break;
-            case 3:
+            case 2:
                 damageMultiplier = 1.5f;
                 knockbackMultiplier = 1.5f;
                 knockbackHeightMultiplier = 1.5f;

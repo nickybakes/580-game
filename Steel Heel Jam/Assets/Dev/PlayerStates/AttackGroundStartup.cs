@@ -13,25 +13,20 @@ public class AttackGroundStartup : BasicState
         canDodgeRoll = false;
         canBlock = false;
         updateMovement = false;
-        moveSpeedMultiplier = 1.6f;
-        extraFallGravityMultiplier = .8f;
-        countDodgeRollCooldown = false;
-        animationState = AnimationState.DodgeRoll; // TODO: CHANGE THIS
+        countAttackCooldown = false;
+        animationState = AnimationState.AttackGroundStartup; // TODO: CHANGE THIS
         stateToChangeTo = new AttackGroundRecovery(recovery);
     }
 
 
     public override void Update(PlayerStatus status)
     {
-        if (timeToChangingState != 0)
+        base.Update(status);
+
+        if (changeStateNow)
         {
-            timeInThisState += Time.deltaTime;
-            if (timeInThisState >= timeToChangingState)
-            {
-                status.combat.weaponState.Attack();
-                status.movement.SetVelocityToMoveSpeedTimesFowardDirection(status.combat.weaponState.ForwardDisplacement);
-                changeStateNow = true;
-            }
+            status.combat.weaponState.Attack();
+            status.movement.SetVelocityToMoveSpeedTimesFowardDirection(status.combat.weaponState.ForwardDisplacement);
         }
     }
 }

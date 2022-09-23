@@ -60,7 +60,7 @@ public class PlayerCombat : MonoBehaviour
         if (_status.CurrentPlayerState.countBlockCooldown && blockCoolDown < blockCoolDownMax)
             blockCoolDown += Time.deltaTime;
 
-        if (canAttack && attackCooldown > attackCooldownMax && _input.Attack)
+        if (canAttack && (attackCooldown > attackCooldownMax) && _input.Attack)
         {
             if (_status.movement.grounded)
             {

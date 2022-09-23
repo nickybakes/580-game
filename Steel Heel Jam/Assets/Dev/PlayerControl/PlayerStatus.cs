@@ -104,6 +104,8 @@ public class PlayerStatus : MonoBehaviour
 
     public void SetPlayerStateImmediately(BasicState state)
     {
+        currentPlayerState.OnExitThisState(state, this);
+
         currentPlayerState = state;
 
         if (state is DodgeRollRecovery)
