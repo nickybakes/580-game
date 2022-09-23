@@ -131,20 +131,20 @@ public class DefaultState
     /// </summary>
     public virtual void Attack()
     {
-        //hitboxScript.duration = duration * durationMultiplier;
-
         if (currentComboCount >= maxComboCount) currentComboCount = 0;
 
         currentComboCount += 1;
+
+        InitHitbox();
 
         hitbox.SetActive(true);
     }
 
     /// <summary>
-    /// Sets the hitbox size and duration. Must be called each time the equip state is changed.
+    /// Sets the hitbox size and duration.
     /// </summary>
     /// <returns>A reference to the hitbox script.</returns>
-    public virtual Hitbox InitHitbox()
+    protected virtual Hitbox InitHitbox()
     {
         // Set up hitbox values
         hitboxScript.damage = damage * damageMultiplier;
@@ -152,6 +152,7 @@ public class DefaultState
         hitboxScript.knockbackHeight = knockbackHeight * knockbackHeightMultiplier;
         hitboxScript.hitstun = hitstun * hitstunMultiplier;
         hitboxScript.radius = radius * radiusMultiplier; // Radius is only passed through for gizmo drawing
+        hitboxScript.duration = duration * durationMultiplier;
         hitboxScript.playerNumber = playerNumber;
         //hitboxScript.duration = duration * durationMultiplier;
 

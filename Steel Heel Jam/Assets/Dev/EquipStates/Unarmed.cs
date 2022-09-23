@@ -55,7 +55,6 @@ public class Unarmed : DefaultState
                 forwardDisplacementMultiplier = 1.0f;
                 break;
         }
-        InitHitbox();
 
         base.Attack();
     }

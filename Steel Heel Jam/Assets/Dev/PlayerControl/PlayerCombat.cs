@@ -13,7 +13,7 @@ public class PlayerCombat : MonoBehaviour
     public DefaultState weaponState;
 
     public float attackCooldown;
-    private const float attackCooldownMax = .4f;
+    private const float attackCooldownMax = .3f;
 
     private float dodgeRollCoolDown;
     private const float dodgeRollCoolDownMax = .2f;
@@ -30,7 +30,6 @@ public class PlayerCombat : MonoBehaviour
         _status = GetComponent<PlayerStatus>();
 
         weaponState = new Unarmed(_status.playerNumber, _hitbox);
-        _hitboxScript = weaponState.InitHitbox();
     }
 
     /// <summary>
@@ -47,7 +46,6 @@ public class PlayerCombat : MonoBehaviour
         if (weaponState == null)
         {
             weaponState = new DefaultState(_status.playerNumber, _hitbox);
-            weaponState.InitHitbox();
         }
 #endif
 
