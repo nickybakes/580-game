@@ -14,7 +14,7 @@ public class AttackGroundStartup : BasicState
         canBlock = false;
         updateMovement = false;
         countAttackCooldown = false;
-        animationState = AnimationState.AttackGroundStartup; // TODO: CHANGE THIS
+        animationState = AnimationState.AttackGroundStartup;
         stateToChangeTo = new AttackGroundRecovery(recovery);
     }
 

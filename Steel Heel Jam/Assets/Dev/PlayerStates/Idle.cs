@@ -8,13 +8,11 @@ public class Idle : BasicState
 
     public Idle()
     {
-        Debug.Log("idle");
         timeToChangingState = 0;
         canPlayerControlMove = true;
         canPlayerControlRotate = true;
         updateMovement = true;
         animationState = AnimationState.Idle;
-
     }
 
 }

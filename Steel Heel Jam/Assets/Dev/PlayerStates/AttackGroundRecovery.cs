@@ -10,11 +10,11 @@ public class AttackGroundRecovery : BasicState
         canPlayerControlMove = false;
         canPlayerControlRotate = false;
         canAttack = true;
-        canDodgeRoll = true;
-        canBlock = true;
+        canDodgeRoll = false;
+        canBlock = false;
         updateMovement = true;
         countAttackCooldown = false;
-        animationState = AnimationState.AttackGroundRecovery; // TODO: CHANGE THIS
+        animationState = AnimationState.AttackGroundRecovery;
         stateToChangeTo = new Idle();
     }
 

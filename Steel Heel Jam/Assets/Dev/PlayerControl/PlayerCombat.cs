@@ -84,8 +84,6 @@ public class PlayerCombat : MonoBehaviour
     private void AttackGround()
     {
         _input.Attack = false;
-        //AttackGround a = new AttackGroundStartup(eq);
-        //a.time = equipState.time
         _status.movement.velocity = Vector3.zero;
         _status.SetPlayerStateImmediately(new AttackGroundStartup(weaponState.Startup, weaponState.Recovery));
         _status.movement.SetTheSetForwardDirection();
@@ -104,6 +102,7 @@ public class PlayerCombat : MonoBehaviour
     {
         _input.block = false;
         blockCoolDown = 0;
+        _status.movement.velocity = Vector3.zero;
         _status.SetPlayerStateImmediately(new Block());
     }
 
