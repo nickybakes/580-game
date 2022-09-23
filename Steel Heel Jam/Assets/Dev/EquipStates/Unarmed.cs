@@ -51,7 +51,7 @@ public class Unarmed : DefaultState
                 radiusMultiplier = 2.5f;
                 startupMultiplier = 0.5f;
                 durationMultiplier = 1.0f;
-                recoveryMultiplier = 5.0f;
+                recoveryMultiplier = 1.0f;
                 forwardDisplacementMultiplier = 1.0f;
                 break;
         }

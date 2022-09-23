@@ -18,15 +18,14 @@ public class AttackGroundStartup : BasicState
         stateToChangeTo = new AttackGroundRecovery(recovery);
     }
 
-
-    public override void Update(PlayerStatus status)
+    public override void OnExitThisState(BasicState nextState, PlayerStatus status)
     {
-        base.Update(status);
+        status.combat.weaponState.Attack();
+        status.movement.SetVelocityToMoveSpeedTimesFowardDirection(status.combat.weaponState.ForwardDisplacement);
 
-        if (changeStateNow)
+        if (!status.combat.weaponState.CanCombo)
         {
-            status.combat.weaponState.Attack();
-            status.movement.SetVelocityToMoveSpeedTimesFowardDirection(status.combat.weaponState.ForwardDisplacement);
+            status.combat.attackCooldown = 0;
         }
     }
 }

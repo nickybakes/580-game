@@ -12,8 +12,8 @@ public class PlayerCombat : MonoBehaviour
 
     public DefaultState weaponState;
 
-    private float attackCooldown;
-    private const float attackCooldownMax = .2f;
+    public float attackCooldown;
+    private const float attackCooldownMax = .4f;
 
     private float dodgeRollCoolDown;
     private const float dodgeRollCoolDownMax = .2f;
@@ -88,12 +88,9 @@ public class PlayerCombat : MonoBehaviour
         _input.Attack = false;
         //AttackGround a = new AttackGroundStartup(eq);
         //a.time = equipState.time
-        if (weaponState.CanCombo)
-        {
-            _status.movement.velocity = Vector3.zero;
-            _status.SetPlayerStateImmediately(new AttackGroundStartup(weaponState.Startup, weaponState.Recovery));
-            _status.movement.SetTheSetForwardDirection();
-        }
+        _status.movement.velocity = Vector3.zero;
+        _status.SetPlayerStateImmediately(new AttackGroundStartup(weaponState.Startup, weaponState.Recovery));
+        _status.movement.SetTheSetForwardDirection();
     }
 
     private void DodgeRoll()

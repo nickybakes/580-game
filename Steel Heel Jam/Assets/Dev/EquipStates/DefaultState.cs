@@ -36,7 +36,7 @@ public class DefaultState
     private float forwardDisplacement = 15;
     [SerializeField] protected float forwardDisplacementMultiplier = 1;
     [SerializeField] public int maxComboCount = 3;
-    public int currentComboCount;
+    public int currentComboCount = 0;
     //private float backwardDisplacement;
     //protected float backwardDisplacementMultiplier;
 
@@ -131,9 +131,9 @@ public class DefaultState
     /// </summary>
     public virtual void Attack()
     {
-        hitboxScript.duration = duration * durationMultiplier;
+        //hitboxScript.duration = duration * durationMultiplier;
 
-        // if (currentComboCount > maxComboCount) currentComboCount = 0;
+        if (currentComboCount >= maxComboCount) currentComboCount = 0;
 
         currentComboCount += 1;
 
