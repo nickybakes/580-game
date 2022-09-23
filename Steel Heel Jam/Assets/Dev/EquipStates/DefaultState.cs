@@ -135,6 +135,8 @@ public class DefaultState
 
         if (currentHit > comboCount) currentHit = 1;
 
+        currentHit += 1;
+
         hitbox.SetActive(true);
     }
 

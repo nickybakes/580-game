@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class AttackGroundRecovery : BasicState
 {
-    public AttackGroundRecovery(float recovery, bool canCombo)
+    public AttackGroundRecovery(float recovery)
     {
         timeToChangingState = recovery;
         canPlayerControlMove = false;
         canPlayerControlRotate = false;
-        canAttack = canCombo ? true : false;
+        canAttack = true;
         canDodgeRoll = true;
         canBlock = true;
         updateMovement = true;

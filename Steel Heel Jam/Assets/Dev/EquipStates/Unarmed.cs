@@ -57,8 +57,6 @@ public class Unarmed : DefaultState
         }
         InitHitbox();
 
-        currentHit += 1;
-
         base.Attack();
     }
 }

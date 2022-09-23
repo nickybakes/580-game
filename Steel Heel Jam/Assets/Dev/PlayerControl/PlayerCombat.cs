@@ -86,12 +86,14 @@ public class PlayerCombat : MonoBehaviour
     private void AttackGround()
     {
         _input.Attack = false;
-        //attackCoolDown = 0;
         //AttackGround a = new AttackGroundStartup(eq);
         //a.time = equipState.time
-        _status.movement.velocity = Vector3.zero;
-        _status.SetPlayerStateImmediately(new AttackGroundStartup(weaponState.Startup, weaponState.Recovery, weaponState.CanCombo));
-        _status.movement.SetTheSetForwardDirection();
+        if (weaponState.CanCombo)
+        {
+            _status.movement.velocity = Vector3.zero;
+            _status.SetPlayerStateImmediately(new AttackGroundStartup(weaponState.Startup, weaponState.Recovery));
+            _status.movement.SetTheSetForwardDirection();
+        }
     }
 
     private void DodgeRoll()
