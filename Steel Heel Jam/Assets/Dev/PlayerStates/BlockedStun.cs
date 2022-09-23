@@ -10,7 +10,6 @@ public class BlockedStun : BasicState
     // Start is called before the first frame update
     public BlockedStun()
     {
-        Debug.Log("block recovery");
         timeToChangeState = .5f;
         canPlayerControlMove = false;
         canPlayerControlRotate = false;

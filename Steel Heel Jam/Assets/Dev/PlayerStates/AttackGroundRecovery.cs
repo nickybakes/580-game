@@ -52,7 +52,7 @@ public class AttackGroundRecovery : BasicState
     {
         base.OnExitThisState(nextState, status);
 
-        if (changeStateNow)
+        if (!(nextState is AttackGroundStartup))
         {
             status.combat.weaponState.currentComboCount = 0;
             status.combat.attackCooldown = 0;
