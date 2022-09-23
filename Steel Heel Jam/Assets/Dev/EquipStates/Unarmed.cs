@@ -9,6 +9,12 @@ public class Unarmed : DefaultState
     {
         //SetupHitboxReferences(_hitbox);
 
+        SetInitialHit();
+        comboCount = 3;
+    }
+
+    protected override void SetInitialHit()
+    {
         damageMultiplier = 1.0f;
         knockbackMultiplier = 1.0f;
         knockbackHeightMultiplier = 1.0f;
@@ -17,12 +23,6 @@ public class Unarmed : DefaultState
         startupMultiplier = 1.0f;
         durationMultiplier = 1.0f;
         recoveryMultiplier = 1.0f;
-        comboCount = 3;
-    }
-
-    private void SetInitialHit()
-    {
-
     }
 
     public override void Attack()
@@ -30,20 +30,32 @@ public class Unarmed : DefaultState
         switch (currentHit)
         {
             case 1:
-
+                SetInitialHit();
                 break;
             case 2:
                 damageMultiplier = 0.7f;
                 knockbackMultiplier = 0.7f;
                 knockbackHeightMultiplier = 0.5f;
                 hitstunMultiplier = 0.5f;
+                radiusMultiplier = 1.5f;
                 startupMultiplier = 0.5f;
                 durationMultiplier = 0.7f;
-                
+                recoveryMultiplier = 0.7f;
+                forwardDisplacementMultiplier = 0.5f;
                 break;
             case 3:
+                damageMultiplier = 1.5f;
+                knockbackMultiplier = 1.5f;
+                knockbackHeightMultiplier = 1.5f;
+                hitstunMultiplier = 1.0f;
+                radiusMultiplier = 2.5f;
+                startupMultiplier = 0.5f;
+                durationMultiplier = 1.0f;
+                recoveryMultiplier = 5.0f;
+                forwardDisplacementMultiplier = 1.0f;
                 break;
         }
+        InitHitbox();
 
         currentHit += 1;
 

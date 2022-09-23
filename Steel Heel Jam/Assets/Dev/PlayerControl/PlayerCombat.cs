@@ -90,7 +90,7 @@ public class PlayerCombat : MonoBehaviour
         //AttackGround a = new AttackGroundStartup(eq);
         //a.time = equipState.time
         _status.movement.velocity = Vector3.zero;
-        _status.SetPlayerStateImmediately(new AttackGroundStartup(weaponState.Startup, weaponState.Recovery));
+        _status.SetPlayerStateImmediately(new AttackGroundStartup(weaponState.Startup, weaponState.Recovery, weaponState.CanCombo));
         _status.movement.SetTheSetForwardDirection();
     }
 

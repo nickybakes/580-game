@@ -36,7 +36,7 @@ public class DefaultState
     private float forwardDisplacement = 15;
     [SerializeField] protected float forwardDisplacementMultiplier = 1;
     [SerializeField] public int comboCount = 3;
-    protected int currentHit;
+    public int currentHit;
     //private float backwardDisplacement;
     //protected float backwardDisplacementMultiplier;
 
@@ -47,6 +47,14 @@ public class DefaultState
     // NOTE MAKE COMBO SYSTEM
     // NOTE DEFINE PRIVATES
     // NOTE MOVE MULTIPLIERS TO CONSTRUCTOR
+
+    public bool CanCombo
+    {
+        get
+        {
+            return currentHit <= comboCount;
+        }
+    }
 
     public float Startup
     {
@@ -104,6 +112,18 @@ public class DefaultState
         // Initialize hitbox references
         hitboxScript = hitbox.GetComponent<Hitbox>();
         hitboxCollider = hitbox.GetComponent<SphereCollider>();
+    }
+
+    protected virtual void SetInitialHit()
+    {
+        damageMultiplier = 1.0f;
+        knockbackMultiplier = 1.0f;
+        knockbackHeightMultiplier = 1.0f;
+        hitstunMultiplier = 1.0f;
+        radiusMultiplier = 1.0f;
+        startupMultiplier = 1.0f;
+        durationMultiplier = 1.0f;
+        recoveryMultiplier = 1.0f;
     }
 
     /// <summary>

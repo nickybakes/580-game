@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AttackGroundStartup : BasicState
 {
-    public AttackGroundStartup(float startup, float recovery)
+    public AttackGroundStartup(float startup, float recovery, bool canCombo)
     {
         timeToChangingState = startup;
         canPlayerControlMove = false;
@@ -17,7 +17,7 @@ public class AttackGroundStartup : BasicState
         extraFallGravityMultiplier = .8f;
         countDodgeRollCooldown = false;
         animationState = AnimationState.DodgeRoll; // TODO: CHANGE THIS
-        stateToChangeTo = new AttackGroundRecovery(recovery);
+        stateToChangeTo = new AttackGroundRecovery(recovery, canCombo);
     }
 
 
