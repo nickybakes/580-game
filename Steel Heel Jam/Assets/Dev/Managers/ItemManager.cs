@@ -26,12 +26,12 @@ public class ItemManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        spawnTimer += Time.deltaTime;
-        if (spawnTimer >= spawnTimerMax)
-        {
-            spawnRandomItem();
-            spawnTimer = 0;
-        }
+        // spawnTimer += Time.deltaTime;
+        // if (spawnTimer >= spawnTimerMax)
+        // {
+        //     spawnRandomItem();
+        //     spawnTimer = 0;
+        // }
     }
 
     void spawnRandomItem()
