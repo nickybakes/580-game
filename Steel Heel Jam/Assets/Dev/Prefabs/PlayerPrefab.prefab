@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8188171632429326040}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Visuals
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -53,7 +53,7 @@ GameObject:
   - component: {fileID: 1777015905490208812}
   - component: {fileID: 1777015905490208813}
   - component: {fileID: -3918983175351921918}
-  m_Layer: 3
+  m_Layer: 7
   m_Name: PlayerPrefab
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -251,7 +251,7 @@ GameObject:
   - component: {fileID: 1777015905696392863}
   - component: {fileID: 1777015905696392861}
   - component: {fileID: 1777015905696392862}
-  m_Layer: 3
+  m_Layer: 7
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -334,7 +334,7 @@ GameObject:
   - component: {fileID: 1777015905882587282}
   - component: {fileID: 1777015905882587280}
   - component: {fileID: 1777015905882587281}
-  m_Layer: 3
+  m_Layer: 7
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -415,7 +415,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1777015906093603490}
-  m_Layer: 3
+  m_Layer: 7
   m_Name: PickUpLocation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -448,7 +448,7 @@ GameObject:
   - component: {fileID: 3861052546219309350}
   - component: {fileID: 6882750798883994721}
   - component: {fileID: 124854538809448018}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Recovery
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -531,7 +531,7 @@ GameObject:
   - component: {fileID: 3509740243464245568}
   - component: {fileID: 7395490603491557745}
   - component: {fileID: 4622606847129131898}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Stun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -614,7 +614,7 @@ GameObject:
   - component: {fileID: 8727767393796085164}
   - component: {fileID: 9138370409357828701}
   - component: {fileID: 6357743205408984540}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Dodge Roll
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -697,7 +697,7 @@ GameObject:
   - component: {fileID: 2829029065222596444}
   - component: {fileID: 8514038953373219975}
   - component: {fileID: 2990830145322922368}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Block
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -780,7 +780,7 @@ GameObject:
   - component: {fileID: 3931965086709777512}
   - component: {fileID: 5929775261724630233}
   - component: {fileID: 6303657129029269505}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Knockback
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -928,6 +928,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Hitbox
+      objectReference: {fileID: 0}
+    - target: {fileID: 2295276495909386343, guid: aadce769ff4519044b76ad34195f7df0,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 9185653830716651572, guid: aadce769ff4519044b76ad34195f7df0,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aadce769ff4519044b76ad34195f7df0, type: 3}
