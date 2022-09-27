@@ -20,7 +20,19 @@ public enum Tag
 [RequireComponent(typeof(PlayerCombat))]
 public class PlayerStatus : MonoBehaviour
 {
+    /// <summary>
+    /// The stamina value for the player. Stamina is consumed for actions and is lost upon being hit, being the heel, or being outside of the ring.
+    /// When a player's stamina is empty and they are knocked out of the zone, they are eliminated.
+    /// </summary>
     private float stamina = 100f;
+    /// <summary>
+    /// The player's current maximum stamina value.
+    /// </summary>
+    private float maxStamina = 100f;
+    /// <summary>
+    /// The lowest a player's maximum stamina can get.
+    /// </summary>
+    [SerializeField] private const float MinMaxStamina = 20f;
 
     private BasicState currentPlayerState;
 
@@ -36,7 +48,26 @@ public class PlayerStatus : MonoBehaviour
 
     public int PlayerNumber { get { return playerNumber; } }
 
-    public BasicState CurrentPlayerState { get { return currentPlayerState; }}
+    public BasicState CurrentPlayerState { get { return currentPlayerState; } }
+
+    /// <summary>
+    /// A boolean that represents if the player is outside of the ring.
+    /// </summary>
+    private bool isOOB = false;
+
+    /// <summary>
+    /// The rate at which stamina is lost when out of bounds.
+    /// </summary>
+    [SerializeField] private const float OOBStaminaLossCooldownMax = 1f;
+
+    /// <summary>
+    /// The current timer for losing stamina when out of bounds.
+    /// </summary>
+    private float OOBStaminaLossCooldown;
+
+    [SerializeField] private const float OOBStaminaDamage = 20f;
+
+    [SerializeField] private const float OOBMaxStaminaDamage = 10f;
 
     /// <summary>
     /// Use this to check if the player is currently dodging when you want to hit them with an attack
@@ -86,10 +117,25 @@ public class PlayerStatus : MonoBehaviour
             currentPlayerState = new Idle();
 #endif
 
+        // If the player is out of bounds . . .
+        if (isOOB)
+        {
+            // Reduce the timer for OOB stamina loss
+            OOBStaminaLossCooldown -= Time.deltaTime;
+
+            // If the timer for OOB stamina loss runs out . . .
+            if (OOBStaminaLossCooldown < 0)
+            {
+                // Reset the timer for OOB stamina loss and decrease stamina & maximum stamina
+                OOBStaminaLossCooldown = OOBStaminaLossCooldownMax;
+                ReduceStamina(OOBStaminaDamage);
+                ReduceMaxStamina(OOBMaxStaminaDamage);
+            }
+        }
+
         movement.UpdateManual(currentPlayerState.updateMovement, currentPlayerState.canPlayerControlMove, currentPlayerState.canPlayerControlRotate);
 
         combat.UpdateManual(currentPlayerState.canAttack, currentPlayerState.canDodgeRoll, currentPlayerState.canBlock, currentPlayerState.canPickUp);
-
 
         currentPlayerState.Update(this);
 
@@ -120,6 +166,8 @@ public class PlayerStatus : MonoBehaviour
 
         if (!IsDodgeRolling)
         {
+            ReduceStamina(damage);
+
             Vector3 knockbackDir = (collisionPos - hitboxPos).normalized;
             knockback = knockback * (2 + stamina / 100);
             Vector3 knockbackVelocity = new Vector3(knockbackDir.x * knockback, knockbackHeight, knockbackDir.z * knockback);
@@ -131,5 +179,44 @@ public class PlayerStatus : MonoBehaviour
             currentPlayerState.stateToChangeTo.timeToChangeState = hitstun;
         }
 
+    }
+
+    /// <summary>
+    /// Reduces the player's stamina. This value will never go below 0.
+    /// </summary>
+    /// <param name="value">The value to decrease the stamina value by.</param>
+    private void ReduceStamina(float value)
+    {
+        stamina -= value;
+
+        if (stamina < 0) stamina = 0;
+    }
+
+    /// <summary>
+    /// Reduces the player's maximum stamina. If the value would be decreased past the minimum-maximum value, it will be set to the minimum-maximum.
+    /// </summary>
+    /// <param name="value">The value to decrease the maximum stamina by.</param>
+    private void ReduceMaxStamina(float value)
+    {
+        maxStamina -= value;
+
+        if (maxStamina < MinMaxStamina) maxStamina = MinMaxStamina;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Ring")
+        {
+            isOOB = true;
+            OOBStaminaLossCooldown = OOBStaminaLossCooldownMax;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Ring")
+        {
+            isOOB = false;
+        }
     }
 }
