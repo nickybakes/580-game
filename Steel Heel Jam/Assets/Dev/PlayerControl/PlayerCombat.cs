@@ -129,7 +129,9 @@ public class PlayerCombat : MonoBehaviour
 
     private void TryPickup()
     {
-
+        _input.pickUpPressed = false;
+        _pickUpSphere.SetActive(true);
+        
     }
 
 

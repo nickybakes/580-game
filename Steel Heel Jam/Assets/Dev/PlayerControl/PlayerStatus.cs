@@ -5,12 +5,14 @@ using UnityEngine;
 public enum PlayerChild
 {
     Hitbox = 2,
-    Visuals = 4
+    Visuals = 4,
+    PickUpSphere = 5
 }
 
 public enum Tag
 {
-    Player
+    Player,
+    PickUp
 }
 
 

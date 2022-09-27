@@ -20,7 +20,9 @@ public class PickUpSphere : MonoBehaviour
     {
         if(other.tag == Tag.PickUp.ToString())
         {
+            // Change Players current equip state to equip state for this object
 
+            // Destroy the object on the ground
         }
     }
 }
