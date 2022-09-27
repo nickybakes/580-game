@@ -59,6 +59,10 @@ public class ItemManager : MonoBehaviour
             }
         }
         GameObject thrownItem = Instantiate(prefabToSpawn, playerTransform.position, playerTransform.rotation);
-        thrownItem.GetComponent<Rigidbody>().AddForce(thrownItem.GetComponent<Rigidbody>().transform.position * forceMultiplier);
+        Vector3 targetPos = new Vector3(0, 5, 0);
+        Vector3 throwDirection = targetPos - thrownItem.GetComponent<Rigidbody>().transform.position;
+        throwDirection.Normalize();
+        thrownItem.GetComponent<Rigidbody>().AddForce(throwDirection * forceMultiplier);
+        itemsOnGround.Add(thrownItem);
     }
 }

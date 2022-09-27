@@ -73,6 +73,9 @@ public class BasicState
 
     public bool canBlock = true;
 
+    public bool canPickUp = true;
+
+
     public AnimationState animationState = AnimationState.Idle;
 
     public BasicState stateToChangeTo;

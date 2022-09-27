@@ -5,12 +5,14 @@ using UnityEngine;
 public enum PlayerChild
 {
     Hitbox = 2,
-    Visuals = 4
+    Visuals = 4,
+    PickUpSphere = 5
 }
 
 public enum Tag
 {
-    Player
+    Player,
+    PickUp
 }
 
 
@@ -86,7 +88,7 @@ public class PlayerStatus : MonoBehaviour
 
         movement.UpdateManual(currentPlayerState.updateMovement, currentPlayerState.canPlayerControlMove, currentPlayerState.canPlayerControlRotate);
 
-        combat.UpdateManual(currentPlayerState.canAttack, currentPlayerState.canDodgeRoll, currentPlayerState.canBlock);
+        combat.UpdateManual(currentPlayerState.canAttack, currentPlayerState.canDodgeRoll, currentPlayerState.canBlock, currentPlayerState.canPickUp);
 
 
         currentPlayerState.Update(this);

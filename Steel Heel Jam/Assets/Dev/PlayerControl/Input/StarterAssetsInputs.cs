@@ -20,6 +20,7 @@ public class StarterAssetsInputs : MonoBehaviour
     // Combat Controls
     public bool attack;
     public bool pickUpPressed;
+    public bool wasPickUpPressed;
     public bool throwIsHeld;
 
     public bool dodgeRoll;
@@ -129,6 +130,7 @@ public class StarterAssetsInputs : MonoBehaviour
 
     public void PickUpInput(bool newPickUpState)
     {
+        wasPickUpPressed = pickUpPressed;
         pickUpPressed = newPickUpState;
     }
 

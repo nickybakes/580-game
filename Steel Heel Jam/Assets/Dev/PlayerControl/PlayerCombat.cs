@@ -10,6 +10,10 @@ public class PlayerCombat : MonoBehaviour
     private Hitbox _hitboxScript;
     private PlayerStatus _status;
 
+    private GameObject _pickUpSphere;
+
+    private PickUpSphere _pickUpSphereScript;
+
     public DefaultState weaponState;
 
     public float attackCooldown;
@@ -28,6 +32,10 @@ public class PlayerCombat : MonoBehaviour
         _input = GetComponent<StarterAssetsInputs>();
         _hitbox = transform.GetChild((int)PlayerChild.Hitbox).gameObject;
 
+        _pickUpSphere = transform.GetChild((int)PlayerChild.PickUpSphere).gameObject;
+
+        _pickUpSphereScript = transform.GetChild((int)PlayerChild.PickUpSphere).gameObject.GetComponent<PickUpSphere>();
+
         _status = GetComponent<PlayerStatus>();
 
         weaponState = new Unarmed(_status.playerNumber, _hitbox);
@@ -40,7 +48,7 @@ public class PlayerCombat : MonoBehaviour
     /// <param name="canDodgeRoll">True if the player can interrupt their current state and go into a dodge roll. Base off the player's current PlayerState</param>
     /// <param name="canBlock">True if the player can interrupt their current state and activate a block. Base off the player's current PlayerState</param>
     /// 
-    public void UpdateManual(bool canAttack, bool canDodgeRoll, bool canBlock)
+    public void UpdateManual(bool canAttack, bool canDodgeRoll, bool canBlock, bool canPickup)
     {
         //fixes the null ref exception when recompiling in the Editor
 #if UNITY_EDITOR
@@ -80,6 +88,11 @@ public class PlayerCombat : MonoBehaviour
         {
             Block();
         }
+
+        if (canPickup && _input.pickUpPressed && !_input.wasPickUpPressed)
+        {
+            TryPickup();
+        }
     }
 
     private void AttackGround()
@@ -112,6 +125,11 @@ public class PlayerCombat : MonoBehaviour
         blockCoolDown = 0;
         _status.movement.velocity = Vector3.zero;
         _status.SetPlayerStateImmediately(new Block());
+    }
+
+    private void TryPickup()
+    {
+
     }
 
 
