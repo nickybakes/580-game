@@ -5,14 +5,12 @@ using UnityEngine;
 public enum PlayerChild
 {
     Hitbox = 2,
-    Visuals = 4,
-    PickUpSphere = 5
+    Visuals = 4
 }
 
 public enum Tag
 {
-    Player,
-    PickUp
+    Player
 }
 
 
@@ -201,6 +199,11 @@ public class PlayerStatus : MonoBehaviour
         maxStamina -= value;
 
         if (maxStamina < MinMaxStamina) maxStamina = MinMaxStamina;
+
+        if (stamina > maxStamina)
+        {
+            stamina = maxStamina;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
