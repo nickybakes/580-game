@@ -102,17 +102,7 @@ public class StarterAssetsInputs : MonoBehaviour
 
     public void OnPickUp(InputValue value)
     {
-        /*if(pickUpPutDownPressed == false)
-        {
-            pickUpPutDownPressed = true;
-        }
-        else if(pickUpPutDownPressed == true)
-        {
-            pickUpPutDownPressed = false;
-        }*/
         PickUpInput(value.isPressed);
-        Debug.Log("dfdsfds");
-
     }
 
     public void OnAttack(InputValue value)
@@ -152,7 +142,6 @@ public class StarterAssetsInputs : MonoBehaviour
         {
             throwIsHeld = false;
         }
-        Debug.Log("test");
     }
 
     public void MoveInput(Vector2 newMoveDirection)

@@ -40,7 +40,7 @@ public class PlayerToken : MonoBehaviour
         playerPrefabInputsComp.OnDodgeRoll(value);
     }
 
-    public void OnPickUpPutDown(InputValue value)
+    public void OnPickUp(InputValue value)
     {
         playerPrefabInputsComp.OnPickUp(value);
     }
@@ -53,5 +53,10 @@ public class PlayerToken : MonoBehaviour
     public void OnBlock(InputValue value)
     {
         playerPrefabInputsComp.OnBlock(value);
+    }
+
+    public void OnThrow(InputValue value)
+    {
+        playerPrefabInputsComp.OnThrow(value);
     }
 }
