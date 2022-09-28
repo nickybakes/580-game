@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 public class PlayerCombat : MonoBehaviour
 {
     private StarterAssetsInputs _input;
-    private GameObject _hitbox;
+    public GameObject _hitbox;
     private Hitbox _hitboxScript;
     private PlayerStatus _status;
 
@@ -131,8 +131,10 @@ public class PlayerCombat : MonoBehaviour
     {
         _input.pickUpPressed = false;
         _pickUpSphere.SetActive(true);
-        
     }
 
+    private void Throw()
+    {
 
+    }
 }
