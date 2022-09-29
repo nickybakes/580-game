@@ -7,6 +7,7 @@ public class CursorInputs : MonoBehaviour
     public Vector2 move;
 
     public bool accept;
+    public bool back;
     public bool wasAccepting;
 
     private void Update()
@@ -24,6 +25,11 @@ public class CursorInputs : MonoBehaviour
         AcceptInput(value.isPressed);
     }
 
+    public void OnBack(InputValue value)
+    {
+        BackInput(value.isPressed);
+    }
+
     public void MoveInput(Vector2 newMoveDirection)
     {
         move = newMoveDirection;
@@ -33,5 +39,10 @@ public class CursorInputs : MonoBehaviour
     {
         wasAccepting = accept;
         accept = pressed;
+    }
+
+    public void BackInput(bool pressed)
+    {
+        back = pressed;
     }
 }
