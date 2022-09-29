@@ -22,6 +22,8 @@ public class PlayerCombat : MonoBehaviour
     private float recentAttackCooldown;
     private const float recentAttackCooldownMax = 0.5f;
 
+    public bool hasItemEquiped = false;
+
     /// <summary>
     /// A boolean that represents if the player has attacked recently.
     /// </summary>

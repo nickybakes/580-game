@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerItemPickUpThrow : MonoBehaviour
 {
-    private StarterAssetsInputs _input;
+    /*private StarterAssetsInputs _input;
     private PlayerStatus _status;
     private GameObject _itemManagerObject;
     private ItemManager _itemManager;
@@ -81,10 +81,10 @@ public class PlayerItemPickUpThrow : MonoBehaviour
                 _playerStatus.currentEquipState = EquipState.DefaultState;
             }*/
 
-            itemPickedUp = false;
+            /*itemPickedUp = false;
             readyToThrow = false;
             _itemManager.SpawnThrownItem(pickedUpItemTag, this.transform, forceMultiplier);
             forceMultiplier = 0;
         }
-    }
+    }*/
 }

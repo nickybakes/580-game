@@ -5,7 +5,7 @@ using Random = System.Random;
 
 public class ItemManager : MonoBehaviour
 {
-    public List<GameObject> itemsOnGround;
+    //public List<GameObject> itemsOnGround;
     public List<GameObject> itemsToSpawn = new List<GameObject>();
     float spawnTimer;
     float spawnTimerMax;
@@ -16,7 +16,7 @@ public class ItemManager : MonoBehaviour
     {
         spawnTimer = 0f;
         spawnTimerMax = 10f;
-        itemsOnGround = new List<GameObject>();
+        //itemsOnGround = new List<GameObject>();
     }
 
     // Update is called once per frame
@@ -37,18 +37,18 @@ public class ItemManager : MonoBehaviour
         int randomZCoordinate = r.Next(-40, 40);
         Vector3 spawnLocation = new Vector3(randomXCoordinate, 1, randomZCoordinate);
         GameObject newItem = Instantiate(itemsToSpawn[randomItemIndex], spawnLocation, Quaternion.identity);
-        itemsOnGround.Add(newItem);
+        //itemsOnGround.Add(newItem);
     }
 
-    public string DeleteItemAndRemoveFromList(int indexToDelete)
+    /*public string DeleteItemAndRemoveFromList(int indexToDelete)
     {
         string itemTag = itemsOnGround[indexToDelete].tag;
         Destroy(itemsOnGround[indexToDelete]);
         itemsOnGround.RemoveAt(indexToDelete);
         return itemTag;
-    }
+    }*/
 
-    public void SpawnThrownItem(string itemTag, Transform playerTransform, float forceMultiplier)
+    /*public void SpawnThrownItem(string itemTag, Transform playerTransform, float forceMultiplier)
     {
         GameObject prefabToSpawn = null;
         for (int i = 0; i < itemsToSpawn.Count; i++)
@@ -64,5 +64,5 @@ public class ItemManager : MonoBehaviour
         throwDirection.Normalize();
         thrownItem.GetComponent<Rigidbody>().AddForce(throwDirection * forceMultiplier);
         itemsOnGround.Add(thrownItem);
-    }
+    }*/
 }
