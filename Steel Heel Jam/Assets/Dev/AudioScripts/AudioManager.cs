@@ -4,6 +4,11 @@ using System;
 
 public class AudioManager : MonoBehaviour
 {
+    [SerializeField] private AudioMixerGroup musicMixerGroup;
+    [SerializeField] private AudioMixerGroup soundEffectsMixerGroup;
+    [SerializeField] private AudioMixerGroup voiceOverMixerGroup;
+    [Space(10)] //For ease of reading in Inspector.
+
     public Sound[] sounds;
 
     public static AudioManager instance;
@@ -33,6 +38,22 @@ public class AudioManager : MonoBehaviour
             s.source.volume = s.volume;
             s.source.pitch = s.pitch;
             s.source.loop = s.loop;
+
+            switch (s.audioType)
+            {
+                case Sound.AudioTypes.Music:
+                    s.source.outputAudioMixerGroup = musicMixerGroup;
+                    break;
+                case Sound.AudioTypes.SoundEffect:
+                    s.source.outputAudioMixerGroup = soundEffectsMixerGroup;
+                    break;
+                case Sound.AudioTypes.VoiceOver:
+                    s.source.outputAudioMixerGroup = voiceOverMixerGroup;
+                    break;
+            }
+
+            if (s.playOnAwake)
+                s.source.Play();
         }
     }
 
@@ -140,5 +161,12 @@ public class AudioManager : MonoBehaviour
             return null;
         }
         return s;
+    }
+
+    public void UpdateMixerVolume()
+    {
+        musicMixerGroup.audioMixer.SetFloat("MusicVolume", Mathf.Log10(AudioOptionsManager.musicVolume) * 20);
+        soundEffectsMixerGroup.audioMixer.SetFloat("SoundEffectsVolume", Mathf.Log10(AudioOptionsManager.soundEffectsVolume) * 20);
+        voiceOverMixerGroup.audioMixer.SetFloat("VoiceOverVolume", Mathf.Log10(AudioOptionsManager.voiceOverVolume) * 20);
     }
 }
