@@ -66,9 +66,15 @@ public class PlayerStatus : MonoBehaviour
     /// </summary>
     private float OOBStaminaLossCooldown;
 
-    [SerializeField] private const float OOBStaminaDamage = 20f;
+    [SerializeField] private const float OOBStaminaDamage = 10f;
 
-    [SerializeField] private const float OOBMaxStaminaDamage = 10f;
+    [SerializeField] private const float OOBMaxStaminaDamage = 5f;
+
+    [SerializeField] private const float StaminaRegenCooldownMax = 1f;
+
+    private float staminaRegenCooldown;
+
+    [SerializeField] private const float PassiveStaminaRegen = 5f;
 
     /// <summary>
     /// Use this to check if the player is currently dodging when you want to hit them with an attack
@@ -143,6 +149,18 @@ public class PlayerStatus : MonoBehaviour
         if (currentPlayerState.changeStateNow)
             SetPlayerStateImmediately(currentPlayerState.stateToChangeTo);
 
+        if (combat.AttackedRecently || isOOB)
+        {
+            staminaRegenCooldown = StaminaRegenCooldownMax;
+        }
+        else
+        {
+            staminaRegenCooldown -= Time.deltaTime;
+
+            if (staminaRegenCooldown <= 0) IncreaseStamina(PassiveStaminaRegen);
+        }
+
+        print(stamina);
     }
 
     public void SetPlayerStateImmediately(BasicState state)
@@ -183,10 +201,21 @@ public class PlayerStatus : MonoBehaviour
     }
 
     /// <summary>
+    /// Increases the player's stamina. This value will never go above the max.
+    /// </summary>
+    /// <param name="value">The value to increase the stamina value by.</param>
+    public void IncreaseStamina(float value)
+    {
+        stamina += value;
+
+        if (stamina > maxStamina) stamina = maxStamina;
+    }
+
+    /// <summary>
     /// Reduces the player's stamina. This value will never go below 0.
     /// </summary>
     /// <param name="value">The value to decrease the stamina value by.</param>
-    private void ReduceStamina(float value)
+    public void ReduceStamina(float value)
     {
         stamina -= value;
 

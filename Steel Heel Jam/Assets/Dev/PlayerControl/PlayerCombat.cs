@@ -19,6 +19,17 @@ public class PlayerCombat : MonoBehaviour
     public float attackCooldown;
     public const float attackCooldownMax = .35f;
 
+    /// <summary>
+    /// A boolean that represents if the player has attacked recently.
+    /// </summary>
+    public bool AttackedRecently {
+        get
+        {
+            if (attackCooldown > 0) return true;
+            return false;
+        }
+    }
+
     private float dodgeRollCoolDown;
     private const float dodgeRollCoolDownMax = .2f;
 
