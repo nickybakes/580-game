@@ -17,7 +17,7 @@ public class DefaultState
     // Fields
     //**********
     public int playerNumber;
-    private float damage = 20;
+    private float damage = 10;
     [SerializeField] protected float damageMultiplier = 1;
     private float knockback = 5;
     [SerializeField] protected float knockbackMultiplier = 1;
@@ -37,6 +37,7 @@ public class DefaultState
     [SerializeField] protected float forwardSpeedModifierMultiplier = 1;
     [SerializeField] public int maxComboCount = 3;
     public int currentComboCount = 0;
+    public float staminaCost = 5f;
     //private float backwardDisplacement;
     //protected float backwardDisplacementMultiplier;
 
