@@ -14,6 +14,16 @@ public class PlayerToken : MonoBehaviour
 
     public StarterAssetsInputs playerPrefabInputsComp;
 
+    public void SetUpCursorPrefab(GameObject cursor)
+    {
+        // playerPrefabInputsComp = cursor.GetComponent<StarterAssetsInputs>();
+        PlayerCursor cursorScript = cursor.GetComponent<PlayerCursor>();
+
+        cursorScript.playerNumberText.text = "P" + playerNumber;
+        cursorScript.cursorSprite.color = colors[playerNumber - 1];
+        cursorScript.playerNumber = playerNumber;
+    }
+
     public void SetUpPlayerPrefab(GameObject player)
     {
         playerPrefabInputsComp = player.GetComponent<StarterAssetsInputs>();
