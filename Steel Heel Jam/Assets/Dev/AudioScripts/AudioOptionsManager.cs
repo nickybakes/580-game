@@ -8,10 +8,12 @@ public class AudioOptionsManager : MonoBehaviour
     public static float musicVolume { get; private set; }
     public static float soundEffectsVolume { get; private set; }
     public static float voiceOverVolume { get; private set; }
+    public static float ambientVolume { get; private set; }
 
     [SerializeField] private TextMeshPro musicSliderText;
     [SerializeField] private TextMeshPro soundEffectSliderText;
     [SerializeField] private TextMeshPro voiceOverSliderText;
+    [SerializeField] private TextMeshPro ambientSliderText;
 
 
     //https://www.youtube.com/watch?v=LfU5xotjbPw
@@ -19,20 +21,27 @@ public class AudioOptionsManager : MonoBehaviour
     {
         musicVolume = value;
         musicSliderText.text = ((int)(value * 100)).ToString();
-        //AudioManager.Instance.UpdateMixerVolume();
+        AudioManager.instance.UpdateMixerVolume();
     }
 
     public void OnSoundEffectSliderValueChange(float value)
     {
         soundEffectsVolume = value;
         soundEffectSliderText.text = ((int)(value * 100)).ToString();
-        //AudioManager.Instance.UpdateMixerVolume();
+        AudioManager.instance.UpdateMixerVolume();
     }
 
     public void OnVoiceOverSliderValueChange(float value)
     {
         voiceOverVolume = value;
         voiceOverSliderText.text = ((int)(value * 100)).ToString();
-        //AudioManager.Instance.UpdateMixerVolume();
+        AudioManager.instance.UpdateMixerVolume();
+    }
+
+    public void OnAmbientSliderValueChange(float value)
+    {
+        ambientVolume = value;
+        ambientSliderText.text = ((int)(value * 100)).ToString();
+        AudioManager.instance.UpdateMixerVolume();
     }
 }

@@ -7,6 +7,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioMixerGroup musicMixerGroup;
     [SerializeField] private AudioMixerGroup soundEffectsMixerGroup;
     [SerializeField] private AudioMixerGroup voiceOverMixerGroup;
+    [SerializeField] private AudioMixerGroup ambientMixerGroup;
     [Space(10)] //For ease of reading in Inspector.
 
     public Sound[] sounds;
@@ -49,6 +50,9 @@ public class AudioManager : MonoBehaviour
                     break;
                 case Sound.AudioTypes.VoiceOver:
                     s.source.outputAudioMixerGroup = voiceOverMixerGroup;
+                    break;
+                case Sound.AudioTypes.Ambient:
+                    s.source.outputAudioMixerGroup = ambientMixerGroup;
                     break;
             }
 
@@ -168,5 +172,6 @@ public class AudioManager : MonoBehaviour
         musicMixerGroup.audioMixer.SetFloat("MusicVolume", Mathf.Log10(AudioOptionsManager.musicVolume) * 20);
         soundEffectsMixerGroup.audioMixer.SetFloat("SoundEffectsVolume", Mathf.Log10(AudioOptionsManager.soundEffectsVolume) * 20);
         voiceOverMixerGroup.audioMixer.SetFloat("VoiceOverVolume", Mathf.Log10(AudioOptionsManager.voiceOverVolume) * 20);
+        ambientMixerGroup.audioMixer.SetFloat("AmbientVolume", Mathf.Log10(AudioOptionsManager.ambientVolume) * 20);
     }
 }

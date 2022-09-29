@@ -7,7 +7,8 @@ public class Sound
     public enum AudioTypes {
         Music,
         SoundEffect,
-        VoiceOver 
+        VoiceOver,
+        Ambient
     }
     public AudioTypes audioType;
 
