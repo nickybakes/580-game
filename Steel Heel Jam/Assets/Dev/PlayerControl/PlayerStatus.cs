@@ -4,9 +4,10 @@ using UnityEngine;
 
 public enum PlayerChild
 {
-    Hitbox = 2,
-    Visuals = 4,
-    PickUpSphere = 5
+    Model = 0,
+    Hitbox = 1,
+    Visuals = 3,
+    PickUpSphere = 4
 }
 
 public enum Tag
