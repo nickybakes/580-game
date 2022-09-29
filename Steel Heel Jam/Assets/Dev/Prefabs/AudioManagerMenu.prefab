@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2728357844220918305}
   - component: {fileID: 8454066521746509047}
   m_Layer: 0
-  m_Name: AudioManager
+  m_Name: AudioManagerMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3d4d8fa29b55974ca44be1e60d991b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  masterMixerGroup: {fileID: 24300002, guid: 1ca6bd5d073053a4faf5da10fc88482c, type: 2}
   musicMixerGroup: {fileID: -4459372364512313063, guid: 1ca6bd5d073053a4faf5da10fc88482c,
     type: 2}
   soundEffectsMixerGroup: {fileID: -6342020048092475579, guid: 1ca6bd5d073053a4faf5da10fc88482c,
@@ -53,25 +54,7 @@ MonoBehaviour:
     type: 2}
   ambientMixerGroup: {fileID: -1552417759374218702, guid: 1ca6bd5d073053a4faf5da10fc88482c,
     type: 2}
-  sounds:
-  - audioType: 1
-    name: Smack
-    clips:
-    - {fileID: 8300000, guid: a3046481ba3e4044b9c0a43b1b295938, type: 3}
-    volume: 1
-    pitch: 1
-    loop: 0
-    playOnAwake: 0
-    source: {fileID: 0}
-  - audioType: 0
-    name: TheEmeraldTavern
-    clips:
-    - {fileID: 8300000, guid: 291e0f95c62050342a6984c897ee041f, type: 3}
-    volume: 1
-    pitch: 1
-    loop: 0
-    playOnAwake: 0
-    source: {fileID: 0}
+  sounds: []
 --- !u!114 &8454066521746509047
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -84,6 +67,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98d8463ae9bb4914cb4c30958666df60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  masterSliderText: {fileID: 0}
   musicSliderText: {fileID: 0}
   soundEffectSliderText: {fileID: 0}
   voiceOverSliderText: {fileID: 0}
