@@ -5,11 +5,13 @@ using TMPro;
 
 public class AudioOptionsManager : MonoBehaviour
 {
+    public static float masterVolume {get; private set; }
     public static float musicVolume { get; private set; }
     public static float soundEffectsVolume { get; private set; }
     public static float voiceOverVolume { get; private set; }
     public static float ambientVolume { get; private set; }
 
+    [SerializeField] private TextMeshPro masterSliderText;
     [SerializeField] private TextMeshPro musicSliderText;
     [SerializeField] private TextMeshPro soundEffectSliderText;
     [SerializeField] private TextMeshPro voiceOverSliderText;
@@ -17,6 +19,14 @@ public class AudioOptionsManager : MonoBehaviour
 
 
     //https://www.youtube.com/watch?v=LfU5xotjbPw
+    
+    public void OnMasterSliderValueChange(float value)
+    {
+        masterVolume = value;
+        masterSliderText.text = ((int)(value * 100)).ToString();
+        AudioManager.instance.UpdateMixerVolume();
+    }
+
     public void OnMusicSliderValueChange(float value)
     {
         musicVolume = value;
