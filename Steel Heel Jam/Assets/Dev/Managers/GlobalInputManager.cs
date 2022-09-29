@@ -11,6 +11,8 @@ public class GlobalInputManager : MonoBehaviour
 
     public GameObject playerPrefab;
 
+    public GameObject cursorPrefab;
+
     void Start()
     {
         playerTokens = new PlayerToken[8];
