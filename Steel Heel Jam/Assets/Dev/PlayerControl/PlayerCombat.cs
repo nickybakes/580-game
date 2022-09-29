@@ -19,13 +19,16 @@ public class PlayerCombat : MonoBehaviour
     public float attackCooldown;
     public const float attackCooldownMax = .35f;
 
+    private float recentAttackCooldown;
+    private const float recentAttackCooldownMax = 0.5f;
+
     /// <summary>
     /// A boolean that represents if the player has attacked recently.
     /// </summary>
     public bool AttackedRecently {
         get
         {
-            if (attackCooldown > 0) return true;
+            if (recentAttackCooldown > 0) return true;
             return false;
         }
     }
@@ -78,6 +81,11 @@ public class PlayerCombat : MonoBehaviour
         if (_status.CurrentPlayerState.countBlockCooldown && blockCoolDown < blockCoolDownMax)
             blockCoolDown += Time.deltaTime;
 
+        if (recentAttackCooldown > 0)
+        {
+            recentAttackCooldown -= Time.deltaTime;
+        }
+
         if (canAttack && attackCooldown > attackCooldownMax && _input.Attack)
         {
             if (_status.movement.grounded)
@@ -88,6 +96,8 @@ public class PlayerCombat : MonoBehaviour
             {
                 //AttackAir();
             }
+
+            recentAttackCooldown = recentAttackCooldownMax;
         }
 
         if (canDodgeRoll && dodgeRollCoolDown > dodgeRollCoolDownMax && _input.dodgeRoll && !_input.wasDodgeRolling)

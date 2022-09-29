@@ -157,10 +157,14 @@ public class PlayerStatus : MonoBehaviour
         {
             staminaRegenCooldown -= Time.deltaTime;
 
-            if (staminaRegenCooldown <= 0) IncreaseStamina(PassiveStaminaRegen);
+            if (staminaRegenCooldown <= 0)
+            {
+                IncreaseStamina(PassiveStaminaRegen);
+                staminaRegenCooldown = StaminaRegenCooldownMax;
+            }
         }
 
-        print(stamina);
+        print(combat.AttackedRecently);
     }
 
     public void SetPlayerStateImmediately(BasicState state)
