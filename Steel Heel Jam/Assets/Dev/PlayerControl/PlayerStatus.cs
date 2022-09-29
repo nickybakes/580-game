@@ -25,7 +25,7 @@ public class PlayerStatus : MonoBehaviour
     /// The stamina value for the player. Stamina is consumed for actions and is lost upon being hit, being the heel, or being outside of the ring.
     /// When a player's stamina is empty and they are knocked out of the zone, they are eliminated.
     /// </summary>
-    private float stamina = 100f;
+    public float stamina = 100f;
     /// <summary>
     /// The player's current maximum stamina value.
     /// </summary>
@@ -66,14 +66,29 @@ public class PlayerStatus : MonoBehaviour
     /// </summary>
     private float OOBStaminaLossCooldown;
 
+    /// <summary>
+    /// The damage to stamina that the player takes every interval while out of bounds.
+    /// </summary>
     [SerializeField] private const float OOBStaminaDamage = 10f;
 
+    /// <summary>
+    /// The loss of max stamina that the player accrues every interval while out of bounds.
+    /// </summary>
     [SerializeField] private const float OOBMaxStaminaDamage = 5f;
 
+    /// <summary>
+    /// The rate at which stamina is regained when not active.
+    /// </summary>
     [SerializeField] private const float StaminaRegenCooldownMax = 1f;
 
+    /// <summary>
+    /// The current timer for regenerating stamina.
+    /// </summary>
     private float staminaRegenCooldown;
 
+    /// <summary>
+    /// The amount of stamina restored every interval when not active.
+    /// </summary>
     [SerializeField] private const float PassiveStaminaRegen = 5f;
 
     /// <summary>
@@ -164,7 +179,7 @@ public class PlayerStatus : MonoBehaviour
             }
         }
 
-        print(combat.AttackedRecently);
+        //print(stamina);
     }
 
     public void SetPlayerStateImmediately(BasicState state)
@@ -189,12 +204,24 @@ public class PlayerStatus : MonoBehaviour
 
         if (!IsDodgeRolling)
         {
-            ReduceStamina(damage);
-
             Vector3 knockbackDir = (collisionPos - hitboxPos).normalized;
             knockback = knockback * (2 + stamina / 100);
-            Vector3 knockbackVelocity = new Vector3(knockbackDir.x * knockback, knockbackHeight, knockbackDir.z * knockback);
+
+            float staminaRatio = (maxStamina - stamina);// * 0.2f;
+
+            float staminaRatioX = staminaRatio;
+            float staminaRatioZ = staminaRatio;
+
+            if (knockbackDir.x < 0) staminaRatioX = -staminaRatio;
+            else if (knockbackDir.x == 0) staminaRatioX = 0;
+
+            if (knockbackDir.z < 0) staminaRatioZ = -staminaRatio;
+            else if (knockbackDir.z == 0) staminaRatioZ = 0;
+
+            Vector3 knockbackVelocity = new Vector3(knockbackDir.x * knockback + staminaRatioX, knockbackHeight + staminaRatio, knockbackDir.z * knockback + staminaRatioZ);
             movement.grounded = false;
+            print(knockbackVelocity.magnitude);
+            ReduceStamina(damage);
 
             attackingPlayerStatus.combat.weaponState.gotAHit = true;
 
