@@ -213,8 +213,7 @@ public class PlayerStatus : MonoBehaviour
     {
         if (other.tag == "Ring")
         {
-            isOOB = true;
-            OOBStaminaLossCooldown = OOBStaminaLossCooldownMax;
+            isOOB = false;
         }
     }
 
@@ -222,7 +221,8 @@ public class PlayerStatus : MonoBehaviour
     {
         if (other.tag == "Ring")
         {
-            isOOB = false;
+            isOOB = true;
+            OOBStaminaLossCooldown = OOBStaminaLossCooldownMax;
         }
     }
 }
