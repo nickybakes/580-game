@@ -1004,7 +1004,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0.0000038147, y: 31}
-  m_SizeDelta: {x: 1109.19, y: 888.1}
+  m_SizeDelta: {x: 1719.8, y: 888.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &441815542
 GameObject:
@@ -1891,15 +1891,15 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Lose stamina while out of the ring.
+  m_text: 'Lose Approval while out of the ring.
 
-    Also lose stamina while being
-    the Heel.
+    Heel = lose Approval over time
+    but do more damage.
 
-    Hit someone to make them the Heel.
+    Hit someone to transfer Heel status to them.
 
-    Out of ring AND 0 stamina
-    = KO''d!'
+    Out
+    of ring AND 0 stamina = KO''d!'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 382f909292acf1e41928e56b37f83a14, type: 2}
   m_sharedMaterial: {fileID: 7907999476742806842, guid: 382f909292acf1e41928e56b37f83a14,
