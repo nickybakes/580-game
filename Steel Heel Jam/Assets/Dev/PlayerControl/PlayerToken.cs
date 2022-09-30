@@ -14,6 +14,41 @@ public class PlayerToken : MonoBehaviour
 
     public StarterAssetsInputs playerPrefabInputsComp;
 
+    public CursorInputs cursorPrefabInputsComp;
+
+    public PlayerInput input;
+
+    void Start()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
+
+    void OnDestroy()
+    {
+        Debug.Log("Player Token " + playerNumber + " destroyed.");
+        if (cursorPrefabInputsComp != null)
+        {
+            Destroy(cursorPrefabInputsComp.gameObject);
+        }
+
+        if (playerPrefabInputsComp != null)
+        {
+            Destroy(playerPrefabInputsComp.gameObject);
+        }
+    }
+
+    public void SetUpCursorPrefab(GameObject cursor)
+    {
+        cursorPrefabInputsComp = cursor.GetComponent<CursorInputs>();
+        PlayerCursor cursorScript = cursor.GetComponent<PlayerCursor>();
+
+        cursorScript.playerNumberText.text = "P" + playerNumber;
+        cursorScript.cursorSprite.color = colors[playerNumber - 1];
+        cursorScript.playerNumber = playerNumber;
+
+        cursorScript.ReturnToDefaultLocation();
+    }
+
     public void SetUpPlayerPrefab(GameObject player)
     {
         playerPrefabInputsComp = player.GetComponent<StarterAssetsInputs>();
@@ -25,9 +60,37 @@ public class PlayerToken : MonoBehaviour
         status.playerNumber = playerNumber;
     }
 
+    public void OnDebugRestartGame(InputValue value)
+    {
+        if (value.isPressed)
+        {
+            Debug.Log("Restart Game");
+            AppManager.app.SwitchToScene(Scenes.MENU_TempJoinScreen);
+        }
+    }
+
+    public void OnDebugStartGame1(InputValue value)
+    {
+        if (value.isPressed)
+        {
+            Debug.Log("Start Game 1");
+            AppManager.app.SwitchToScene(Scenes.MAP_Demo_01);
+        }
+    }
+
     public void OnMove(InputValue value)
     {
         playerPrefabInputsComp.OnMove(value);
+    }
+
+    public void OnCursorMove(InputValue value)
+    {
+        cursorPrefabInputsComp.OnMove(value);
+    }
+
+    public void OnCursorBack(InputValue value)
+    {
+        cursorPrefabInputsComp.OnBack(value);
     }
 
     public void OnJump(InputValue value)
@@ -53,6 +116,7 @@ public class PlayerToken : MonoBehaviour
     public void OnBlock(InputValue value)
     {
         playerPrefabInputsComp.OnBlock(value);
+
     }
 
     public void OnThrow(InputValue value)
