@@ -49,7 +49,7 @@ public class PlayerToken : MonoBehaviour
         cursorScript.ReturnToDefaultLocation();
     }
 
-    public void SetUpPlayerPrefab(GameObject player)
+    public PlayerStatus SetUpPlayerPrefab(GameObject player)
     {
         playerPrefabInputsComp = player.GetComponent<StarterAssetsInputs>();
         PlayerStatus status = player.GetComponent<PlayerStatus>();
@@ -58,6 +58,8 @@ public class PlayerToken : MonoBehaviour
         player.transform.GetChild((int)PlayerChild.Model).GetChild(1).GetComponent<MeshRenderer>().material.SetColor("_BaseColor", colors[playerNumber - 1]);
 
         status.playerNumber = playerNumber;
+
+        return status;
     }
 
     public void OnDebugRestartGame(InputValue value)

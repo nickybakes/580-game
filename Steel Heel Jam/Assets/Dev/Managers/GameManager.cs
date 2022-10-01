@@ -12,13 +12,18 @@ public class GameManager : MonoBehaviour
 
     public HUDManager hudManager;
 
-    public PlayerStatus[] playerStatuses;
+    public CameraManager cameraManager;
+
+    public List<PlayerStatus> allPlayerStatuses;
+    public List<PlayerStatus> alivePlayerStatuses;
 
 
     // Start is called before the first frame update
     void Start()
     {
         audioManager = FindObjectOfType<AudioManager>();
+        allPlayerStatuses = new List<PlayerStatus>();
+        alivePlayerStatuses = new List<PlayerStatus>();
         SpawnPlayerPrefabs();
         //audioManager.Play("Smack");
     }
@@ -26,7 +31,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        cameraManager.UpdateCamera(alivePlayerStatuses);
     }
 
     public void SpawnPlayerPrefabs()
@@ -52,10 +57,13 @@ public class GameManager : MonoBehaviour
                 token.input.SwitchCurrentActionMap("Player");
 
                 GameObject player = Instantiate(playerPrefab, spawnPoints.GetChild(spawnPointOrder[j]).position, spawnPoints.GetChild(spawnPointOrder[j]).rotation);
-                token.SetUpPlayerPrefab(player);
+                PlayerStatus status = token.SetUpPlayerPrefab(player);
                 j++;
 
-                hudManager.CreatePlayerHeader(player);
+                allPlayerStatuses.Add(status);
+                alivePlayerStatuses.Add(status);
+
+                hudManager.CreatePlayerHeader(status);
             }
         }
     }

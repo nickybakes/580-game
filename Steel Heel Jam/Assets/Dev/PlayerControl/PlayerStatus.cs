@@ -97,6 +97,8 @@ public class PlayerStatus : MonoBehaviour
 
     public PlayerHeader playerHeader;
 
+    private new Transform transform;
+
     /// <summary>
     /// Use this to check if the player is currently dodging when you want to hit them with an attack
     /// </summary>
@@ -117,6 +119,11 @@ public class PlayerStatus : MonoBehaviour
         }
     }
 
+    public Transform GetTransform
+    {
+        get { return transform; }
+    }
+
     /// <summary>
     /// Gives you the current moveSpeed of the character (base move speed multiplied by the current state's move speed multiplier)
     /// </summary>
@@ -126,6 +133,7 @@ public class PlayerStatus : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        transform = gameObject.transform;
         currentPlayerState = new Idle();
         movement = GetComponent<PlayerMovement>();
         combat = GetComponent<PlayerCombat>();
