@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
 
     public GameObject playerPrefab;
 
+    public HUDManager hudManager;
+
     public PlayerStatus[] playerStatuses;
 
 
@@ -33,7 +35,8 @@ public class GameManager : MonoBehaviour
         spawnPoints.gameObject.SetActive(true);
         int[] spawnPointOrder = new int[spawnPoints.childCount];
 
-        for(int i = 0; i < spawnPointOrder.Length; i++){
+        for (int i = 0; i < spawnPointOrder.Length; i++)
+        {
             spawnPointOrder[i] = i;
         }
 
@@ -51,6 +54,8 @@ public class GameManager : MonoBehaviour
                 GameObject player = Instantiate(playerPrefab, spawnPoints.GetChild(spawnPointOrder[j]).position, spawnPoints.GetChild(spawnPointOrder[j]).rotation);
                 token.SetUpPlayerPrefab(player);
                 j++;
+
+                hudManager.CreatePlayerHeader(player);
             }
         }
     }

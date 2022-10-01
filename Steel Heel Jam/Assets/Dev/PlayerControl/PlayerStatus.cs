@@ -21,15 +21,19 @@ public enum Tag
 [RequireComponent(typeof(PlayerCombat))]
 public class PlayerStatus : MonoBehaviour
 {
+
+    public const float deafaultMaxStamina = 100f;
+
+
     /// <summary>
     /// The stamina value for the player. Stamina is consumed for actions and is lost upon being hit, being the heel, or being outside of the ring.
     /// When a player's stamina is empty and they are knocked out of the zone, they are eliminated.
     /// </summary>
-    public float stamina = 100f;
+    public float stamina = deafaultMaxStamina;
     /// <summary>
     /// The player's current maximum stamina value.
     /// </summary>
-    private float maxStamina = 100f;
+    public float maxStamina = deafaultMaxStamina;
     /// <summary>
     /// The lowest a player's maximum stamina can get.
     /// </summary>
@@ -90,6 +94,8 @@ public class PlayerStatus : MonoBehaviour
     /// The amount of stamina restored every interval when not active.
     /// </summary>
     [SerializeField] private const float PassiveStaminaRegen = 5f;
+
+    public PlayerHeader playerHeader;
 
     /// <summary>
     /// Use this to check if the player is currently dodging when you want to hit them with an attack
@@ -194,7 +200,7 @@ public class PlayerStatus : MonoBehaviour
 
     public void GetHit(Vector3 hitboxPos, Vector3 collisionPos, float damage, float knockback, float knockbackHeight, float hitstun, PlayerStatus attackingPlayerStatus)
     {
-        if(IsBlocking)
+        if (IsBlocking)
         {
             attackingPlayerStatus.SetPlayerStateImmediately(new BlockedStun());
             attackingPlayerStatus.movement.velocity = attackingPlayerStatus.transform.position - transform.position;
@@ -205,7 +211,7 @@ public class PlayerStatus : MonoBehaviour
         if (!IsDodgeRolling)
         {
             Vector3 knockbackDir = (collisionPos - hitboxPos).normalized;
-            knockback = knockback * (2 + stamina / 100);
+            knockback = knockback * (2 + stamina / deafaultMaxStamina);
 
             float staminaRatio = (maxStamina - stamina);// * 0.2f;
 
@@ -240,6 +246,8 @@ public class PlayerStatus : MonoBehaviour
         stamina += value;
 
         if (stamina > maxStamina) stamina = maxStamina;
+
+        playerHeader.UpdateStaminaBar();
     }
 
     /// <summary>
@@ -251,6 +259,8 @@ public class PlayerStatus : MonoBehaviour
         stamina -= value;
 
         if (stamina < 0) stamina = 0;
+
+        playerHeader.UpdateStaminaBar();
     }
 
     /// <summary>
@@ -267,6 +277,8 @@ public class PlayerStatus : MonoBehaviour
         {
             stamina = maxStamina;
         }
+
+        playerHeader.UpdateStaminaBar();
     }
 
     private void OnTriggerEnter(Collider other)
