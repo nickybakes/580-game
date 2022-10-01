@@ -55,6 +55,15 @@ MonoBehaviour:
   ambientMixerGroup: {fileID: -1552417759374218702, guid: 1ca6bd5d073053a4faf5da10fc88482c,
     type: 2}
   sounds:
+  - audioType: 0
+    name: drumLoop
+    clips:
+    - {fileID: 8300000, guid: f1fed9267e0cdc34c84a1c55bfa046e2, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 1
+    playOnAwake: 1
+    source: {fileID: 0}
   - audioType: 1
     name: Smack
     clips:
@@ -64,14 +73,32 @@ MonoBehaviour:
     loop: 0
     playOnAwake: 0
     source: {fileID: 0}
-  - audioType: 0
-    name: TheEmeraldTavern
+  - audioType: 1
+    name: orchestraHit
     clips:
-    - {fileID: 8300000, guid: 291e0f95c62050342a6984c897ee041f, type: 3}
+    - {fileID: 8300000, guid: db24964515fffd842baa2eac04250a79, type: 3}
     volume: 1
     pitch: 1
     loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - audioType: 3
+    name: market
+    clips:
+    - {fileID: 8300000, guid: 65ed942379f6b6340a3528852f44ff1a, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 1
     playOnAwake: 1
+    source: {fileID: 0}
+  - audioType: 2
+    name: exhibition
+    clips:
+    - {fileID: 8300000, guid: 906f04367f4257f49be231309b4af50a, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
     source: {fileID: 0}
 --- !u!114 &8454066521746509047
 MonoBehaviour:
