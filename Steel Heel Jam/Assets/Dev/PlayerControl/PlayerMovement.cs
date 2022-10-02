@@ -276,7 +276,7 @@ public class PlayerMovement : MonoBehaviour
                 float differenceX = velocity.x - (CurrentMoveSpeed * inputDirection.x);
                 float differenceZ = velocity.z - (CurrentMoveSpeed * inputDirection.z);
                 Vector2 speedDecayDirection = new Vector2(differenceX, differenceZ) / CurrentMoveSpeed;
-                if(CurrentMoveSpeed == 0)
+                if (CurrentMoveSpeed == 0)
                     speedDecayDirection = Vector2.zero;
 
                 velocity.x = velocity.x - speedDecayDirection.x * airSpeedChangeAmount * Time.deltaTime;
@@ -459,17 +459,14 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // apply gravity over time if under terminal (multiply by delta time twice to linearly speed up over time)
-        if (velocity.y < _terminalVelocity)
+        if (velocity.y < 0)
         {
-            if (velocity.y < 0)
-            {
-                //when falling, make gravity stronger (multiply it by a multiplier value) to give a better feel to jumps
-                velocity.y += gravity * fallGravityMultiplier * extraFallMultiplier * Time.deltaTime;
-            }
-            else
-            {
-                velocity.y += gravity * Time.deltaTime;
-            }
+            //when falling, make gravity stronger (multiply it by a multiplier value) to give a better feel to jumps
+            velocity.y += gravity * fallGravityMultiplier * extraFallMultiplier * Time.deltaTime;
+        }
+        else
+        {
+            velocity.y += gravity * Time.deltaTime;
         }
     }
 

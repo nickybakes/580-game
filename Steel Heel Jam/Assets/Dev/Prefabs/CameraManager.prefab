@@ -24,7 +24,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4198951308829617086}
-  m_LocalRotation: {x: 0.53397137, y: -0, z: -0, w: 0.8455026}
+  m_LocalRotation: {x: 0.53396875, y: 0, z: 0, w: 0.8455043}
   m_LocalPosition: {x: 0, y: 31.8, z: -1.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -45,6 +45,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54508eea90539904ebc3bc7f68fab284, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxZoom: 40
+  highestPosition: {x: 0, y: 58, z: 8}
+  mapShortestRadius: 44
+  playerRadiusVerticalMultiplier: 5
+  angleZOffset: 28
 --- !u!1 &4198951308965892339
 GameObject:
   m_ObjectHideFlags: 0
