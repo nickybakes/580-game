@@ -49,4 +49,11 @@ MonoBehaviour:
   gameSceneSettings: {fileID: 0}
   playerPrefab: {fileID: 1777015905490208814, guid: 0b9ee7085df612341ad6df4227583f65,
     type: 3}
-  playerStatuses: []
+  hudManager: {fileID: 0}
+  hudCountdown: {fileID: 0}
+  cameraManager: {fileID: 0}
+  allPlayerStatuses: []
+  alivePlayerStatuses: []
+  eliminatedPlayerStatuses: []
+  countdownTime: 3
+  gameTime: 0

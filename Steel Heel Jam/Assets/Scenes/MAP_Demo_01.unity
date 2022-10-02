@@ -5017,6 +5017,11 @@ PrefabInstance:
       objectReference: {fileID: 7924586174504487228}
     - target: {fileID: 6805674360510968633, guid: 4a76a2b278d543f459cef859a22f5af0,
         type: 3}
+      propertyPath: hudCountdown
+      value: 
+      objectReference: {fileID: 7924586174504487229}
+    - target: {fileID: 6805674360510968633, guid: 4a76a2b278d543f459cef859a22f5af0,
+        type: 3}
       propertyPath: cameraManager
       value: 
       objectReference: {fileID: 4198951308757468469}
@@ -8574,3 +8579,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d161e7d9dae81684d959af45708ce065, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &7924586174504487229 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2847466400226150194, guid: 8781a0d5f6631b244b67185782fadc18,
+    type: 3}
+  m_PrefabInstance: {fileID: 7924586174504487227}
+  m_PrefabAsset: {fileID: 0}

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -14,12 +15,16 @@ public class GameManager : MonoBehaviour
     public GameObject playerPrefab;
 
     public HUDManager hudManager;
+    public GameObject hudCountdown;
 
     public CameraManager cameraManager;
 
     public List<PlayerStatus> allPlayerStatuses;
     public List<PlayerStatus> alivePlayerStatuses;
     public List<PlayerStatus> eliminatedPlayerStatuses;
+
+    public int countdownTime;
+    private TextMeshProUGUI countdownDisplay;
 
     /// <summary>
     /// Starts counting up after the game starts
@@ -36,7 +41,33 @@ public class GameManager : MonoBehaviour
         alivePlayerStatuses = new List<PlayerStatus>();
         eliminatedPlayerStatuses = new List<PlayerStatus>();
         SpawnPlayerPrefabs();
-        //audioManager.Play("Smack");
+
+        //Grabs the countdown text from GameHUD and starts a countdown.
+        countdownDisplay = hudCountdown.GetComponent<TextMeshProUGUI>();
+        StartCoroutine(CountdownToStart());
+    }
+
+    /// <summary>
+    /// Creates match countdown, limiting player movement until over.
+    /// </summary>
+    IEnumerator CountdownToStart()
+    {
+        while (countdownTime > 0)
+        {
+            countdownDisplay.text = countdownTime.ToString();
+
+            yield return new WaitForSeconds(1f);
+
+            countdownTime--;
+        }
+
+        countdownDisplay.text = "BRAWL!";
+
+        // Player movement limited by PlayerStatus update().
+
+        yield return new WaitForSeconds(1f);
+
+        countdownDisplay.gameObject.SetActive(false);
     }
 
     // Update is called once per frame

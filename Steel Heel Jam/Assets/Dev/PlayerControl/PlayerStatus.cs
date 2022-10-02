@@ -157,6 +157,10 @@ public class PlayerStatus : MonoBehaviour
             currentPlayerState = new Idle();
 #endif
 
+        // Prevents player movement on game start countdown.
+        if (GameManager.game.countdownTime > 0)
+            return;
+
         if (eliminated && timeOfEliminiation == 0)
             GameManager.game.EliminatePlayer(this);
 
