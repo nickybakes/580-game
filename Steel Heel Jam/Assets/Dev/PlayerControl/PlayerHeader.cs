@@ -36,6 +36,10 @@ public class PlayerHeader : MonoBehaviour
     private const float dangerBlinkTimeMax = .15f;
     private const float staminaDangerThreshold = .12f;
 
+    public PlayerStatus Status{
+        get{ return playerStatus; }
+    }
+
 
 
     public void Setup(PlayerStatus status, Canvas c)

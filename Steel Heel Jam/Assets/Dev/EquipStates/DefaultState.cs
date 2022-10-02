@@ -154,6 +154,11 @@ public class DefaultState
         hitbox.SetActive(true);
     }
 
+    public virtual void ForceEndAttack()
+    {
+        hitbox.SetActive(false);
+    }
+
     /// <summary>
     /// Sets the hitbox size and duration.
     /// </summary>

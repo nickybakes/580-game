@@ -13,6 +13,7 @@ public enum AnimationState
     AttackGroundDuration,
     AttackGroundRecovery,
     Knockback,
+    Eliminated,
 }
 
 //public enum PlayerState

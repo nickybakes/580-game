@@ -95,6 +95,10 @@ public class PlayerStatus : MonoBehaviour
     /// </summary>
     [SerializeField] private const float PassiveStaminaRegen = 5f;
 
+    public bool eliminated;
+
+    public float timeOfEliminiation;
+
     public PlayerHeader playerHeader;
 
     private new Transform transform;
@@ -153,6 +157,9 @@ public class PlayerStatus : MonoBehaviour
             currentPlayerState = new Idle();
 #endif
 
+        if (eliminated && timeOfEliminiation == 0)
+            GameManager.game.EliminatePlayer(this);
+
         // If the player is out of bounds . . .
         if (isOOB)
         {
@@ -208,6 +215,9 @@ public class PlayerStatus : MonoBehaviour
 
     public void GetHit(Vector3 hitboxPos, Vector3 collisionPos, float damage, float knockback, float knockbackHeight, float hitstun, PlayerStatus attackingPlayerStatus)
     {
+        if (eliminated)
+            return;
+
         if (IsBlocking)
         {
             attackingPlayerStatus.SetPlayerStateImmediately(new BlockedStun());
@@ -255,7 +265,8 @@ public class PlayerStatus : MonoBehaviour
 
         if (stamina > maxStamina) stamina = maxStamina;
 
-        playerHeader.UpdateStaminaBar();
+        if (!eliminated)
+            playerHeader.UpdateStaminaBar();
     }
 
     /// <summary>
@@ -268,7 +279,8 @@ public class PlayerStatus : MonoBehaviour
 
         if (stamina < 0) stamina = 0;
 
-        playerHeader.UpdateStaminaBar();
+        if (!eliminated)
+            playerHeader.UpdateStaminaBar();
     }
 
     /// <summary>
@@ -286,7 +298,8 @@ public class PlayerStatus : MonoBehaviour
             stamina = maxStamina;
         }
 
-        playerHeader.UpdateStaminaBar();
+        if (!eliminated)
+            playerHeader.UpdateStaminaBar();
     }
 
     private void OnTriggerEnter(Collider other)

@@ -22,28 +22,50 @@ public class CameraManager : MonoBehaviour
     private float previousZoom;
 
 
-    public void UpdateCamera(List<PlayerStatus> players)
+    public void UpdateCamera(List<PlayerStatus> alivePlayers, List<PlayerStatus> eliminatedPlayers)
     {
-        if (players == null)
+        if (alivePlayers == null)
             return;
         // Bounds playerBounds = new Bounds(Vector3.Lerp(minPosition, maxPosition, .5f), Vector3.one * 10);
 
         Vector3 boundsMin = new Vector3(float.MaxValue, float.MaxValue, float.MaxValue);
         Vector3 boundsMax = new Vector3(float.MinValue, float.MinValue, float.MinValue);
 
-        foreach (PlayerStatus status in players)
+        List<Vector3> positions = new List<Vector3>(alivePlayers.Count + eliminatedPlayers.Count);
+
+        foreach (PlayerStatus status in alivePlayers)
         {
             if (status.GetTransform != null)
             {
-                Vector3 pos = status.GetTransform.position;
-                boundsMin.x = Mathf.Min(pos.x, boundsMin.x);
-                boundsMin.y = Mathf.Min(pos.y, boundsMin.y);
-                boundsMin.z = Mathf.Min(pos.z, boundsMin.z);
-
-                boundsMax.x = Mathf.Max(pos.x, boundsMax.x);
-                boundsMax.y = Mathf.Max(pos.y, boundsMax.y);
-                boundsMax.z = Mathf.Max(pos.z, boundsMax.z);
+                positions.Add(status.GetTransform.position);
             }
+        }
+
+        foreach (PlayerStatus status in eliminatedPlayers)
+        {
+            if (status.GetTransform != null && status.eliminated)
+            {
+                float eliminationTimeAmount = GameManager.game.gameTime - status.timeOfEliminiation;
+                if (eliminationTimeAmount <= 3)
+                {
+                    positions.Add(status.GetTransform.position);
+                }
+                else if (eliminationTimeAmount > 3 && eliminationTimeAmount < 6)
+                {
+                    positions.Add(Vector3.Lerp(status.GetTransform.position, positions[0], (GameManager.game.gameTime - status.timeOfEliminiation - 3) / 3f));
+                }
+            }
+        }
+
+        foreach (Vector3 pos in positions)
+        {
+            boundsMin.x = Mathf.Min(pos.x, boundsMin.x);
+            boundsMin.y = Mathf.Min(pos.y, boundsMin.y);
+            boundsMin.z = Mathf.Min(pos.z, boundsMin.z);
+
+            boundsMax.x = Mathf.Max(pos.x, boundsMax.x);
+            boundsMax.y = Mathf.Max(pos.y, boundsMax.y);
+            boundsMax.z = Mathf.Max(pos.z, boundsMax.z);
         }
 
 
@@ -54,11 +76,11 @@ public class CameraManager : MonoBehaviour
 
         // playerBoundsSize += new Vector3(12, 1, 7);
 
-        float playerRadius = Mathf.Pow(playerBoundsSize.x/2, 2) + playerRadiusZMultiplier*Mathf.Pow(playerBoundsSize.z/2, 2);
+        float playerRadius = Mathf.Pow(playerBoundsSize.x / 2, 2) + playerRadiusZMultiplier * Mathf.Pow(playerBoundsSize.z / 2, 2);
 
         // Vector3 normalizedPlayerBounds = new Vector3(playerBoundsSize.x / cameraBoundsSize.x, playerBoundsSize.y / cameraBoundsSize.y, playerBoundsSize.z / cameraBoundsSize.z);
 
-        float zoomPercentage = playerRadius/(Mathf.Pow(mapShortestRadius, 2));
+        float zoomPercentage = playerRadius / (Mathf.Pow(mapShortestRadius, 2));
 
         float targetZoom = Mathf.Lerp(maxZoom, 0, zoomPercentage);
 
@@ -74,7 +96,7 @@ public class CameraManager : MonoBehaviour
         // Vector3 targetPosition = new Vector3(Mathf.Clamp(x, minPosition.x, maxPosition.x), minPosition.y, Mathf.Clamp(z, minPosition.z, maxPosition.z));
 
         // Debug.Log(center);
-    
+
 
         // Vector3 targetPosition = Vector3.Lerp(new Vector3(center.x, highestPosition.y, center.z), highestPosition, 0);
         Vector3 targetPosition = new Vector3(center.x, Mathf.Lerp(previousPosition.y, highestPosition.y + center.y, .1f), center.z);

@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+
+    public static GameManager game;
+
     public AudioManager audioManager;
 
     public GameSceneSettings gameSceneSettings;
@@ -16,14 +19,22 @@ public class GameManager : MonoBehaviour
 
     public List<PlayerStatus> allPlayerStatuses;
     public List<PlayerStatus> alivePlayerStatuses;
+    public List<PlayerStatus> eliminatedPlayerStatuses;
+
+    /// <summary>
+    /// Starts counting up after the game starts
+    /// </summary>
+    public float gameTime;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        GameManager.game = this;
         audioManager = FindObjectOfType<AudioManager>();
         allPlayerStatuses = new List<PlayerStatus>();
         alivePlayerStatuses = new List<PlayerStatus>();
+        eliminatedPlayerStatuses = new List<PlayerStatus>();
         SpawnPlayerPrefabs();
         //audioManager.Play("Smack");
     }
@@ -31,7 +42,8 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        cameraManager.UpdateCamera(alivePlayerStatuses);
+        gameTime += Time.deltaTime;
+        cameraManager.UpdateCamera(alivePlayerStatuses, eliminatedPlayerStatuses);
     }
 
     public void SpawnPlayerPrefabs()
@@ -66,6 +78,16 @@ public class GameManager : MonoBehaviour
                 hudManager.CreatePlayerHeader(status);
             }
         }
+    }
+
+    public void EliminatePlayer(PlayerStatus status)
+    {
+        alivePlayerStatuses.Remove(status);
+        eliminatedPlayerStatuses.Add(status);
+        status.timeOfEliminiation = gameTime;
+        hudManager.RemoveHeader(status);
+        status.SetPlayerStateImmediately(new Eliminated());
+        status.playerHeader = null;
     }
 
     private void ShuffleArray<T>(T[] array)

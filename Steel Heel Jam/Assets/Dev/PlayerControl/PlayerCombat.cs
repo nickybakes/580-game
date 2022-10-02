@@ -131,7 +131,9 @@ public class PlayerCombat : MonoBehaviour
         _status.CurrentPlayerState.stateToChangeTo.timeToChangeState = weaponState.Duration;
         _status.CurrentPlayerState.stateToChangeTo.moveSpeedMultiplier = weaponState.ForwardSpeedModifier;
         _status.CurrentPlayerState.stateToChangeTo.stateToChangeTo.timeToChangeState = weaponState.Recovery;
-        _status.movement.SetTheSetForwardDirection();
+
+        if(weaponState.currentComboCount == 0)
+            _status.movement.SetTheSetForwardDirection();
     }
 
     private void DodgeRoll()

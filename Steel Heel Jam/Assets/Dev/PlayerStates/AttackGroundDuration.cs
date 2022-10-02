@@ -42,5 +42,6 @@ public class AttackGroundDuration : BasicState
     public override void OnExitThisState(BasicState nextState, PlayerStatus status)
     {
         base.OnExitThisState(nextState, status);
+        status.combat.weaponState.ForceEndAttack();
     }
 }
