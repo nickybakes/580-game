@@ -18,16 +18,18 @@ public class Item : MonoBehaviour
     }
 
     public ItemType itemType;
+    public bool isOnScreen;
 
-    // Start is called before the first frame update
-    void Start()
+    // Disable this script when the GameObject moves out of the camera's view
+    void OnBecameInvisible()
     {
-        
+        isOnScreen = false;
     }
 
-    // Update is called once per frame
-    void Update()
+    // Enable this script when the GameObject moves into the camera's view
+    void OnBecameVisible()
     {
-        
+        isOnScreen = true;
     }
+
 }

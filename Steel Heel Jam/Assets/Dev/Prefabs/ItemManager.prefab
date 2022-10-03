@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8191337005771635382}
   m_Layer: 0
   m_Name: ItemManager
-  m_TagString: Untagged
+  m_TagString: ItemManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -44,3 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c53c8b0776c3f21488025139a6d7a505, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemsOnGround: []
+  itemsToSpawn:
+  - {fileID: 983809085666807924, guid: b10bd05b193a26840bc3f274e8a977fe, type: 3}

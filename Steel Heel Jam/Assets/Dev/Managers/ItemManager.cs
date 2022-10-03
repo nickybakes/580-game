@@ -5,7 +5,7 @@ using Random = System.Random;
 
 public class ItemManager : MonoBehaviour
 {
-    //public List<GameObject> itemsOnGround;
+    public List<GameObject> itemsOnGround;
     public List<GameObject> itemsToSpawn = new List<GameObject>();
     float spawnTimer;
     float spawnTimerMax;
@@ -37,7 +37,7 @@ public class ItemManager : MonoBehaviour
         int randomZCoordinate = r.Next(-40, 40);
         Vector3 spawnLocation = new Vector3(randomXCoordinate, 1, randomZCoordinate);
         GameObject newItem = Instantiate(itemsToSpawn[randomItemIndex], spawnLocation, Quaternion.identity);
-        //itemsOnGround.Add(newItem);
+        itemsOnGround.Add(newItem);
     }
 
     /*public string DeleteItemAndRemoveFromList(int indexToDelete)
