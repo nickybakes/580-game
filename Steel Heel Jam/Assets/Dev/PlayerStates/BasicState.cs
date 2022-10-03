@@ -74,7 +74,11 @@ public class BasicState
 
     public bool canBlock = true;
 
-    public bool canPickUp = true;
+    /// <summary>
+    /// False for all but idle.
+    /// (this way it doesn't need to be explicitly stated in every status.)
+    /// </summary>
+    public bool canPickUp = false;
 
 
     public AnimationState animationState = AnimationState.Idle;

@@ -11,7 +11,6 @@ public class ItemPickUp : BasicState
         canPlayerControlRotate = false;
         updateMovement = true;
         animationState = AnimationState.Idle;
-        canPickUp = false;
 
         stateToChangeTo = new ItemPickUpRecovery();
     }

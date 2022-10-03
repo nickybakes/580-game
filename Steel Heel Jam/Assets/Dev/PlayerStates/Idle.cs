@@ -12,6 +12,7 @@ public class Idle : BasicState
         canPlayerControlMove = true;
         canPlayerControlRotate = true;
         updateMovement = true;
+        canPickUp = true;
         animationState = AnimationState.Idle;
     }
 

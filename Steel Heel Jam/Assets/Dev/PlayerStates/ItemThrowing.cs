@@ -17,7 +17,6 @@ public class ItemThrowing : BasicState
         moveSpeedMultiplier = 1.0f;
         //animationState = AnimationState.Throwing;
         //visual = VisualChild.Throw;
-        canPickUp = false;
 
         stateToChangeTo = new Idle();
     }
