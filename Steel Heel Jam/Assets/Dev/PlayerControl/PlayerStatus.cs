@@ -172,7 +172,14 @@ public class PlayerStatus : MonoBehaviour
         if (eliminated && timeOfEliminiation == 0)
             GameManager.game.EliminatePlayer(this);
 
+        movement.UpdateManual(currentPlayerState.updateMovement, currentPlayerState.canPlayerControlMove, currentPlayerState.canPlayerControlRotate);
 
+        combat.UpdateManual(currentPlayerState.canAttack, currentPlayerState.canDodgeRoll, currentPlayerState.canBlock, currentPlayerState.canPickUp, currentPlayerState.canThrow);
+
+        currentPlayerState.Update(this);
+
+        if (currentPlayerState.changeStateNow)
+            SetPlayerStateImmediately(currentPlayerState.stateToChangeTo);
 
         // If the player is out of bounds . . .
         if (isOOB)
@@ -189,15 +196,6 @@ public class PlayerStatus : MonoBehaviour
                 //ReduceMaxStamina(OOBMaxStaminaDamage);
             }
         }
-
-        movement.UpdateManual(currentPlayerState.updateMovement, currentPlayerState.canPlayerControlMove, currentPlayerState.canPlayerControlRotate);
-
-        combat.UpdateManual(currentPlayerState.canAttack, currentPlayerState.canDodgeRoll, currentPlayerState.canBlock, currentPlayerState.canPickUp, currentPlayerState.canThrow);
-
-        currentPlayerState.Update(this);
-
-        if (currentPlayerState.changeStateNow)
-            SetPlayerStateImmediately(currentPlayerState.stateToChangeTo);
 
         if (combat.AttackedRecently || isOOB)
         {
@@ -294,7 +292,7 @@ public class PlayerStatus : MonoBehaviour
 
         if (stamina > maxStamina) stamina = maxStamina;
 
-        if (!eliminated)
+        if (playerHeader != null)
             playerHeader.UpdateStaminaBar();
     }
 
@@ -308,8 +306,13 @@ public class PlayerStatus : MonoBehaviour
 
         if (stamina < 0) stamina = 0;
 
-        if (!eliminated)
+        if (playerHeader != null)
             playerHeader.UpdateStaminaBar();
+
+        if (stamina == 0 && isOOB)
+        {
+            GameManager.game.EliminatePlayer(this);
+        }
     }
 
     /// <summary>
@@ -327,7 +330,7 @@ public class PlayerStatus : MonoBehaviour
             stamina = maxStamina;
         }
 
-        if (!eliminated)
+        if (playerHeader != null)
             playerHeader.UpdateStaminaBar();
     }
 
