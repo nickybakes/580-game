@@ -95,6 +95,14 @@ public class PlayerStatus : MonoBehaviour
     /// </summary>
     [SerializeField] private const float PassiveStaminaRegen = 5f;
 
+    public float totalDamageTaken;
+
+    public float recentDamageTaken;
+
+    public float recentDamageTakenMax;
+
+    public float recentDamageTimeCurrent;
+
     public bool eliminated;
 
     public float timeOfEliminiation;
@@ -164,6 +172,8 @@ public class PlayerStatus : MonoBehaviour
         if (eliminated && timeOfEliminiation == 0)
             GameManager.game.EliminatePlayer(this);
 
+
+
         // If the player is out of bounds . . .
         if (isOOB)
         {
@@ -176,7 +186,7 @@ public class PlayerStatus : MonoBehaviour
                 // Reset the timer for OOB stamina loss and decrease stamina & maximum stamina
                 OOBStaminaLossCooldown = OOBStaminaLossCooldownMax;
                 ReduceStamina(OOBStaminaDamage);
-                ReduceMaxStamina(OOBMaxStaminaDamage);
+                //ReduceMaxStamina(OOBMaxStaminaDamage);
             }
         }
 
@@ -204,7 +214,12 @@ public class PlayerStatus : MonoBehaviour
             }
         }
 
-        //print(stamina);
+        if (recentDamageTimeCurrent > 0)
+        {
+            recentDamageTimeCurrent -= Time.deltaTime;
+
+            recentDamageTaken = Mathf.Max(0, Mathf.Lerp(0, recentDamageTakenMax, recentDamageTimeCurrent / 10f));
+        }
     }
 
     public void SetPlayerStateImmediately(BasicState state)
@@ -250,6 +265,16 @@ public class PlayerStatus : MonoBehaviour
             movement.grounded = false;
             print(knockbackVelocity.magnitude);
             ReduceStamina(damage);
+            totalDamageTaken += damage;
+            
+            recentDamageTaken += damage;
+            recentDamageTakenMax = recentDamageTaken;
+            recentDamageTimeCurrent = 10f;
+
+            if (totalDamageTaken > 200f && recentDamageTaken > 30f)
+            {
+                ReduceMaxStamina(damage);
+            }
 
             attackingPlayerStatus.combat.weaponState.gotAHit = true;
 
