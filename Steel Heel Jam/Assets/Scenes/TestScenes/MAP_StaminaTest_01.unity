@@ -135,6 +135,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: ItemManager
       objectReference: {fileID: 0}
+    - target: {fileID: 1599914268308543230, guid: 3c1b5738da581b644b4422e00da43ba3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2331629727776989314, guid: 3c1b5738da581b644b4422e00da43ba3,
         type: 3}
       propertyPath: m_RootOrder
@@ -225,7 +230,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &439297811
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -370,6 +375,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerJoiner
       objectReference: {fileID: 0}
+    - target: {fileID: 974872262451518214, guid: 31c1c55cd352ab1439085e34a31e9388,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 31c1c55cd352ab1439085e34a31e9388, type: 3}
 --- !u!1001 &1138281779
@@ -472,7 +482,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh46298
+  m_Name: pb_Mesh31064
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -693,7 +703,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 25a9fb42d361f46ad89221f6d301e96e, type: 2}
+  - {fileID: 2100000, guid: 21f8589a435c59a468988df7c2288637, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1136,6 +1146,19 @@ CapsuleCollider:
   m_Height: 20
   m_Direction: 1
   m_Center: {x: 0, y: 5, z: 0}
+--- !u!114 &1862827374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1862827369}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc6af0f1ba4f80e4f9136aa6c1ddaed1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tr: {fileID: 0}
 --- !u!1 &2081900687
 GameObject:
   m_ObjectHideFlags: 0

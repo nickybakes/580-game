@@ -14,10 +14,14 @@ public class GameManager : MonoBehaviour
 
     public GameObject playerPrefab;
 
+    public GameObject ringPrefab;
+
     public HUDManager hudManager;
     public GameObject hudCountdown;
 
     public CameraManager cameraManager;
+
+    private Ring ringScript;
 
     public List<PlayerStatus> allPlayerStatuses;
     public List<PlayerStatus> alivePlayerStatuses;
@@ -41,6 +45,7 @@ public class GameManager : MonoBehaviour
         alivePlayerStatuses = new List<PlayerStatus>();
         eliminatedPlayerStatuses = new List<PlayerStatus>();
         SpawnPlayerPrefabs();
+        SpawnRing();
 
         //Grabs the countdown text from GameHUD and starts a countdown.
         countdownDisplay = hudCountdown.GetComponent<TextMeshProUGUI>();
@@ -131,5 +136,16 @@ public class GameManager : MonoBehaviour
             array[n] = array[k];
             array[k] = temp;
         }
+    }
+
+    private void SpawnRing()
+    {
+        GameObject g = Instantiate(ringPrefab);
+        ringScript = g.GetComponent<Ring>();
+
+        g.transform.localScale = new Vector3(90, 7, 90);
+
+        // Resize ring to a diameter of 10 units in 5 minutes
+        ringScript.ResizeRing(10, 240);
     }
 }

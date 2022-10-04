@@ -4,35 +4,32 @@ using UnityEngine;
 
 public class Ring : MonoBehaviour
 {
-    Transform tr;
+    public Transform tr;
 
     private Vector3 startingSize;
     private Vector3 targetSize;
-    private float resizeMagnitude;
 
-    private float time;
-    private float resizeTimer;
+    private float ringResizeTimeCurrent;
+    private float ringResizeTimeMax;
     
     // Start is called before the first frame update
     void Start()
     {
         tr = transform;
-
-        ResizeRing(5, 0.2f);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (resizeTimer > 0)
+        if (ringResizeTimeCurrent <= ringResizeTimeMax)
         {
-            float size = resizeMagnitude * Time.deltaTime * time;
-            //print(size);
-            
-        }
+            ringResizeTimeCurrent += Time.deltaTime;
 
-        transform.localScale = Vector3.Lerp(transform.localScale, targetSize, time * Time.deltaTime);
-        print(transform.localScale);
+            tr.localScale = Vector3.Lerp(startingSize, targetSize, ringResizeTimeCurrent / ringResizeTimeMax);
+
+            Shader.SetGlobalVector("ringPosition", new Vector2(tr.position.x, tr.position.z));
+            Shader.SetGlobalFloat("ringRadius", tr.localScale.x);
+        }
     }
 
     /// <summary>
@@ -44,9 +41,8 @@ public class Ring : MonoBehaviour
     {
         startingSize = tr.localScale;
         targetSize = new Vector3(size, tr.localScale.y, size);
-        //resizeMagnitude = targetSize - startingSize;
 
-        this.time = time;
-        resizeTimer = time;
+        ringResizeTimeCurrent = 0;
+        ringResizeTimeMax = time;
     }
 }

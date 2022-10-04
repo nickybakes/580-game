@@ -88,7 +88,7 @@ public class PlayerCombat : MonoBehaviour
             recentAttackCooldown -= Time.deltaTime;
         }
 
-        if (canAttack && attackCooldown > attackCooldownMax && _input.Attack && _status.stamina >= weaponState.staminaCost)
+        if (canAttack && attackCooldown > attackCooldownMax && _input.Attack && _status.stamina > 0)
         {
             if (_status.movement.grounded)
             {
@@ -99,7 +99,7 @@ public class PlayerCombat : MonoBehaviour
                 //AttackAir();
             }
 
-            _status.ReduceStamina(weaponState.staminaCost);
+            //_status.ReduceStamina(weaponState.staminaCost);
             recentAttackCooldown = recentAttackCooldownMax;
         }
 
