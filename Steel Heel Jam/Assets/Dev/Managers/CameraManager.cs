@@ -46,6 +46,7 @@ public class CameraManager : MonoBehaviour
             if (status.GetTransform != null && status.eliminated)
             {
                 float eliminationTimeAmount = GameManager.game.gameTime - status.timeOfEliminiation;
+
                 if (eliminationTimeAmount <= 3)
                 {
                     positions.Add(status.GetTransform.position);

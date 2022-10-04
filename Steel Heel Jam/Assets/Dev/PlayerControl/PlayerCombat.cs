@@ -104,13 +104,13 @@ public class PlayerCombat : MonoBehaviour
             recentActionCooldown = recentActionCooldownMax;
         }
 
-        if (canDodgeRoll && dodgeRollCoolDown > dodgeRollCoolDownMax && _input.dodgeRoll && !_input.wasDodgeRolling)
+        if (canDodgeRoll && dodgeRollCoolDown > dodgeRollCoolDownMax && _input.dodgeRoll && !_input.wasDodgeRolling && _status.stamina > 0)
         {
             DodgeRoll();
             recentActionCooldown = recentActionCooldownMax;
         }
 
-        if (canBlock && blockCoolDown > blockCoolDownMax && _input.block && !_input.wasBlocking)
+        if (canBlock && blockCoolDown > blockCoolDownMax && _input.block && !_input.wasBlocking && _status.stamina > 0)
         {
             Block();
             recentActionCooldown = recentActionCooldownMax;

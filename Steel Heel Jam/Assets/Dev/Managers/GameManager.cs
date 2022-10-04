@@ -118,6 +118,7 @@ public class GameManager : MonoBehaviour
 
     public void EliminatePlayer(PlayerStatus status)
     {
+        status.eliminated = true;
         alivePlayerStatuses.Remove(status);
         eliminatedPlayerStatuses.Add(status);
         status.timeOfEliminiation = gameTime;
@@ -146,6 +147,6 @@ public class GameManager : MonoBehaviour
         g.transform.localScale = new Vector3(60, 7, 60);
 
         // Resize ring to a diameter of 10 units in 3 minutes
-        ringScript.ResizeRing(10, 180);
+        ringScript.ResizeRing(10, 5);
     }
 }

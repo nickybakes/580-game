@@ -59,7 +59,7 @@ public class PlayerStatus : MonoBehaviour
 
     [SerializeField] public float missedBlockStaminaDamage = 20f;
 
-    [SerializeField] public float dodgeRollStaminaDamage = 10f;
+    [SerializeField] public float dodgeRollStaminaDamage = 16f;
 
     /// <summary>
     /// A boolean that represents if the player is outside of the ring.
@@ -175,9 +175,6 @@ public class PlayerStatus : MonoBehaviour
         if (GameManager.game.countdownTime > 0)
             return;
 
-        if (eliminated && timeOfEliminiation == 0)
-            GameManager.game.EliminatePlayer(this);
-
         movement.UpdateManual(currentPlayerState.updateMovement, currentPlayerState.canPlayerControlMove, currentPlayerState.canPlayerControlRotate);
 
         combat.UpdateManual(currentPlayerState.canAttack, currentPlayerState.canDodgeRoll, currentPlayerState.canBlock, currentPlayerState.canPickUp, currentPlayerState.canThrow);
@@ -255,7 +252,7 @@ public class PlayerStatus : MonoBehaviour
             Vector3 knockbackDir = (collisionPos - hitboxPos).normalized;
             knockback = knockback * (2 + stamina / deafaultMaxStamina);
 
-            float staminaRatio = (maxStamina - stamina);// * 0.2f;
+            float staminaRatio = (maxStamina - stamina) * 0.2f;
 
             float staminaRatioX = staminaRatio;
             float staminaRatioZ = staminaRatio;
@@ -316,7 +313,7 @@ public class PlayerStatus : MonoBehaviour
         if (playerHeader != null)
             playerHeader.UpdateStaminaBar();
 
-        if (stamina == 0 && isOOB)
+        if (!eliminated && stamina == 0 && isOOB)
         {
             GameManager.game.EliminatePlayer(this);
         }

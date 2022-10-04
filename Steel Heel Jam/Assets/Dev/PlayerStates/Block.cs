@@ -6,7 +6,7 @@ public class Block : BasicState
 {
     public Block()
     {
-        timeToChangeState = .25f;
+        timeToChangeState = .4f;
         canPlayerControlMove = false;
         canPlayerControlRotate = false;
         canAttack = false;
