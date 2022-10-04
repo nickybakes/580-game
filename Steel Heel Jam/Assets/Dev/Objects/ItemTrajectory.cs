@@ -8,7 +8,12 @@ public class ItemTrajectory : MonoBehaviour
     public bool isThrown;
     public float chargeAmount;
 
-    private GameObject _item;
+    private bool wasThrown;
+    private Vector3 throwDirection;
+    private float gravity = 0.01f;
+    public float startingVelocityY = 1;
+
+    private Transform tr;
 
     public PlayerStatus target;
     public PlayerStatus thrower;
@@ -16,8 +21,7 @@ public class ItemTrajectory : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (transform.parent != null)
-            _item = transform.parent.gameObject;
+        tr = transform;
     }
 
     // Update is called once per frame
@@ -25,6 +29,9 @@ public class ItemTrajectory : MonoBehaviour
     {
         if (isThrown)
         {
+            if (!wasThrown)
+                throwDirection = GetInitialDirection();
+
             if (isTargetedThrow)
             {
                 UpdateTargetedThrow();
@@ -33,18 +40,31 @@ public class ItemTrajectory : MonoBehaviour
             {
                 UpdateStraightThrow();
             }
+
         }
     }
 
     private void UpdateStraightThrow()
     {
-        //Debug.Log(thrower.movement.ActualFowardDirection);
 
-        
+        //transform.position = thrower.movement.ActualFowardDirection * chargeAmount;
+        //Debug.Log(thrower.movement.ActualFowardDirection);
+        throwDirection.y += gravity * Time.deltaTime;
+
+        tr.position = new Vector3(tr.position.x + (throwDirection.x * chargeAmount / 200), tr.position.y + (throwDirection.y / 200), tr.position.z + (throwDirection.z * chargeAmount / 200));
     }
 
     private void UpdateTargetedThrow()
     {
         
+    }
+
+    private Vector3 GetInitialDirection()
+    {
+        wasThrown = true;
+
+        Vector3 vec3 = thrower.movement.ActualFowardDirection;
+        vec3.y = startingVelocityY;
+        return vec3;
     }
 }

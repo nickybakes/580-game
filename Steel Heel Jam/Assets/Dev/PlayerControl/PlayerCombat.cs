@@ -123,13 +123,11 @@ public class PlayerCombat : MonoBehaviour
 
         if (_status.CurrentPlayerState is ItemThrowing && equippedItem != null && !_input.throwIsHeld && _input.throwWasHeld)
         {
-            Debug.Log("wdadawda");
             Throw();
         }
 
         if (canThrow && _input.throwIsHeld && equippedItem != null)
         {
-            Debug.Log("throw is held");
 
             if (_status.CurrentPlayerState != new ItemThrowing())
             {
