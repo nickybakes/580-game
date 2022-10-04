@@ -174,6 +174,7 @@ public class PlayerCombat : MonoBehaviour
     private void Block()
     {
         _input.block = false;
+        _status.attackBlocked = false;
         blockCoolDown = 0;
         _status.movement.velocity = Vector3.zero;
         _status.SetPlayerStateImmediately(new Block());

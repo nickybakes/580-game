@@ -35,7 +35,5 @@ public class BlockRecovery : BasicState
         {
             status.ReduceStamina(status.missedBlockStaminaDamage);
         }
-
-        status.attackBlocked = false;
     }
 }
