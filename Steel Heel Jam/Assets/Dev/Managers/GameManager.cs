@@ -143,9 +143,9 @@ public class GameManager : MonoBehaviour
         GameObject g = Instantiate(ringPrefab);
         ringScript = g.GetComponent<Ring>();
 
-        g.transform.localScale = new Vector3(90, 7, 90);
+        g.transform.localScale = new Vector3(60, 7, 60);
 
-        // Resize ring to a diameter of 10 units in 5 minutes
-        ringScript.ResizeRing(10, 240);
+        // Resize ring to a diameter of 10 units in 3 minutes
+        ringScript.ResizeRing(10, 180);
     }
 }

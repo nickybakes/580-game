@@ -13,7 +13,7 @@ public class Ring : MonoBehaviour
     private float ringResizeTimeMax;
     
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         tr = transform;
     }
