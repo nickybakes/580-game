@@ -15,6 +15,7 @@ public class PlayerCombat : MonoBehaviour
     private PickUpSphere _pickUpSphereScript;
 
     public DefaultState weaponState;
+    private float timeHeld;
 
     public float attackCooldown;
     public const float attackCooldownMax = .35f;
@@ -121,7 +122,24 @@ public class PlayerCombat : MonoBehaviour
         if (canThrow && hasItemEquiped && !_input.throwIsHeld && _input.throwWasHeld)
         {
             Throw();
+            timeHeld = 0;
         }
+
+        if (_input.throwIsHeld && hasItemEquiped)
+        {
+            if (_status.CurrentPlayerState != new ItemThrowing())
+            {
+                _status.SetPlayerStateImmediately(new ItemThrowing());
+            }
+
+            timeHeld += Time.deltaTime;
+
+            if (timeHeld > 3)
+                timeHeld = 3;
+        }
+
+        Debug.Log(_status.CurrentPlayerState);
+
     }
 
     private void AttackGround()
@@ -166,7 +184,35 @@ public class PlayerCombat : MonoBehaviour
 
     private void Throw()
     {
-        _status.SetPlayerStateImmediately(new ItemThrowing());
+        
 
+        // If the player is not in unarmed equip state, the item they are currently holding need to drop before new item is picked up.
+        for (int i = 0; i < _status.transform.childCount; i++)
+        {
+            if(_status.transform.GetChild(i).gameObject.tag == "PickUp")
+            {
+                GameObject itemToDrop = _status.transform.GetChild(i).gameObject;
+                itemToDrop.transform.parent = null;
+                itemToDrop.SetActive(true);
+
+                // Look for target, if there is one, use targeted throw, else use straight throw.
+                ItemTrajectory itemTrajectory = itemToDrop.GetComponent<ItemTrajectory>();
+
+                // For now, always uses straight throw.
+                itemTrajectory.isTargetedThrow = false;
+                itemTrajectory.isThrown = true;
+                itemTrajectory.chargeAmount = timeHeld;
+                itemTrajectory.thrower = _status;
+
+                //_status.SetPlayerStateImmediately(new ThrowRecovery());
+                _status.SetPlayerStateImmediately(new Idle());
+            }
+        }
     }
+
+    // Math to find player to hit
+    // private bool WillHitPerson()
+    // {
+
+    // }
 }
