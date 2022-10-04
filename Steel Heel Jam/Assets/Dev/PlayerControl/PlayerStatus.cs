@@ -55,6 +55,12 @@ public class PlayerStatus : MonoBehaviour
 
     public BasicState CurrentPlayerState { get { return currentPlayerState; } }
 
+    public bool attackBlocked = false;
+
+    [SerializeField] public float missedBlockStaminaDamage = 20f;
+
+    [SerializeField] public float dodgeRollStaminaDamage = 10f;
+
     /// <summary>
     /// A boolean that represents if the player is outside of the ring.
     /// </summary>
@@ -197,7 +203,7 @@ public class PlayerStatus : MonoBehaviour
             }
         }
 
-        if (combat.AttackedRecently || isOOB)
+        if (combat.ActedRecently || isOOB)
         {
             staminaRegenCooldown = StaminaRegenCooldownMax;
         }
@@ -240,6 +246,7 @@ public class PlayerStatus : MonoBehaviour
             attackingPlayerStatus.SetPlayerStateImmediately(new BlockedStun());
             attackingPlayerStatus.movement.velocity = attackingPlayerStatus.transform.position - transform.position;
             SetPlayerStateImmediately(new Idle());
+            attackBlocked = true;
             return;
         }
 
