@@ -23,7 +23,7 @@ public class PlayerCombat : MonoBehaviour
     private float recentAttackCooldown;
     private const float recentAttackCooldownMax = 0.5f;
 
-    public bool hasItemEquiped = false;
+    public GameObject equippedItem;
 
     /// <summary>
     /// A boolean that represents if the player has attacked recently.
@@ -119,14 +119,16 @@ public class PlayerCombat : MonoBehaviour
             TryPickup();
         }
 
-        if (canThrow && hasItemEquiped && !_input.throwIsHeld && _input.throwWasHeld)
+        if (_status.CurrentPlayerState is ItemThrowing && equippedItem != null && !_input.throwIsHeld && _input.throwWasHeld)
         {
+            Debug.Log("wdadawda");
             Throw();
-            timeHeld = 0;
         }
 
-        if (_input.throwIsHeld && hasItemEquiped)
+        if (canThrow && _input.throwIsHeld && equippedItem != null)
         {
+            Debug.Log("throw is held");
+
             if (_status.CurrentPlayerState != new ItemThrowing())
             {
                 _status.SetPlayerStateImmediately(new ItemThrowing());
@@ -137,8 +139,6 @@ public class PlayerCombat : MonoBehaviour
             if (timeHeld > 3)
                 timeHeld = 3;
         }
-
-        Debug.Log(_status.CurrentPlayerState);
 
     }
 
@@ -184,30 +184,25 @@ public class PlayerCombat : MonoBehaviour
 
     private void Throw()
     {
-        
+        equippedItem.transform.parent = null;
+        equippedItem.SetActive(true);
 
-        // If the player is not in unarmed equip state, the item they are currently holding need to drop before new item is picked up.
-        for (int i = 0; i < _status.transform.childCount; i++)
-        {
-            if(_status.transform.GetChild(i).gameObject.tag == "PickUp")
-            {
-                GameObject itemToDrop = _status.transform.GetChild(i).gameObject;
-                itemToDrop.transform.parent = null;
-                itemToDrop.SetActive(true);
+        // Look for target, if there is one, use targeted throw, else use straight throw.
+        ItemTrajectory itemTrajectory = equippedItem.GetComponent<ItemTrajectory>();
 
-                // Look for target, if there is one, use targeted throw, else use straight throw.
-                ItemTrajectory itemTrajectory = itemToDrop.GetComponent<ItemTrajectory>();
+        // For now, always uses straight throw.
+        itemTrajectory.isTargetedThrow = false;
+        itemTrajectory.isThrown = true;
+        itemTrajectory.chargeAmount = timeHeld;
+        itemTrajectory.thrower = _status;
 
-                // For now, always uses straight throw.
-                itemTrajectory.isTargetedThrow = false;
-                itemTrajectory.isThrown = true;
-                itemTrajectory.chargeAmount = timeHeld;
-                itemTrajectory.thrower = _status;
+        equippedItem = null;
+        weaponState = new Unarmed(_status.playerNumber, _hitbox);
 
-                //_status.SetPlayerStateImmediately(new ThrowRecovery());
-                _status.SetPlayerStateImmediately(new Idle());
-            }
-        }
+        _status.SetPlayerStateImmediately(new ThrowRecovery());
+
+        timeHeld = 0;
+
     }
 
     // Math to find player to hit

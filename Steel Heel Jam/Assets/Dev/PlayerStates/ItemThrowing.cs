@@ -7,14 +7,13 @@ public class ItemThrowing : BasicState
 {
     public ItemThrowing()
     {
-        timeToChangeState = 999f; // Only change state on button release.
+        timeToChangeState = 0; // Only change state on button release.
         canPlayerControlMove = false;
         canPlayerControlRotate = true;
         updateMovement = true;
         canAttack = false;
-        canDodgeRoll = true;
-        canBlock = true;
-        moveSpeedMultiplier = 1.0f;
+        canDodgeRoll = false;
+        canBlock = false;
         //animationState = AnimationState.Throwing;
         //visual = VisualChild.Throw;
 
@@ -35,6 +34,6 @@ public class ItemThrowing : BasicState
     {
         base.OnEnterThisState(prevState, status);
 
-        status.movement.velocity = status.movement.velocity.normalized * status.movement.CurrentMoveSpeed;
+        status.movement.SetTopDownVelocityToZero();
     }
 }

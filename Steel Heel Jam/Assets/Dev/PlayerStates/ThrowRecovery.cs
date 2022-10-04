@@ -27,14 +27,11 @@ public class ThrowRecovery : BasicState
     {
         base.Update(status);
 
-        status.movement.SetVelocityToMoveSpeedTimesFowardDirection();
-
     }
 
     public override void OnEnterThisState(BasicState prevState, PlayerStatus status)
     {
         base.OnEnterThisState(prevState, status);
 
-        status.movement.velocity = status.movement.velocity.normalized * status.movement.CurrentMoveSpeed;
     }
 }
