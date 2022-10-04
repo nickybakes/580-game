@@ -46,6 +46,11 @@ public class AttackGroundRecovery : BasicState
 
         if (status.combat.weaponState.CanCombo)
             canCombo = true;
+
+        if (!status.combat.weaponState.gotAHit)
+        {
+            status.ReduceStamina(status.combat.weaponState.staminaCost);
+        }
     }
 
     public override void OnExitThisState(BasicState nextState, PlayerStatus status)
