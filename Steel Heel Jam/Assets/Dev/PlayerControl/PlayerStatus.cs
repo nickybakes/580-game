@@ -55,6 +55,12 @@ public class PlayerStatus : MonoBehaviour
 
     public BasicState CurrentPlayerState { get { return currentPlayerState; } }
 
+    public bool attackBlocked = false;
+
+    [SerializeField] public float missedBlockStaminaDamage = 20f;
+
+    [SerializeField] public float dodgeRollStaminaDamage = 10f;
+
     /// <summary>
     /// A boolean that represents if the player is outside of the ring.
     /// </summary>
@@ -172,7 +178,14 @@ public class PlayerStatus : MonoBehaviour
         if (eliminated && timeOfEliminiation == 0)
             GameManager.game.EliminatePlayer(this);
 
+        movement.UpdateManual(currentPlayerState.updateMovement, currentPlayerState.canPlayerControlMove, currentPlayerState.canPlayerControlRotate);
 
+        combat.UpdateManual(currentPlayerState.canAttack, currentPlayerState.canDodgeRoll, currentPlayerState.canBlock, currentPlayerState.canPickUp, currentPlayerState.canThrow);
+
+        currentPlayerState.Update(this);
+
+        if (currentPlayerState.changeStateNow)
+            SetPlayerStateImmediately(currentPlayerState.stateToChangeTo);
 
         // If the player is out of bounds . . .
         if (isOOB)
@@ -190,16 +203,7 @@ public class PlayerStatus : MonoBehaviour
             }
         }
 
-        movement.UpdateManual(currentPlayerState.updateMovement, currentPlayerState.canPlayerControlMove, currentPlayerState.canPlayerControlRotate);
-
-        combat.UpdateManual(currentPlayerState.canAttack, currentPlayerState.canDodgeRoll, currentPlayerState.canBlock, currentPlayerState.canPickUp, currentPlayerState.canThrow);
-
-        currentPlayerState.Update(this);
-
-        if (currentPlayerState.changeStateNow)
-            SetPlayerStateImmediately(currentPlayerState.stateToChangeTo);
-
-        if (combat.AttackedRecently || isOOB)
+        if (combat.ActedRecently || isOOB)
         {
             staminaRegenCooldown = StaminaRegenCooldownMax;
         }
@@ -242,6 +246,7 @@ public class PlayerStatus : MonoBehaviour
             attackingPlayerStatus.SetPlayerStateImmediately(new BlockedStun());
             attackingPlayerStatus.movement.velocity = attackingPlayerStatus.transform.position - transform.position;
             SetPlayerStateImmediately(new Idle());
+            attackBlocked = true;
             return;
         }
 
@@ -294,7 +299,7 @@ public class PlayerStatus : MonoBehaviour
 
         if (stamina > maxStamina) stamina = maxStamina;
 
-        if (!eliminated)
+        if (playerHeader != null)
             playerHeader.UpdateStaminaBar();
     }
 
@@ -308,8 +313,13 @@ public class PlayerStatus : MonoBehaviour
 
         if (stamina < 0) stamina = 0;
 
-        if (!eliminated)
+        if (playerHeader != null)
             playerHeader.UpdateStaminaBar();
+
+        if (stamina == 0 && isOOB)
+        {
+            GameManager.game.EliminatePlayer(this);
+        }
     }
 
     /// <summary>
@@ -327,7 +337,7 @@ public class PlayerStatus : MonoBehaviour
             stamina = maxStamina;
         }
 
-        if (!eliminated)
+        if (playerHeader != null)
             playerHeader.UpdateStaminaBar();
     }
 

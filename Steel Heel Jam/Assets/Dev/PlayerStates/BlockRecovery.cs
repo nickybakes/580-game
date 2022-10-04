@@ -24,7 +24,16 @@ public class BlockRecovery : BasicState
     {
         base.Update(status);
 
-        moveSpeedMultiplier = Mathf.Clamp(Mathf.Lerp(-.5f, 1, timeInThisState/timeToChangeState), 0, 1); 
+        moveSpeedMultiplier = Mathf.Clamp(Mathf.Lerp(-.5f, 1, timeInThisState/timeToChangeState), 0, 1);
+    }
 
+    public override void OnEnterThisState(BasicState prevState, PlayerStatus status)
+    {
+        base.OnEnterThisState(prevState, status);
+
+        if (!status.attackBlocked)
+        {
+            status.ReduceStamina(status.missedBlockStaminaDamage);
+        }
     }
 }

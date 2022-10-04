@@ -20,18 +20,18 @@ public class PlayerCombat : MonoBehaviour
     public float attackCooldown;
     public const float attackCooldownMax = .35f;
 
-    private float recentAttackCooldown;
-    private const float recentAttackCooldownMax = 0.5f;
+    private float recentActionCooldown;
+    private const float recentActionCooldownMax = 0.5f;
 
     public GameObject equippedItem;
 
     /// <summary>
     /// A boolean that represents if the player has attacked recently.
     /// </summary>
-    public bool AttackedRecently {
+    public bool ActedRecently {
         get
         {
-            if (recentAttackCooldown > 0) return true;
+            if (recentActionCooldown > 0) return true;
             return false;
         }
     }
@@ -84,9 +84,9 @@ public class PlayerCombat : MonoBehaviour
         if (_status.CurrentPlayerState.countBlockCooldown && blockCoolDown < blockCoolDownMax)
             blockCoolDown += Time.deltaTime;
 
-        if (recentAttackCooldown > 0)
+        if (recentActionCooldown > 0)
         {
-            recentAttackCooldown -= Time.deltaTime;
+            recentActionCooldown -= Time.deltaTime;
         }
 
         if (canAttack && attackCooldown > attackCooldownMax && _input.Attack && _status.stamina > 0)
@@ -101,17 +101,19 @@ public class PlayerCombat : MonoBehaviour
             }
 
             //_status.ReduceStamina(weaponState.staminaCost);
-            recentAttackCooldown = recentAttackCooldownMax;
+            recentActionCooldown = recentActionCooldownMax;
         }
 
         if (canDodgeRoll && dodgeRollCoolDown > dodgeRollCoolDownMax && _input.dodgeRoll && !_input.wasDodgeRolling)
         {
             DodgeRoll();
+            recentActionCooldown = recentActionCooldownMax;
         }
 
         if (canBlock && blockCoolDown > blockCoolDownMax && _input.block && !_input.wasBlocking)
         {
             Block();
+            recentActionCooldown = recentActionCooldownMax;
         }
 
         if (canPickup && _input.pickUpPressed && !_input.wasPickUpPressed)
@@ -166,11 +168,13 @@ public class PlayerCombat : MonoBehaviour
         _status.SetPlayerStateImmediately(new DodgeRoll());
         _status.movement.SetTheSetForwardDirection();
         _status.movement.SetVelocityToMoveSpeedTimesFowardDirection();
+        _status.ReduceStamina(_status.dodgeRollStaminaDamage);
     }
 
     private void Block()
     {
         _input.block = false;
+        _status.attackBlocked = false;
         blockCoolDown = 0;
         _status.movement.velocity = Vector3.zero;
         _status.SetPlayerStateImmediately(new Block());
