@@ -4,15 +4,21 @@ using UnityEngine;
 
 public class Ring : MonoBehaviour
 {
-    [SerializeField] public float startingRadius = 30.0f;
-    private float radius;
+    Transform tr;
 
+    private Vector3 startingSize;
+    private Vector3 targetSize;
+    private float resizeMagnitude;
+
+    private float time;
     private float resizeTimer;
-
+    
     // Start is called before the first frame update
     void Start()
     {
-        radius = startingRadius;
+        tr = transform;
+
+        ResizeRing(5, 0.2f);
     }
 
     // Update is called once per frame
@@ -20,9 +26,13 @@ public class Ring : MonoBehaviour
     {
         if (resizeTimer > 0)
         {
-            float size = ((radius * 2) - transform.localScale.x) * Time.deltaTime;
-            transform.localScale = new Vector3(size, transform.localScale.y, size);
+            float size = resizeMagnitude * Time.deltaTime * time;
+            //print(size);
+            
         }
+
+        transform.localScale = Vector3.Lerp(transform.localScale, targetSize, time * Time.deltaTime);
+        print(transform.localScale);
     }
 
     /// <summary>
@@ -30,9 +40,13 @@ public class Ring : MonoBehaviour
     /// </summary>
     /// <param name="radius">The new radius of the ring.</param>
     /// <param name="time">The time it takes for the ring to fully resize.</param>
-    public void ResizeRing(float radius, float time)
+    public void ResizeRing(float size, float time)
     {
-        this.radius = radius;
+        startingSize = tr.localScale;
+        targetSize = new Vector3(size, tr.localScale.y, size);
+        //resizeMagnitude = targetSize - startingSize;
+
+        this.time = time;
         resizeTimer = time;
     }
 }
