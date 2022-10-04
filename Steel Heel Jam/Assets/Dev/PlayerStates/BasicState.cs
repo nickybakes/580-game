@@ -80,6 +80,8 @@ public class BasicState
     /// </summary>
     public bool canPickUp = false;
 
+    public bool canThrow = true;
+
 
     public AnimationState animationState = AnimationState.Idle;
 

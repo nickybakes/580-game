@@ -8,7 +8,7 @@ public class ItemThrowing : BasicState
     public ItemThrowing()
     {
         timeToChangeState = 999f; // Only change state on button release.
-        canPlayerControlMove = true;
+        canPlayerControlMove = false;
         canPlayerControlRotate = true;
         updateMovement = true;
         canAttack = false;
@@ -18,7 +18,7 @@ public class ItemThrowing : BasicState
         //animationState = AnimationState.Throwing;
         //visual = VisualChild.Throw;
 
-        stateToChangeTo = new Idle();
+        stateToChangeTo = new ThrowRecovery();
     }
 
     public override void Update(PlayerStatus status)

@@ -21,7 +21,9 @@ public class StarterAssetsInputs : MonoBehaviour
     public bool attack;
     public bool pickUpPressed;
     public bool wasPickUpPressed;
+
     public bool throwIsHeld;
+    public bool throwWasHeld;
 
     public bool dodgeRoll;
 
@@ -136,14 +138,21 @@ public class StarterAssetsInputs : MonoBehaviour
 
     public void OnThrow(InputValue value)
     {
-        if (value.isPressed) // Key pressed
+        /*if (value.isPressed) // Key pressed
         {
             throwIsHeld = true;
         }
         if (value.isPressed == false) // Key released
         {
             throwIsHeld = false;
-        }
+        }*/
+        ThrowInput(value.isPressed);
+    }
+
+    public void ThrowInput(bool newThrowState)
+    {
+        throwWasHeld = throwIsHeld;
+        throwIsHeld = newThrowState;
     }
 
     public void MoveInput(Vector2 newMoveDirection)

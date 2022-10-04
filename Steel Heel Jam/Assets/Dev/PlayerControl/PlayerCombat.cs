@@ -64,7 +64,7 @@ public class PlayerCombat : MonoBehaviour
     /// <param name="canDodgeRoll">True if the player can interrupt their current state and go into a dodge roll. Base off the player's current PlayerState</param>
     /// <param name="canBlock">True if the player can interrupt their current state and activate a block. Base off the player's current PlayerState</param>
     /// 
-    public void UpdateManual(bool canAttack, bool canDodgeRoll, bool canBlock, bool canPickup)
+    public void UpdateManual(bool canAttack, bool canDodgeRoll, bool canBlock, bool canPickup, bool canThrow)
     {
         //fixes the null ref exception when recompiling in the Editor
 #if UNITY_EDITOR
@@ -117,6 +117,11 @@ public class PlayerCombat : MonoBehaviour
         {
             TryPickup();
         }
+
+        if (canThrow && hasItemEquiped && !_input.throwIsHeld && _input.throwWasHeld)
+        {
+            Throw();
+        }
     }
 
     private void AttackGround()
@@ -161,6 +166,7 @@ public class PlayerCombat : MonoBehaviour
 
     private void Throw()
     {
-        
+        _status.SetPlayerStateImmediately(new ItemThrowing());
+
     }
 }

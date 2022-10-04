@@ -71,12 +71,15 @@ public class PickUpSphere : MonoBehaviour
             // If the player is not in unarmed equip state, the item they are currently holding need to drop before new item is picked up.
             if (playerCombat.hasItemEquiped == true)
             {
-
-                Item itemToDrop = playerStatus.transform.GetComponent<Item>();
-                //GameObject itemToDrop = playerStatus.transform.GetChild(4).gameObject;
-                //itemToDrop.transform.position = playerStatus.transform.position;
-                //itemToDrop.transform.parent = null;
-                //itemToDrop.transform.gameObject.SetActive(true);
+                for (int i = 0; i < playerStatus.transform.childCount; i++)
+                {
+                    if(playerStatus.transform.GetChild(i).gameObject.tag == "PickUp")
+                    {
+                        GameObject itemToDrop = playerStatus.transform.GetChild(i).gameObject;
+                        itemToDrop.transform.parent = null;
+                        itemToDrop.SetActive(true);
+                    }
+                }
             }
 
             // Make object inactive and a child of the player
