@@ -118,12 +118,13 @@ public class GameManager : MonoBehaviour
 
     public void EliminatePlayer(PlayerStatus status)
     {
+        status.SetPlayerStateImmediately(new Eliminated());
+
         status.eliminated = true;
         alivePlayerStatuses.Remove(status);
         eliminatedPlayerStatuses.Add(status);
         status.timeOfEliminiation = gameTime;
         hudManager.RemoveHeader(status);
-        status.SetPlayerStateImmediately(new Eliminated());
         status.playerHeader = null;
     }
 
