@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class ItemTrajectory : MonoBehaviour
 {
-    public bool isTargetedThrow;
     public bool isThrown;
     public float chargeAmount;
     private float chargeAmountMultiplier = 20f;
@@ -31,7 +30,7 @@ public class ItemTrajectory : MonoBehaviour
         if (isThrown)
         {
 
-            if (isTargetedThrow)
+            if (target != null)
             {
                 UpdateTargetedThrow();
                 isThrown = false;

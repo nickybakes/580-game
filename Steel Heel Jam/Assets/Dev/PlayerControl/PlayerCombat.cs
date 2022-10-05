@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Linq;
 
 [RequireComponent(typeof(PlayerInput))]
 [RequireComponent(typeof(StarterAssetsInputs))]
@@ -25,6 +27,8 @@ public class PlayerCombat : MonoBehaviour
 
     public GameObject equippedItem;
 
+    private GameManager gameManager;
+
     /// <summary>
     /// A boolean that represents if the player has attacked recently.
     /// </summary>
@@ -46,6 +50,8 @@ public class PlayerCombat : MonoBehaviour
     // Start is called before the first frame update
     public void Start()
     {
+        gameManager = FindObjectOfType<GameManager>();
+
         _input = GetComponent<StarterAssetsInputs>();
         _hitbox = transform.GetChild((int)PlayerChild.Hitbox).gameObject;
 
@@ -186,14 +192,41 @@ public class PlayerCombat : MonoBehaviour
 
     private void Throw()
     {
+        List<PlayerStatus> potentialTargets = new List<PlayerStatus>();
         equippedItem.transform.parent = null;
         equippedItem.SetActive(true);
 
         // Look for target, if there is one, use targeted throw, else use straight throw.
         ItemTrajectory itemTrajectory = equippedItem.GetComponent<ItemTrajectory>();
 
-        // For now, always uses straight throw.
-        itemTrajectory.isTargetedThrow = false;
+        // Grab all players. (gameManager does this)
+        foreach (PlayerStatus s in gameManager.alivePlayerStatuses)
+        {
+            Vector3 vectorToCollider = (s.transform.position - _status.transform.position).normalized;
+            // 180 degree arc, change 0 to 0.5 for a 90 degree "pie"
+            if (Vector3.Dot(vectorToCollider, _status.movement.ActualFowardDirection) > 0.5)
+            {
+                // If in the arc, add to potential target list.
+                potentialTargets.Add(s);
+            }
+        }
+
+        // Now sort the list by distance, shortest to furthest.
+        if (potentialTargets.Count != 0)
+        {
+            potentialTargets = potentialTargets.OrderBy(x => Vector3.Distance(_status.transform.position, x.transform.position)).ToList();
+
+            // Now check if there are any obstacles in the way of the first player in the list, if not, pass to itemTrajectory, else cont. list, if none, pass null.
+            // Raycasting magic.
+
+            // For now, adds the first in potentialTargets.
+            itemTrajectory.target = potentialTargets[0];
+        }
+        else
+        {
+            itemTrajectory.target = null;
+        }
+
         itemTrajectory.isThrown = true;
         itemTrajectory.chargeAmount = timeHeld;
         itemTrajectory.thrower = _status;
@@ -207,9 +240,4 @@ public class PlayerCombat : MonoBehaviour
 
     }
 
-    // Math to find player to hit
-    // private bool WillHitPerson()
-    // {
-
-    // }
 }
