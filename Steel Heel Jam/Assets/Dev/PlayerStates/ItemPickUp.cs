@@ -10,6 +10,7 @@ public class ItemPickUp : BasicState
         canPlayerControlMove = false;
         canPlayerControlRotate = false;
         updateMovement = true;
+        alternateFriction = true;
         animationState = AnimationState.Pickup_01;
 
         stateToChangeTo = new Idle();
@@ -19,6 +20,6 @@ public class ItemPickUp : BasicState
     {
         base.OnEnterThisState(prevState, status);
 
-        status.movement.SetTopDownVelocityToZero();
+        // status.movement.SetTopDownVelocityToZero();
     }
 }

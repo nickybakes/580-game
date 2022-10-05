@@ -177,7 +177,6 @@ public class PlayerCombat : MonoBehaviour
         _status.SetPlayerStateImmediately(new DodgeRoll());
         _status.movement.SetTheSetForwardDirection();
         _status.movement.SetVelocityToMoveSpeedTimesFowardDirection();
-        _status.ReduceStamina(_status.dodgeRollStaminaDamage);
     }
 
     private void Block()

@@ -16,6 +16,7 @@ public class Knockback : BasicState
         canDodgeRoll = false;
         canBlock = false;
         updateMovement = true;
+        // alternateFriction = true;
         animationState = AnimationState.Knockback;
         stateToChangeTo = new Idle();
 
