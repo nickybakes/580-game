@@ -75,14 +75,10 @@ public class PickUpSphere : MonoBehaviour
                 playerCombat.equippedItem.SetActive(true);
             }
 
-
-
             // Make object inactive and a child of the player
             other.transform.SetParent(playerStatus.transform);
             other.gameObject.SetActive(false);
             playerCombat.equippedItem = other.gameObject;
-
-            Debug.Log("pickup sphere");
 
             // Set Player to pick up state
             playerStatus.SetPlayerStateImmediately(new ItemPickUp());

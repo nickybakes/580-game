@@ -17,6 +17,7 @@ public class ItemThrowing : BasicState
         //animationState = AnimationState.Throwing;
         //visual = VisualChild.Throw;
 
+
         stateToChangeTo = new ThrowRecovery();
     }
 
@@ -34,6 +35,7 @@ public class ItemThrowing : BasicState
     {
         base.OnEnterThisState(prevState, status);
 
+        //status.movement.velocity = status.movement.velocity.normalized * moveSpeedMultiplier;
         status.movement.SetTopDownVelocityToZero();
     }
 }
