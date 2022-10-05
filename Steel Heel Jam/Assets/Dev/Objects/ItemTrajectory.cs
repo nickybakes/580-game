@@ -11,7 +11,8 @@ public class ItemTrajectory : MonoBehaviour
 
     private bool wasThrown;
     private Vector3 throwDirection;
-    //private float gravity = -0.1f;
+    private float gravity = -0.1f;
+    //private float height = 1.0f;
 
     private Transform tr;
 
@@ -49,9 +50,10 @@ public class ItemTrajectory : MonoBehaviour
 
         //transform.position = thrower.movement.ActualFowardDirection * chargeAmount;
         //Debug.Log(thrower.movement.ActualFowardDirection);
-        //throwDirection.y += gravity * Time.deltaTime;
 
-        tr.position = new Vector3(tr.position.x + (throwDirection.x * chargeAmount * chargeAmountMultiplier), tr.position.y/* + (throwDirection.y)*/, tr.position.z + (throwDirection.z * chargeAmount * chargeAmountMultiplier));
+        //height += gravity * Time.deltaTime;
+
+        tr.position = new Vector3(tr.position.x + (throwDirection.x * chargeAmount * chargeAmountMultiplier), tr.position.y/* + height*/, tr.position.z + (throwDirection.z * chargeAmount * chargeAmountMultiplier));
     }
 
     private void UpdateTargetedThrow()
