@@ -29,6 +29,11 @@ public class PlayerCombat : MonoBehaviour
 
     private GameManager gameManager;
 
+    // -1 = 360 deg arc, 0 = 180 degree arc, 0.5 = 90 deg...
+    [SerializeField]
+    [Range(-1, 1)]
+    private float targetAngle = 0.5f;
+
     /// <summary>
     /// A boolean that represents if the player has attacked recently.
     /// </summary>
@@ -204,7 +209,7 @@ public class PlayerCombat : MonoBehaviour
         {
             Vector3 vectorToCollider = (s.transform.position - _status.transform.position).normalized;
             // 180 degree arc, change 0 to 0.5 for a 90 degree "pie"
-            if (Vector3.Dot(vectorToCollider, _status.movement.ActualFowardDirection) > 0.5)
+            if (Vector3.Dot(vectorToCollider, _status.movement.ActualFowardDirection) > targetAngle)
             {
                 // If in the arc, add to potential target list.
                 potentialTargets.Add(s);
