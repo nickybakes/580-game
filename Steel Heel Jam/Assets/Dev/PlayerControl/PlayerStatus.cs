@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public enum PlayerChild
@@ -175,7 +173,7 @@ public class PlayerStatus : MonoBehaviour
         if (GameManager.game.countdownTime > 0)
             return;
 
-        movement.UpdateManual(currentPlayerState.updateMovement, currentPlayerState.canPlayerControlMove, currentPlayerState.canPlayerControlRotate);
+        movement.UpdateManual(currentPlayerState.updateMovement, currentPlayerState.canPlayerControlMove, currentPlayerState.canPlayerControlRotate, currentPlayerState.alternateFriction);
 
         combat.UpdateManual(currentPlayerState.canAttack, currentPlayerState.canDodgeRoll, currentPlayerState.canBlock, currentPlayerState.canPickUp, currentPlayerState.canThrow);
 
@@ -228,9 +226,15 @@ public class PlayerStatus : MonoBehaviour
         currentPlayerState.OnExitThisState(state, this);
         state.OnEnterThisState(currentPlayerState, this);
 
+        visuals.SetAnimationState(state.animationState);
         visuals.EnableVisual(state.visual);
 
         currentPlayerState = state;
+    }
+
+    public void SetAnimationState(AnimationState state)
+    {
+        visuals.SetAnimationState(state);
     }
 
     public void GetHit(Vector3 hitboxPos, Vector3 collisionPos, float damage, float knockback, float knockbackHeight, float hitstun, PlayerStatus attackingPlayerStatus)
@@ -268,7 +272,7 @@ public class PlayerStatus : MonoBehaviour
             print(knockbackVelocity.magnitude);
             ReduceStamina(damage);
             totalDamageTaken += damage;
-            
+
             recentDamageTaken += damage;
             recentDamageTakenMax = recentDamageTaken;
             recentDamageTimeCurrent = 10f;

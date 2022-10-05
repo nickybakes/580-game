@@ -10,15 +10,15 @@ public class ItemPickUp : BasicState
         canPlayerControlMove = false;
         canPlayerControlRotate = false;
         updateMovement = true;
-        animationState = AnimationState.Idle;
+        animationState = AnimationState.Pickup_01;
 
-        stateToChangeTo = new ItemPickUpRecovery();
+        stateToChangeTo = new Idle();
     }
 
     public override void OnEnterThisState(BasicState prevState, PlayerStatus status)
     {
         base.OnEnterThisState(prevState, status);
 
-        status.movement.velocity = status.movement.velocity.normalized * 0;
+        status.movement.SetTopDownVelocityToZero();
     }
 }

@@ -151,6 +151,11 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    public bool InputDirectionNotZero
+    {
+        get { return (_input.move.x != 0 || _input.move.y != 0); }
+    }
+
     public float ActualTopDownSpeed
     {
         get { return new Vector2(velocity.x, velocity.z).magnitude; }
@@ -183,7 +188,7 @@ public class PlayerMovement : MonoBehaviour
     /// <param name="updateMovement">True if we should overall update the player's movement (gravity, position with velocity, etc)</param>
     /// <param name="controlMovement">True if the player can affect their movement velocity and if they can jump with their inputs</param>
     /// <param name="controlRotation">True if the player can change the direction they are facing, regardless of their current velocity</param>
-    public void UpdateManual(bool updateMovement, bool controlMovement, bool controlRotation)
+    public void UpdateManual(bool updateMovement, bool controlMovement, bool controlRotation, bool alternateFriction)
     {
         moveSpeedMultiplier = _status.CurrentPlayerState.moveSpeedMultiplier;
         extraFallMultiplier = _status.CurrentPlayerState.extraFallGravityMultiplier;
@@ -197,6 +202,9 @@ public class PlayerMovement : MonoBehaviour
                 ControlMovement(inputDirection);
             if (controlRotation)
                 ControlRotation(inputDirection);
+            if (alternateFriction)
+                ControlMovement(Vector3.zero);
+
             Move();
         }
     }

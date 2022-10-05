@@ -15,6 +15,7 @@ public class BlockRecovery : BasicState
         canBlock = false;
         updateMovement = true;
         countBlockCooldown = false;
+        animationState = AnimationState.BlockRecovery;
         stateToChangeTo = new Idle();
         visual = VisualChild.Recovery;
 

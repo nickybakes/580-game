@@ -14,7 +14,7 @@ public class Block : BasicState
         canBlock = false;
         updateMovement = true;
         countBlockCooldown = false;
-        stateToChangeTo = new BlockRecovery();
+        stateToChangeTo = new Block();
 
         visual = VisualChild.Block;
 

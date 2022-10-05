@@ -19,6 +19,8 @@ public class BlockedStun : BasicState
 
         visual = VisualChild.Stun;
 
+        animationState = AnimationState.ImpactStun;
+
         stateToChangeTo = new Idle();
     }
 }

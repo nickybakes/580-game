@@ -54,8 +54,11 @@ public class PlayerToken : MonoBehaviour
         playerPrefabInputsComp = player.GetComponent<StarterAssetsInputs>();
         PlayerStatus status = player.GetComponent<PlayerStatus>();
 
-        player.transform.GetChild((int)PlayerChild.Model).GetChild(0).GetComponent<MeshRenderer>().material.SetColor("_BaseColor", colors[playerNumber - 1]);
-        player.transform.GetChild((int)PlayerChild.Model).GetChild(1).GetComponent<MeshRenderer>().material.SetColor("_BaseColor", colors[playerNumber - 1]);
+
+        player.GetComponentInChildren<OutlineSketchUpdate>().SetBaseColor(playerNumber);
+
+        // player.transform.GetChild((int)PlayerChild.Model).GetChild(0).GetComponent<MeshRenderer>().material.SetColor("_BaseColor", colors[playerNumber - 1]);
+        // player.transform.GetChild((int)PlayerChild.Model).GetChild(1).GetComponent<MeshRenderer>().material.SetColor("_BaseColor", colors[playerNumber - 1]);
 
         status.playerNumber = playerNumber;
 

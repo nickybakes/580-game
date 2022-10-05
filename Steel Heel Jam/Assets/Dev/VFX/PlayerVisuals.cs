@@ -20,6 +20,10 @@ public class PlayerVisuals
 
     private Transform tr;
 
+    private Animator animator;
+
+    private AnimationState currentAnimationState;
+
     private GameObject blockSphere;
     private GameObject dodgeRollSphere;
     private GameObject stunSphere;
@@ -31,11 +35,23 @@ public class PlayerVisuals
         tr = _tr;
         status = _status;
 
+        animator = tr.GetComponentInChildren<Animator>();
+
         blockSphere = tr.GetChild((int)PlayerChild.Visuals).GetChild((int)VisualChild.Block).gameObject;
         dodgeRollSphere = tr.GetChild((int)PlayerChild.Visuals).GetChild((int)VisualChild.DodgeRoll).gameObject;
         stunSphere = tr.GetChild((int)PlayerChild.Visuals).GetChild((int)VisualChild.Stun).gameObject;
         recoverySphere = tr.GetChild((int)PlayerChild.Visuals).GetChild((int)VisualChild.Recovery).gameObject;
         knockbackSphere = tr.GetChild((int)PlayerChild.Visuals).GetChild((int)VisualChild.Knockback).gameObject;
+    }
+
+    public void SetAnimationState(AnimationState state)
+    {
+        if (currentAnimationState == state)
+            return;
+
+        currentAnimationState = state;
+
+        animator.SetTrigger(state.ToString());
     }
 
     public void EnableVisual(VisualChild vc)

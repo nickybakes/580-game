@@ -19,7 +19,7 @@ public class ThrowRecovery : BasicState
         countDodgeRollCooldown = false;
         visual = VisualChild.Recovery;
 
-        animationState = AnimationState.Idle;
+        animationState = AnimationState.Throw_01;
         stateToChangeTo = new Idle();
     }
 

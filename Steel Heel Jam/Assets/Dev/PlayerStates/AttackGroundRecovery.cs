@@ -17,7 +17,7 @@ public class AttackGroundRecovery : BasicState
         updateMovement = true;
         countAttackCooldown = false;
         visual = VisualChild.Recovery;
-        animationState = AnimationState.AttackGroundRecovery;
+        animationState = AnimationState.AttackGroundRecovery_01;
         stateToChangeTo = new Idle();
     }
 

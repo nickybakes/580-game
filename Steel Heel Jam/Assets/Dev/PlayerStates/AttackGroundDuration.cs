@@ -13,7 +13,7 @@ public class AttackGroundDuration : BasicState
         canBlock = false;
         updateMovement = true;
         countAttackCooldown = false;
-        animationState = AnimationState.AttackGroundRecovery;
+        animationState = AnimationState.AttackGroundDuration_01;
         stateToChangeTo = new AttackGroundRecovery();
     }
 
