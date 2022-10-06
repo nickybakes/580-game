@@ -28,8 +28,6 @@ public class Rest : BasicState
     {
         base.Update(status);
 
-        status.PrintStuff<float>(restStaminaIncreaseCooldown);
-
         restStaminaIncreaseCooldown += Time.deltaTime;
 
         if (restStaminaIncreaseCooldown >= restStaminaIncreaseCooldownMax)

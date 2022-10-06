@@ -110,7 +110,7 @@ public class PlayerCombat : MonoBehaviour
                 }
                 else
                 {
-                    //AttackAir();
+                    AttackAir();
                 }
 
                 recentActionCooldown = recentActionCooldownMax;
@@ -179,6 +179,18 @@ public class PlayerCombat : MonoBehaviour
         _status.CurrentPlayerState.stateToChangeTo.stateToChangeTo.timeToChangeState = weaponState.Recovery;
 
         if(weaponState.currentComboCount == 0)
+            _status.movement.SetTheSetForwardDirection();
+    }
+
+    private void AttackAir()
+    {
+        _input.Attack = false;
+        //_status.movement.velocity = Vector3.zero;
+        _status.SetPlayerStateImmediately(_status.movement.velocity.y > 0? new AttackAirStartup() : new AttackAirDuration());
+
+        //weaponState.UpdateValues();
+
+        if (weaponState.currentComboCount == 0)
             _status.movement.SetTheSetForwardDirection();
     }
 
