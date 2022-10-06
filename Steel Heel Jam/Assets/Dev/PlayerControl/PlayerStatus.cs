@@ -335,6 +335,14 @@ public class PlayerStatus : MonoBehaviour
             SetPlayerStateImmediately(new ImpactStun(attackingPlayerStatus, knockbackVelocity));
             currentPlayerState.stateToChangeTo.timeToChangeState = hitstun;
 
+            // Plays orchestra hits for combo.
+            int combo = attackingPlayerStatus.combat.weaponState.currentComboCount;
+
+            if (combo == 1 || combo == 2)
+                audioManager.Play("orchestraHitShort", combo, combo);
+            if (combo == 3)
+                audioManager.Play("orchestraHitLong");
+
             audioManager.Play("punch", 0.8f, 1.2f);
         }
 

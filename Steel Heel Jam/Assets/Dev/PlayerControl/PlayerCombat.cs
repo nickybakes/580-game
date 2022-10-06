@@ -185,7 +185,7 @@ public class PlayerCombat : MonoBehaviour
         if (weaponState.currentComboCount == 0)
             _status.movement.SetTheSetForwardDirection();
 
-        audioManager.Play("swing");
+        audioManager.Play("swing", 0.8f, 1.2f);
     }
 
     private void AttackAir()

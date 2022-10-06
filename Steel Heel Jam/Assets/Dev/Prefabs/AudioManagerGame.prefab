@@ -74,10 +74,19 @@ MonoBehaviour:
     playOnAwake: 0
     source: {fileID: 0}
   - audioType: 1
-    name: orchestraHit
+    name: orchestraHitShort
     clips:
     - {fileID: 8300000, guid: db24964515fffd842baa2eac04250a79, type: 3}
-    volume: 1
+    volume: 0.1
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - audioType: 1
+    name: orchestraHitLong
+    clips:
+    - {fileID: 8300000, guid: 6f4a2267fda6f3748b085b6f337d719f, type: 3}
+    volume: 0.2
     pitch: 1
     loop: 0
     playOnAwake: 0
@@ -117,11 +126,10 @@ MonoBehaviour:
   - audioType: 1
     name: swing
     clips:
-    - {fileID: 8300000, guid: 0d8adc008a5696f47b780be66276aec6, type: 3}
-    - {fileID: 8300000, guid: 61546619f0f1bbd429171b81d36d7329, type: 3}
-    - {fileID: 8300000, guid: 911eee477ba8aa24f8957edcf4906c9e, type: 3}
-    - {fileID: 8300000, guid: 654c665691eb2284589107bafe2c841e, type: 3}
-    - {fileID: 8300000, guid: 294f09806d0dd0244bf243ad77005ef5, type: 3}
+    - {fileID: 8300000, guid: 9fc67e1ab49b99541b2cf1d1099e314a, type: 3}
+    - {fileID: 8300000, guid: ac081add02c44be488e8c9ce671bdaf8, type: 3}
+    - {fileID: 8300000, guid: 08f03069b83afef4ea98b3ee2d916f3b, type: 3}
+    - {fileID: 8300000, guid: ac8f11b78faa3e2488fe6ebc1fbece45, type: 3}
     volume: 1
     pitch: 1
     loop: 0
