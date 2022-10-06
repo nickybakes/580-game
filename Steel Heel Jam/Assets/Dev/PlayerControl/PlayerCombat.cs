@@ -220,7 +220,8 @@ public class PlayerCombat : MonoBehaviour
         {
             Vector3 vectorToCollider = (s.transform.position - _status.transform.position).normalized;
             // 180 degree arc, change 0 to 0.5 for a 90 degree "pie"
-            if (Vector3.Dot(vectorToCollider, _status.movement.ActualFowardDirection) > targetAngle)
+            if (Vector3.Dot(vectorToCollider, _status.movement.ActualFowardDirection) > targetAngle &&
+                Vector3.Distance(_status.transform.position, s.transform.position) < 25)
             {
                 // If in the arc, add to potential target list.
                 potentialTargets.Add(s);
@@ -233,6 +234,7 @@ public class PlayerCombat : MonoBehaviour
             potentialTargets = potentialTargets.OrderBy(x => Vector3.Distance(_status.transform.position, x.transform.position)).ToList();
 
             // Now check if there are any obstacles in the way of the first player in the list, if not, pass to itemTrajectory, else cont. list, if none, pass null.
+            
             // Raycasting magic.
 
             // For now, adds the first in potentialTargets.

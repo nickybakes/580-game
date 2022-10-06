@@ -7,7 +7,10 @@ public class ItemTrajectory : MonoBehaviour
 {
     public bool isThrown;
     public float chargeAmount;
+    [SerializeField]
     private float chargeAmountMultiplier = 20f;
+    [SerializeField]
+    private float aimAssistMultiplier = 300f;
 
     private bool wasThrown;
 
@@ -52,14 +55,22 @@ public class ItemTrajectory : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        // Prevent collision with thrower.
+        // Prevent collision with thrower
         if (collision.gameObject != throwerObject)
         {
+            // Checks for collision with enemy.
+            if (collision.gameObject.CompareTag(Tag.Player.ToString()))
+            {
+                PlayerStatus hitPlayerStatus = collision.gameObject.GetComponent<PlayerStatus>();
+                hitPlayerStatus.ReduceStamina(10);
+                // Sets state to Block for now.
+                hitPlayerStatus.SetPlayerStateImmediately(new Block());
+            }
+
+
             wasThrown = false;
             isThrown = false;
         }
-
-        // Add section for collision with enemy.
     }
 
     private void InitialThrow()
@@ -89,11 +100,13 @@ public class ItemTrajectory : MonoBehaviour
         //if ((target.transform.position - transform.position).magnitude < 0.1f)
         //    isThrown = false;
 
+        //Mathf.Lerp(1.0f, 0.2f, timeInThisState / 2.0f)
+        //Vector3.Slerp();
 
         // Add small impulse every update to course correct.
-        //Vector3 correctedDirection = (target.transform.position - transform.position).normalized;
+        Vector3 correctedDirection = chargeAmount * chargeAmountMultiplier * (target.transform.position - transform.position).normalized;
+        Vector3 forceToAdd = correctedDirection - rb.transform.forward.normalized;
 
-        //rb.AddForce(correctedDirection, ForceMode.Force);
-
+        rb.AddForce(forceToAdd * aimAssistMultiplier * Time.deltaTime, ForceMode.Force);
     }
 }
