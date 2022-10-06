@@ -6,12 +6,14 @@ public class PickUpSphere : MonoBehaviour
 {
     public PlayerCombat playerCombat;
     public PlayerStatus playerStatus;
+    public Transform pickUpLocation;
 
     // Start is called before the first frame update
     void Start()
     {
         playerCombat = transform.parent.GetComponent<PlayerCombat>();
         playerStatus = transform.parent.GetComponent<PlayerStatus>();
+        pickUpLocation = transform.parent.Find("PickUpLocation");
     }
 
     private void OnEnable()
@@ -22,7 +24,7 @@ public class PickUpSphere : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -77,6 +79,8 @@ public class PickUpSphere : MonoBehaviour
 
             // Make object inactive and a child of the player
             other.transform.SetParent(playerStatus.transform);
+            other.transform.position = pickUpLocation.transform.position;
+            
             other.gameObject.SetActive(false);
             playerCombat.equippedItem = other.gameObject;
 

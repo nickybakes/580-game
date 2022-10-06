@@ -16,6 +16,7 @@ public class ItemManager : MonoBehaviour
     {
         spawnTimer = 0f;
         spawnTimerMax = 10f;
+        //spawnTimerMax = 2f;
         //itemsOnGround = new List<GameObject>();
     }
 
@@ -32,7 +33,7 @@ public class ItemManager : MonoBehaviour
 
     void SpawnRandomItem()
     {
-        int randomItemIndex = r.Next(0, itemsToSpawn.Count - 1);
+        int randomItemIndex = r.Next(0, itemsToSpawn.Count);
         int randomXCoordinate = r.Next(-40, 40);
         int randomZCoordinate = r.Next(-40, 40);
         Vector3 spawnLocation = new Vector3(randomXCoordinate, 1, randomZCoordinate);
