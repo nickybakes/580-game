@@ -11,7 +11,7 @@ public class Ring : MonoBehaviour
 
     private float ringResizeTimeCurrent;
     private float ringResizeTimeMax;
-    
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -27,9 +27,14 @@ public class Ring : MonoBehaviour
 
             tr.localScale = Vector3.Lerp(startingSize, targetSize, ringResizeTimeCurrent / ringResizeTimeMax);
 
-            Shader.SetGlobalVector("ringPosition", new Vector2(tr.position.x, tr.position.z));
-            Shader.SetGlobalFloat("ringRadius", tr.localScale.x);
+            UpdateRingShaderProperties();
         }
+    }
+
+    public void UpdateRingShaderProperties()
+    {
+        Shader.SetGlobalVector("ringPosition", new Vector2(tr.position.x, tr.position.z));
+        Shader.SetGlobalFloat("ringRadius", tr.localScale.x);
     }
 
     /// <summary>

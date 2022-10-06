@@ -6,7 +6,7 @@ public class AttackAirRecovery : BasicState
 {
     public AttackAirRecovery()
     {
-        timeToChangeState = 0.5f;
+        timeToChangeState = .8f;
         canPlayerControlMove = false;
         canPlayerControlRotate = false;
         canAttack = false;
@@ -15,7 +15,7 @@ public class AttackAirRecovery : BasicState
         updateMovement = false;
         countAttackCooldown = false;
         visual = VisualChild.Recovery;
-        animationState = AnimationState.AttackAirRecovery_01;
+        animationState = AnimationState.Eliminated;
         stateToChangeTo = new Idle();
     }
 

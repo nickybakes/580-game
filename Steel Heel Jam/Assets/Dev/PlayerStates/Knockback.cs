@@ -20,8 +20,6 @@ public class Knockback : BasicState
         animationState = AnimationState.Knockback;
         stateToChangeTo = new Idle();
 
-        visual = VisualChild.Knockback;
-
         velocity = _velocity;
     }
 

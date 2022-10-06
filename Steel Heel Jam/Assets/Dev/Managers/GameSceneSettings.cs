@@ -15,6 +15,8 @@ public class GameSceneSettings : MonoBehaviour
     public Transform playerSpawnsFor6;
     public Transform playerSpawnsFor7;
     public Transform playerSpawnsFor8;
+    public Transform ringCenters;
+    public Transform heelSpotlightStart;
 
     // Start is called before the first frame update
     void Start()

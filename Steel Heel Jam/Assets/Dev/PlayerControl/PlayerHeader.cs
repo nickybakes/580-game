@@ -31,13 +31,17 @@ public class PlayerHeader : MonoBehaviour
 
     private RectTransform staminaBarBackgroundRect;
 
+    public TextMeshProUGUI weaponText;
+
+
     private bool blinkDangerText;
     private float dangerBlinkTime;
     private const float dangerBlinkTimeMax = .15f;
     private const float staminaDangerThreshold = .12f;
 
-    public PlayerStatus Status{
-        get{ return playerStatus; }
+    public PlayerStatus Status
+    {
+        get { return playerStatus; }
     }
 
 
@@ -104,5 +108,10 @@ public class PlayerHeader : MonoBehaviour
                 dangerText.SetActive(!dangerText.activeSelf);
             }
         }
+    }
+
+    public void SetWeaponText(string weaponName)
+    {
+        weaponText.text = weaponName;
     }
 }

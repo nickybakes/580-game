@@ -37,7 +37,8 @@ public class PlayerCombat : MonoBehaviour
     /// <summary>
     /// A boolean that represents if the player has attacked recently.
     /// </summary>
-    public bool ActedRecently {
+    public bool ActedRecently
+    {
         get
         {
             if (recentActionCooldown > 0) return true;
@@ -158,7 +159,8 @@ public class PlayerCombat : MonoBehaviour
 
                 if (timeHeld > 3)
                     timeHeld = 3;
-            } else
+            }
+            else
             {
                 if (_status.CurrentPlayerState is not Rest) _status.SetPlayerStateImmediately(new Rest());
             }
@@ -178,7 +180,7 @@ public class PlayerCombat : MonoBehaviour
         _status.CurrentPlayerState.stateToChangeTo.moveSpeedMultiplier = weaponState.ForwardSpeedModifier;
         _status.CurrentPlayerState.stateToChangeTo.stateToChangeTo.timeToChangeState = weaponState.Recovery;
 
-        if(weaponState.currentComboCount == 0)
+        if (weaponState.currentComboCount == 0)
             _status.movement.SetTheSetForwardDirection();
     }
 
@@ -186,7 +188,7 @@ public class PlayerCombat : MonoBehaviour
     {
         _input.Attack = false;
         //_status.movement.velocity = Vector3.zero;
-        _status.SetPlayerStateImmediately(_status.movement.velocity.y > 0? new AttackAirStartup() : new AttackAirDuration());
+        _status.SetPlayerStateImmediately(_status.movement.velocity.y > 0 ? new AttackAirStartup() : new AttackAirDuration());
 
         //weaponState.UpdateValues();
 
@@ -221,6 +223,7 @@ public class PlayerCombat : MonoBehaviour
     private void Throw()
     {
         List<PlayerStatus> potentialTargets = new List<PlayerStatus>();
+        equippedItem.transform.localRotation = Quaternion.identity;
         equippedItem.transform.parent = null;
         equippedItem.SetActive(true);
 
@@ -233,7 +236,7 @@ public class PlayerCombat : MonoBehaviour
             Vector3 vectorToCollider = (s.transform.position - _status.transform.position).normalized;
             // 180 degree arc, change 0 to 0.5 for a 90 degree "pie"
             if (Vector3.Dot(vectorToCollider, _status.movement.ActualFowardDirection) > targetAngle &&
-                Vector3.Distance(_status.transform.position, s.transform.position) < 25)
+                Vector3.Distance(_status.transform.position, s.transform.position) < 25 && Mathf.Abs(_status.transform.position.y - s.transform.position.y) < 10)
             {
                 // If in the arc, add to potential target list.
                 potentialTargets.Add(s);
@@ -246,7 +249,7 @@ public class PlayerCombat : MonoBehaviour
             potentialTargets = potentialTargets.OrderBy(x => Vector3.Distance(_status.transform.position, x.transform.position)).ToList();
 
             // Now check if there are any obstacles in the way of the first player in the list, if not, pass to itemTrajectory, else cont. list, if none, pass null.
-            
+
             // Raycasting magic.
 
             // For now, adds the first in potentialTargets.
@@ -263,12 +266,25 @@ public class PlayerCombat : MonoBehaviour
         itemTrajectory.throwerObject = _status.gameObject;
 
         equippedItem = null;
+        _status.playerHeader.SetWeaponText("");
         weaponState = new Unarmed(_status.playerNumber, _hitbox);
 
         _status.SetPlayerStateImmediately(new ThrowRecovery());
 
         timeHeld = 0;
 
+    }
+
+    public void DropWeapon()
+    {
+        equippedItem.transform.localRotation = Quaternion.identity;
+        equippedItem.transform.parent = null;
+        equippedItem.SetActive(true);
+
+        equippedItem = null;
+        if(_status.playerHeader)
+            _status.playerHeader.SetWeaponText("");
+        weaponState = new Unarmed(_status.playerNumber, _hitbox);
     }
 
 }

@@ -24,7 +24,7 @@ public class ItemManager : MonoBehaviour
     void Update()
     {
          spawnTimer += Time.deltaTime;
-         if (spawnTimer >= spawnTimerMax)
+         if (spawnTimer >= spawnTimerMax + (10 * Mathf.Clamp01(GameManager.game.gameTime / GameManager.game.maxGameTime)))
          {
              SpawnRandomItem();
              spawnTimer = 0;
@@ -36,10 +36,9 @@ public class ItemManager : MonoBehaviour
         int randomItemIndex = r.Next(0, itemsToSpawn.Count);
         //int randomXCoordinate = r.Next(-40, 40);
         //int randomZCoordinate = r.Next(-40, 40);
-        float radius = GameManager.game.ringScript.tr.localScale.x/2;
-        Debug.Log(radius);
-        float randomXCoordinate = NextFloat(GameManager.game.ringScript.transform.position.x - radius - 2f, GameManager.game.ringScript.transform.position.x + radius - 2f);
-        float randomZCoordinate = NextFloat(GameManager.game.ringScript.transform.position.z - radius - 2f, GameManager.game.ringScript.transform.position.z + radius - 2f);
+        float radius = (GameManager.game.ringScript.tr.localScale.x/2) + 8;
+        float randomXCoordinate = NextFloat(GameManager.game.ringScript.transform.position.x - radius, GameManager.game.ringScript.transform.position.x + radius);
+        float randomZCoordinate = NextFloat(GameManager.game.ringScript.transform.position.z - radius, GameManager.game.ringScript.transform.position.z + radius);
         Vector3 spawnLocation = new Vector3(randomXCoordinate, 35, randomZCoordinate);
         GameObject newItem = Instantiate(itemsToSpawn[randomItemIndex], spawnLocation, Quaternion.identity);
         itemsOnGround.Add(newItem);

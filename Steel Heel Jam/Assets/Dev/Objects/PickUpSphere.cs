@@ -29,41 +29,57 @@ public class PickUpSphere : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == Tag.PickUp.ToString())
+        if (other.tag == Tag.PickUp.ToString())
         {
             Item itemScript = other.GetComponent<Item>();
             switch (itemScript.itemType)
             {
                 case Item.ItemType.TestCube:
                     playerCombat.weaponState = new TestCubeState(playerStatus.playerNumber, playerCombat._hitbox);
+                    if (playerStatus.playerHeader)
+                        playerStatus.playerHeader.SetWeaponText("Test Item");
                     break;
 
                 case Item.ItemType.Saber:
                     playerCombat.weaponState = new Saber(playerStatus.playerNumber, playerCombat._hitbox);
+                    if (playerStatus.playerHeader)
+                        playerStatus.playerHeader.SetWeaponText("Saber");
                     break;
 
                 case Item.ItemType.BoomBox:
                     playerCombat.weaponState = new BoomBox(playerStatus.playerNumber, playerCombat._hitbox);
+                    if (playerStatus.playerHeader)
+                        playerStatus.playerHeader.SetWeaponText("Boom Box");
                     break;
 
                 case Item.ItemType.ExplosiveBarrel:
                     playerCombat.weaponState = new ExplosiveBarrel(playerStatus.playerNumber, playerCombat._hitbox);
+                    if (playerStatus.playerHeader)
+                        playerStatus.playerHeader.SetWeaponText("Barrel");
                     break;
 
                 case Item.ItemType.SteelChair:
                     playerCombat.weaponState = new SteelChair(playerStatus.playerNumber, playerCombat._hitbox);
+                    if (playerStatus.playerHeader)
+                        playerStatus.playerHeader.SetWeaponText("Steel Chair");
                     break;
 
                 case Item.ItemType.Boomerang:
                     playerCombat.weaponState = new Boomerang(playerStatus.playerNumber, playerCombat._hitbox);
+                    if (playerStatus.playerHeader)
+                        playerStatus.playerHeader.SetWeaponText("Boomerang");
                     break;
 
                 case Item.ItemType.Gauntlets:
                     playerCombat.weaponState = new Gauntlets(playerStatus.playerNumber, playerCombat._hitbox);
+                    if (playerStatus.playerHeader)
+                        playerStatus.playerHeader.SetWeaponText("Boxer Gloves");
                     break;
 
                 case Item.ItemType.HomingMissile:
                     playerCombat.weaponState = new HomingMissile(playerStatus.playerNumber, playerCombat._hitbox);
+                    if (playerStatus.playerHeader)
+                        playerStatus.playerHeader.SetWeaponText("Homing Missile");
                     break;
             }
 
@@ -80,7 +96,7 @@ public class PickUpSphere : MonoBehaviour
             // Make object inactive and a child of the player
             other.transform.SetParent(playerStatus.transform);
             other.transform.position = pickUpLocation.transform.position;
-            
+
             other.gameObject.SetActive(false);
             playerCombat.equippedItem = other.gameObject;
 

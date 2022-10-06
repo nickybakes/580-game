@@ -20,6 +20,7 @@ public class Rest : BasicState
         canDodgeRoll = false;
         canBlock = false;
         animationState = AnimationState.Taunt_01;
+        visual = VisualChild.Knockback;
 
         stateToChangeTo = new Idle();
     }

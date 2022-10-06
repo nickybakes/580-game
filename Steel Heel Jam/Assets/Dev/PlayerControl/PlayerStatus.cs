@@ -104,7 +104,7 @@ public class PlayerStatus : MonoBehaviour
     /// <summary>
     /// The amount of stamina restored every interval when not active.
     /// </summary>
-    [SerializeField] private const float PassiveStaminaRegen = 5f;
+    [SerializeField] private const float PassiveStaminaRegen = 3f;
 
     public float totalDamageTaken;
 
@@ -255,9 +255,9 @@ public class PlayerStatus : MonoBehaviour
 
     public void SetPlayerStateImmediately(BasicState state)
     {
-        if(eliminated)
+        if (eliminated)
             return;
-            
+
         currentPlayerState.OnExitThisState(state, this);
         state.OnEnterThisState(currentPlayerState, this);
 
@@ -323,6 +323,7 @@ public class PlayerStatus : MonoBehaviour
 
             if (totalDamageTaken > 200f && recentDamageTaken > 30f)
             {
+                combat.DropWeapon();
                 ReduceMaxStamina(damage);
             }
 
@@ -369,8 +370,20 @@ public class PlayerStatus : MonoBehaviour
         ReduceStamina(damage);
         totalDamageTaken += damage;
 
+        recentDamageTaken += damage;
+        recentDamageTakenMax = recentDamageTaken;
+        recentDamageTimeCurrent = 10f;
+
+        if (totalDamageTaken > 200f && recentDamageTaken > 30f)
+        {
+            combat.DropWeapon();
+            ReduceMaxStamina(damage);
+        }
+
         // Set a knockback on the player.
         movement.velocity += knockbackVelocity;
+        SetPlayerStateImmediately(new ImpactStun(null, knockbackVelocity));
+        currentPlayerState.stateToChangeTo.timeToChangeState = .3f;
     }
 
     public void SetHeel()

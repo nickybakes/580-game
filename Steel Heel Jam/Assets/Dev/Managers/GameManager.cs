@@ -19,6 +19,8 @@ public class GameManager : MonoBehaviour
     public HUDManager hudManager;
     public GameObject hudCountdown;
 
+    public ItemManager itemManager;
+
     public CameraManager cameraManager;
 
     public Ring ringScript;
@@ -35,6 +37,8 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public float gameTime;
 
+    public float maxGameTime = 163;
+
 
     // Start is called before the first frame update
     void Start()
@@ -44,6 +48,11 @@ public class GameManager : MonoBehaviour
         allPlayerStatuses = new List<PlayerStatus>();
         alivePlayerStatuses = new List<PlayerStatus>();
         eliminatedPlayerStatuses = new List<PlayerStatus>();
+
+        //temporary
+        itemManager = FindObjectOfType<ItemManager>();
+
+
         SpawnPlayerPrefabs();
         SpawnRing();
 
@@ -142,12 +151,17 @@ public class GameManager : MonoBehaviour
 
     private void SpawnRing()
     {
+        Transform ringCenter = gameSceneSettings.ringCenters.transform.GetChild(Random.Range(0, gameSceneSettings.ringCenters.transform.childCount));
+
         GameObject g = Instantiate(ringPrefab);
         ringScript = g.GetComponent<Ring>();
 
         g.transform.localScale = new Vector3(60, 7, 60);
+        g.transform.position = new Vector3(ringCenter.position.x, g.transform.position.y, ringCenter.position.z);
 
-        // Resize ring to a diameter of 10 units in 3 minutes
-        ringScript.ResizeRing(10, 60);
+        ringScript.UpdateRingShaderProperties();
+
+        // Resize ring to a diameter of 10 units in 2-ish minutes
+        ringScript.ResizeRing(10, maxGameTime);
     }
 }
