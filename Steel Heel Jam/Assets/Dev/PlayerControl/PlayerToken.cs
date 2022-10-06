@@ -49,15 +49,20 @@ public class PlayerToken : MonoBehaviour
         cursorScript.ReturnToDefaultLocation();
     }
 
-    public void SetUpPlayerPrefab(GameObject player)
+    public PlayerStatus SetUpPlayerPrefab(GameObject player)
     {
         playerPrefabInputsComp = player.GetComponent<StarterAssetsInputs>();
         PlayerStatus status = player.GetComponent<PlayerStatus>();
 
-        player.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = colors[playerNumber - 1];
-        player.transform.GetChild(1).GetComponent<MeshRenderer>().material.color = colors[playerNumber - 1];
+
+        player.GetComponentInChildren<OutlineSketchUpdate>().SetBaseColor(playerNumber);
+
+        // player.transform.GetChild((int)PlayerChild.Model).GetChild(0).GetComponent<MeshRenderer>().material.SetColor("_BaseColor", colors[playerNumber - 1]);
+        // player.transform.GetChild((int)PlayerChild.Model).GetChild(1).GetComponent<MeshRenderer>().material.SetColor("_BaseColor", colors[playerNumber - 1]);
 
         status.playerNumber = playerNumber;
+
+        return status;
     }
 
     public void OnDebugRestartGame(InputValue value)
@@ -103,7 +108,7 @@ public class PlayerToken : MonoBehaviour
         playerPrefabInputsComp.OnDodgeRoll(value);
     }
 
-    public void OnPickUpPutDown(InputValue value)
+    public void OnPickUp(InputValue value)
     {
         playerPrefabInputsComp.OnPickUp(value);
     }
@@ -117,5 +122,10 @@ public class PlayerToken : MonoBehaviour
     {
         playerPrefabInputsComp.OnBlock(value);
 
+    }
+
+    public void OnThrow(InputValue value)
+    {
+        playerPrefabInputsComp.OnThrow(value);
     }
 }

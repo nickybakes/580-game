@@ -20,6 +20,12 @@ public class PlayerVisuals
 
     private Transform tr;
 
+    private Animator animator;
+
+    private Transform modelTransform;
+
+    private AnimationState currentAnimationState;
+
     private GameObject blockSphere;
     private GameObject dodgeRollSphere;
     private GameObject stunSphere;
@@ -31,11 +37,37 @@ public class PlayerVisuals
         tr = _tr;
         status = _status;
 
+        animator = tr.GetComponentInChildren<Animator>();
+        modelTransform = animator.transform;
+
         blockSphere = tr.GetChild((int)PlayerChild.Visuals).GetChild((int)VisualChild.Block).gameObject;
         dodgeRollSphere = tr.GetChild((int)PlayerChild.Visuals).GetChild((int)VisualChild.DodgeRoll).gameObject;
         stunSphere = tr.GetChild((int)PlayerChild.Visuals).GetChild((int)VisualChild.Stun).gameObject;
         recoverySphere = tr.GetChild((int)PlayerChild.Visuals).GetChild((int)VisualChild.Recovery).gameObject;
         knockbackSphere = tr.GetChild((int)PlayerChild.Visuals).GetChild((int)VisualChild.Knockback).gameObject;
+    }
+
+/// <summary>
+/// Do this later, make the model rotate while in knockout state, so it looks
+/// like its drilling through the air
+/// </summary>
+/// <param name="radians">Angle in radians</param>
+    public void SetModelRotationX(float radians)
+    {
+        Vector3 center = modelTransform.position + new Vector3(0, modelTransform.localScale.y, 0);
+
+        // modelTransform.RotateAround(center, Vector3.right, angle);
+
+    }
+
+    public void SetAnimationState(AnimationState state)
+    {
+        if (currentAnimationState == state)
+            return;
+
+        currentAnimationState = state;
+
+        animator.SetTrigger(state.ToString());
     }
 
     public void EnableVisual(VisualChild vc)

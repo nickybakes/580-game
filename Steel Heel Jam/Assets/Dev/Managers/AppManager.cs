@@ -30,6 +30,22 @@ public class AppManager : MonoBehaviour
         get { return previousScene; }
     }
 
+    public int TokenAmount
+    {
+        get
+        {
+            int amount = 0;
+            for (int i = 0; i < playerTokens.Length; i++)
+            {
+                if (playerTokens[i])
+                    amount++;
+                else
+                    return amount;
+            }
+            return amount;
+        }
+    }
+
     public PlayerToken[] playerTokens;
 
     // Start is called before the first frame update
@@ -41,7 +57,9 @@ public class AppManager : MonoBehaviour
 
         playerTokens = new PlayerToken[8];
 
-        SwitchToScene(Scenes.MENU_TempJoinScreen);
+
+        if(SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex((int) Scenes.MENU_InitApp))
+            SwitchToScene(Scenes.MENU_TempJoinScreen);
     }
 
     // Update is called once per frame

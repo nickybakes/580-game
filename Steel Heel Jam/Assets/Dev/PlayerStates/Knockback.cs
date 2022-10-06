@@ -16,10 +16,9 @@ public class Knockback : BasicState
         canDodgeRoll = false;
         canBlock = false;
         updateMovement = true;
+        // alternateFriction = true;
         animationState = AnimationState.Knockback;
         stateToChangeTo = new Idle();
-
-        visual = VisualChild.Knockback;
 
         velocity = _velocity;
     }
@@ -30,6 +29,12 @@ public class Knockback : BasicState
         
         status.movement.velocity = velocity;
         status.movement.grounded = false;
+    }
+
+    public override void OnExitThisState(BasicState nextState, PlayerStatus status)
+    {
+        base.OnExitThisState(nextState, status);
+
     }
 
 }

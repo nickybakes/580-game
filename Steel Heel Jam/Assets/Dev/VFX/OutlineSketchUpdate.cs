@@ -7,7 +7,9 @@ public class OutlineSketchUpdate : MonoBehaviour
 {
 
     public SkinnedMeshRenderer innerOutlineMesh;
+    // public MeshRenderer innerOutlineMesh2;
     public SkinnedMeshRenderer outerOutlineMesh;
+    // public MeshRenderer outerOutlineMesh2;
 
     private float time;
     public float maxFrameTime = .2f;
@@ -31,6 +33,12 @@ public class OutlineSketchUpdate : MonoBehaviour
         }
     }
 
+    public void SetBaseColor(int playerNumber)
+    {
+        innerOutlineMesh.material.SetColor("_BaseColor", PlayerToken.colors[playerNumber - 1]);
+        // outerOutlineMesh.material.SetColor("_BaseColor", PlayerToken.colors[playerNumber - 1]);
+    }
+
     void UpdateOutline()
     {
         if (!innerOutlineMesh || !outerOutlineMesh)
@@ -41,5 +49,11 @@ public class OutlineSketchUpdate : MonoBehaviour
 
         outerOutlineMesh.material.SetFloat("_PanX", Random.value);
         outerOutlineMesh.material.SetFloat("_PanY", Random.value);
+
+        // innerOutlineMesh2.material.SetFloat("_PanX", Random.value);
+        // innerOutlineMesh2.material.SetFloat("_PanY", Random.value);
+
+        // outerOutlineMesh2.material.SetFloat("_PanX", Random.value);
+        // outerOutlineMesh2.material.SetFloat("_PanY", Random.value);
     }
 }

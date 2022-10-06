@@ -151,6 +151,11 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    public bool InputDirectionNotZero
+    {
+        get { return (_input.move.x != 0 || _input.move.y != 0); }
+    }
+
     public float ActualTopDownSpeed
     {
         get { return new Vector2(velocity.x, velocity.z).magnitude; }
@@ -183,7 +188,7 @@ public class PlayerMovement : MonoBehaviour
     /// <param name="updateMovement">True if we should overall update the player's movement (gravity, position with velocity, etc)</param>
     /// <param name="controlMovement">True if the player can affect their movement velocity and if they can jump with their inputs</param>
     /// <param name="controlRotation">True if the player can change the direction they are facing, regardless of their current velocity</param>
-    public void UpdateManual(bool updateMovement, bool controlMovement, bool controlRotation)
+    public void UpdateManual(bool updateMovement, bool controlMovement, bool controlRotation, bool alternateFriction)
     {
         moveSpeedMultiplier = _status.CurrentPlayerState.moveSpeedMultiplier;
         extraFallMultiplier = _status.CurrentPlayerState.extraFallGravityMultiplier;
@@ -197,6 +202,9 @@ public class PlayerMovement : MonoBehaviour
                 ControlMovement(inputDirection);
             if (controlRotation)
                 ControlRotation(inputDirection);
+            if (alternateFriction)
+                ControlMovement(Vector3.zero);
+
             Move();
         }
     }
@@ -276,7 +284,7 @@ public class PlayerMovement : MonoBehaviour
                 float differenceX = velocity.x - (CurrentMoveSpeed * inputDirection.x);
                 float differenceZ = velocity.z - (CurrentMoveSpeed * inputDirection.z);
                 Vector2 speedDecayDirection = new Vector2(differenceX, differenceZ) / CurrentMoveSpeed;
-                if(CurrentMoveSpeed == 0)
+                if (CurrentMoveSpeed == 0)
                     speedDecayDirection = Vector2.zero;
 
                 velocity.x = velocity.x - speedDecayDirection.x * airSpeedChangeAmount * Time.deltaTime;
@@ -459,17 +467,14 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // apply gravity over time if under terminal (multiply by delta time twice to linearly speed up over time)
-        if (velocity.y < _terminalVelocity)
+        if (velocity.y < 0)
         {
-            if (velocity.y < 0)
-            {
-                //when falling, make gravity stronger (multiply it by a multiplier value) to give a better feel to jumps
-                velocity.y += gravity * fallGravityMultiplier * extraFallMultiplier * Time.deltaTime;
-            }
-            else
-            {
-                velocity.y += gravity * Time.deltaTime;
-            }
+            //when falling, make gravity stronger (multiply it by a multiplier value) to give a better feel to jumps
+            velocity.y += gravity * fallGravityMultiplier * extraFallMultiplier * Time.deltaTime;
+        }
+        else
+        {
+            velocity.y += gravity * Time.deltaTime;
         }
     }
 

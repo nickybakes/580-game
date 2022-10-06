@@ -9,10 +9,23 @@ public enum AnimationState
     Jump,
     Fall,
     DodgeRoll,
-    AttackGroundStartup,
-    AttackGroundDuration,
-    AttackGroundRecovery,
+    DodgeRollFall,
+    DodgeRollRecovery,
+    Block,
+    BlockRecovery,
     Knockback,
+    Eliminated,
+    ImpactStun,
+    Pickup_01,
+    Throw_01,
+    ThrowCharging_01,
+    Taunt_01,
+    AttackGroundStartup_01,
+    AttackGroundDuration_01,
+    AttackGroundRecovery_01,
+    AttackAirStartup_01,
+    AttackAirDuration_01,
+    AttackAirRecovery_01,
 }
 
 //public enum PlayerState
@@ -40,6 +53,7 @@ public class BasicState
     protected float timeInThisState;
 
     public bool updateMovement = true;
+    public bool alternateFriction = false;
 
     public bool canPlayerControlMove = true;
 
@@ -72,6 +86,15 @@ public class BasicState
     public bool countDodgeRollCooldown = true;
 
     public bool canBlock = true;
+
+    /// <summary>
+    /// False for all but idle.
+    /// (this way it doesn't need to be explicitly stated in every status.)
+    /// </summary>
+    public bool canPickUp = false;
+
+    public bool canThrow = true;
+
 
     public AnimationState animationState = AnimationState.Idle;
 
