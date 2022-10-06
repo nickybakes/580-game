@@ -16,6 +16,7 @@ public class ItemTrajectory : MonoBehaviour
 
     public PlayerStatus target;
     public PlayerStatus thrower;
+    public GameObject throwerObject;
 
     // Start is called before the first frame update
     void Start()
@@ -27,43 +28,49 @@ public class ItemTrajectory : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isThrown)
+
+        // isThrown only happens the first frame throw is released.
+        if (isThrown && !wasThrown)
         {
-
-            if (target != null)
-            {
-                UpdateTargetedThrow();
-                isThrown = false;
-            }
-            else
-            {
-                UpdateStraightThrow();
-            }
-
-            // Set isThrown to false when it's "grounded" or being held.
-            if (rb.velocity.magnitude < 0.01f)
-            {
-                isThrown = false;
-                wasThrown = false;
-            }
+            InitialThrow();
+            wasThrown = true;
         }
+        if (wasThrown && target != null)
+        {
+            UpdateTargetedThrow();
+        }
+
+        //Debug.Log(wasThrown);
+
+        // Set isThrown to false when it's "grounded" or being held.
+        //if (rb.velocity.magnitude < 0.01f)
+        //{
+        //    isThrown = false;
+        //    wasThrown = false;
+        //}
     }
 
-    private void UpdateStraightThrow()
+    private void OnCollisionEnter(Collision collision)
     {
-
-        if (!wasThrown)
+        // Prevent collision with thrower.
+        if (collision.gameObject != throwerObject)
         {
-            wasThrown = true;
-
-            Vector3 initialDirection = thrower.movement.ActualFowardDirection;
-            initialDirection.x *= chargeAmount * chargeAmountMultiplier;
-            initialDirection.z *= chargeAmount * chargeAmountMultiplier;
-            initialDirection.y = 5 * chargeAmount; //chargeamt from 0-3
-
-            rb.velocity = new Vector3(0,0,0);
-            rb.AddForce(initialDirection, ForceMode.Impulse);
+            wasThrown = false;
+            isThrown = false;
         }
+
+        // Add section for collision with enemy.
+    }
+
+    private void InitialThrow()
+    {
+        Vector3 initialDirection = thrower.movement.ActualFowardDirection;
+        initialDirection.x *= chargeAmount * chargeAmountMultiplier;
+        initialDirection.z *= chargeAmount * chargeAmountMultiplier;
+        initialDirection.y = 5 * chargeAmount; //chargeamt from 0-3
+
+        rb.velocity = new Vector3(0,0,0);
+        rb.AddForce(initialDirection, ForceMode.Impulse);
 
         //transform.position = thrower.movement.ActualFowardDirection * chargeAmount;
         //Debug.Log(thrower.movement.ActualFowardDirection);
@@ -78,6 +85,15 @@ public class ItemTrajectory : MonoBehaviour
 
     private void UpdateTargetedThrow()
     {
-        
+        // If the object hit the target.
+        //if ((target.transform.position - transform.position).magnitude < 0.1f)
+        //    isThrown = false;
+
+
+        // Add small impulse every update to course correct.
+        //Vector3 correctedDirection = (target.transform.position - transform.position).normalized;
+
+        //rb.AddForce(correctedDirection, ForceMode.Force);
+
     }
 }

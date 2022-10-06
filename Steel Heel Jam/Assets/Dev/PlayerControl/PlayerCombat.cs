@@ -234,6 +234,7 @@ public class PlayerCombat : MonoBehaviour
         itemTrajectory.isThrown = true;
         itemTrajectory.chargeAmount = timeHeld;
         itemTrajectory.thrower = _status;
+        itemTrajectory.throwerObject = _status.gameObject;
 
         equippedItem = null;
         weaponState = new Unarmed(_status.playerNumber, _hitbox);
