@@ -37,7 +37,14 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public float gameTime;
 
-    public float maxGameTime = 163;
+    public float maxGameTime = 154;
+
+    public bool gameWon;
+
+    public GameObject heelSpotlightPrefab;
+    public HeelSpotlight heelSpotlightScript;
+
+    private bool heelSpotlightSpawned;
 
 
     // Start is called before the first frame update
@@ -90,6 +97,12 @@ public class GameManager : MonoBehaviour
     {
         gameTime += Time.deltaTime;
         cameraManager.UpdateCamera(alivePlayerStatuses, eliminatedPlayerStatuses);
+
+        if (gameTime > 13 && !heelSpotlightSpawned)
+        {
+            heelSpotlightSpawned = true;
+            // SpawnHeelSpotlight();
+        }
     }
 
     public void SpawnPlayerPrefabs()
@@ -126,9 +139,36 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public float GetTotalActivityTime()
+    {
+        float score = 0;
+        foreach (PlayerStatus p in alivePlayerStatuses)
+        {
+            score += p.recentActivityTimeCurrent;
+        }
+
+        return score;
+    }
+
+    public PlayerStatus GetLeastActivePlayer()
+    {
+        PlayerStatus status = alivePlayerStatuses[0];
+
+        foreach (PlayerStatus s in alivePlayerStatuses)
+        {
+            if (s.ActivityScore < status.ActivityScore)
+                status = s;
+        }
+
+        return status;
+    }
+
     public void EliminatePlayer(PlayerStatus status)
     {
         status.SetPlayerStateImmediately(new Eliminated());
+
+        if (status.playerLastHitBy != null)
+            status.playerLastHitBy.totalEliminations++;
 
         status.eliminated = true;
         alivePlayerStatuses.Remove(status);
@@ -136,6 +176,16 @@ public class GameManager : MonoBehaviour
         status.timeOfEliminiation = gameTime;
         hudManager.RemoveHeader(status);
         status.playerHeader = null;
+
+        if (status.isHeel)
+        {
+            heelSpotlightScript.gameObject.transform.position = new Vector3(status.gameObject.transform.position.x, heelSpotlightScript.gameObject.transform.position.y, status.gameObject.transform.position.z);
+
+            heelSpotlightScript.gameObject.SetActive(true);
+        }
+
+        if (alivePlayerStatuses.Count == 1)
+            gameWon = true;
     }
 
     private void ShuffleArray<T>(T[] array)
@@ -157,12 +207,21 @@ public class GameManager : MonoBehaviour
         GameObject g = Instantiate(ringPrefab);
         ringScript = g.GetComponent<Ring>();
 
-        g.transform.localScale = new Vector3(60, 7, 60);
+        g.transform.localScale = new Vector3(65, 7, 65);
         g.transform.position = new Vector3(ringCenter.position.x, g.transform.position.y, ringCenter.position.z);
 
         ringScript.UpdateRingShaderProperties();
 
         // Resize ring to a diameter of 10 units in 2-ish minutes
-        ringScript.ResizeRing(10, maxGameTime);
+        ringScript.ResizeRing(10, 16);
+    }
+
+    public void SpawnHeelSpotlight()
+    {
+        GameObject g = Instantiate(heelSpotlightPrefab);
+
+        heelSpotlightScript = g.GetComponent<HeelSpotlight>();
+
+
     }
 }

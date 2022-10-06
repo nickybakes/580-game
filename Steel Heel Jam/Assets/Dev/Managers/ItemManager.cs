@@ -18,17 +18,36 @@ public class ItemManager : MonoBehaviour
         spawnTimerMax = 5f;
         //spawnTimerMax = 1f;
         //itemsOnGround = new List<GameObject>();
+        for (int i = 0; i < 7; i++)
+        {
+            SpawnRandomItem(20);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-         spawnTimer += Time.deltaTime;
-         if (spawnTimer >= spawnTimerMax + (10 * Mathf.Clamp01(GameManager.game.gameTime / GameManager.game.maxGameTime)))
-         {
-             SpawnRandomItem();
-             spawnTimer = 0;
-         }
+        if (GameManager.game.gameWon)
+            return;
+
+        spawnTimer += Time.deltaTime;
+        if (spawnTimer >= spawnTimerMax + (10 * Mathf.Clamp01(GameManager.game.gameTime / GameManager.game.maxGameTime)))
+        {
+            SpawnRandomItem();
+            spawnTimer = 0;
+        }
+    }
+
+    void SpawnRandomItem(float radius)
+    {
+        int randomItemIndex = r.Next(0, itemsToSpawn.Count);
+        //int randomXCoordinate = r.Next(-40, 40);
+        //int randomZCoordinate = r.Next(-40, 40);
+        float randomXCoordinate = NextFloat(GameManager.game.gameSceneSettings.heelSpotlightStart.position.x - radius, GameManager.game.gameSceneSettings.heelSpotlightStart.position.x + radius);
+        float randomZCoordinate = NextFloat(GameManager.game.gameSceneSettings.heelSpotlightStart.position.z - radius, GameManager.game.gameSceneSettings.heelSpotlightStart.position.z + radius);
+        Vector3 spawnLocation = new Vector3(randomXCoordinate, 35, randomZCoordinate);
+        GameObject newItem = Instantiate(itemsToSpawn[randomItemIndex], spawnLocation, Quaternion.identity);
+        itemsOnGround.Add(newItem);
     }
 
     void SpawnRandomItem()
@@ -36,7 +55,7 @@ public class ItemManager : MonoBehaviour
         int randomItemIndex = r.Next(0, itemsToSpawn.Count);
         //int randomXCoordinate = r.Next(-40, 40);
         //int randomZCoordinate = r.Next(-40, 40);
-        float radius = (GameManager.game.ringScript.tr.localScale.x/2) + 8;
+        float radius = (GameManager.game.ringScript.tr.localScale.x / 2) + 8;
         float randomXCoordinate = NextFloat(GameManager.game.ringScript.transform.position.x - radius, GameManager.game.ringScript.transform.position.x + radius);
         float randomZCoordinate = NextFloat(GameManager.game.ringScript.transform.position.z - radius, GameManager.game.ringScript.transform.position.z + radius);
         Vector3 spawnLocation = new Vector3(randomXCoordinate, 35, randomZCoordinate);

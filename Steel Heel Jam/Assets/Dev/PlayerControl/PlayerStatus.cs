@@ -112,9 +112,19 @@ public class PlayerStatus : MonoBehaviour
 
     public float recentDamageTaken;
 
+    public float totalDamagerDealt;
+
+    public int totalEliminations;
+
+    public PlayerStatus playerLastHitBy;
+
     public float recentDamageTakenMax;
 
     public float recentDamageTimeCurrent;
+
+    private const float recentActivityTimeMax = 5;
+
+    public float recentActivityTimeCurrent;
 
     public bool eliminated;
 
@@ -123,6 +133,14 @@ public class PlayerStatus : MonoBehaviour
     public PlayerHeader playerHeader;
 
     private new Transform transform;
+
+    public float ActivityScore
+    {
+        get
+        {
+            return recentDamageTaken + totalDamagerDealt + (totalEliminations * 25);
+        }
+    }
 
     public bool IsResting
     {
@@ -254,6 +272,11 @@ public class PlayerStatus : MonoBehaviour
 
             recentDamageTaken = Mathf.Max(0, Mathf.Lerp(0, recentDamageTakenMax, recentDamageTimeCurrent / 10f));
         }
+
+        if (recentActivityTimeCurrent > 0)
+        {
+            recentActivityTimeCurrent -= Time.deltaTime;
+        }
     }
 
     public void SetPlayerStateImmediately(BasicState state)
@@ -300,6 +323,8 @@ public class PlayerStatus : MonoBehaviour
                 knockbackHeight *= 1.6f;
             }
 
+            playerLastHitBy = attackingPlayerStatus;
+
             Vector3 knockbackDir = (collisionPos - hitboxPos).normalized;
             knockback = knockback * (2 + stamina / deafaultMaxStamina);
 
@@ -330,7 +355,11 @@ public class PlayerStatus : MonoBehaviour
                 ReduceMaxStamina(damage);
             }
 
+            attackingPlayerStatus.totalDamagerDealt += damage;
             attackingPlayerStatus.combat.weaponState.gotAHit = true;
+
+            recentActivityTimeCurrent = recentActivityTimeMax;
+            attackingPlayerStatus.recentActivityTimeCurrent = recentActivityTimeMax;
 
             SetPlayerStateImmediately(new ImpactStun(attackingPlayerStatus, knockbackVelocity));
             currentPlayerState.stateToChangeTo.timeToChangeState = hitstun;
@@ -348,7 +377,7 @@ public class PlayerStatus : MonoBehaviour
 
     }
 
-    public void GetHitByThrowable(Vector3 hitboxPos, Vector3 collisionPos, float damage, float knockback, float knockbackHeight/*, PlayerStatus attackingPlayerStatus*/)
+    public void GetHitByThrowable(Vector3 hitboxPos, Vector3 collisionPos, float damage, float knockback, float knockbackHeight, PlayerStatus attackingPlayerStatus)
     {
         // If eliminated/blocking/dodgerolling, nothing happens.
         if (eliminated || IsBlocking || IsDodgeRolling)
@@ -363,6 +392,9 @@ public class PlayerStatus : MonoBehaviour
         //    knockback *= 1.6f;
         //    knockbackHeight *= 1.6f;
         //}
+
+        if (attackingPlayerStatus != null)
+            playerLastHitBy = attackingPlayerStatus;
 
         Vector3 knockbackDir = (collisionPos - hitboxPos).normalized;
         knockback = knockback * (2 + stamina / deafaultMaxStamina);
@@ -393,6 +425,15 @@ public class PlayerStatus : MonoBehaviour
             ReduceMaxStamina(damage);
         }
 
+        recentActivityTimeCurrent = recentActivityTimeMax;
+
+
+        if (attackingPlayerStatus != null)
+        {
+            attackingPlayerStatus.totalDamagerDealt += damage;
+            attackingPlayerStatus.recentActivityTimeCurrent = recentActivityTimeMax;
+        }
+
         // Set a knockback on the player.
         movement.velocity += knockbackVelocity;
         SetPlayerStateImmediately(new ImpactStun(null, knockbackVelocity));
@@ -404,6 +445,11 @@ public class PlayerStatus : MonoBehaviour
     public void SetHeel()
     {
         isHeel = true;
+
+        if (playerHeader)
+        {
+            playerHeader.SetHeel(true);
+        }
     }
 
     /// <summary>
@@ -426,6 +472,9 @@ public class PlayerStatus : MonoBehaviour
     /// <param name="value">The value to decrease the stamina value by.</param>
     public void ReduceStamina(float value)
     {
+        if (GameManager.game.gameWon)
+            return;
+
         stamina -= value;
 
         if (stamina < 0) stamina = 0;

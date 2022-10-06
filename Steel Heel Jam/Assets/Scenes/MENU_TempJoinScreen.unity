@@ -890,7 +890,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Throw weapon or rest
+  m_text: Throw weapon or hold to Flex and gain Approval
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e162f25dbf485d94dbe27a7d391b2278, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: c04666277e158a94d833ab8c68af3979, type: 2}
@@ -953,7 +953,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: -52.71425, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1899,7 +1899,7 @@ MonoBehaviour:
     Hit someone to transfer Heel status to them.
 
     Out
-    of ring AND 0 stamina = KO''d!'
+    of ring AND 0 Approval = KO''d!'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 382f909292acf1e41928e56b37f83a14, type: 2}
   m_sharedMaterial: {fileID: 7907999476742806842, guid: 382f909292acf1e41928e56b37f83a14,

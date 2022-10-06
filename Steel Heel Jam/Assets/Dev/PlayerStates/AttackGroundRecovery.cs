@@ -46,7 +46,7 @@ public class AttackGroundRecovery : BasicState
 
         if (status.combat.weaponState.CanCombo)
             canCombo = true;
-        
+
         // Lose stamina if missed
         if (!status.combat.weaponState.gotAHit)
         {
@@ -56,6 +56,12 @@ public class AttackGroundRecovery : BasicState
         else if (status.isHeel)
         {
             status.isHeel = false;
+
+            if (status.playerHeader)
+            {
+                status.playerHeader.SetHeel(false);
+            }
+
         }
     }
 

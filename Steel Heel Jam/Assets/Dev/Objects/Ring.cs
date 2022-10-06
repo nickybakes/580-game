@@ -12,6 +12,12 @@ public class Ring : MonoBehaviour
     private float ringResizeTimeCurrent;
     private float ringResizeTimeMax;
 
+    private bool finalRing;
+
+    private bool finalRingShrinking;
+
+    private float timeInFinalRing;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -29,6 +35,29 @@ public class Ring : MonoBehaviour
 
             UpdateRingShaderProperties();
         }
+        else if (!finalRing)
+        {
+            finalRing = true;
+        }
+
+        if (finalRing)
+        {
+            timeInFinalRing += Time.deltaTime;
+        }
+
+        if (finalRing && !finalRingShrinking)
+        {
+            if (timeInFinalRing > 7)
+            {
+                if (GameManager.game.GetTotalActivityTime() <= 0)
+                {
+                    finalRingShrinking = true;
+                    ResizeRing(0, 15);
+                }
+            }
+        }
+
+
     }
 
     public void UpdateRingShaderProperties()

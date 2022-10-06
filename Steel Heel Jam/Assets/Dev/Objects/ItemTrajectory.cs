@@ -8,7 +8,7 @@ public class ItemTrajectory : MonoBehaviour
     public bool isThrown;
     public float chargeAmount;
     [SerializeField]
-    private float chargeAmountMultiplier = 20f;
+    private float chargeAmountMultiplier = 80f;
     [SerializeField]
     private float aimAssistMultiplier = 600f;
 
@@ -66,7 +66,7 @@ public class ItemTrajectory : MonoBehaviour
             if (isThrown && collision.gameObject.CompareTag(Tag.Player.ToString()))
             {
                 PlayerStatus hitPlayerStatus = collision.gameObject.GetComponent<PlayerStatus>();
-                hitPlayerStatus.GetHitByThrowable(transform.position, collision.transform.position, 10, 12 * chargeAmount + 3, 13 * chargeAmount + 7/*, thrower*/);
+                hitPlayerStatus.GetHitByThrowable(transform.position, collision.transform.position, 10, 12 * chargeAmount + 3, 13 * chargeAmount + 7, thrower);
             }
 
             wasThrown = false;
@@ -92,9 +92,9 @@ public class ItemTrajectory : MonoBehaviour
         {
             Vector3 initialDirection = (thrower.movement.ActualFowardDirection + (Vector3.up * 2)).normalized;
 
-            initialDirection.x *= chargeAmount * chargeAmountMultiplier;
-            initialDirection.z *= chargeAmount * chargeAmountMultiplier;
-            initialDirection.y = 5 * chargeAmount; //chargeamt from 0-3
+            initialDirection.x *= chargeAmount * chargeAmountMultiplier + 20;
+            initialDirection.z *= chargeAmount * chargeAmountMultiplier + 20;
+            initialDirection.y = 5 * chargeAmount + 4; //chargeamt from 0-3
 
             rb.velocity = new Vector3(0,0,0);
             rb.AddForce(initialDirection, ForceMode.Impulse);
