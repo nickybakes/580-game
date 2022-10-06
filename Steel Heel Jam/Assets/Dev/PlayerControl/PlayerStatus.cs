@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem.Controls;
 
 public enum PlayerChild
 {
@@ -121,6 +122,14 @@ public class PlayerStatus : MonoBehaviour
 
     private new Transform transform;
 
+    public bool IsResting
+    {
+        get
+        {
+            return (currentPlayerState is Rest);
+        }
+    }
+
     /// <summary>
     /// Use this to check if the player is currently dodging when you want to hit them with an attack
     /// </summary>
@@ -218,7 +227,7 @@ public class PlayerStatus : MonoBehaviour
             }
         }
 
-        if (!isHeel)
+        if (!isHeel && !IsResting)
         {
             if (combat.ActedRecently || isOOB)
             {
@@ -263,7 +272,7 @@ public class PlayerStatus : MonoBehaviour
         visuals.SetAnimationState(state);
     }
 
-    public void GetHit(bool heel, Vector3 hitboxPos, Vector3 collisionPos, float damage, float knockback, float knockbackHeight, float hitstun, PlayerStatus attackingPlayerStatus)
+    public void GetHit(Vector3 hitboxPos, Vector3 collisionPos, float damage, float knockback, float knockbackHeight, float hitstun, PlayerStatus attackingPlayerStatus)
     {
         if (eliminated)
             return;
@@ -279,7 +288,14 @@ public class PlayerStatus : MonoBehaviour
 
         if (!IsDodgeRolling)
         {
-            if (heel) isHeel = heel;
+            if (attackingPlayerStatus.isHeel)
+            {
+                SetHeel();
+
+                damage *= 1.6f;
+                knockback *= 1.6f;
+                knockbackHeight *= 1.6f;
+            }
 
             Vector3 knockbackDir = (collisionPos - hitboxPos).normalized;
             knockback = knockback * (2 + stamina / deafaultMaxStamina);
@@ -297,7 +313,7 @@ public class PlayerStatus : MonoBehaviour
 
             Vector3 knockbackVelocity = new Vector3(knockbackDir.x * knockback + staminaRatioX, knockbackHeight + staminaRatio, knockbackDir.z * knockback + staminaRatioZ);
             movement.grounded = false;
-            print(knockbackVelocity.magnitude);
+            //print(knockbackVelocity.magnitude);
             ReduceStamina(damage);
             totalDamageTaken += damage;
 
@@ -316,6 +332,16 @@ public class PlayerStatus : MonoBehaviour
             currentPlayerState.stateToChangeTo.timeToChangeState = hitstun;
         }
 
+    }
+
+    public void SetHeel()
+    {
+        isHeel = true;
+    }
+
+    public void PrintStuff<T>(T thing)
+    {
+        print(thing);
     }
 
     /// <summary>

@@ -47,13 +47,12 @@ public class Hitbox : MonoBehaviour
             if (playerNumber == player.PlayerNumber) return;
 
             player.GetHit(
-                playerStatus.isHeel, 
-                playerStatus.transform.position, 
-                other.transform.position, 
-                damage, 
-                knockback, 
-                knockbackHeight, 
-                hitstun, 
+                playerStatus.transform.position,
+                other.transform.position,
+                damage,
+                knockback,
+                knockbackHeight,
+                hitstun,
                 playerStatus
                 );
         }
