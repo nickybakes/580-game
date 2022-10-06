@@ -20,6 +20,8 @@ public enum Tag
 [RequireComponent(typeof(PlayerCombat))]
 public class PlayerStatus : MonoBehaviour
 {
+    private AudioManager audioManager;
+
     [SerializeField] public bool isHeel = false;
 
     [SerializeField] private const float HeelStaminaDamage = 5f;
@@ -164,6 +166,7 @@ public class PlayerStatus : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        audioManager = FindObjectOfType<AudioManager>();
         transform = gameObject.transform;
         currentPlayerState = new Idle();
         movement = GetComponent<PlayerMovement>();
@@ -331,6 +334,8 @@ public class PlayerStatus : MonoBehaviour
 
             SetPlayerStateImmediately(new ImpactStun(attackingPlayerStatus, knockbackVelocity));
             currentPlayerState.stateToChangeTo.timeToChangeState = hitstun;
+
+            audioManager.Play("punch", 0.8f, 1.2f);
         }
 
     }
@@ -384,6 +389,8 @@ public class PlayerStatus : MonoBehaviour
         movement.velocity += knockbackVelocity;
         SetPlayerStateImmediately(new ImpactStun(null, knockbackVelocity));
         currentPlayerState.stateToChangeTo.timeToChangeState = .3f;
+
+        audioManager.Play("smack", 0.8f, 1.2f);
     }
 
     public void SetHeel()

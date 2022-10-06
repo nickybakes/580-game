@@ -15,9 +15,12 @@ public class GlobalInputManager : MonoBehaviour
 
     public bool joinFromMenu;
 
+    private AudioManager audioManger;
+
     void Start()
     {
         ReInitializeCursors();
+        audioManger = FindObjectOfType<AudioManager>();
     }
 
     public void ReInitializeCursors()
@@ -56,6 +59,8 @@ public class GlobalInputManager : MonoBehaviour
 
                 GameObject cursor = Instantiate(cursorPrefab, cursorPanel.transform);
                 token.SetUpCursorPrefab(cursor);
+
+                audioManger.Play("controllerOn", 0.6f, 1.4f);
             }
             else
             {

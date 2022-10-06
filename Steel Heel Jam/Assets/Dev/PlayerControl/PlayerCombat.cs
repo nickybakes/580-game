@@ -28,6 +28,7 @@ public class PlayerCombat : MonoBehaviour
     public GameObject equippedItem;
 
     private GameManager gameManager;
+    private AudioManager audioManager;
 
     // -1 = 360 deg arc, 0 = 180 degree arc, 0.5 = 90 deg...
     [SerializeField]
@@ -57,6 +58,7 @@ public class PlayerCombat : MonoBehaviour
     public void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
+        audioManager = FindObjectOfType<AudioManager>();
 
         _input = GetComponent<StarterAssetsInputs>();
         _hitbox = transform.GetChild((int)PlayerChild.Hitbox).gameObject;
@@ -182,6 +184,8 @@ public class PlayerCombat : MonoBehaviour
 
         if (weaponState.currentComboCount == 0)
             _status.movement.SetTheSetForwardDirection();
+
+        audioManager.Play("swing");
     }
 
     private void AttackAir()

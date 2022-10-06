@@ -76,6 +76,7 @@ public class GameManager : MonoBehaviour
         }
 
         countdownDisplay.text = "BRAWL!";
+        audioManager.Play("bellStart");
 
         // Player movement limited by PlayerStatus update().
 

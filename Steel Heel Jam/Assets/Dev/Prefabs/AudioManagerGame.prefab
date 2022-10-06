@@ -59,13 +59,13 @@ MonoBehaviour:
     name: drumLoop
     clips:
     - {fileID: 8300000, guid: f1fed9267e0cdc34c84a1c55bfa046e2, type: 3}
-    volume: 1
+    volume: 0.1
     pitch: 1
     loop: 1
     playOnAwake: 1
     source: {fileID: 0}
   - audioType: 1
-    name: Smack
+    name: smack
     clips:
     - {fileID: 8300000, guid: a3046481ba3e4044b9c0a43b1b295938, type: 3}
     volume: 1
@@ -86,7 +86,7 @@ MonoBehaviour:
     name: market
     clips:
     - {fileID: 8300000, guid: 65ed942379f6b6340a3528852f44ff1a, type: 3}
-    volume: 1
+    volume: 0.1
     pitch: 1
     loop: 1
     playOnAwake: 1
@@ -96,6 +96,51 @@ MonoBehaviour:
     clips:
     - {fileID: 8300000, guid: 906f04367f4257f49be231309b4af50a, type: 3}
     volume: 1
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - audioType: 1
+    name: footstep
+    clips:
+    - {fileID: 8300000, guid: 631d8d7e336097c48b769f1ac18dcade, type: 3}
+    - {fileID: 8300000, guid: e9da0d50a446a4644b974581f12c5860, type: 3}
+    - {fileID: 8300000, guid: 10e189d41a324de4b8a24f6543cad0d0, type: 3}
+    - {fileID: 8300000, guid: d7faae07b8c7cac4f8705c1b09135918, type: 3}
+    - {fileID: 8300000, guid: 9178353c7edc3f64b842676a3e1be685, type: 3}
+    - {fileID: 8300000, guid: ad0f875b9e5ce884b95c74b6648789db, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - audioType: 1
+    name: swing
+    clips:
+    - {fileID: 8300000, guid: 0d8adc008a5696f47b780be66276aec6, type: 3}
+    - {fileID: 8300000, guid: 61546619f0f1bbd429171b81d36d7329, type: 3}
+    - {fileID: 8300000, guid: 911eee477ba8aa24f8957edcf4906c9e, type: 3}
+    - {fileID: 8300000, guid: 654c665691eb2284589107bafe2c841e, type: 3}
+    - {fileID: 8300000, guid: 294f09806d0dd0244bf243ad77005ef5, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - audioType: 1
+    name: punch
+    clips:
+    - {fileID: 8300000, guid: a5c9215836d3bcb449f34af312ac5ecf, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - audioType: 1
+    name: bellStart
+    clips:
+    - {fileID: 8300000, guid: 803461bf9c99de244b390b9eae313466, type: 3}
+    volume: 0.5
     pitch: 1
     loop: 0
     playOnAwake: 0

@@ -54,7 +54,43 @@ MonoBehaviour:
     type: 2}
   ambientMixerGroup: {fileID: -1552417759374218702, guid: 1ca6bd5d073053a4faf5da10fc88482c,
     type: 2}
-  sounds: []
+  sounds:
+  - audioType: 2
+    name: exhibition
+    clips:
+    - {fileID: 8300000, guid: 906f04367f4257f49be231309b4af50a, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    playOnAwake: 1
+    source: {fileID: 0}
+  - audioType: 3
+    name: market
+    clips:
+    - {fileID: 8300000, guid: 65ed942379f6b6340a3528852f44ff1a, type: 3}
+    volume: 0.5
+    pitch: 1
+    loop: 1
+    playOnAwake: 1
+    source: {fileID: 0}
+  - audioType: 1
+    name: controllerOn
+    clips:
+    - {fileID: 8300000, guid: d79d794faa2950f4890cd7475560c416, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - audioType: 1
+    name: controllerOff
+    clips:
+    - {fileID: 8300000, guid: c1aa1f5c6f4838946b73859bcf5fbb70, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
 --- !u!114 &8454066521746509047
 MonoBehaviour:
   m_ObjectHideFlags: 0

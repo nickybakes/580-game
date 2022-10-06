@@ -55,20 +55,20 @@ public class HUDManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        for (int i = 0; i < itemManagerScript.itemsOnGround.Count; i++)
-        {
-            if (!itemManagerScript.itemsOnGround[i].GetComponent<Item>().isOnScreen)
-            {
-                // Create a new GUI arrow.
+        //for (int i = 0; i < itemManagerScript.itemsOnGround.Count; i++)
+        //{
+        //    if (!itemManagerScript.itemsOnGround[i].GetComponent<Item>().isOnScreen)
+        //    {
+        //        // Create a new GUI arrow.
 
 
-                // Calculate direction to point arrow.
-                //Vector3 itemVector = NormalVectorToItem(i);
-                //Debug.Log("Normal direction is: " + itemVector.x + ", " + itemVector.z);
+        //        // Calculate direction to point arrow.
+        //        //Vector3 itemVector = NormalVectorToItem(i);
+        //        //Debug.Log("Normal direction is: " + itemVector.x + ", " + itemVector.z);
 
-                // Calculate edge of screen.
-            }
-        }
+        //        // Calculate edge of screen.
+        //    }
+        //}
     }
 
 
