@@ -100,31 +100,33 @@ public class PlayerCombat : MonoBehaviour
             recentActionCooldown -= Time.deltaTime;
         }
 
-        if (canAttack && attackCooldown > attackCooldownMax && _input.Attack && _status.stamina > 0)
+        if (_status.stamina > 0 || _status.isHeel)
         {
-            if (_status.movement.grounded)
+            if (canAttack && attackCooldown > attackCooldownMax && _input.Attack)
             {
-                AttackGround();
+                if (_status.movement.grounded)
+                {
+                    AttackGround();
+                }
+                else
+                {
+                    //AttackAir();
+                }
+
+                recentActionCooldown = recentActionCooldownMax;
             }
-            else
+
+            if (canDodgeRoll && dodgeRollCoolDown > dodgeRollCoolDownMax && _input.dodgeRoll && !_input.wasDodgeRolling)
             {
-                //AttackAir();
+                DodgeRoll();
+                recentActionCooldown = recentActionCooldownMax;
             }
 
-            //_status.ReduceStamina(weaponState.staminaCost);
-            recentActionCooldown = recentActionCooldownMax;
-        }
-
-        if (canDodgeRoll && dodgeRollCoolDown > dodgeRollCoolDownMax && _input.dodgeRoll && !_input.wasDodgeRolling && _status.stamina > 0)
-        {
-            DodgeRoll();
-            recentActionCooldown = recentActionCooldownMax;
-        }
-
-        if (canBlock && blockCoolDown > blockCoolDownMax && _input.block && !_input.wasBlocking && _status.stamina > 0)
-        {
-            Block();
-            recentActionCooldown = recentActionCooldownMax;
+            if (canBlock && blockCoolDown > blockCoolDownMax && _input.block && !_input.wasBlocking)
+            {
+                Block();
+                recentActionCooldown = recentActionCooldownMax;
+            }
         }
 
         if (canPickup && _input.pickUpPressed && !_input.wasPickUpPressed)
@@ -137,20 +139,30 @@ public class PlayerCombat : MonoBehaviour
             Throw();
         }
 
-        if (canThrow && _input.throwIsHeld && equippedItem != null)
+        if (_status.CurrentPlayerState is Rest && _input.throwWasHeld)
         {
-
-            if (_status.CurrentPlayerState != new ItemThrowing())
-            {
-                _status.SetPlayerStateImmediately(new ItemThrowing());
-            }
-
-            timeHeld += Time.deltaTime;
-
-            if (timeHeld > 3)
-                timeHeld = 3;
+            _status.SetPlayerStateImmediately(new Idle());
         }
 
+        if (_input.throwIsHeld && canThrow)
+        {
+            if (equippedItem != null)
+            {
+
+                if (_status.CurrentPlayerState != new ItemThrowing())
+                {
+                    _status.SetPlayerStateImmediately(new ItemThrowing());
+                }
+
+                timeHeld += Time.deltaTime;
+
+                if (timeHeld > 3)
+                    timeHeld = 3;
+            } else
+            {
+                if (_status.CurrentPlayerState is not Rest) _status.SetPlayerStateImmediately(new Rest());
+            }
+        }
     }
 
     private void AttackGround()
