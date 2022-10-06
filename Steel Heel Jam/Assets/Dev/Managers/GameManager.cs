@@ -101,7 +101,7 @@ public class GameManager : MonoBehaviour
         if (gameTime > 13 && !heelSpotlightSpawned)
         {
             heelSpotlightSpawned = true;
-            // SpawnHeelSpotlight();
+            SpawnHeelSpotlight();
         }
     }
 
@@ -213,7 +213,7 @@ public class GameManager : MonoBehaviour
         ringScript.UpdateRingShaderProperties();
 
         // Resize ring to a diameter of 10 units in 2-ish minutes
-        ringScript.ResizeRing(10, 16);
+        ringScript.ResizeRing(10, maxGameTime);
     }
 
     public void SpawnHeelSpotlight()
