@@ -17,7 +17,7 @@ public class AttackGroundRecovery : BasicState
         updateMovement = true;
         countAttackCooldown = false;
         visual = VisualChild.Recovery;
-        animationState = AnimationState.AttackGroundRecovery;
+        animationState = AnimationState.AttackGroundRecovery_01;
         stateToChangeTo = new Idle();
     }
 
@@ -46,6 +46,23 @@ public class AttackGroundRecovery : BasicState
 
         if (status.combat.weaponState.CanCombo)
             canCombo = true;
+
+        // Lose stamina if missed
+        if (!status.combat.weaponState.gotAHit)
+        {
+            status.ReduceStamina(status.combat.weaponState.staminaCost);
+        }
+        // If hit and is heel, remove heel status
+        else if (status.isHeel)
+        {
+            status.isHeel = false;
+
+            if (status.playerHeader)
+            {
+                status.playerHeader.SetHeel(false);
+            }
+
+        }
     }
 
     public override void OnExitThisState(BasicState nextState, PlayerStatus status)

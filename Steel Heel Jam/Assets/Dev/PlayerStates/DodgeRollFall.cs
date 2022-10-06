@@ -18,7 +18,7 @@ public class DodgeRollFall : BasicState
         moveSpeedMultiplier = 2.1f;
         extraFallGravityMultiplier = .6f;
         countDodgeRollCooldown = false;
-        animationState = AnimationState.DodgeRoll;
+        animationState = AnimationState.DodgeRollFall;
         stateToChangeTo = new Idle();
     }
 

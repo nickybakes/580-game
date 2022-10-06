@@ -647,7 +647,7 @@ MonoBehaviour:
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1920, y: 1080}
-  m_ScreenMatchMode: 0
+  m_ScreenMatchMode: 1
   m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
@@ -890,7 +890,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Throw weapon or rest
+  m_text: Throw weapon or hold to Flex and gain Approval
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e162f25dbf485d94dbe27a7d391b2278, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: c04666277e158a94d833ab8c68af3979, type: 2}
@@ -953,7 +953,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: -52.71425, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1004,7 +1004,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0.0000038147, y: 31}
-  m_SizeDelta: {x: 1109.19, y: 888.1}
+  m_SizeDelta: {x: 1719.8, y: 888.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &441815542
 GameObject:
@@ -1891,15 +1891,15 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Lose stamina while out of the ring.
+  m_text: 'Lose Approval while out of the ring.
 
-    Also lose stamina while being
-    the Heel.
+    Heel = lose Approval over time
+    but do more damage.
 
-    Hit someone to make them the Heel.
+    Hit someone to transfer Heel status to them.
 
-    Out of ring AND 0 stamina
-    = KO''d!'
+    Out
+    of ring AND 0 Approval = KO''d!'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 382f909292acf1e41928e56b37f83a14, type: 2}
   m_sharedMaterial: {fileID: 7907999476742806842, guid: 382f909292acf1e41928e56b37f83a14,
@@ -2810,3 +2810,72 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2047420976}
   m_CullTransparentMesh: 1
+--- !u!1001 &3102601212733398669
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1285489703509536206, guid: f99391197842e964cac0f27d985cd793,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1285489703509536206, guid: f99391197842e964cac0f27d985cd793,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1285489703509536206, guid: f99391197842e964cac0f27d985cd793,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1285489703509536206, guid: f99391197842e964cac0f27d985cd793,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1285489703509536206, guid: f99391197842e964cac0f27d985cd793,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1285489703509536206, guid: f99391197842e964cac0f27d985cd793,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1285489703509536206, guid: f99391197842e964cac0f27d985cd793,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1285489703509536206, guid: f99391197842e964cac0f27d985cd793,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1285489703509536206, guid: f99391197842e964cac0f27d985cd793,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1285489703509536206, guid: f99391197842e964cac0f27d985cd793,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1285489703509536206, guid: f99391197842e964cac0f27d985cd793,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8705892428411434741, guid: f99391197842e964cac0f27d985cd793,
+        type: 3}
+      propertyPath: m_Name
+      value: AudioManagerMenu
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f99391197842e964cac0f27d985cd793, type: 3}

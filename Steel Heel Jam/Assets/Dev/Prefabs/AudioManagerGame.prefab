@@ -1,0 +1,172 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8705892428411434741
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1285489703509536206}
+  - component: {fileID: 2728357844220918305}
+  - component: {fileID: 8454066521746509047}
+  m_Layer: 0
+  m_Name: AudioManagerGame
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1285489703509536206
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8705892428411434741}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2728357844220918305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8705892428411434741}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3d4d8fa29b55974ca44be1e60d991b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  masterMixerGroup: {fileID: 24300002, guid: 1ca6bd5d073053a4faf5da10fc88482c, type: 2}
+  musicMixerGroup: {fileID: -4459372364512313063, guid: 1ca6bd5d073053a4faf5da10fc88482c,
+    type: 2}
+  soundEffectsMixerGroup: {fileID: -6342020048092475579, guid: 1ca6bd5d073053a4faf5da10fc88482c,
+    type: 2}
+  voiceOverMixerGroup: {fileID: -5021809461783976458, guid: 1ca6bd5d073053a4faf5da10fc88482c,
+    type: 2}
+  ambientMixerGroup: {fileID: -1552417759374218702, guid: 1ca6bd5d073053a4faf5da10fc88482c,
+    type: 2}
+  sounds:
+  - audioType: 0
+    name: drumLoop
+    clips:
+    - {fileID: 8300000, guid: f1fed9267e0cdc34c84a1c55bfa046e2, type: 3}
+    volume: 0.1
+    pitch: 1
+    loop: 1
+    playOnAwake: 1
+    source: {fileID: 0}
+  - audioType: 1
+    name: smack
+    clips:
+    - {fileID: 8300000, guid: a3046481ba3e4044b9c0a43b1b295938, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - audioType: 1
+    name: orchestraHitShort
+    clips:
+    - {fileID: 8300000, guid: db24964515fffd842baa2eac04250a79, type: 3}
+    volume: 0.1
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - audioType: 1
+    name: orchestraHitLong
+    clips:
+    - {fileID: 8300000, guid: 6f4a2267fda6f3748b085b6f337d719f, type: 3}
+    volume: 0.2
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - audioType: 3
+    name: market
+    clips:
+    - {fileID: 8300000, guid: 65ed942379f6b6340a3528852f44ff1a, type: 3}
+    volume: 0.1
+    pitch: 1
+    loop: 1
+    playOnAwake: 1
+    source: {fileID: 0}
+  - audioType: 2
+    name: exhibition
+    clips:
+    - {fileID: 8300000, guid: 906f04367f4257f49be231309b4af50a, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - audioType: 1
+    name: footstep
+    clips:
+    - {fileID: 8300000, guid: 631d8d7e336097c48b769f1ac18dcade, type: 3}
+    - {fileID: 8300000, guid: e9da0d50a446a4644b974581f12c5860, type: 3}
+    - {fileID: 8300000, guid: 10e189d41a324de4b8a24f6543cad0d0, type: 3}
+    - {fileID: 8300000, guid: d7faae07b8c7cac4f8705c1b09135918, type: 3}
+    - {fileID: 8300000, guid: 9178353c7edc3f64b842676a3e1be685, type: 3}
+    - {fileID: 8300000, guid: ad0f875b9e5ce884b95c74b6648789db, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - audioType: 1
+    name: swing
+    clips:
+    - {fileID: 8300000, guid: 9fc67e1ab49b99541b2cf1d1099e314a, type: 3}
+    - {fileID: 8300000, guid: ac081add02c44be488e8c9ce671bdaf8, type: 3}
+    - {fileID: 8300000, guid: 08f03069b83afef4ea98b3ee2d916f3b, type: 3}
+    - {fileID: 8300000, guid: ac8f11b78faa3e2488fe6ebc1fbece45, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - audioType: 1
+    name: punch
+    clips:
+    - {fileID: 8300000, guid: a5c9215836d3bcb449f34af312ac5ecf, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - audioType: 1
+    name: bellStart
+    clips:
+    - {fileID: 8300000, guid: 803461bf9c99de244b390b9eae313466, type: 3}
+    volume: 0.5
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+--- !u!114 &8454066521746509047
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8705892428411434741}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98d8463ae9bb4914cb4c30958666df60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  masterSliderText: {fileID: 0}
+  musicSliderText: {fileID: 0}
+  soundEffectSliderText: {fileID: 0}
+  voiceOverSliderText: {fileID: 0}
+  ambientSliderText: {fileID: 0}

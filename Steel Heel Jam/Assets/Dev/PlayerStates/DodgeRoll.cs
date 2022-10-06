@@ -42,6 +42,16 @@ public class DodgeRoll : BasicState
     {
         base.OnExitThisState(nextState, status);
 
+        if (nextState is DodgeRollFall)
+        {
+            status.ReduceStamina(status.dodgeRollStaminaDamage/2);
+        }
+        else
+        {
+            status.ReduceStamina(status.dodgeRollStaminaDamage);
+        }
+
+
         status.movement.velocity = status.movement.velocity.normalized * status.movement.CurrentMoveSpeed;
     }
 

@@ -24,6 +24,8 @@ public class ImpactStun : BasicState
         animationState = AnimationState.Knockback;
         stateToChangeTo = new Knockback(knockbackVelocity);
 
+        animationState = AnimationState.ImpactStun;
+
         visual = VisualChild.Stun;
 
         attackingPlayer = _attackingPlayer;

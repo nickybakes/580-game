@@ -1,16 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem.Controls;
 
 public enum PlayerChild
 {
-    Hitbox = 2,
-    Visuals = 4
+    Model = 0,
+    Hitbox = 1,
+    Visuals = 3,
+    PickUpSphere = 4
 }
 
 public enum Tag
 {
-    Player
+    Player,
+    PickUp
 }
 
 
@@ -18,7 +20,31 @@ public enum Tag
 [RequireComponent(typeof(PlayerCombat))]
 public class PlayerStatus : MonoBehaviour
 {
-    private float stamina = 100f;
+    private AudioManager audioManager;
+
+    [SerializeField] public bool isHeel = false;
+
+    [SerializeField] private const float HeelStaminaDamage = 5f;
+
+    [SerializeField] private const float HeelStaminaLossCooldownMax = 1f;
+
+    private float heelStaminaLossCooldown;
+
+    public const float deafaultMaxStamina = 100f;
+
+    /// <summary>
+    /// The stamina value for the player. Stamina is consumed for actions and is lost upon being hit, being the heel, or being outside of the ring.
+    /// When a player's stamina is empty and they are knocked out of the zone, they are eliminated.
+    /// </summary>
+    public float stamina = deafaultMaxStamina;
+    /// <summary>
+    /// The player's current maximum stamina value.
+    /// </summary>
+    public float maxStamina = deafaultMaxStamina;
+    /// <summary>
+    /// The lowest a player's maximum stamina can get.
+    /// </summary>
+    [SerializeField] private const float MinMaxStamina = 20f;
 
     private BasicState currentPlayerState;
 
@@ -34,7 +60,95 @@ public class PlayerStatus : MonoBehaviour
 
     public int PlayerNumber { get { return playerNumber; } }
 
-    public BasicState CurrentPlayerState { get { return currentPlayerState; }}
+    public BasicState CurrentPlayerState { get { return currentPlayerState; } }
+
+    public bool attackBlocked = false;
+
+    [SerializeField] public float missedBlockStaminaDamage = 20f;
+
+    [SerializeField] public float dodgeRollStaminaDamage = 16f;
+
+    /// <summary>
+    /// A boolean that represents if the player is outside of the ring.
+    /// </summary>
+    private bool isOOB = false;
+
+    /// <summary>
+    /// The rate at which stamina is lost when out of bounds.
+    /// </summary>
+    [SerializeField] private const float OOBStaminaLossCooldownMax = 1f;
+
+    /// <summary>
+    /// The current timer for losing stamina when out of bounds.
+    /// </summary>
+    private float OOBStaminaLossCooldown;
+
+    /// <summary>
+    /// The damage to stamina that the player takes every interval while out of bounds.
+    /// </summary>
+    [SerializeField] private const float OOBStaminaDamage = 10f;
+
+    /// <summary>
+    /// The loss of max stamina that the player accrues every interval while out of bounds.
+    /// </summary>
+    [SerializeField] private const float OOBMaxStaminaDamage = 5f;
+
+    /// <summary>
+    /// The rate at which stamina is regained when not active.
+    /// </summary>
+    [SerializeField] private const float StaminaRegenCooldownMax = 1f;
+
+    /// <summary>
+    /// The current timer for regenerating stamina.
+    /// </summary>
+    private float staminaRegenCooldown;
+
+    /// <summary>
+    /// The amount of stamina restored every interval when not active.
+    /// </summary>
+    [SerializeField] private const float PassiveStaminaRegen = 3f;
+
+    public float totalDamageTaken;
+
+    public float recentDamageTaken;
+
+    public float totalDamagerDealt;
+
+    public int totalEliminations;
+
+    public PlayerStatus playerLastHitBy;
+
+    public float recentDamageTakenMax;
+
+    public float recentDamageTimeCurrent;
+
+    private const float recentActivityTimeMax = 5;
+
+    public float recentActivityTimeCurrent;
+
+    public bool eliminated;
+
+    public float timeOfEliminiation;
+
+    public PlayerHeader playerHeader;
+
+    private new Transform transform;
+
+    public float ActivityScore
+    {
+        get
+        {
+            return recentDamageTaken + totalDamagerDealt + (totalEliminations * 25);
+        }
+    }
+
+    public bool IsResting
+    {
+        get
+        {
+            return (currentPlayerState is Rest);
+        }
+    }
 
     /// <summary>
     /// Use this to check if the player is currently dodging when you want to hit them with an attack
@@ -56,6 +170,11 @@ public class PlayerStatus : MonoBehaviour
         }
     }
 
+    public Transform GetTransform
+    {
+        get { return transform; }
+    }
+
     /// <summary>
     /// Gives you the current moveSpeed of the character (base move speed multiplied by the current state's move speed multiplier)
     /// </summary>
@@ -65,6 +184,8 @@ public class PlayerStatus : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        audioManager = FindObjectOfType<AudioManager>();
+        transform = gameObject.transform;
         currentPlayerState = new Idle();
         movement = GetComponent<PlayerMovement>();
         combat = GetComponent<PlayerCombat>();
@@ -84,50 +205,322 @@ public class PlayerStatus : MonoBehaviour
             currentPlayerState = new Idle();
 #endif
 
-        movement.UpdateManual(currentPlayerState.updateMovement, currentPlayerState.canPlayerControlMove, currentPlayerState.canPlayerControlRotate);
+        // Prevents player movement on game start countdown.
+        if (GameManager.game.countdownTime > 0)
+            return;
 
-        combat.UpdateManual(currentPlayerState.canAttack, currentPlayerState.canDodgeRoll, currentPlayerState.canBlock);
+        movement.UpdateManual(currentPlayerState.updateMovement, currentPlayerState.canPlayerControlMove, currentPlayerState.canPlayerControlRotate, currentPlayerState.alternateFriction);
 
+        combat.UpdateManual(currentPlayerState.canAttack, currentPlayerState.canDodgeRoll, currentPlayerState.canBlock, currentPlayerState.canPickUp, currentPlayerState.canThrow);
 
         currentPlayerState.Update(this);
 
         if (currentPlayerState.changeStateNow)
             SetPlayerStateImmediately(currentPlayerState.stateToChangeTo);
 
+        // If the player is out of bounds . . .
+        if (isOOB)
+        {
+            // Reduce the timer for OOB stamina loss
+            OOBStaminaLossCooldown += Time.deltaTime;
+
+            // If the timer for OOB stamina loss runs out . . .
+            if (OOBStaminaLossCooldown >= OOBStaminaLossCooldownMax)
+            {
+                // Reset the timer for OOB stamina loss and decrease stamina
+                OOBStaminaLossCooldown = 0;
+                ReduceStamina(OOBStaminaDamage);
+            }
+        }
+
+        // If the player is the Heel . . .
+        if (isHeel)
+        {
+            // Reduce the timer for Heel stamina loss
+            heelStaminaLossCooldown += Time.deltaTime;
+
+            // If the Heel stamina loss timer runs out . . .
+            if (heelStaminaLossCooldown >= HeelStaminaLossCooldownMax)
+            {
+                // Reset the timer for Heel stamina loss and decrease stamina
+                heelStaminaLossCooldown = 0;
+                ReduceStamina(HeelStaminaDamage);
+            }
+        }
+
+        if (!isHeel && !IsResting)
+        {
+            if (combat.ActedRecently || isOOB)
+            {
+                staminaRegenCooldown = StaminaRegenCooldownMax;
+            }
+            else
+            {
+                staminaRegenCooldown += Time.deltaTime;
+
+                if (staminaRegenCooldown >= StaminaRegenCooldownMax)
+                {
+                    IncreaseStamina(PassiveStaminaRegen);
+                    staminaRegenCooldown = 0;
+                }
+            }
+        }
+
+        if (recentDamageTimeCurrent > 0)
+        {
+            recentDamageTimeCurrent -= Time.deltaTime;
+
+            recentDamageTaken = Mathf.Max(0, Mathf.Lerp(0, recentDamageTakenMax, recentDamageTimeCurrent / 10f));
+        }
+
+        if (recentActivityTimeCurrent > 0)
+        {
+            recentActivityTimeCurrent -= Time.deltaTime;
+        }
     }
 
     public void SetPlayerStateImmediately(BasicState state)
     {
+        if (eliminated)
+            return;
+
         currentPlayerState.OnExitThisState(state, this);
         state.OnEnterThisState(currentPlayerState, this);
 
+        visuals.SetAnimationState(state.animationState);
         visuals.EnableVisual(state.visual);
 
         currentPlayerState = state;
     }
 
+    public void SetAnimationState(AnimationState state)
+    {
+        visuals.SetAnimationState(state);
+    }
+
     public void GetHit(Vector3 hitboxPos, Vector3 collisionPos, float damage, float knockback, float knockbackHeight, float hitstun, PlayerStatus attackingPlayerStatus)
     {
-        if(IsBlocking)
+        if (eliminated)
+            return;
+
+        if (IsBlocking)
         {
             attackingPlayerStatus.SetPlayerStateImmediately(new BlockedStun());
             attackingPlayerStatus.movement.velocity = attackingPlayerStatus.transform.position - transform.position;
             SetPlayerStateImmediately(new Idle());
+            attackBlocked = true;
             return;
         }
 
         if (!IsDodgeRolling)
         {
-            Vector3 knockbackDir = (collisionPos - hitboxPos).normalized;
-            knockback = knockback * (2 + stamina / 100);
-            Vector3 knockbackVelocity = new Vector3(knockbackDir.x * knockback, knockbackHeight, knockbackDir.z * knockback);
-            movement.grounded = false;
+            if (attackingPlayerStatus.isHeel)
+            {
+                SetHeel();
 
+                damage *= 1.6f;
+                knockback *= 1.6f;
+                knockbackHeight *= 1.6f;
+            }
+
+            playerLastHitBy = attackingPlayerStatus;
+
+            Vector3 knockbackDir = (collisionPos - hitboxPos).normalized;
+            knockback = knockback * (2 + stamina / deafaultMaxStamina);
+
+            float staminaRatio = (maxStamina - stamina) * 0.2f;
+
+            float staminaRatioX = staminaRatio;
+            float staminaRatioZ = staminaRatio;
+
+            if (knockbackDir.x < 0) staminaRatioX = -staminaRatio;
+            else if (knockbackDir.x == 0) staminaRatioX = 0;
+
+            if (knockbackDir.z < 0) staminaRatioZ = -staminaRatio;
+            else if (knockbackDir.z == 0) staminaRatioZ = 0;
+
+            Vector3 knockbackVelocity = new Vector3(knockbackDir.x * knockback + staminaRatioX, knockbackHeight + staminaRatio, knockbackDir.z * knockback + staminaRatioZ);
+            movement.grounded = false;
+            //print(knockbackVelocity.magnitude);
+            ReduceStamina(damage);
+            totalDamageTaken += damage;
+
+            recentDamageTaken += damage;
+            recentDamageTakenMax = recentDamageTaken;
+            recentDamageTimeCurrent = 10f;
+
+            if (totalDamageTaken > 200f && recentDamageTaken > 30f)
+            {
+                combat.DropWeapon();
+                ReduceMaxStamina(damage);
+            }
+
+            attackingPlayerStatus.totalDamagerDealt += damage;
             attackingPlayerStatus.combat.weaponState.gotAHit = true;
+
+            recentActivityTimeCurrent = recentActivityTimeMax;
+            attackingPlayerStatus.recentActivityTimeCurrent = recentActivityTimeMax;
 
             SetPlayerStateImmediately(new ImpactStun(attackingPlayerStatus, knockbackVelocity));
             currentPlayerState.stateToChangeTo.timeToChangeState = hitstun;
+
+            // Plays orchestra hits for combo.
+            int combo = attackingPlayerStatus.combat.weaponState.currentComboCount;
+
+            if (combo == 1 || combo == 2)
+                audioManager.Play("orchestraHitShort", combo, combo);
+            if (combo == 3)
+                audioManager.Play("orchestraHitLong");
+
+            audioManager.Play("punch", 0.8f, 1.2f);
         }
 
+    }
+
+    public void GetHitByThrowable(Vector3 hitboxPos, Vector3 collisionPos, float damage, float knockback, float knockbackHeight, PlayerStatus attackingPlayerStatus)
+    {
+        // If eliminated/blocking/dodgerolling, nothing happens.
+        if (eliminated || IsBlocking || IsDodgeRolling)
+            return;
+
+
+        //if (attackingPlayerStatus.isHeel)
+        //{
+        //    SetHeel();
+
+        //    damage *= 1.6f;
+        //    knockback *= 1.6f;
+        //    knockbackHeight *= 1.6f;
+        //}
+
+        if (attackingPlayerStatus != null)
+            playerLastHitBy = attackingPlayerStatus;
+
+        Vector3 knockbackDir = (collisionPos - hitboxPos).normalized;
+        knockback = knockback * (2 + stamina / deafaultMaxStamina);
+
+        float staminaRatio = (maxStamina - stamina) * 0.2f;
+
+        float staminaRatioX = staminaRatio;
+        float staminaRatioZ = staminaRatio;
+
+        if (knockbackDir.x < 0) staminaRatioX = -staminaRatio;
+        else if (knockbackDir.x == 0) staminaRatioX = 0;
+
+        if (knockbackDir.z < 0) staminaRatioZ = -staminaRatio;
+        else if (knockbackDir.z == 0) staminaRatioZ = 0;
+
+        Vector3 knockbackVelocity = new Vector3(knockbackDir.x * knockback + staminaRatioX, knockbackHeight + staminaRatio, knockbackDir.z * knockback + staminaRatioZ);
+        movement.grounded = false;
+        ReduceStamina(damage);
+        totalDamageTaken += damage;
+
+        recentDamageTaken += damage;
+        recentDamageTakenMax = recentDamageTaken;
+        recentDamageTimeCurrent = 10f;
+
+        if (totalDamageTaken > 200f && recentDamageTaken > 30f)
+        {
+            combat.DropWeapon();
+            ReduceMaxStamina(damage);
+        }
+
+        recentActivityTimeCurrent = recentActivityTimeMax;
+
+
+        if (attackingPlayerStatus != null)
+        {
+            attackingPlayerStatus.totalDamagerDealt += damage;
+            attackingPlayerStatus.recentActivityTimeCurrent = recentActivityTimeMax;
+        }
+
+        // Set a knockback on the player.
+        movement.velocity += knockbackVelocity;
+        SetPlayerStateImmediately(new ImpactStun(null, knockbackVelocity));
+        currentPlayerState.stateToChangeTo.timeToChangeState = .3f;
+
+        audioManager.Play("smack", 0.8f, 1.2f);
+    }
+
+    public void SetHeel()
+    {
+        isHeel = true;
+
+        if (playerHeader)
+        {
+            playerHeader.SetHeel(true);
+        }
+    }
+
+    /// <summary>
+    /// Increases the player's stamina. This value will never go above the max.
+    /// </summary>
+    /// <param name="value">The value to increase the stamina value by.</param>
+    public void IncreaseStamina(float value)
+    {
+        stamina += value;
+
+        if (stamina > maxStamina) stamina = maxStamina;
+
+        if (playerHeader != null)
+            playerHeader.UpdateStaminaBar();
+    }
+
+    /// <summary>
+    /// Reduces the player's stamina. This value will never go below 0.
+    /// </summary>
+    /// <param name="value">The value to decrease the stamina value by.</param>
+    public void ReduceStamina(float value)
+    {
+        if (GameManager.game.gameWon)
+            return;
+
+        stamina -= value;
+
+        if (stamina < 0) stamina = 0;
+
+        if (playerHeader != null)
+            playerHeader.UpdateStaminaBar();
+
+        if (!eliminated && stamina == 0 && isOOB)
+        {
+            GameManager.game.EliminatePlayer(this);
+        }
+    }
+
+    /// <summary>
+    /// Reduces the player's maximum stamina. If the value would be decreased past the minimum-maximum value, it will be set to the minimum-maximum.
+    /// </summary>
+    /// <param name="value">The value to decrease the maximum stamina by.</param>
+    private void ReduceMaxStamina(float value)
+    {
+        maxStamina -= value;
+
+        if (maxStamina < MinMaxStamina) maxStamina = MinMaxStamina;
+
+        if (stamina > maxStamina)
+        {
+            stamina = maxStamina;
+        }
+
+        if (playerHeader != null)
+            playerHeader.UpdateStaminaBar();
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Ring")
+        {
+            isOOB = false;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Ring")
+        {
+            isOOB = true;
+            OOBStaminaLossCooldown = 0;
+        }
     }
 }

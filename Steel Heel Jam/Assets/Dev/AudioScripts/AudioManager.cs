@@ -4,6 +4,13 @@ using System;
 
 public class AudioManager : MonoBehaviour
 {
+    [SerializeField] private AudioMixerGroup masterMixerGroup;
+    [SerializeField] private AudioMixerGroup musicMixerGroup;
+    [SerializeField] private AudioMixerGroup soundEffectsMixerGroup;
+    [SerializeField] private AudioMixerGroup voiceOverMixerGroup;
+    [SerializeField] private AudioMixerGroup ambientMixerGroup;
+    [Space(10)] //For ease of reading in Inspector.
+
     public Sound[] sounds;
 
     public static AudioManager instance;
@@ -11,15 +18,15 @@ public class AudioManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        if (instance == null)
-            instance = this;
-        else
-        {
-            Destroy(gameObject);
-            return;
-        }
+        //if (instance == null)
+        //    instance = this;
+        //else
+        //{
+        //    Destroy(gameObject);
+        //    return;
+        //}
 
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
 
         foreach (Sound s in sounds)
         {
@@ -33,6 +40,25 @@ public class AudioManager : MonoBehaviour
             s.source.volume = s.volume;
             s.source.pitch = s.pitch;
             s.source.loop = s.loop;
+
+            switch (s.audioType)
+            {
+                case Sound.AudioTypes.Music:
+                    s.source.outputAudioMixerGroup = musicMixerGroup;
+                    break;
+                case Sound.AudioTypes.SoundEffect:
+                    s.source.outputAudioMixerGroup = soundEffectsMixerGroup;
+                    break;
+                case Sound.AudioTypes.VoiceOver:
+                    s.source.outputAudioMixerGroup = voiceOverMixerGroup;
+                    break;
+                case Sound.AudioTypes.Ambient:
+                    s.source.outputAudioMixerGroup = ambientMixerGroup;
+                    break;
+            }
+
+            if (s.playOnAwake)
+                s.source.Play();
         }
     }
 
@@ -140,5 +166,14 @@ public class AudioManager : MonoBehaviour
             return null;
         }
         return s;
+    }
+
+    public void UpdateMixerVolume()
+    {
+        masterMixerGroup.audioMixer.SetFloat("MasterVolume", Mathf.Log10(AudioOptionsManager.masterVolume) * 20);
+        musicMixerGroup.audioMixer.SetFloat("MusicVolume", Mathf.Log10(AudioOptionsManager.musicVolume) * 20);
+        soundEffectsMixerGroup.audioMixer.SetFloat("SoundEffectsVolume", Mathf.Log10(AudioOptionsManager.soundEffectsVolume) * 20);
+        voiceOverMixerGroup.audioMixer.SetFloat("VoiceOverVolume", Mathf.Log10(AudioOptionsManager.voiceOverVolume) * 20);
+        ambientMixerGroup.audioMixer.SetFloat("AmbientVolume", Mathf.Log10(AudioOptionsManager.ambientVolume) * 20);
     }
 }

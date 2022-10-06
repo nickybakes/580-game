@@ -46,3 +46,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioManager: {fileID: 2728357844220918305, guid: f99391197842e964cac0f27d985cd793,
     type: 3}
+  gameSceneSettings: {fileID: 0}
+  playerPrefab: {fileID: 1777015905490208814, guid: 0b9ee7085df612341ad6df4227583f65,
+    type: 3}
+  ringPrefab: {fileID: 5454069359185126400, guid: ffa75000cf828834c8dbe66e30049f93,
+    type: 3}
+  hudManager: {fileID: 0}
+  hudCountdown: {fileID: 0}
+  cameraManager: {fileID: 0}
+  allPlayerStatuses: []
+  alivePlayerStatuses: []
+  eliminatedPlayerStatuses: []
+  countdownTime: 3
+  gameTime: 0

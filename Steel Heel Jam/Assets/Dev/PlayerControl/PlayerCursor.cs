@@ -26,14 +26,14 @@ public class PlayerCursor : MonoBehaviour
 
     public Vector2 normalizedPosition;
 
-    private Rect canvasRect;
+    private RectTransform canvasRect;
 
     // Start is called before the first frame update
     void Start()
     {
         _input = GetComponent<CursorInputs>();
         rect = GetComponent<RectTransform>();
-        canvasRect = FindObjectOfType<Canvas>().GetComponent<RectTransform>().rect;
+        canvasRect = FindObjectOfType<Canvas>().GetComponent<RectTransform>();
         velocity = new Vector2();
     }
 
@@ -46,6 +46,7 @@ public class PlayerCursor : MonoBehaviour
         }
 
         inputDirection = _input.move.normalized;
+        aspectRatio = canvasRect.rect.width/canvasRect.rect.height;
         inputDirection = new Vector2(inputDirection.x, inputDirection.y * aspectRatio);
         velocity = inputDirection * moveSpeed;
         Move();
@@ -65,8 +66,8 @@ public class PlayerCursor : MonoBehaviour
         normalizedPosition.x = Mathf.Max(Mathf.Min(1, normalizedPosition.x), 0);
         normalizedPosition.y = Mathf.Max(Mathf.Min(1, normalizedPosition.y), 0);
         rect.localPosition = new Vector2(
-            (normalizedPosition.x - .5f) * canvasRect.width,
-            (normalizedPosition.y - .5f) * canvasRect.height
+            (normalizedPosition.x - .5f) * canvasRect.rect.width,
+            (normalizedPosition.y - .5f) * canvasRect.rect.height
         );
     }
 }

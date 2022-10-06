@@ -13,7 +13,7 @@ public class AttackGroundDuration : BasicState
         canBlock = false;
         updateMovement = true;
         countAttackCooldown = false;
-        animationState = AnimationState.AttackGroundRecovery;
+        animationState = AnimationState.AttackGroundDuration_01;
         stateToChangeTo = new AttackGroundRecovery();
     }
 
@@ -42,5 +42,6 @@ public class AttackGroundDuration : BasicState
     public override void OnExitThisState(BasicState nextState, PlayerStatus status)
     {
         base.OnExitThisState(nextState, status);
+        status.combat.weaponState.ForceEndAttack();
     }
 }

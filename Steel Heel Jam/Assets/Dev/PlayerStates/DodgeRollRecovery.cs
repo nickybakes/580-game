@@ -19,7 +19,7 @@ public class DodgeRollRecovery : BasicState
         countDodgeRollCooldown = false;
         visual = VisualChild.Recovery;
 
-        animationState = AnimationState.DodgeRoll;
+        animationState = AnimationState.DodgeRollRecovery;
         stateToChangeTo = new Idle();
     }
 
