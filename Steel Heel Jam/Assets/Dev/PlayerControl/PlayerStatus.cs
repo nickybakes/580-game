@@ -19,9 +19,15 @@ public enum Tag
 [RequireComponent(typeof(PlayerCombat))]
 public class PlayerStatus : MonoBehaviour
 {
+    [SerializeField] public bool isHeel = false;
+
+    [SerializeField] private const float HeelStaminaDamage = 5f;
+
+    [SerializeField] private const float HeelStaminaLossCooldownMax = 1f;
+
+    private float heelStaminaLossCooldown;
 
     public const float deafaultMaxStamina = 100f;
-
 
     /// <summary>
     /// The stamina value for the player. Stamina is consumed for actions and is lost upon being hit, being the heel, or being outside of the ring.
@@ -186,30 +192,47 @@ public class PlayerStatus : MonoBehaviour
         if (isOOB)
         {
             // Reduce the timer for OOB stamina loss
-            OOBStaminaLossCooldown -= Time.deltaTime;
+            OOBStaminaLossCooldown += Time.deltaTime;
 
             // If the timer for OOB stamina loss runs out . . .
-            if (OOBStaminaLossCooldown < 0)
+            if (OOBStaminaLossCooldown >= OOBStaminaLossCooldownMax)
             {
-                // Reset the timer for OOB stamina loss and decrease stamina & maximum stamina
-                OOBStaminaLossCooldown = OOBStaminaLossCooldownMax;
+                // Reset the timer for OOB stamina loss and decrease stamina
+                OOBStaminaLossCooldown = 0;
                 ReduceStamina(OOBStaminaDamage);
-                //ReduceMaxStamina(OOBMaxStaminaDamage);
             }
         }
 
-        if (combat.ActedRecently || isOOB)
+        // If the player is the Heel . . .
+        if (isHeel)
         {
-            staminaRegenCooldown = StaminaRegenCooldownMax;
-        }
-        else
-        {
-            staminaRegenCooldown -= Time.deltaTime;
+            // Reduce the timer for Heel stamina loss
+            heelStaminaLossCooldown += Time.deltaTime;
 
-            if (staminaRegenCooldown <= 0)
+            // If the Heel stamina loss timer runs out . . .
+            if (heelStaminaLossCooldown >= HeelStaminaLossCooldownMax)
             {
-                IncreaseStamina(PassiveStaminaRegen);
+                // Reset the timer for Heel stamina loss and decrease stamina
+                heelStaminaLossCooldown = 0;
+                ReduceStamina(HeelStaminaDamage);
+            }
+        }
+
+        if (!isHeel)
+        {
+            if (combat.ActedRecently || isOOB)
+            {
                 staminaRegenCooldown = StaminaRegenCooldownMax;
+            }
+            else
+            {
+                staminaRegenCooldown += Time.deltaTime;
+
+                if (staminaRegenCooldown >= StaminaRegenCooldownMax)
+                {
+                    IncreaseStamina(PassiveStaminaRegen);
+                    staminaRegenCooldown = 0;
+                }
             }
         }
 
@@ -240,7 +263,7 @@ public class PlayerStatus : MonoBehaviour
         visuals.SetAnimationState(state);
     }
 
-    public void GetHit(Vector3 hitboxPos, Vector3 collisionPos, float damage, float knockback, float knockbackHeight, float hitstun, PlayerStatus attackingPlayerStatus)
+    public void GetHit(bool heel, Vector3 hitboxPos, Vector3 collisionPos, float damage, float knockback, float knockbackHeight, float hitstun, PlayerStatus attackingPlayerStatus)
     {
         if (eliminated)
             return;
@@ -256,6 +279,8 @@ public class PlayerStatus : MonoBehaviour
 
         if (!IsDodgeRolling)
         {
+            if (heel) isHeel = heel;
+
             Vector3 knockbackDir = (collisionPos - hitboxPos).normalized;
             knockback = knockback * (2 + stamina / deafaultMaxStamina);
 
@@ -358,7 +383,7 @@ public class PlayerStatus : MonoBehaviour
         if (other.tag == "Ring")
         {
             isOOB = true;
-            OOBStaminaLossCooldown = OOBStaminaLossCooldownMax;
+            OOBStaminaLossCooldown = 0;
         }
     }
 }
