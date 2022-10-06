@@ -14,9 +14,9 @@ public class Gauntlets : DefaultState
 
     protected override void SetInitialHit()
     {
-        damageMultiplier = 1.0f;
+        damageMultiplier = 1.2f;
         knockbackMultiplier = 1.0f;
-        knockbackHeightMultiplier = 1.0f;
+        knockbackHeightMultiplier = 0.7f;
         hitstunMultiplier = 1.0f;
         radiusMultiplier = 1.0f;
         startupMultiplier = 1.0f;
@@ -32,17 +32,17 @@ public class Gauntlets : DefaultState
                 SetInitialHit();
                 break;
             case 1:
-                damageMultiplier = 0.8f;
+                damageMultiplier = 1.3f;
                 knockbackMultiplier = 0.7f;
-                knockbackHeightMultiplier = 0.5f;
+                knockbackHeightMultiplier = 0.7f;
                 radiusMultiplier = 1.5f;
                 startupMultiplier = 0.7f;
                 forwardSpeedModifierMultiplier = 1.1f;
                 break;
             case 2:
-                damageMultiplier = 1.5f;
-                knockbackMultiplier = 1.5f;
-                knockbackHeightMultiplier = 1.5f;
+                damageMultiplier = 1.7f;
+                knockbackMultiplier = 1.7f;
+                knockbackHeightMultiplier = 2.0f;
                 radiusMultiplier = 2.5f;
                 startupMultiplier = 0.7f;
                 forwardSpeedModifierMultiplier = 1.3f;

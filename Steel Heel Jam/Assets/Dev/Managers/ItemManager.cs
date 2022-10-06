@@ -40,7 +40,7 @@ public class ItemManager : MonoBehaviour
         Debug.Log(radius);
         float randomXCoordinate = NextFloat(GameManager.game.ringScript.transform.position.x - radius - 2f, GameManager.game.ringScript.transform.position.x + radius - 2f);
         float randomZCoordinate = NextFloat(GameManager.game.ringScript.transform.position.z - radius - 2f, GameManager.game.ringScript.transform.position.z + radius - 2f);
-        Vector3 spawnLocation = new Vector3(randomXCoordinate, 1, randomZCoordinate);
+        Vector3 spawnLocation = new Vector3(randomXCoordinate, 35, randomZCoordinate);
         GameObject newItem = Instantiate(itemsToSpawn[randomItemIndex], spawnLocation, Quaternion.identity);
         itemsOnGround.Add(newItem);
     }

@@ -14,11 +14,11 @@ public class Saber : DefaultState
 
     protected override void SetInitialHit()
     {
-        damageMultiplier = 1.0f;
-        knockbackMultiplier = 1.0f;
-        knockbackHeightMultiplier = 1.0f;
-        hitstunMultiplier = 1.0f;
-        radiusMultiplier = 1.0f;
+        damageMultiplier = 1.2f;
+        knockbackMultiplier = 1.2f;
+        knockbackHeightMultiplier = 0.4f;
+        hitstunMultiplier = 1.5f;
+        radiusMultiplier = 1.4f;
         startupMultiplier = 1.0f;
         durationMultiplier = 1.0f;
         recoveryMultiplier = 1.0f;
@@ -32,20 +32,21 @@ public class Saber : DefaultState
                 SetInitialHit();
                 break;
             case 1:
-                damageMultiplier = 0.8f;
-                knockbackMultiplier = 0.7f;
-                knockbackHeightMultiplier = 0.5f;
-                radiusMultiplier = 1.5f;
+                damageMultiplier = 1.2f;
+                knockbackMultiplier = 1.2f;
+                knockbackHeightMultiplier = 0.4f;
+                radiusMultiplier = 1.6f;
                 startupMultiplier = 0.7f;
                 forwardSpeedModifierMultiplier = 1.1f;
                 break;
             case 2:
                 damageMultiplier = 1.5f;
                 knockbackMultiplier = 1.5f;
-                knockbackHeightMultiplier = 1.5f;
+                knockbackHeightMultiplier = 0.6f;
                 radiusMultiplier = 2.5f;
                 startupMultiplier = 0.7f;
-                forwardSpeedModifierMultiplier = 1.3f;
+                forwardSpeedModifierMultiplier = 1.4f;
+                durationMultiplier = 1.4f;
                 break;
         }
     }
