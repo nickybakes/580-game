@@ -62,7 +62,7 @@ public class ItemTrajectory : MonoBehaviour
             if (collision.gameObject.CompareTag(Tag.Player.ToString()))
             {
                 PlayerStatus hitPlayerStatus = collision.gameObject.GetComponent<PlayerStatus>();
-                hitPlayerStatus.GetHitByThrowable(throwerObject.transform.position, collision.transform.position, 10, 5 * chargeAmount, 5 * chargeAmount, thrower);
+                hitPlayerStatus.GetHitByThrowable(transform.position, collision.transform.position, 10, 5 * chargeAmount, 5 * chargeAmount/*, thrower*/);
             }
 
             wasThrown = false;

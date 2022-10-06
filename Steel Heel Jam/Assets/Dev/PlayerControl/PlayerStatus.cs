@@ -334,21 +334,21 @@ public class PlayerStatus : MonoBehaviour
 
     }
 
-    public void GetHitByThrowable(Vector3 hitboxPos, Vector3 collisionPos, float damage, float knockback, float knockbackHeight, PlayerStatus attackingPlayerStatus)
+    public void GetHitByThrowable(Vector3 hitboxPos, Vector3 collisionPos, float damage, float knockback, float knockbackHeight/*, PlayerStatus attackingPlayerStatus*/)
     {
         // If eliminated/blocking/dodgerolling, nothing happens.
         if (eliminated || IsBlocking || IsDodgeRolling)
             return;
 
 
-        if (attackingPlayerStatus.isHeel)
-        {
-            SetHeel();
+        //if (attackingPlayerStatus.isHeel)
+        //{
+        //    SetHeel();
 
-            damage *= 1.6f;
-            knockback *= 1.6f;
-            knockbackHeight *= 1.6f;
-        }
+        //    damage *= 1.6f;
+        //    knockback *= 1.6f;
+        //    knockbackHeight *= 1.6f;
+        //}
 
         Vector3 knockbackDir = (collisionPos - hitboxPos).normalized;
         knockback = knockback * (2 + stamina / deafaultMaxStamina);
