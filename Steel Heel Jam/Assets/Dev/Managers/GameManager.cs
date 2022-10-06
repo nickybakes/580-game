@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
 
     public CameraManager cameraManager;
 
-    private Ring ringScript;
+    public Ring ringScript;
 
     public List<PlayerStatus> allPlayerStatuses;
     public List<PlayerStatus> alivePlayerStatuses;
