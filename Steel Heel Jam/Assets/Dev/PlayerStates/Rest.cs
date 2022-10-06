@@ -15,10 +15,11 @@ public class Rest : BasicState
         timeToChangeState = 0; // Only change state on button release.
         canPlayerControlMove = false;
         canPlayerControlRotate = false;
-        updateMovement = false;
+        updateMovement = true;
         canAttack = false;
         canDodgeRoll = false;
         canBlock = false;
+        alternateFriction = true;
         animationState = AnimationState.Taunt_01;
         visual = VisualChild.Knockback;
 
