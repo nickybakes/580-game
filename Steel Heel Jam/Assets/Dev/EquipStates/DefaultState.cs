@@ -154,6 +154,18 @@ public class DefaultState
         hitbox.SetActive(true);
     }
 
+
+    public virtual void AirAttack()
+    {
+        gotAHit = false;
+
+        SetInitialHit();
+
+        InitAirHitbox();
+
+        hitbox.SetActive(true);
+    }
+
     public virtual void ForceEndAttack()
     {
         hitbox.SetActive(false);
@@ -179,6 +191,25 @@ public class DefaultState
         hitboxCollider.radius = radius * radiusMultiplier;
         hitbox.transform.localPosition = new Vector3(0, 1, 1 + (radius * radiusMultiplier) / 2); // Experimental
         hitbox.transform.GetChild(0).localScale = new Vector3(hitboxCollider.radius * 2, hitboxCollider.radius * 2, hitboxCollider.radius * 2);
+
+        return hitboxScript;
+    }
+
+    protected virtual Hitbox InitAirHitbox()
+    {
+        // Set up hitbox values
+        hitboxScript.damage = damage * damageMultiplier * 1.5f;
+        hitboxScript.knockback = knockback * knockbackMultiplier * 1.5f;
+        hitboxScript.knockbackHeight = knockbackHeight * knockbackHeightMultiplier * 1.5f;
+        hitboxScript.hitstun = hitstun * hitstunMultiplier * 1.5f;
+        hitboxScript.radius = radius * radiusMultiplier * 5; // Radius is only passed through for gizmo drawing
+        hitboxScript.duration = 100f;
+        hitboxScript.playerNumber = playerNumber;
+
+        // Resize hitbox
+        hitboxCollider.radius = radius * radiusMultiplier * 5;
+        hitbox.transform.localPosition = new Vector3(0, 0, 0);
+        hitbox.transform.GetChild(0).localScale = new Vector3(hitboxCollider.radius, hitboxCollider.radius, hitboxCollider.radius);
 
         return hitboxScript;
     }

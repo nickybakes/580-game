@@ -15,8 +15,8 @@ public class ItemManager : MonoBehaviour
     void Start()
     {
         spawnTimer = 0f;
-        spawnTimerMax = 10f;
-        //spawnTimerMax = 2f;
+        spawnTimerMax = 5f;
+        //spawnTimerMax = 1f;
         //itemsOnGround = new List<GameObject>();
     }
 
@@ -34,11 +34,21 @@ public class ItemManager : MonoBehaviour
     void SpawnRandomItem()
     {
         int randomItemIndex = r.Next(0, itemsToSpawn.Count);
-        int randomXCoordinate = r.Next(-40, 40);
-        int randomZCoordinate = r.Next(-40, 40);
+        //int randomXCoordinate = r.Next(-40, 40);
+        //int randomZCoordinate = r.Next(-40, 40);
+        float radius = GameManager.game.ringScript.tr.localScale.x/2;
+        Debug.Log(radius);
+        float randomXCoordinate = NextFloat(GameManager.game.ringScript.transform.position.x - radius - 2f, GameManager.game.ringScript.transform.position.x + radius - 2f);
+        float randomZCoordinate = NextFloat(GameManager.game.ringScript.transform.position.z - radius - 2f, GameManager.game.ringScript.transform.position.z + radius - 2f);
         Vector3 spawnLocation = new Vector3(randomXCoordinate, 1, randomZCoordinate);
         GameObject newItem = Instantiate(itemsToSpawn[randomItemIndex], spawnLocation, Quaternion.identity);
         itemsOnGround.Add(newItem);
+    }
+
+    private float NextFloat(float min, float max)
+    {
+        double val = (r.NextDouble() * (max - min) + min);
+        return (float)val;
     }
 
     /*public string DeleteItemAndRemoveFromList(int indexToDelete)

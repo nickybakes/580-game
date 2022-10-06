@@ -378,11 +378,6 @@ public class PlayerStatus : MonoBehaviour
         isHeel = true;
     }
 
-    public void PrintStuff<T>(T thing)
-    {
-        print(thing);
-    }
-
     /// <summary>
     /// Increases the player's stamina. This value will never go above the max.
     /// </summary>
