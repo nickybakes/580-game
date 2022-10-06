@@ -62,11 +62,8 @@ public class ItemTrajectory : MonoBehaviour
             if (collision.gameObject.CompareTag(Tag.Player.ToString()))
             {
                 PlayerStatus hitPlayerStatus = collision.gameObject.GetComponent<PlayerStatus>();
-                hitPlayerStatus.ReduceStamina(10);
-                // Sets state to Block for now.
-                hitPlayerStatus.SetPlayerStateImmediately(new Block());
+                hitPlayerStatus.GetHitByThrowable(throwerObject.transform.position, collision.transform.position, 10, 5 * chargeAmount, 5 * chargeAmount, thrower);
             }
-
 
             wasThrown = false;
             isThrown = false;
