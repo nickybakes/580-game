@@ -46,10 +46,16 @@ public class AttackGroundRecovery : BasicState
 
         if (status.combat.weaponState.CanCombo)
             canCombo = true;
-
+        
+        // Lose stamina if missed
         if (!status.combat.weaponState.gotAHit)
         {
             status.ReduceStamina(status.combat.weaponState.staminaCost);
+        }
+        // If hit and is heel, remove heel status
+        else if (status.isHeel)
+        {
+            status.isHeel = false;
         }
     }
 
