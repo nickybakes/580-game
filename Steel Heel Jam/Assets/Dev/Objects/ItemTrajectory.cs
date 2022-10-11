@@ -9,8 +9,6 @@ public class ItemTrajectory : MonoBehaviour
     public float chargeAmount;
     [SerializeField]
     private float chargeAmountMultiplier = 80f;
-    [SerializeField]
-    private float aimAssistMultiplier = 600f;
 
     private bool wasThrown;
 
@@ -77,7 +75,6 @@ public class ItemTrajectory : MonoBehaviour
 
     private void InitialThrow()
     {
-
 
         if (target != null)
         {

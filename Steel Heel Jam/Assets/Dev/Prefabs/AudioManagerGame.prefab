@@ -136,6 +136,16 @@ MonoBehaviour:
     playOnAwake: 0
     source: {fileID: 0}
   - audioType: 1
+    name: throw
+    clips:
+    - {fileID: 8300000, guid: 8c4829008977bd44a850ee8999fcb625, type: 3}
+    - {fileID: 8300000, guid: 05d499229fe6f1349b5689c81c3d7f24, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - audioType: 1
     name: punch
     clips:
     - {fileID: 8300000, guid: a5c9215836d3bcb449f34af312ac5ecf, type: 3}

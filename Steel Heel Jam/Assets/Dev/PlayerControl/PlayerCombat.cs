@@ -252,9 +252,8 @@ public class PlayerCombat : MonoBehaviour
         {
             potentialTargets = potentialTargets.OrderBy(x => Vector3.Distance(_status.transform.position, x.transform.position)).ToList();
 
-            // Now check if there are any obstacles in the way of the first player in the list, if not, pass to itemTrajectory, else cont. list, if none, pass null.
-
-            // Raycasting magic.
+            // Now check if there are any obstacles in the way of the first player in the list (Raycasting),
+            // if not, pass to itemTrajectory, else cont. list, if none, pass null.
 
             // For now, adds the first in potentialTargets.
             itemTrajectory.target = potentialTargets[0];
@@ -277,6 +276,8 @@ public class PlayerCombat : MonoBehaviour
 
         timeHeld = 0;
 
+        // Plays initial item throw sfx.
+        audioManager.Play("throw", 0.8f, 1.2f);
     }
 
     public void DropWeapon()
