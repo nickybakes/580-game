@@ -168,6 +168,23 @@ public class AudioManager : MonoBehaviour
         return s;
     }
 
+    /// <summary>
+    /// Finds if a specified clip is currently playing.
+    /// </summary>
+    /// <returns>Returns true if the clip is playing, else false.</returns>
+    public bool IsPlaying(string name)
+    {
+        Sound s = Array.Find(sounds, sound => sound.name == name);
+        if (s.source.isPlaying)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     public void UpdateMixerVolume()
     {
         masterMixerGroup.audioMixer.SetFloat("MasterVolume", Mathf.Log10(AudioOptionsManager.masterVolume) * 20);

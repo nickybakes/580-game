@@ -277,6 +277,16 @@ public class PlayerStatus : MonoBehaviour
         {
             recentActivityTimeCurrent -= Time.deltaTime;
         }
+
+        if (IsResting)
+        {
+            if (!audioManager.IsPlaying("flexing"))
+                audioManager.Play("flexing");
+        }
+        else
+        {
+            audioManager.Stop("flexing");
+        }
     }
 
     public void SetPlayerStateImmediately(BasicState state)
