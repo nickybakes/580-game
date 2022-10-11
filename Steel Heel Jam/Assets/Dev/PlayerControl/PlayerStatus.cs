@@ -319,6 +319,8 @@ public class PlayerStatus : MonoBehaviour
             attackingPlayerStatus.movement.velocity = attackingPlayerStatus.transform.position - transform.position;
             SetPlayerStateImmediately(new Idle());
             attackBlocked = true;
+
+            audioManager.Play("blockedPunch");
             return;
         }
 
