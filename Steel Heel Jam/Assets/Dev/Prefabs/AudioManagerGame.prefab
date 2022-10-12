@@ -56,13 +56,22 @@ MonoBehaviour:
     type: 2}
   sounds:
   - audioType: 0
-    name: drumLoop
+    name: musicLoop
     clips:
-    - {fileID: 8300000, guid: f1fed9267e0cdc34c84a1c55bfa046e2, type: 3}
-    volume: 0.1
+    - {fileID: 8300000, guid: 1273ba5f279eabc43962128ed5a8706e, type: 3}
+    volume: 0.3
     pitch: 1
     loop: 1
     playOnAwake: 1
+    source: {fileID: 0}
+  - audioType: 0
+    name: drumLoop
+    clips:
+    - {fileID: 8300000, guid: f1fed9267e0cdc34c84a1c55bfa046e2, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
     source: {fileID: 0}
   - audioType: 1
     name: smack
