@@ -151,8 +151,12 @@ MonoBehaviour:
   dodgeRollStaminaDamage: 16
   totalDamageTaken: 0
   recentDamageTaken: 0
+  totalDamagerDealt: 0
+  totalEliminations: 0
+  playerLastHitBy: {fileID: 0}
   recentDamageTakenMax: 0
   recentDamageTimeCurrent: 0
+  recentActivityTimeCurrent: 0
   eliminated: 0
   timeOfEliminiation: 0
   playerHeader: {fileID: 0}
@@ -168,7 +172,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5329c894691c5145a5666968dab2efd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 10
+  moveSpeed: 11.5
   rotationSmoothTime: 0.026
   speedChangeRate: 16
   landingAudioClip: {fileID: 0}
@@ -184,7 +188,7 @@ MonoBehaviour:
   grounded: 1
   wasGrounded: 1
   groundedOffset: -0.17
-  groundedRadius: 0.4
+  groundedRadius: 0.5
   groundLayers:
     serializedVersion: 2
     m_Bits: 321

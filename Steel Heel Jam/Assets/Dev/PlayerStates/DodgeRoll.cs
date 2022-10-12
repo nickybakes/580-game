@@ -8,14 +8,14 @@ public class DodgeRoll : BasicState
 
     public DodgeRoll()
     {
-        timeToChangeState = .3f;
+        timeToChangeState = .45f;
         canPlayerControlMove = false;
         canPlayerControlRotate = false;
         canAttack = false;
         canDodgeRoll = false;
         canBlock = false;
         updateMovement = true;
-        moveSpeedMultiplier = 1.7f;
+        moveSpeedMultiplier = 1.8f;
         extraFallGravityMultiplier = .8f;
         countDodgeRollCooldown = false;
 
