@@ -175,7 +175,7 @@ public class PlayerCombat : MonoBehaviour
         _status.movement.velocity = Vector3.zero;
         _status.SetPlayerStateImmediately(new AttackGroundStartup());
 
-        weaponState.UpdateValues();
+        //weaponState.UpdateValues();
 
         _status.CurrentPlayerState.timeToChangeState = weaponState.Startup;
         _status.CurrentPlayerState.stateToChangeTo.timeToChangeState = weaponState.Duration;

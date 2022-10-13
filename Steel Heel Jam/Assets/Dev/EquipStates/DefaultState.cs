@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public enum EquipState
@@ -7,6 +6,48 @@ public enum EquipState
     DefaultState,
     TestCubeState
 };
+
+public struct Attack
+{
+    public float damageMultiplier;
+    public float knockbackMultiplier;
+    public float knockbackHeightMultiplier;
+    public float hitstunMultiplier;
+    public float radiusMultiplier;
+    public float heightMultiplier;
+    public float startupMultiplier;
+    public float durationMultiplier;
+    public float recoveryMultiplier;
+    public float forwardSpeedModifierMultiplier;
+
+    /// <summary>
+    /// Creates an instance of an Attack struct.
+    /// </summary>
+    public Attack(
+        float _damageMultiplier,
+        float _knockbackMultiplier,
+        float _knockbackHeightMultiplier,
+        float _hitstunMultiplier,
+        float _radiusMultiplier,
+        float _heightMultiplier,
+        float _startupMultiplier,
+        float _durationMultiplier,
+        float _recoveryMultiplier,
+        float _forwardSpeedModifierMultiplier
+        )
+    {
+        damageMultiplier = _damageMultiplier;
+        knockbackMultiplier = _knockbackMultiplier;
+        knockbackHeightMultiplier = _knockbackHeightMultiplier;
+        hitstunMultiplier = _hitstunMultiplier;
+        radiusMultiplier = _radiusMultiplier;
+        heightMultiplier = _heightMultiplier;
+        startupMultiplier = _startupMultiplier;
+        durationMultiplier = _durationMultiplier;
+        recoveryMultiplier = _recoveryMultiplier;
+        forwardSpeedModifierMultiplier = _forwardSpeedModifierMultiplier;
+    }
+}
 
 /// <summary>
 /// The base class for Weapon States
@@ -18,30 +59,32 @@ public class DefaultState
     //**********
     public int playerNumber;
     private float damage = 10;
-    [SerializeField] protected float damageMultiplier = 1;
+
     private float knockback = 5;
-    [SerializeField] protected float knockbackMultiplier = 1;
+
     private float knockbackHeight = 20;
-    [SerializeField] protected float knockbackHeightMultiplier = 1;
+
     private float hitstun = .75f;
-    [SerializeField] protected float hitstunMultiplier = 1;
+
     private float radius = 1;
-    [SerializeField] protected float radiusMultiplier = 1;
-    private float length = 10;
-    [SerializeField] protected float lengthMultiplier = 1;
+
+    private float height = 10;
+
     private float startup = 0.1f; //TIME IS IN SECONDS
-    [SerializeField] protected float startupMultiplier = 1;
+
     private float duration = 0.2f;
-    [SerializeField] protected float durationMultiplier = 1;
+
     private float recovery = 0.35f;
-    [SerializeField] protected float recoveryMultiplier = 1;
+
     private float forwardSpeedModifier = 1.4f;
-    [SerializeField] protected float forwardSpeedModifierMultiplier = 1;
-    [SerializeField] public int maxComboCount = 3;
+
+    public int maxComboCount;
     public int currentComboCount = 0;
+    protected Attack[] combo;
+    public Attack currentAttack;
+    public Attack airAttack;
+
     public float staminaCost = 5f;
-    //private float backwardDisplacement;
-    //protected float backwardDisplacementMultiplier;
 
     [SerializeField] public GameObject hitbox;
     private Hitbox hitboxScript;
@@ -71,7 +114,7 @@ public class DefaultState
     {
         get
         {
-            return startup * startupMultiplier;
+            return startup * currentAttack.startupMultiplier;
         }
     }
 
@@ -79,7 +122,7 @@ public class DefaultState
     {
         get
         {
-            return duration * durationMultiplier;
+            return duration * currentAttack.durationMultiplier;
         }
     }
 
@@ -87,7 +130,7 @@ public class DefaultState
     {
         get
         {
-            return recovery * recoveryMultiplier;
+            return recovery * currentAttack.recoveryMultiplier;
         }
     }
 
@@ -95,7 +138,7 @@ public class DefaultState
     {
         get
         {
-            return forwardSpeedModifier * forwardSpeedModifierMultiplier;
+            return forwardSpeedModifier * currentAttack.forwardSpeedModifierMultiplier;
         }
     }
 
@@ -113,6 +156,7 @@ public class DefaultState
         hitbox = _hitbox;
 
         SetupHitboxReferences(_hitbox);
+        InitializeAttacks();
     }
 
     //**********
@@ -125,23 +169,60 @@ public class DefaultState
         hitboxCollider = hitbox.GetComponent<CapsuleCollider>();
     }
 
-    protected virtual void SetInitialHit()
+    protected virtual void InitializeAttacks()
     {
-        damageMultiplier = 1.0f;
-        knockbackMultiplier = 1.0f;
-        knockbackHeightMultiplier = 1.0f;
-        hitstunMultiplier = 1.0f;
-        radiusMultiplier = 1.0f;
-        lengthMultiplier = 1.0f;
-        startupMultiplier = 1.0f;
-        durationMultiplier = 1.0f;
-        recoveryMultiplier = 1.0f;
+        combo = new Attack[]
+        {
+            new Attack(
+                1.0f, // Damage Multiplier
+                1.0f, // Knockback Multiplier
+                1.0f, // Knockback Height Multiplier
+                1.0f, // Hitstun Multiplier
+                1.0f, // Radius Multiplier
+                1.0f, // Height Multiplier
+                1.0f, // Startup Multiplier
+                1.0f, // Duration Multiplier
+                1.0f, // Recovery Multiplier
+                1.0f  // Forward Speed Multiplier
+                )
+        };
+
+        maxComboCount = combo.Length;
     }
 
-    public virtual void UpdateValues()
+    protected virtual void InitializeAirAttack()
     {
-        SetInitialHit();
+        airAttack = new Attack(
+            1.0f, // Damage Multiplier
+                1.0f, // Knockback Multiplier
+                1.0f, // Knockback Height Multiplier
+                1.0f, // Hitstun Multiplier
+                1.0f, // Radius Multiplier
+                1.0f, // Height Multiplier
+                1.0f, // Startup Multiplier
+                1.0f, // Duration Multiplier
+                1.0f, // Recovery Multiplier
+                1.0f  // Forward Speed Multiplier
+                );
     }
+
+    //protected virtual void SetInitialHit()
+    //{
+    //    damageMultiplier = 1.0f;
+    //    knockbackMultiplier = 1.0f;
+    //    knockbackHeightMultiplier = 1.0f;
+    //    hitstunMultiplier = 1.0f;
+    //    radiusMultiplier = 1.0f;
+    //    heightMultiplier = 1.0f;
+    //    startupMultiplier = 1.0f;
+    //    durationMultiplier = 1.0f;
+    //    recoveryMultiplier = 1.0f;
+    //}
+
+    //public virtual void UpdateValues()
+    //{
+    //    SetInitialHit();
+    //}
 
     /// <summary>
     /// Activates the hitbox prefab attached to the player.
@@ -150,9 +231,13 @@ public class DefaultState
     {
         gotAHit = false;
 
+        currentAttack = combo[currentComboCount];
+
         currentComboCount += 1;
 
-        InitHitbox();
+        if (currentComboCount > maxComboCount) currentComboCount = 0;
+
+        LoadHitbox();
 
         hitbox.SetActive(true);
     }
@@ -162,9 +247,7 @@ public class DefaultState
     {
         gotAHit = false;
 
-        SetInitialHit();
-
-        InitAirHitbox();
+        LoadAirHitbox();
 
         hitbox.SetActive(true);
     }
@@ -175,45 +258,49 @@ public class DefaultState
     }
 
     /// <summary>
-    /// Sets the hitbox size and duration.
+    /// Sets the hitbox values.
     /// </summary>
     /// <returns>A reference to the hitbox script.</returns>
-    protected virtual Hitbox InitHitbox()
+    protected virtual Hitbox LoadHitbox()
     {
         // Set up hitbox values
-        hitboxScript.damage = damage * damageMultiplier;
-        hitboxScript.knockback = knockback * knockbackMultiplier;
-        hitboxScript.knockbackHeight = knockbackHeight * knockbackHeightMultiplier;
-        hitboxScript.hitstun = hitstun * hitstunMultiplier;
-        hitboxScript.radius = radius * radiusMultiplier; // Radius is only passed through for gizmo drawing
-        hitboxScript.duration = duration * durationMultiplier;
+        hitboxScript.damage = damage * currentAttack.damageMultiplier;
+        hitboxScript.knockback = knockback * currentAttack.knockbackMultiplier;
+        hitboxScript.knockbackHeight = knockbackHeight * currentAttack.knockbackHeightMultiplier;
+        hitboxScript.hitstun = hitstun * currentAttack.hitstunMultiplier;
+        hitboxScript.radius = radius * currentAttack.radiusMultiplier; // Radius is only passed through for gizmo drawing
+        hitboxScript.duration = duration * currentAttack.durationMultiplier;
         hitboxScript.playerNumber = playerNumber;
-        //hitboxScript.duration = duration * durationMultiplier;
 
         // Resize hitbox
-        hitboxCollider.radius = radius * radiusMultiplier;
-        hitboxCollider.height = length * lengthMultiplier;
-        hitboxScript.tr.localPosition = new Vector3(0, 1, 1 + (radius * radiusMultiplier) / 2); // Experimental
-        hitboxScript.tr.GetChild(0).localScale = new Vector3(hitboxCollider.radius * 2, hitboxCollider.radius * 2, hitboxCollider.radius * 2);
+        hitboxCollider.radius = radius * currentAttack.radiusMultiplier;
+        hitboxCollider.height = height * currentAttack.heightMultiplier;
+        hitboxScript.tr.localPosition = new Vector3(0, 1, 1 + (radius * currentAttack.radiusMultiplier) / 2); // Experimental
+        hitboxScript.tr.GetChild(0).localScale = new Vector3(hitboxCollider.radius * 2, hitboxCollider.height, hitboxCollider.radius * 2);
 
         return hitboxScript;
     }
 
-    protected virtual Hitbox InitAirHitbox()
+    /// <summary>
+    /// Sets the hitbox values for the air attack.
+    /// </summary>
+    /// <returns>A reference to the hitbox script.</returns>
+    protected virtual Hitbox LoadAirHitbox()
     {
         // Set up hitbox values
-        hitboxScript.damage = damage * damageMultiplier * 1.5f;
-        hitboxScript.knockback = knockback * knockbackMultiplier * 1.5f;
-        hitboxScript.knockbackHeight = knockbackHeight * knockbackHeightMultiplier * 1.5f;
-        hitboxScript.hitstun = hitstun * hitstunMultiplier * 1.5f;
-        hitboxScript.radius = radius * radiusMultiplier * 5; // Radius is only passed through for gizmo drawing
-        hitboxScript.duration = 100f;
+        hitboxScript.damage = damage * airAttack.damageMultiplier;
+        hitboxScript.knockback = knockback * airAttack.knockbackMultiplier;
+        hitboxScript.knockbackHeight = knockbackHeight * airAttack.knockbackHeightMultiplier;
+        hitboxScript.hitstun = hitstun * airAttack.hitstunMultiplier;
+        hitboxScript.radius = radius * airAttack.radiusMultiplier; // Radius is only passed through for gizmo drawing
+        hitboxScript.duration = duration * airAttack.durationMultiplier;
         hitboxScript.playerNumber = playerNumber;
 
         // Resize hitbox
-        hitboxCollider.radius = radius * radiusMultiplier * 5;
+        hitboxCollider.radius = radius * airAttack.radiusMultiplier * 5;
+        hitboxCollider.height = hitboxCollider.radius * 2;
         hitboxScript.tr.localPosition = new Vector3(0, 0, 0);
-        hitboxScript.tr.GetChild(0).localScale = new Vector3(hitboxCollider.radius, hitboxCollider.radius, hitboxCollider.radius);
+        hitboxScript.tr.GetChild(0).localScale = new Vector3(hitboxCollider.radius * 2, hitboxCollider.height, hitboxCollider.radius * 2);
 
         return hitboxScript;
     }
