@@ -35,7 +35,7 @@ public class DefaultState
     [SerializeField] protected float durationMultiplier = 1;
     private float recovery = 0.35f;
     [SerializeField] protected float recoveryMultiplier = 1;
-    private float forwardSpeedModifier = 1.4f;
+    private float forwardSpeedModifier = 0.8f;
     [SerializeField] protected float forwardSpeedModifierMultiplier = 1;
     [SerializeField] public int maxComboCount = 3;
     public int currentComboCount = 0;
