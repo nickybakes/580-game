@@ -12,10 +12,16 @@ public class Hitbox : MonoBehaviour
     public float knockbackHeight;
     public float hitstun;
     public float radius;
+    public float length;
     public float duration;
     public int playerNumber;
 
     public PlayerStatus playerStatus;
+
+    /// <summary>
+    /// A reference to this object's transform. Use this instead of GetComponent<Transform>()
+    /// </summary>
+    public Transform tr;
 
     // Start is called before the first frame update
     void Start()
@@ -23,6 +29,7 @@ public class Hitbox : MonoBehaviour
         gameObject.SetActive(true);
 
         playerStatus = transform.parent.GetComponent<PlayerStatus>();
+        tr = transform;
     }
 
     // Update is called once per frame

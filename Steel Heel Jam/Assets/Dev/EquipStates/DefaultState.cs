@@ -27,6 +27,8 @@ public class DefaultState
     [SerializeField] protected float hitstunMultiplier = 1;
     private float radius = 1;
     [SerializeField] protected float radiusMultiplier = 1;
+    private float length = 10;
+    [SerializeField] protected float lengthMultiplier = 1;
     private float startup = 0.1f; //TIME IS IN SECONDS
     [SerializeField] protected float startupMultiplier = 1;
     private float duration = 0.2f;
@@ -43,7 +45,7 @@ public class DefaultState
 
     [SerializeField] public GameObject hitbox;
     private Hitbox hitboxScript;
-    private SphereCollider hitboxCollider;
+    private CapsuleCollider hitboxCollider;
 
     /// <summary>
     /// set this to true for when doing a single attack, we got a hit.
@@ -120,7 +122,7 @@ public class DefaultState
     {
         // Initialize hitbox references
         hitboxScript = hitbox.GetComponent<Hitbox>();
-        hitboxCollider = hitbox.GetComponent<SphereCollider>();
+        hitboxCollider = hitbox.GetComponent<CapsuleCollider>();
     }
 
     protected virtual void SetInitialHit()
@@ -130,6 +132,7 @@ public class DefaultState
         knockbackHeightMultiplier = 1.0f;
         hitstunMultiplier = 1.0f;
         radiusMultiplier = 1.0f;
+        lengthMultiplier = 1.0f;
         startupMultiplier = 1.0f;
         durationMultiplier = 1.0f;
         recoveryMultiplier = 1.0f;
@@ -189,8 +192,9 @@ public class DefaultState
 
         // Resize hitbox
         hitboxCollider.radius = radius * radiusMultiplier;
-        hitbox.transform.localPosition = new Vector3(0, 1, 1 + (radius * radiusMultiplier) / 2); // Experimental
-        hitbox.transform.GetChild(0).localScale = new Vector3(hitboxCollider.radius * 2, hitboxCollider.radius * 2, hitboxCollider.radius * 2);
+        hitboxCollider.height = length * lengthMultiplier;
+        hitboxScript.tr.localPosition = new Vector3(0, 1, 1 + (radius * radiusMultiplier) / 2); // Experimental
+        hitboxScript.tr.GetChild(0).localScale = new Vector3(hitboxCollider.radius * 2, hitboxCollider.radius * 2, hitboxCollider.radius * 2);
 
         return hitboxScript;
     }
@@ -208,8 +212,8 @@ public class DefaultState
 
         // Resize hitbox
         hitboxCollider.radius = radius * radiusMultiplier * 5;
-        hitbox.transform.localPosition = new Vector3(0, 0, 0);
-        hitbox.transform.GetChild(0).localScale = new Vector3(hitboxCollider.radius, hitboxCollider.radius, hitboxCollider.radius);
+        hitboxScript.tr.localPosition = new Vector3(0, 0, 0);
+        hitboxScript.tr.GetChild(0).localScale = new Vector3(hitboxCollider.radius, hitboxCollider.radius, hitboxCollider.radius);
 
         return hitboxScript;
     }
