@@ -70,7 +70,7 @@ public class ItemTrajectory : MonoBehaviour
             Vector3 initialDirection = (thrower.movement.ActualFowardDirection + (Vector3.up * 2)).normalized;
 
             currentMoveDirection = initialDirection;
-            speed = 20 * chargeAmount + minThrowSpeed;
+            speed = chargeAmountMultiplier * chargeAmount + minThrowSpeed;
 
             rb.useGravity = false;
         }
@@ -116,8 +116,8 @@ public class ItemTrajectory : MonoBehaviour
 
         currentMoveDirection = newDirection;
 
-        velocity = speed * currentMoveDirection;
+        rb.velocity = speed * currentMoveDirection;
 
-        tr.position += velocity * Time.deltaTime;
+        tr.position += rb.velocity * Time.deltaTime;
     }
 }
