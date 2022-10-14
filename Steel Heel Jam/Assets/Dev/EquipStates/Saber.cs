@@ -6,48 +6,51 @@ public class Saber : DefaultState
 {
     public Saber(int _playerNumber, GameObject _hitbox) : base(_playerNumber, _hitbox)
     {
-        //SetupHitboxReferences(_hitbox);
 
-        //SetInitialHit();
-        maxComboCount = 3;
     }
 
-    //protected override void SetInitialHit()
-    //{
-    //    damageMultiplier = 1.2f;
-    //    knockbackMultiplier = 1.2f;
-    //    knockbackHeightMultiplier = 0.4f;
-    //    hitstunMultiplier = 1.5f;
-    //    radiusMultiplier = 1.4f;
-    //    startupMultiplier = 1.0f;
-    //    durationMultiplier = 1.0f;
-    //    recoveryMultiplier = 1.0f;
-    //}
+    protected override void InitializeAttacks()
+    {
+        combo = new Attack[]
+        {
+            new Attack( // *** 1st Hit ***
+                1.2f, // Damage Multiplier
+                1.2f, // Knockback Multiplier
+                0.4f, // Knockback Height Multiplier
+                1.5f, // Hitstun Multiplier
+                1.4f, // Radius Multiplier
+                1.0f, // Height Multiplier
+                1.0f, // Startup Multiplier
+                1.0f, // Duration Multiplier
+                1.0f, // Recovery Multiplier
+                1.0f  // Forward Speed Multiplier
+                ),
+            new Attack( // *** 2nd Hit ***
+                1.2f, // Damage Multiplier
+                1.2f, // Knockback Multiplier
+                0.4f, // Knockback Height Multiplier
+                1.0f, // Hitstun Multiplier
+                1.6f, // Radius Multiplier
+                1.0f, // Height Multiplier
+                0.7f, // Startup Multiplier
+                1.0f, // Duration Multiplier
+                1.0f, // Recovery Multiplier
+                1.1f  // Forward Speed Multiplier
+                ),
+            new Attack( // *** 3rd Hit ***
+                1.5f, // Damage Multiplier
+                1.5f, // Knockback Multiplier
+                0.6f, // Knockback Height Multiplier
+                1.0f, // Hitstun Multiplier
+                2.5f, // Radius Multiplier
+                1.0f, // Height Multiplier
+                0.7f, // Startup Multiplier
+                1.4f, // Duration Multiplier
+                1.0f, // Recovery Multiplier
+                1.4f  // Forward Speed Multiplier
+                ),
+        };
 
-    //public override void UpdateValues()
-    //{
-    //    switch (currentComboCount)
-    //    {
-    //        case 0:
-    //            //SetInitialHit();
-    //            break;
-    //        case 1:
-    //            damageMultiplier = 1.2f;
-    //            knockbackMultiplier = 1.2f;
-    //            knockbackHeightMultiplier = 0.4f;
-    //            radiusMultiplier = 1.6f;
-    //            startupMultiplier = 0.7f;
-    //            forwardSpeedModifierMultiplier = 1.1f;
-    //            break;
-    //        case 2:
-    //            damageMultiplier = 1.5f;
-    //            knockbackMultiplier = 1.5f;
-    //            knockbackHeightMultiplier = 0.6f;
-    //            radiusMultiplier = 2.5f;
-    //            startupMultiplier = 0.7f;
-    //            forwardSpeedModifierMultiplier = 1.4f;
-    //            durationMultiplier = 1.4f;
-    //            break;
-    //    }
-    //}
+        maxComboCount = combo.Length;
+    }
 }

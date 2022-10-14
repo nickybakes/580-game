@@ -24,16 +24,16 @@ public struct Attack
     /// Creates an instance of an Attack struct.
     /// </summary>
     public Attack(
-        float _damageMultiplier,
-        float _knockbackMultiplier,
-        float _knockbackHeightMultiplier,
-        float _hitstunMultiplier,
-        float _radiusMultiplier,
-        float _heightMultiplier,
-        float _startupMultiplier,
-        float _durationMultiplier,
-        float _recoveryMultiplier,
-        float _forwardSpeedModifierMultiplier
+        float _damageMultiplier = 1.0f,
+        float _knockbackMultiplier = 1.0f,
+        float _knockbackHeightMultiplier = 1.0f,
+        float _hitstunMultiplier = 1.0f,
+        float _radiusMultiplier = 1.0f,
+        float _heightMultiplier = 1.0f,
+        float _startupMultiplier = 1.0f,
+        float _durationMultiplier = 1.0f,
+        float _recoveryMultiplier = 1.0f,
+        float _forwardSpeedModifierMultiplier = 1.0f
         )
     {
         damageMultiplier = _damageMultiplier;
@@ -96,11 +96,6 @@ public class DefaultState
     /// feel more IMPACTFUL!!
     /// </summary>
     public bool gotAHit;
-
-
-    // NOTE MAKE COMBO SYSTEM
-    // NOTE DEFINE PRIVATES
-    // NOTE MOVE MULTIPLIERS TO CONSTRUCTOR
 
     public bool CanCombo
     {
@@ -173,18 +168,9 @@ public class DefaultState
     {
         combo = new Attack[]
         {
-            new Attack(
-                1.0f, // Damage Multiplier
-                1.0f, // Knockback Multiplier
-                1.0f, // Knockback Height Multiplier
-                1.0f, // Hitstun Multiplier
-                1.0f, // Radius Multiplier
-                1.0f, // Height Multiplier
-                1.0f, // Startup Multiplier
-                1.0f, // Duration Multiplier
-                1.0f, // Recovery Multiplier
-                1.0f  // Forward Speed Multiplier
-                )
+            new Attack(),
+            new Attack(),
+            new Attack()
         };
 
         maxComboCount = combo.Length;
@@ -192,37 +178,8 @@ public class DefaultState
 
     protected virtual void InitializeAirAttack()
     {
-        airAttack = new Attack(
-            1.0f, // Damage Multiplier
-                1.0f, // Knockback Multiplier
-                1.0f, // Knockback Height Multiplier
-                1.0f, // Hitstun Multiplier
-                1.0f, // Radius Multiplier
-                1.0f, // Height Multiplier
-                1.0f, // Startup Multiplier
-                1.0f, // Duration Multiplier
-                1.0f, // Recovery Multiplier
-                1.0f  // Forward Speed Multiplier
-                );
+        airAttack = new Attack();
     }
-
-    //protected virtual void SetInitialHit()
-    //{
-    //    damageMultiplier = 1.0f;
-    //    knockbackMultiplier = 1.0f;
-    //    knockbackHeightMultiplier = 1.0f;
-    //    hitstunMultiplier = 1.0f;
-    //    radiusMultiplier = 1.0f;
-    //    heightMultiplier = 1.0f;
-    //    startupMultiplier = 1.0f;
-    //    durationMultiplier = 1.0f;
-    //    recoveryMultiplier = 1.0f;
-    //}
-
-    //public virtual void UpdateValues()
-    //{
-    //    SetInitialHit();
-    //}
 
     /// <summary>
     /// Activates the hitbox prefab attached to the player.
