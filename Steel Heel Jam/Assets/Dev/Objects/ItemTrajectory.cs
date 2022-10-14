@@ -38,12 +38,10 @@ public class ItemTrajectory : MonoBehaviour
             InitialThrow();
             isFirstFrameOfThrow = false;
             isMidAir = true;
-            Debug.Log("INITIAL THROW");
         }
         else if (isMidAir && target != null)
         {
             UpdateTargetedThrow();
-            Debug.Log("Update throw");
         }
     }
 
