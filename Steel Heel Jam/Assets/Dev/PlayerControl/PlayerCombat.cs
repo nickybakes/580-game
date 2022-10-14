@@ -159,8 +159,9 @@ public class PlayerCombat : MonoBehaviour
 
                 timeHeld += Time.deltaTime;
 
-                if (timeHeld > 3)
-                    timeHeld = 3;
+                if (timeHeld > 2)
+                    timeHeld = 2;
+
             }
             else
             {
@@ -276,7 +277,6 @@ public class PlayerCombat : MonoBehaviour
         _status.SetPlayerStateImmediately(new ThrowRecovery());
 
         timeHeld = 0;
-
     }
 
     public void DropWeapon()

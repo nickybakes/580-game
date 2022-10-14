@@ -5,12 +5,8 @@ using UnityEngine;
 
 public class ItemTrajectory : MonoBehaviour
 {
-    public bool isThrown;
-    public float chargeAmount;
-    [SerializeField]
-    private float chargeAmountMultiplier = 80f;
-    [SerializeField]
-    private float aimAssistMultiplier = 600f;
+    private float chargeAmountMultiplier = 10f;
+    private float minThrowSpeed = 10f;
 
     private bool wasThrown;
 
@@ -21,6 +17,8 @@ public class ItemTrajectory : MonoBehaviour
     private Vector3 currentMoveDirection;
     private float speed;
 
+    public bool isThrown;
+    public float chargeAmount;
     public PlayerStatus target;
     public PlayerStatus thrower;
     public GameObject throwerObject;
@@ -47,14 +45,6 @@ public class ItemTrajectory : MonoBehaviour
             UpdateTargetedThrow();
         }
 
-        //Debug.Log(wasThrown);
-
-        // Set isThrown to false when it's "grounded" or being held.
-        //if (rb.velocity.magnitude < 0.01f)
-        //{
-        //    isThrown = false;
-        //    wasThrown = false;
-        //}
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -78,23 +68,22 @@ public class ItemTrajectory : MonoBehaviour
     private void InitialThrow()
     {
 
-
         if (target != null)
         {
             Vector3 initialDirection = (thrower.movement.ActualFowardDirection + (Vector3.up * 2)).normalized;
 
             currentMoveDirection = initialDirection;
-            speed = 15 * chargeAmount + 20;
+            speed = 20 * chargeAmount + minThrowSpeed;
 
             rb.useGravity = false;
         }
         else
         {
-            Vector3 initialDirection = (thrower.movement.ActualFowardDirection + (Vector3.up * 2)).normalized;
+            Vector3 initialDirection = (thrower.movement.ActualFowardDirection /*+ (Vector3.up * 2)*/).normalized;
 
-            initialDirection.x *= chargeAmount * chargeAmountMultiplier + 20;
-            initialDirection.z *= chargeAmount * chargeAmountMultiplier + 20;
-            initialDirection.y = 5 * chargeAmount + 4; //chargeamt from 0-3
+            initialDirection.x *= chargeAmount * chargeAmountMultiplier + minThrowSpeed; //chargeamt from 0-2
+            initialDirection.z *= chargeAmount * chargeAmountMultiplier + minThrowSpeed;
+            initialDirection.y = 4; // Set general height of non-targeted throw.
 
             rb.velocity = new Vector3(0,0,0);
             rb.AddForce(initialDirection, ForceMode.Impulse);
@@ -134,12 +123,5 @@ public class ItemTrajectory : MonoBehaviour
         velocity = speed * currentMoveDirection;
 
         tr.position += velocity * Time.deltaTime;
-
-        // Add small impulse every update to course correct.
-        // Vector3 correctedDirection = chargeAmount * chargeAmountMultiplier * (target.transform.position - transform.position).normalized;
-        // Vector3 forceToAdd = correctedDirection - rb.transform.forward.normalized;
-
-
-        // rb.AddForce(forceToAdd * aimAssistMultiplier * Time.deltaTime, ForceMode.Force);
     }
 }
