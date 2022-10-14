@@ -14,7 +14,7 @@ public class AttackAirDuration : BasicState
         updateMovement = true;
         countAttackCooldown = false;
         extraFallGravityMultiplier = 2f;
-        animationState = AnimationState.Eliminated;
+        animationState = AnimationState.AttackAirDuration_01;
         stateToChangeTo = new AttackAirRecovery();
     }
 

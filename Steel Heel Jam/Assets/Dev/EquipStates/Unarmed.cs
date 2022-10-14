@@ -23,6 +23,7 @@ public class Unarmed : DefaultState
         startupMultiplier = 1.0f;
         durationMultiplier = 1.0f;
         recoveryMultiplier = 1.0f;
+        forwardSpeedModifierMultiplier = 1.0f;
     }
 
     public override void UpdateValues()
@@ -36,17 +37,17 @@ public class Unarmed : DefaultState
                 damageMultiplier = 0.8f;
                 knockbackMultiplier = 0.7f;
                 knockbackHeightMultiplier = 0.5f;
-                radiusMultiplier = 1.5f;
+                radiusMultiplier = 1.25f;
                 startupMultiplier = 0.7f;
-                forwardSpeedModifierMultiplier = 1.1f;
+                forwardSpeedModifierMultiplier = 1.0f;
                 break;
             case 2:
                 damageMultiplier = 1.5f;
                 knockbackMultiplier = 1.5f;
                 knockbackHeightMultiplier = 1.5f;
-                radiusMultiplier = 2.5f;
+                radiusMultiplier = 1.5f;
                 startupMultiplier = 0.7f;
-                forwardSpeedModifierMultiplier = 1.3f;
+                forwardSpeedModifierMultiplier = 1.5f;
                 break;
         }
     }

@@ -98,11 +98,11 @@ public class GameManager : MonoBehaviour
         gameTime += Time.deltaTime;
         cameraManager.UpdateCamera(alivePlayerStatuses, eliminatedPlayerStatuses);
 
-        if (gameTime > 13 && !heelSpotlightSpawned)
-        {
-            heelSpotlightSpawned = true;
-            SpawnHeelSpotlight();
-        }
+        // if (gameTime > 13 && !heelSpotlightSpawned)
+        // {
+        //     heelSpotlightSpawned = true;
+        //     SpawnHeelSpotlight();
+        // }
     }
 
     public void SpawnPlayerPrefabs()

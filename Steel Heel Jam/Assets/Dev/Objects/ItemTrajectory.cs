@@ -5,12 +5,8 @@ using UnityEngine;
 
 public class ItemTrajectory : MonoBehaviour
 {
-    public bool isThrown;
-    public float chargeAmount;
-    [SerializeField]
-    private float chargeAmountMultiplier = 80f;
-
-    private bool wasThrown;
+    private float chargeAmountMultiplier = 10f;
+    private float minThrowSpeed = 10f;
 
     private Transform tr;
     private Rigidbody rb;
@@ -19,6 +15,9 @@ public class ItemTrajectory : MonoBehaviour
     private Vector3 currentMoveDirection;
     private float speed;
 
+    public bool isFirstFrameOfThrow;
+    public bool isMidAir;
+    public float chargeAmount;
     public PlayerStatus target;
     public PlayerStatus thrower;
     public GameObject throwerObject;
@@ -34,25 +33,16 @@ public class ItemTrajectory : MonoBehaviour
     void Update()
     {
 
-        // isThrown only happens the first frame throw is released.
-        if (isThrown && !wasThrown)
+        if (isFirstFrameOfThrow)
         {
             InitialThrow();
-            wasThrown = true;
+            isFirstFrameOfThrow = false;
+            isMidAir = true;
         }
-        if (wasThrown && target != null)
+        else if (isMidAir && target != null)
         {
             UpdateTargetedThrow();
         }
-
-        //Debug.Log(wasThrown);
-
-        // Set isThrown to false when it's "grounded" or being held.
-        //if (rb.velocity.magnitude < 0.01f)
-        //{
-        //    isThrown = false;
-        //    wasThrown = false;
-        //}
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -61,14 +51,13 @@ public class ItemTrajectory : MonoBehaviour
         if (collision.gameObject != throwerObject)
         {
             // Checks for collision with enemy.
-            if (isThrown && collision.gameObject.CompareTag(Tag.Player.ToString()))
+            if (isMidAir && collision.gameObject.CompareTag(Tag.Player.ToString()))
             {
                 PlayerStatus hitPlayerStatus = collision.gameObject.GetComponent<PlayerStatus>();
                 hitPlayerStatus.GetHitByThrowable(transform.position, collision.transform.position, 10, 12 * chargeAmount + 3, 13 * chargeAmount + 7, thrower);
             }
 
-            wasThrown = false;
-            isThrown = false;
+            isMidAir = false;
             rb.useGravity = true;
         }
     }
@@ -81,23 +70,22 @@ public class ItemTrajectory : MonoBehaviour
             Vector3 initialDirection = (thrower.movement.ActualFowardDirection + (Vector3.up * 2)).normalized;
 
             currentMoveDirection = initialDirection;
-            speed = 15 * chargeAmount + 20;
+            speed = chargeAmountMultiplier * chargeAmount + minThrowSpeed;
 
             rb.useGravity = false;
         }
         else
         {
-            Vector3 initialDirection = (thrower.movement.ActualFowardDirection + (Vector3.up * 2)).normalized;
+            Vector3 initialDirection = (thrower.movement.ActualFowardDirection /*+ (Vector3.up * 2)*/).normalized;
 
-            initialDirection.x *= chargeAmount * chargeAmountMultiplier + 20;
-            initialDirection.z *= chargeAmount * chargeAmountMultiplier + 20;
-            initialDirection.y = 5 * chargeAmount + 4; //chargeamt from 0-3
+            initialDirection.x *= chargeAmount * chargeAmountMultiplier + minThrowSpeed; //chargeamt from 0-2
+            initialDirection.z *= chargeAmount * chargeAmountMultiplier + minThrowSpeed;
+            initialDirection.y = 4; // Set general height of non-targeted throw.
 
             rb.velocity = new Vector3(0,0,0);
             rb.AddForce(initialDirection, ForceMode.Impulse);
+            rb.useGravity = true;
         }
-        // rb.velocity = new Vector3(0,0,0);
-        // rb.AddForce(initialDirection, ForceMode.Impulse);
 
         //transform.position = thrower.movement.ActualFowardDirection * chargeAmount;
         //Debug.Log(thrower.movement.ActualFowardDirection);
@@ -128,15 +116,8 @@ public class ItemTrajectory : MonoBehaviour
 
         currentMoveDirection = newDirection;
 
-        velocity = speed * currentMoveDirection;
+        rb.velocity = speed * currentMoveDirection;
 
-        tr.position += velocity * Time.deltaTime;
-
-        // Add small impulse every update to course correct.
-        // Vector3 correctedDirection = chargeAmount * chargeAmountMultiplier * (target.transform.position - transform.position).normalized;
-        // Vector3 forceToAdd = correctedDirection - rb.transform.forward.normalized;
-
-
-        // rb.AddForce(forceToAdd * aimAssistMultiplier * Time.deltaTime, ForceMode.Force);
+        tr.position += rb.velocity * Time.deltaTime;
     }
 }

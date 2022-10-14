@@ -14,7 +14,7 @@ public class AttackAirStartup : BasicState
         canBlock = false;
         updateMovement = false;
         countAttackCooldown = false;
-        animationState = AnimationState.Eliminated;
+        animationState = AnimationState.AttackAirStartup_01;
         stateToChangeTo = new AttackAirDuration();
     }
 

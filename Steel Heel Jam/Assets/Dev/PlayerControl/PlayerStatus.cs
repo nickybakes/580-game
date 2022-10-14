@@ -317,6 +317,7 @@ public class PlayerStatus : MonoBehaviour
         {
             attackingPlayerStatus.SetPlayerStateImmediately(new BlockedStun());
             attackingPlayerStatus.movement.velocity = attackingPlayerStatus.transform.position - transform.position;
+            attackingPlayerStatus.combat.weaponState.currentComboCount = 0;
             SetPlayerStateImmediately(new Idle());
             attackBlocked = true;
 

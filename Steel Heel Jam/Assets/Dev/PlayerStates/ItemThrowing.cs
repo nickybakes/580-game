@@ -14,6 +14,7 @@ public class ItemThrowing : BasicState
         canDodgeRoll = false;
         canBlock = false;
         alternateFriction = true;
+        canThrow = true;
         animationState = AnimationState.ThrowCharging_01;
         //visual = VisualChild.Throw;
 

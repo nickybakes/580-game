@@ -34,7 +34,7 @@ public class AttackGroundRecovery : BasicState
             canAttack = true;
         }
 
-        moveSpeedMultiplier = Mathf.Lerp(prevSpeedModifier, 0, timeInThisState / timeToChangeState);
+        moveSpeedMultiplier = Mathf.Lerp(prevSpeedModifier, 0, Mathf.Clamp01(timeInThisState / (timeToChangeState * 0.25f)));
         status.movement.SetVelocityToMoveSpeedTimesFowardDirection();
     }
 
