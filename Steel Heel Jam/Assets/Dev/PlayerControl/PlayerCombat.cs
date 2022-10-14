@@ -265,7 +265,8 @@ public class PlayerCombat : MonoBehaviour
             itemTrajectory.target = null;
         }
 
-        itemTrajectory.isThrown = true;
+        itemTrajectory.isMidAir = false;
+        itemTrajectory.isFirstFrameOfThrow = true;
         itemTrajectory.chargeAmount = timeHeld;
         itemTrajectory.thrower = _status;
         itemTrajectory.throwerObject = _status.gameObject;

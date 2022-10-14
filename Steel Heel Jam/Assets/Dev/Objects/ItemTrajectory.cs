@@ -8,8 +8,6 @@ public class ItemTrajectory : MonoBehaviour
     private float chargeAmountMultiplier = 10f;
     private float minThrowSpeed = 10f;
 
-    private bool wasThrown;
-
     private Transform tr;
     private Rigidbody rb;
 
@@ -17,7 +15,8 @@ public class ItemTrajectory : MonoBehaviour
     private Vector3 currentMoveDirection;
     private float speed;
 
-    public bool isThrown;
+    public bool isFirstFrameOfThrow;
+    public bool isMidAir;
     public float chargeAmount;
     public PlayerStatus target;
     public PlayerStatus thrower;
@@ -34,17 +33,18 @@ public class ItemTrajectory : MonoBehaviour
     void Update()
     {
 
-        // isThrown only happens the first frame throw is released.
-        if (isThrown && !wasThrown)
+        if (isFirstFrameOfThrow)
         {
             InitialThrow();
-            wasThrown = true;
+            isFirstFrameOfThrow = false;
+            isMidAir = true;
+            Debug.Log("INITIAL THROW");
         }
-        if (wasThrown && target != null)
+        else if (isMidAir && target != null)
         {
             UpdateTargetedThrow();
+            Debug.Log("Update throw");
         }
-
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -53,14 +53,13 @@ public class ItemTrajectory : MonoBehaviour
         if (collision.gameObject != throwerObject)
         {
             // Checks for collision with enemy.
-            if (isThrown && collision.gameObject.CompareTag(Tag.Player.ToString()))
+            if (isMidAir && collision.gameObject.CompareTag(Tag.Player.ToString()))
             {
                 PlayerStatus hitPlayerStatus = collision.gameObject.GetComponent<PlayerStatus>();
                 hitPlayerStatus.GetHitByThrowable(transform.position, collision.transform.position, 10, 12 * chargeAmount + 3, 13 * chargeAmount + 7, thrower);
             }
 
-            wasThrown = false;
-            isThrown = false;
+            isMidAir = false;
             rb.useGravity = true;
         }
     }
@@ -87,9 +86,8 @@ public class ItemTrajectory : MonoBehaviour
 
             rb.velocity = new Vector3(0,0,0);
             rb.AddForce(initialDirection, ForceMode.Impulse);
+            rb.useGravity = true;
         }
-        // rb.velocity = new Vector3(0,0,0);
-        // rb.AddForce(initialDirection, ForceMode.Impulse);
 
         //transform.position = thrower.movement.ActualFowardDirection * chargeAmount;
         //Debug.Log(thrower.movement.ActualFowardDirection);
