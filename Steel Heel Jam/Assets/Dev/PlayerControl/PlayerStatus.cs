@@ -31,6 +31,7 @@ public class PlayerStatus : MonoBehaviour
     private float heelStaminaLossCooldown;
 
     public const float deafaultMaxStamina = 100f;
+    public const float deafaultMaxSpotlight = 100f;
 
     /// <summary>
     /// The stamina value for the player. Stamina is consumed for actions and is lost upon being hit, being the heel, or being outside of the ring.
@@ -44,6 +45,10 @@ public class PlayerStatus : MonoBehaviour
     /// <summary>
     /// The lowest a player's maximum stamina can get.
     /// </summary>
+    /// 
+    
+    public float spotlight;
+
     [SerializeField] private const float MinMaxStamina = 20f;
 
     private BasicState currentPlayerState;
@@ -464,7 +469,7 @@ public class PlayerStatus : MonoBehaviour
         if (stamina > maxStamina) stamina = maxStamina;
 
         if (playerHeader != null)
-            playerHeader.UpdateStaminaBar();
+            playerHeader.UpdateStaminaMeter();
     }
 
     /// <summary>
@@ -481,7 +486,7 @@ public class PlayerStatus : MonoBehaviour
         if (stamina < 0) stamina = 0;
 
         if (playerHeader != null)
-            playerHeader.UpdateStaminaBar();
+            playerHeader.UpdateStaminaMeter();
 
         if (!eliminated && stamina == 0 && isOOB)
         {
@@ -505,7 +510,7 @@ public class PlayerStatus : MonoBehaviour
         }
 
         if (playerHeader != null)
-            playerHeader.UpdateStaminaBar();
+            playerHeader.UpdateStaminaMeter();
     }
 
     private void OnTriggerEnter(Collider other)
