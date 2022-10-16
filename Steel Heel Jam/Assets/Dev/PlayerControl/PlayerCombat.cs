@@ -175,8 +175,6 @@ public class PlayerCombat : MonoBehaviour
         _status.movement.velocity = Vector3.zero;
         _status.SetPlayerStateImmediately(new AttackGroundStartup());
 
-        //weaponState.UpdateValues();
-
         _status.CurrentPlayerState.timeToChangeState = weaponState.Startup;
         _status.CurrentPlayerState.stateToChangeTo.timeToChangeState = weaponState.Duration;
         _status.CurrentPlayerState.stateToChangeTo.moveSpeedMultiplier = weaponState.ForwardSpeedModifier;
@@ -191,10 +189,13 @@ public class PlayerCombat : MonoBehaviour
     private void AttackAir()
     {
         _input.Attack = false;
+
+        weaponState.currentAttack = weaponState.airAttack;
+
+        print(weaponState.airAttack.radiusMultiplier);
+
         //_status.movement.velocity = Vector3.zero;
         _status.SetPlayerStateImmediately(_status.movement.velocity.y > 0 ? new AttackAirStartup() : new AttackAirDuration());
-
-        //weaponState.UpdateValues();
 
         if (weaponState.currentComboCount == 0)
             _status.movement.SetTheSetForwardDirection();

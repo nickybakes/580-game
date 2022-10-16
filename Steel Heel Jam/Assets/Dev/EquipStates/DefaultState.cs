@@ -24,16 +24,16 @@ public struct Attack
     /// Creates an instance of an Attack struct.
     /// </summary>
     public Attack(
-        float _damageMultiplier = 1.0f,
-        float _knockbackMultiplier = 1.0f,
-        float _knockbackHeightMultiplier = 1.0f,
-        float _hitstunMultiplier = 1.0f,
-        float _radiusMultiplier = 1.0f,
-        float _heightMultiplier = 1.0f,
-        float _startupMultiplier = 1.0f,
-        float _durationMultiplier = 1.0f,
-        float _recoveryMultiplier = 1.0f,
-        float _forwardSpeedModifierMultiplier = 1.0f
+        float _damageMultiplier,
+        float _knockbackMultiplier,
+        float _knockbackHeightMultiplier,
+        float _hitstunMultiplier,
+        float _radiusMultiplier,
+        float _heightMultiplier,
+        float _startupMultiplier,
+        float _durationMultiplier,
+        float _recoveryMultiplier,
+        float _forwardSpeedModifierMultiplier
         )
     {
         damageMultiplier = _damageMultiplier;
@@ -80,7 +80,7 @@ public class DefaultState
 
     public int maxComboCount;
     public int currentComboCount = 0;
-    protected Attack[] combo;
+    public Attack[] combo;
     public Attack currentAttack;
     public Attack airAttack;
 
@@ -164,20 +164,15 @@ public class DefaultState
         hitboxCollider = hitbox.GetComponent<CapsuleCollider>();
     }
 
-    protected virtual void InitializeAttacks()
+    public virtual void InitializeAttacks()
     {
         combo = new Attack[]
         {
-            new Attack(),
             new Attack(),
             new Attack()
         };
 
         maxComboCount = combo.Length;
-    }
-
-    protected virtual void InitializeAirAttack()
-    {
         airAttack = new Attack();
     }
 
@@ -203,6 +198,8 @@ public class DefaultState
     public virtual void AirAttack()
     {
         gotAHit = false;
+
+        currentAttack = airAttack;
 
         LoadAirHitbox();
 
@@ -232,7 +229,8 @@ public class DefaultState
         // Resize hitbox
         hitboxCollider.radius = radius * currentAttack.radiusMultiplier;
         hitboxCollider.height = height * currentAttack.heightMultiplier;
-        hitboxScript.tr.localPosition = new Vector3(0, 1, 1 + (radius * currentAttack.radiusMultiplier) / 2); // Experimental
+        //hitboxScript.tr.localPosition = new Vector3(0, 1, 1 + (radius * currentAttack.radiusMultiplier) / 2); // Experimental
+        hitboxScript.tr.localPosition = new Vector3(0, 1, hitboxCollider.height / 2);
         hitboxScript.tr.GetChild(0).localScale = new Vector3(hitboxCollider.radius * 2, hitboxCollider.height, hitboxCollider.radius * 2);
 
         return hitboxScript;

@@ -9,7 +9,7 @@ public class Gauntlets : DefaultState
 
     }
 
-    protected override void InitializeAttacks()
+    public override void InitializeAttacks()
     {
         combo = new Attack[]
         {
@@ -52,43 +52,19 @@ public class Gauntlets : DefaultState
         };
 
         maxComboCount = combo.Length;
+        currentAttack = combo[0];
+        
+        airAttack = new Attack( // *** 1st Hit ***
+                1.0f, // Damage Multiplier
+                1.0f, // Knockback Multiplier
+                1.0f, // Knockback Height Multiplier
+                1.0f, // Hitstun Multiplier
+                1.0f, // Radius Multiplier
+                1.0f, // Height Multiplier
+                1.0f, // Startup Multiplier
+                1.0f, // Duration Multiplier
+                1.0f, // Recovery Multiplier
+                1.0f  // Forward Speed Multiplier
+                );
     }
-
-    //protected override void SetInitialHit()
-    //{
-    //    damageMultiplier = 1.2f;
-    //    knockbackMultiplier = 1.0f;
-    //    knockbackHeightMultiplier = 0.7f;
-    //    hitstunMultiplier = 1.0f;
-    //    radiusMultiplier = 1.0f;
-    //    startupMultiplier = 1.0f;
-    //    durationMultiplier = 1.0f;
-    //    recoveryMultiplier = 1.0f;
-    //}
-
-    //public override void UpdateValues()
-    //{
-    //    switch (currentComboCount)
-    //    {
-    //        case 0:
-    //            //SetInitialHit();
-    //            break;
-    //        case 1:
-    //            damageMultiplier = 1.3f;
-    //            knockbackMultiplier = 0.7f;
-    //            knockbackHeightMultiplier = 0.7f;
-    //            radiusMultiplier = 1.5f;
-    //            startupMultiplier = 0.7f;
-    //            forwardSpeedModifierMultiplier = 1.1f;
-    //            break;
-    //        case 2:
-    //            damageMultiplier = 1.7f;
-    //            knockbackMultiplier = 1.7f;
-    //            knockbackHeightMultiplier = 2.0f;
-    //            radiusMultiplier = 2.5f;
-    //            startupMultiplier = 0.7f;
-    //            forwardSpeedModifierMultiplier = 1.3f;
-    //            break;
-    //    }
-    //}
 }
