@@ -33,6 +33,14 @@ public class PlayerHeader : MonoBehaviour
 
     public TextMeshProUGUI weaponText;
 
+    public Image spotlightMeterFill;
+
+    private RectTransform spotlightMeterFillRect;
+
+    public Image spotlightMeterBackground;
+    private RectTransform spotlightMeterBackgroundRect;
+
+
 
     private bool blinkDangerText;
     private float dangerBlinkTime;
@@ -60,9 +68,21 @@ public class PlayerHeader : MonoBehaviour
         staminaBarFillRect = staminaBarFill.GetComponent<RectTransform>();
         staminaBarBorderRect = staminaBarBorder.GetComponent<RectTransform>();
         staminaBarBackgroundRect = staminaBarBackground.GetComponent<RectTransform>();
+
+        spotlightMeterFillRect = spotlightMeterFill.GetComponent<RectTransform>();
+        spotlightMeterBackgroundRect = spotlightMeterBackground.GetComponent<RectTransform>();
     }
 
-    public void UpdateStaminaBar()
+    public void UpdateSpotlightMeter()
+    {
+        float height = spotlightMeterBackgroundRect.rect.height;
+        float spotlightPercentage = playerStatus.spotlight / PlayerStatus.deafaultMaxSpotlight;
+
+        //DECREASES BARS FROM THE BOTTOM SIDE
+        spotlightMeterFillRect.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Bottom, 0, height * spotlightPercentage);
+    }
+
+    public void UpdateStaminaMeter()
     {
         float width = staminaBarBackgroundRect.rect.width;
         float staminaPercentage = playerStatus.stamina / PlayerStatus.deafaultMaxStamina;

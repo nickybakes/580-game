@@ -75,10 +75,12 @@ public class DefaultState
     private float duration = 0.2f;
 
     private float recovery = 0.35f;
-
-    private float forwardSpeedModifier = 1.4f;
-
+    
+    [SerializeField] protected float recoveryMultiplier = 1;
+    private float forwardSpeedModifier = 0.8f;
+    [SerializeField] protected float forwardSpeedModifierMultiplier = 1;
     public int maxComboCount;
+    
     public int currentComboCount = 0;
     public Attack[] combo;
     public Attack currentAttack;
