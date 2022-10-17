@@ -6,7 +6,8 @@ public enum PlayerChild
     Model = 0,
     Hitbox = 1,
     Visuals = 3,
-    PickUpSphere = 4
+    PickUpSphere = 4,
+    RingDecal = 5
 }
 
 public enum Tag

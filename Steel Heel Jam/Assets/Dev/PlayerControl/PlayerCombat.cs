@@ -204,6 +204,7 @@ public class PlayerCombat : MonoBehaviour
 
     private void DodgeRoll()
     {
+        CameraManager.cam.ShakeCamera(.25f);
         _input.dodgeRoll = false;
         dodgeRollCoolDown = 0;
         _status.SetPlayerStateImmediately(new DodgeRoll());
@@ -213,6 +214,7 @@ public class PlayerCombat : MonoBehaviour
 
     private void Block()
     {
+        CameraManager.cam.ShakeCamera(1f);
         _input.block = false;
         _status.attackBlocked = false;
         blockCoolDown = 0;
@@ -222,6 +224,7 @@ public class PlayerCombat : MonoBehaviour
 
     private void TryPickup()
     {
+        CameraManager.cam.ShakeCamera(.5f);
         _input.pickUpPressed = false;
         _pickUpSphere.SetActive(true);
     }
