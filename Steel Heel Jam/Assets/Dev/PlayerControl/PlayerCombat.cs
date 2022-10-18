@@ -12,7 +12,7 @@ public class PlayerCombat : MonoBehaviour
     private Hitbox _hitboxScript;
     private PlayerStatus _status;
 
-    private GameObject _pickUpSphere;
+    private PickUpSphere _pickUpSphere;
 
     private PickUpSphere _pickUpSphereScript;
 
@@ -63,7 +63,7 @@ public class PlayerCombat : MonoBehaviour
         _input = GetComponent<StarterAssetsInputs>();
         _hitbox = transform.GetChild((int)PlayerChild.Hitbox).gameObject;
 
-        _pickUpSphere = transform.GetChild((int)PlayerChild.PickUpSphere).gameObject;
+        _pickUpSphere = GetComponentInChildren<PickUpSphere>();
 
         _pickUpSphereScript = transform.GetChild((int)PlayerChild.PickUpSphere).gameObject.GetComponent<PickUpSphere>();
 
@@ -226,7 +226,7 @@ public class PlayerCombat : MonoBehaviour
     {
         CameraManager.cam.ShakeCamera(.5f);
         _input.pickUpPressed = false;
-        _pickUpSphere.SetActive(true);
+        _pickUpSphere.TryPickup();
     }
 
     private void Throw()
