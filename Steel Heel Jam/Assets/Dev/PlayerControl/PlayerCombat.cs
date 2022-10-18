@@ -132,7 +132,14 @@ public class PlayerCombat : MonoBehaviour
             }
         }
 
-        if (canPickup && _input.pickUpPressed && !_input.wasPickUpPressed)
+        if (canPickup && _input.suplex)
+        {
+            //TrySuplex();
+            Debug.Log("TrySuplex method called.");
+        }
+
+        // TryPickup should be called if the pickup button is released and it's not a suplex...
+        if (canPickup && !_input.pickUpPressed && _input.wasPickUpPressed && !_input.suplex)
         {
             TryPickup();
         }
