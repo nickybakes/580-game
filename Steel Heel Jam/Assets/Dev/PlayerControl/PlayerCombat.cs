@@ -23,7 +23,7 @@ public class PlayerCombat : MonoBehaviour
     public const float attackCooldownMax = .35f;
 
     private float recentActionCooldown;
-    private const float recentActionCooldownMax = 0.5f;
+    private const float recentActionCooldownMax = 1.0f;
 
     public GameObject equippedItem;
 
@@ -192,8 +192,6 @@ public class PlayerCombat : MonoBehaviour
         _input.Attack = false;
 
         weaponState.currentAttack = weaponState.airAttack;
-
-        print(weaponState.airAttack.radiusMultiplier);
 
         //_status.movement.velocity = Vector3.zero;
         _status.SetPlayerStateImmediately(_status.movement.velocity.y > 0 ? new AttackAirStartup() : new AttackAirDuration());

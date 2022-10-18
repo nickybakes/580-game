@@ -145,6 +145,7 @@ MonoBehaviour:
   stamina: 100
   maxStamina: 100
   spotlight: 0
+  isInSpotlight: 0
   movement: {fileID: 0}
   combat: {fileID: 0}
   playerNumber: 1
@@ -2815,7 +2816,7 @@ PrefabInstance:
     - target: {fileID: 2295276495909386343, guid: aadce769ff4519044b76ad34195f7df0,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6885480512199570454, guid: aadce769ff4519044b76ad34195f7df0,
         type: 3}
