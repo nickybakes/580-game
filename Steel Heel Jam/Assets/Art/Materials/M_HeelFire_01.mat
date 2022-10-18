@@ -79,7 +79,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SampleTexture2DLOD_adf3ea5c44b44b5ba9767247f10d5f93_Texture_1:
-        m_Texture: {fileID: 2800000, guid: 578dd30dcb9ad6840a2af3ffd297a8a5, type: 3}
+        m_Texture: {fileID: 2800000, guid: 31c14b22cd773754994167acf03fe72c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SampleTexture2D_5c43400bf06c49ce9e4249341be858bb_Texture_1:
@@ -91,11 +91,15 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SampleTexture2D_e3b0ff5fb6b54080a171912381190d87_Texture_1:
-        m_Texture: {fileID: 2800000, guid: 578dd30dcb9ad6840a2af3ffd297a8a5, type: 3}
+        m_Texture: {fileID: 2800000, guid: 31c14b22cd773754994167acf03fe72c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_f6e4e8378eb84c3a942f774db5dbb5dc_Texture_1:
+        m_Texture: {fileID: 2800000, guid: 31c14b22cd773754994167acf03fe72c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SampleTexture2D_fabe0dec8ebf4beca5fbb771492ec30c_Texture_1:
-        m_Texture: {fileID: 2800000, guid: 578dd30dcb9ad6840a2af3ffd297a8a5, type: 3}
+        m_Texture: {fileID: 2800000, guid: 31c14b22cd773754994167acf03fe72c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
@@ -127,17 +131,17 @@ Material:
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
-    - _Emission: 2.33
+    - _Emission: 1.5
     - _EnvironmentReflections: 1
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _Inner_Alpha: 2.44
+    - _Inner_Alpha: 2.08
     - _Intersection_Distance: -0.08
     - _MeshScale: 0.99
     - _MeshScaleRandomness: 0.36
-    - _Mesh_Scale: 1.23
-    - _Mesh_Scale_Randomness: 1.06
+    - _Mesh_Scale: 1.45
+    - _Mesh_Scale_Randomness: 0.35
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.005
@@ -149,8 +153,8 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _Surface: 0
-    - _Texture_Scale: 4
-    - _Texture_Speed: -3
+    - _Texture_Scale: 2
+    - _Texture_Speed: -0.5
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
