@@ -113,7 +113,7 @@ public class PlayerStatus : MonoBehaviour
     /// <summary>
     /// The amount of stamina restored every interval when not active.
     /// </summary>
-    [SerializeField] private const float PassiveStaminaRegen = 2.0f;
+    [SerializeField] private const float PassiveStaminaRegen = 5.0f;
 
     public float totalDamageTaken;
 
@@ -255,36 +255,25 @@ public class PlayerStatus : MonoBehaviour
             }
         }
 
-        // NOTE: Stamina Regen is disabled for now
-        //if (!isHeel && !IsResting)
-        //{
-        //    if (combat.ActedRecently || isOOB)
-        //    {
-        //        staminaRegenCooldown = StaminaRegenCooldownMax;
-        //    }
-        //    else
-        //    {
-        //        staminaRegenCooldown += Time.deltaTime;
+        if (!isHeel && !IsResting)
+        {
+            if (!combat.ActedRecently && !isOOB)
+            {
+                IncreaseStamina(PassiveStaminaRegen * Time.deltaTime);
+            }
+        }
 
-        //        if (staminaRegenCooldown >= StaminaRegenCooldownMax)
-        //        {
-        //            IncreaseStamina(PassiveStaminaRegen);
-        //            staminaRegenCooldown = 0;
-        //        }
-        //    }
-        //}
+        if (recentDamageTimeCurrent > 0)
+        {
+            recentDamageTimeCurrent -= Time.deltaTime;
 
-        //if (recentDamageTimeCurrent > 0)
-        //{
-        //    recentDamageTimeCurrent -= Time.deltaTime;
+            recentDamageTaken = Mathf.Max(0, Mathf.Lerp(0, recentDamageTakenMax, recentDamageTimeCurrent / 10f));
+        }
 
-        //    recentDamageTaken = Mathf.Max(0, Mathf.Lerp(0, recentDamageTakenMax, recentDamageTimeCurrent / 10f));
-        //}
-
-        //if (recentActivityTimeCurrent > 0)
-        //{
-        //    recentActivityTimeCurrent -= Time.deltaTime;
-        //}
+        if (recentActivityTimeCurrent > 0)
+        {
+            recentActivityTimeCurrent -= Time.deltaTime;
+        }
     }
 
     public void SetPlayerStateImmediately(BasicState state)

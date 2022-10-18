@@ -5,12 +5,14 @@ using UnityEngine;
 
 public class Rest : BasicState
 {
-    private float restStaminaIncreaseCooldown;
-    private float restStaminaIncreaseCooldownMax = 1f;
+    //private float restStaminaIncreaseCooldown;
+    //private float restStaminaIncreaseCooldownMax = 1f;
+
+    private const float DefaultRestStaminaRegen = 7.0f;
 
     // MAINTAIN 2 to 1 Ratio
-    private const float RestStaminaRegen = 10.0f;
-    private const float RestSpotlightLoss = 5.0f;
+    private const float SpotlightRestStaminaRegen = 12.0f;
+    private const float RestSpotlightLoss = 6.0f;
 
     public Rest()
     {
@@ -41,10 +43,14 @@ public class Rest : BasicState
         //    status.IncreaseStamina(RestStaminaRegen);
         //}
 
-        if (status.spotlight > 0 || status.isInSpotlight)
+        if (status.spotlight > 0)
         {
-            status.IncreaseStamina(RestStaminaRegen * Time.deltaTime);
+            status.IncreaseStamina(SpotlightRestStaminaRegen * Time.deltaTime);
             status.ReduceSpotlightMeter(RestSpotlightLoss * Time.deltaTime);
+        }
+        else
+        {
+            status.IncreaseStamina(DefaultRestStaminaRegen * Time.deltaTime);
         }
     }
 

@@ -23,7 +23,7 @@ public class PlayerCombat : MonoBehaviour
     public const float attackCooldownMax = .35f;
 
     private float recentActionCooldown;
-    private const float recentActionCooldownMax = 0.5f;
+    private const float recentActionCooldownMax = 1.0f;
 
     public GameObject equippedItem;
 
