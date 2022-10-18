@@ -7,6 +7,10 @@ public class BuffSpotlight : MonoBehaviour
     [SerializeField] public float speed = 3.0f;
     [SerializeField] public float targetDistanceMax = 10.0f;
 
+    [SerializeField] public float wanderDecisionCooldownMax = 10.0f;
+    private float wanderDecisionCooldown;
+    private Vector2 wanderDirection;
+
     /// <summary>
     /// All the players currently within the spotlight.
     /// </summary>
@@ -53,15 +57,27 @@ public class BuffSpotlight : MonoBehaviour
 
     private void Wander()
     {
-        float x = Random.Range(0, 2) * Time.deltaTime;
-        float z = Random.Range(0, 2) * Time.deltaTime;
+        tr.position += new Vector3(wanderDirection.x, 0, wanderDirection.y) * Time.deltaTime;
 
-        tr.position = new Vector3(tr.position.x + x, tr.position.y, tr.position.z + z);
+        wanderDecisionCooldown += Time.deltaTime;
+
+        if (wanderDecisionCooldown > wanderDecisionCooldownMax)
+        {
+            wanderDecisionCooldown = 0;
+
+            wanderDirection = DecideWanderDirection();
+        }
+    }
+
+    private Vector2 DecideWanderDirection()
+    {
+        return new Vector2(Random.Range(-1, 2), Random.Range(-1, 2));
     }
 
     private void MoveTowardTargetPlayer()
     {
-        tr.position += (targetPlayerPosition.position - tr.position).normalized * speed * Time.deltaTime;
+        Vector3 movement = (targetPlayerPosition.position - tr.position).normalized * speed * Time.deltaTime;
+        tr.position += new Vector3(movement.x, 0, movement.z);
     }
 
     private bool ShouldContinueTargetingPlayer()
