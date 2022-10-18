@@ -33,9 +33,9 @@ public class OutlineSketchUpdate : MonoBehaviour
         }
     }
 
-    public void SetBaseColor(int playerNumber)
+    public void SetTint(int playerNumber)
     {
-        innerOutlineMesh.material.SetColor("_BaseColor", PlayerToken.colors[playerNumber - 1]);
+        innerOutlineMesh.material.SetColor("_Tint", PlayerToken.colors[playerNumber - 1]);
         // outerOutlineMesh.material.SetColor("_BaseColor", PlayerToken.colors[playerNumber - 1]);
     }
 

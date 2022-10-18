@@ -5,6 +5,8 @@ using UnityEngine;
 public class CameraManager : MonoBehaviour
 {
 
+    public static CameraManager cam;
+
     public float maxZoom = 12;
 
     public Vector3 highestPosition;
@@ -20,6 +22,20 @@ public class CameraManager : MonoBehaviour
 
     private Vector3 previousPosition;
     private float previousZoom;
+
+
+    /// <summary>
+    /// This value defines the most amount of shake. This can be like adjustable in the options menu
+    /// </summary>
+    public float globalShakeMagnitude = 1.1f;
+
+    private float currentShakePercentage;
+
+    private float currentShakeTime;
+    public float currentShakeTimeMax = .3f;
+
+    private float currentShakeOffsetCos;
+    private float currentShakeOffsetSin;
 
 
     public void UpdateCamera(List<PlayerStatus> alivePlayers, List<PlayerStatus> eliminatedPlayers)
@@ -103,15 +119,35 @@ public class CameraManager : MonoBehaviour
         Vector3 targetPosition = new Vector3(center.x, Mathf.Lerp(previousPosition.y, highestPosition.y + center.y, .1f), center.z);
         // float additionalOffset = Mathf.Clamp(angleZOffsetMultiplier*(targetPosition.z + highestPosition.z), 0, 100);
         targetPosition.z -= angleZOffset;
-        childTransform.localPosition = new Vector3(0, 0, targetZoom);
+
+        currentShakeTime = Mathf.Max(0, currentShakeTime - Time.deltaTime);
+        float shakeTimePercentage = currentShakeTime / currentShakeTimeMax;
+        float shakeAmount = shakeTimePercentage * currentShakePercentage * globalShakeMagnitude;
+        childTransform.localPosition = new Vector3(Mathf.Cos(Time.time * 86 + currentShakeOffsetCos) * shakeAmount, Mathf.Sin(Time.time * 86 + currentShakeOffsetSin) * shakeAmount, targetZoom);
+
         transform.position = targetPosition;
 
         previousPosition = targetPosition;
     }
 
+    /// <summary>
+    /// Shake the camera with a scalable magnitude.
+    /// </summary>
+    /// <param name="magnitudePercentage">How much the camera should shake. From 0 to 1, but could technically 
+    /// be higher than 1 if wanted</param>
+    public void ShakeCamera(float magnitudePercentage)
+    {
+        currentShakePercentage = magnitudePercentage;
+        currentShakeOffsetCos = Random.value * 3;
+        currentShakeOffsetSin = Random.value * 3;
+
+        currentShakeTime = currentShakeTimeMax;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
+        CameraManager.cam = this;
         transform = gameObject.transform;
         childTransform = transform.GetComponentInChildren<Camera>().transform;
         previousPosition = new Vector3(highestPosition.x, highestPosition.y, highestPosition.z);
