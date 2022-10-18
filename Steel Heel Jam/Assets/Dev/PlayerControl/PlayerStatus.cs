@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem.Controls;
 
@@ -8,6 +9,13 @@ public enum PlayerChild
     Visuals = 3,
     PickUpSphere = 4,
     RingDecal = 5
+}
+
+public enum Buff
+{
+    Sample1,
+    Sample2,
+    Sample3
 }
 
 public enum Tag
@@ -22,6 +30,8 @@ public enum Tag
 public class PlayerStatus : MonoBehaviour
 {
     private AudioManager audioManager;
+
+    public List<Buff> buffs = new List<Buff>();
 
     [SerializeField] public bool isHeel = false;
 
@@ -306,7 +316,7 @@ public class PlayerStatus : MonoBehaviour
             recentDamageTakenMax = recentDamageTaken;
             recentDamageTimeCurrent = 10f;
 
-            if (totalDamageTaken > 200f && recentDamageTaken > 30f)
+            if (totalDamageTaken > 100f && recentDamageTaken > 30f)
             {
                 combat.DropWeapon();
                 ReduceMaxStamina(damage);
@@ -409,6 +419,15 @@ public class PlayerStatus : MonoBehaviour
         if (playerHeader)
         {
             playerHeader.SetHeel(true);
+        }
+    }
+
+    public void GiveBuff(Buff buff)
+    {
+        if (!buffs.Contains(buff))
+        {
+            buffs.Add(buff);
+            // Reset specific buff timer
         }
     }
 
