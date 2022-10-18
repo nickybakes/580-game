@@ -66,7 +66,10 @@ public class BuffSpotlight : MonoBehaviour
             wanderDecisionCooldown = 0;
 
             wanderDirection = DecideWanderDirection();
+            print(wanderDirection);
         }
+
+        StayWithinBounds();
     }
 
     private Vector2 DecideWanderDirection()
@@ -85,6 +88,34 @@ public class BuffSpotlight : MonoBehaviour
         if (Vector3.Distance(targetPlayerPosition.position, tr.position) > targetDistanceMax) return false;
 
         return true;
+    }
+
+    private void StayWithinBounds()
+    {
+        if (tr.position.x > 35)
+        {
+            wanderDirection.x = -1;
+            wanderDecisionCooldown = 0;
+        }
+        else if (tr.position.x < -35)
+        {
+            wanderDirection.x = 1;
+            wanderDecisionCooldown = 0;
+        }
+
+        if (tr.position.z > 17)
+        {
+            // Z axis
+            wanderDirection.y = -1;
+            wanderDecisionCooldown = 0;
+        }
+        else if(tr.position.z < -9)
+        {
+            // Z axis
+            wanderDirection.y = 1;
+            wanderDecisionCooldown = 0;
+        }
+        
     }
 
     private void OnTriggerEnter(Collider other)
