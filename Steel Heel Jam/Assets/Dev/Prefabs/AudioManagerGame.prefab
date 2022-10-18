@@ -62,6 +62,7 @@ MonoBehaviour:
     volume: 0.3
     pitch: 1
     loop: 1
+    randStartPos: 0
     playOnAwake: 1
     source: {fileID: 0}
   - audioType: 0
@@ -71,6 +72,7 @@ MonoBehaviour:
     volume: 1
     pitch: 1
     loop: 0
+    randStartPos: 0
     playOnAwake: 0
     source: {fileID: 0}
   - audioType: 1
@@ -80,6 +82,7 @@ MonoBehaviour:
     volume: 1
     pitch: 1
     loop: 0
+    randStartPos: 0
     playOnAwake: 0
     source: {fileID: 0}
   - audioType: 1
@@ -89,6 +92,7 @@ MonoBehaviour:
     volume: 0.1
     pitch: 1
     loop: 0
+    randStartPos: 0
     playOnAwake: 0
     source: {fileID: 0}
   - audioType: 1
@@ -98,6 +102,7 @@ MonoBehaviour:
     volume: 0.2
     pitch: 1
     loop: 0
+    randStartPos: 0
     playOnAwake: 0
     source: {fileID: 0}
   - audioType: 3
@@ -107,6 +112,7 @@ MonoBehaviour:
     volume: 0.1
     pitch: 1
     loop: 1
+    randStartPos: 0
     playOnAwake: 1
     source: {fileID: 0}
   - audioType: 2
@@ -116,6 +122,7 @@ MonoBehaviour:
     volume: 1
     pitch: 1
     loop: 0
+    randStartPos: 0
     playOnAwake: 0
     source: {fileID: 0}
   - audioType: 1
@@ -130,6 +137,7 @@ MonoBehaviour:
     volume: 1
     pitch: 1
     loop: 0
+    randStartPos: 0
     playOnAwake: 0
     source: {fileID: 0}
   - audioType: 1
@@ -142,6 +150,7 @@ MonoBehaviour:
     volume: 1
     pitch: 1
     loop: 0
+    randStartPos: 0
     playOnAwake: 0
     source: {fileID: 0}
   - audioType: 1
@@ -152,6 +161,7 @@ MonoBehaviour:
     volume: 1
     pitch: 1
     loop: 0
+    randStartPos: 0
     playOnAwake: 0
     source: {fileID: 0}
   - audioType: 1
@@ -161,6 +171,7 @@ MonoBehaviour:
     volume: 1
     pitch: 1
     loop: 0
+    randStartPos: 0
     playOnAwake: 0
     source: {fileID: 0}
   - audioType: 1
@@ -170,15 +181,17 @@ MonoBehaviour:
     volume: 0.5
     pitch: 1
     loop: 0
+    randStartPos: 0
     playOnAwake: 0
     source: {fileID: 0}
   - audioType: 1
     name: flexing
     clips:
-    - {fileID: 8300000, guid: 61d37f42260481d478922bad5b61e1e0, type: 3}
-    volume: 0.5
+    - {fileID: 8300000, guid: a5327124c308dde4b92038d64ff100c1, type: 3}
+    volume: 1
     pitch: 1
-    loop: 0
+    loop: 1
+    randStartPos: 1
     playOnAwake: 0
     source: {fileID: 0}
   - audioType: 1
@@ -188,6 +201,7 @@ MonoBehaviour:
     volume: 1
     pitch: 1
     loop: 0
+    randStartPos: 0
     playOnAwake: 0
     source: {fileID: 0}
 --- !u!114 &8454066521746509047

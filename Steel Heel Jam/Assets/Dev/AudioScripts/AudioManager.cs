@@ -77,6 +77,10 @@ public class AudioManager : MonoBehaviour
         }
         //chooses from list before playing.
         s.source.clip = s.clips[UnityEngine.Random.Range(0, s.clips.Length)];
+
+        if (s.randStartPos)
+            s.source.time = UnityEngine.Random.Range(0, s.source.clip.length);
+
         s.source.Play();
     }
 
@@ -95,6 +99,10 @@ public class AudioManager : MonoBehaviour
         //chooses from list before playing.
         s.source.clip = s.clips[UnityEngine.Random.Range(0, s.clips.Length)];
         s.source.volume = volume;
+
+        if (s.randStartPos)
+            s.source.time = UnityEngine.Random.Range(0, s.source.clip.length);
+
         s.source.Play();
     }
 
@@ -113,6 +121,10 @@ public class AudioManager : MonoBehaviour
         //chooses from list before playing.
         s.source.clip = s.clips[UnityEngine.Random.Range(0, s.clips.Length)];
         s.source.pitch = UnityEngine.Random.Range(pitch1, pitch2);
+
+        if (s.randStartPos)
+            s.source.time = UnityEngine.Random.Range(0, s.source.clip.length);
+
         s.source.Play();
     }
 
@@ -132,6 +144,10 @@ public class AudioManager : MonoBehaviour
         s.source.clip = s.clips[UnityEngine.Random.Range(0, s.clips.Length)];
         s.source.volume = volume;
         s.source.pitch = UnityEngine.Random.Range(pitch1, pitch2);
+
+        if (s.randStartPos)
+            s.source.time = UnityEngine.Random.Range(0, s.source.clip.length);
+
         s.source.Play();
     }
     #endregion
