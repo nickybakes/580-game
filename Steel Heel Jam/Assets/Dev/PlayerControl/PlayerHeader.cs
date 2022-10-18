@@ -76,7 +76,7 @@ public class PlayerHeader : MonoBehaviour
     public void UpdateSpotlightMeter()
     {
         float height = spotlightMeterBackgroundRect.rect.height;
-        float spotlightPercentage = playerStatus.spotlight / PlayerStatus.deafaultMaxSpotlight;
+        float spotlightPercentage = playerStatus.spotlight / PlayerStatus.defaultMaxSpotlight;
 
         //DECREASES BARS FROM THE BOTTOM SIDE
         spotlightMeterFillRect.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Bottom, 0, height * spotlightPercentage);
@@ -85,8 +85,8 @@ public class PlayerHeader : MonoBehaviour
     public void UpdateStaminaMeter()
     {
         float width = staminaBarBackgroundRect.rect.width;
-        float staminaPercentage = playerStatus.stamina / PlayerStatus.deafaultMaxStamina;
-        float staminaMaxPercentage = playerStatus.maxStamina / PlayerStatus.deafaultMaxStamina;
+        float staminaPercentage = playerStatus.stamina / PlayerStatus.defaultMaxStamina;
+        float staminaMaxPercentage = playerStatus.maxStamina / PlayerStatus.defaultMaxStamina;
 
         //decreases bars from the center
         // staminaBarFillRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, width * staminaPercentage);

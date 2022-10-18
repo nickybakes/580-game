@@ -169,6 +169,7 @@ public class GameManager : MonoBehaviour
 
         if (status.playerLastHitBy != null)
             status.playerLastHitBy.totalEliminations++;
+            status.playerLastHitBy.IncreaseSpotlightMeter(25.0f);
 
         status.eliminated = true;
         alivePlayerStatuses.Remove(status);

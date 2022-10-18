@@ -193,8 +193,6 @@ public class PlayerCombat : MonoBehaviour
 
         weaponState.currentAttack = weaponState.airAttack;
 
-        print(weaponState.airAttack.radiusMultiplier);
-
         //_status.movement.velocity = Vector3.zero;
         _status.SetPlayerStateImmediately(_status.movement.velocity.y > 0 ? new AttackAirStartup() : new AttackAirDuration());
 

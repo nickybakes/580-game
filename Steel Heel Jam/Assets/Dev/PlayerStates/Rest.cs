@@ -8,7 +8,9 @@ public class Rest : BasicState
     private float restStaminaIncreaseCooldown;
     private float restStaminaIncreaseCooldownMax = 1f;
 
-    private const float RestStaminaRegen = 10f;
+    // MAINTAIN 2 to 1 Ratio
+    private const float RestStaminaRegen = 10.0f;
+    private const float RestSpotlightLoss = 5.0f;
 
     public Rest()
     {
@@ -30,13 +32,19 @@ public class Rest : BasicState
     {
         base.Update(status);
 
-        restStaminaIncreaseCooldown += Time.deltaTime;
+        //restStaminaIncreaseCooldown += Time.deltaTime;
 
-        if (restStaminaIncreaseCooldown >= restStaminaIncreaseCooldownMax)
+        //if (restStaminaIncreaseCooldown >= restStaminaIncreaseCooldownMax)
+        //{
+        //    restStaminaIncreaseCooldown = 0;
+
+        //    status.IncreaseStamina(RestStaminaRegen);
+        //}
+
+        if (status.spotlight > 0 || status.isInSpotlight)
         {
-            restStaminaIncreaseCooldown = 0;
-
-            status.IncreaseStamina(RestStaminaRegen);
+            status.IncreaseStamina(RestStaminaRegen * Time.deltaTime);
+            status.ReduceSpotlightMeter(RestSpotlightLoss * Time.deltaTime);
         }
     }
 

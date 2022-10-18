@@ -30,24 +30,25 @@ public class PlayerStatus : MonoBehaviour
 
     private float heelStaminaLossCooldown;
 
-    public const float deafaultMaxStamina = 100f;
-    public const float deafaultMaxSpotlight = 100f;
+    public const float defaultMaxStamina = 100f;
+    public const float defaultMaxSpotlight = 100f;
 
     /// <summary>
     /// The stamina value for the player. Stamina is consumed for actions and is lost upon being hit, being the heel, or being outside of the ring.
     /// When a player's stamina is empty and they are knocked out of the zone, they are eliminated.
     /// </summary>
-    public float stamina = deafaultMaxStamina;
+    public float stamina = defaultMaxStamina;
     /// <summary>
     /// The player's current maximum stamina value.
     /// </summary>
-    public float maxStamina = deafaultMaxStamina;
+    public float maxStamina = defaultMaxStamina;
     /// <summary>
     /// The lowest a player's maximum stamina can get.
     /// </summary>
     /// 
     
     public float spotlight;
+    public bool isInSpotlight;
 
     [SerializeField] private const float MinMaxStamina = 20f;
 
@@ -111,7 +112,7 @@ public class PlayerStatus : MonoBehaviour
     /// <summary>
     /// The amount of stamina restored every interval when not active.
     /// </summary>
-    [SerializeField] private const float PassiveStaminaRegen = 3f;
+    [SerializeField] private const float PassiveStaminaRegen = 2.0f;
 
     public float totalDamageTaken;
 
@@ -253,35 +254,36 @@ public class PlayerStatus : MonoBehaviour
             }
         }
 
-        if (!isHeel && !IsResting)
-        {
-            if (combat.ActedRecently || isOOB)
-            {
-                staminaRegenCooldown = StaminaRegenCooldownMax;
-            }
-            else
-            {
-                staminaRegenCooldown += Time.deltaTime;
+        // NOTE: Stamina Regen is disabled for now
+        //if (!isHeel && !IsResting)
+        //{
+        //    if (combat.ActedRecently || isOOB)
+        //    {
+        //        staminaRegenCooldown = StaminaRegenCooldownMax;
+        //    }
+        //    else
+        //    {
+        //        staminaRegenCooldown += Time.deltaTime;
 
-                if (staminaRegenCooldown >= StaminaRegenCooldownMax)
-                {
-                    IncreaseStamina(PassiveStaminaRegen);
-                    staminaRegenCooldown = 0;
-                }
-            }
-        }
+        //        if (staminaRegenCooldown >= StaminaRegenCooldownMax)
+        //        {
+        //            IncreaseStamina(PassiveStaminaRegen);
+        //            staminaRegenCooldown = 0;
+        //        }
+        //    }
+        //}
 
-        if (recentDamageTimeCurrent > 0)
-        {
-            recentDamageTimeCurrent -= Time.deltaTime;
+        //if (recentDamageTimeCurrent > 0)
+        //{
+        //    recentDamageTimeCurrent -= Time.deltaTime;
 
-            recentDamageTaken = Mathf.Max(0, Mathf.Lerp(0, recentDamageTakenMax, recentDamageTimeCurrent / 10f));
-        }
+        //    recentDamageTaken = Mathf.Max(0, Mathf.Lerp(0, recentDamageTakenMax, recentDamageTimeCurrent / 10f));
+        //}
 
-        if (recentActivityTimeCurrent > 0)
-        {
-            recentActivityTimeCurrent -= Time.deltaTime;
-        }
+        //if (recentActivityTimeCurrent > 0)
+        //{
+        //    recentActivityTimeCurrent -= Time.deltaTime;
+        //}
     }
 
     public void SetPlayerStateImmediately(BasicState state)
@@ -332,7 +334,7 @@ public class PlayerStatus : MonoBehaviour
             playerLastHitBy = attackingPlayerStatus;
 
             Vector3 knockbackDir = (collisionPos - hitboxPos).normalized;
-            knockback = knockback * (2 + stamina / deafaultMaxStamina);
+            knockback = knockback * (2 + stamina / defaultMaxStamina);
 
             float staminaRatio = (maxStamina - stamina) * 0.2f;
 
@@ -350,6 +352,7 @@ public class PlayerStatus : MonoBehaviour
             //print(knockbackVelocity.magnitude);
             ReduceStamina(damage);
             totalDamageTaken += damage;
+            IncreaseSpotlightMeter(damage / 4);
 
             recentDamageTaken += damage;
             recentDamageTakenMax = recentDamageTaken;
@@ -362,6 +365,7 @@ public class PlayerStatus : MonoBehaviour
             }
 
             attackingPlayerStatus.totalDamagerDealt += damage;
+            attackingPlayerStatus.IncreaseSpotlightMeter(damage / 3);
             attackingPlayerStatus.combat.weaponState.gotAHit = true;
 
             recentActivityTimeCurrent = recentActivityTimeMax;
@@ -403,7 +407,7 @@ public class PlayerStatus : MonoBehaviour
             playerLastHitBy = attackingPlayerStatus;
 
         Vector3 knockbackDir = (collisionPos - hitboxPos).normalized;
-        knockback = knockback * (2 + stamina / deafaultMaxStamina);
+        knockback = knockback * (2 + stamina / defaultMaxStamina);
 
         float staminaRatio = (maxStamina - stamina) * 0.2f;
 
@@ -420,6 +424,7 @@ public class PlayerStatus : MonoBehaviour
         movement.grounded = false;
         ReduceStamina(damage);
         totalDamageTaken += damage;
+        IncreaseSpotlightMeter(damage / 4);
 
         recentDamageTaken += damage;
         recentDamageTakenMax = recentDamageTaken;
@@ -437,6 +442,7 @@ public class PlayerStatus : MonoBehaviour
         if (attackingPlayerStatus != null)
         {
             attackingPlayerStatus.totalDamagerDealt += damage;
+            attackingPlayerStatus.IncreaseSpotlightMeter(damage / 3);
             attackingPlayerStatus.recentActivityTimeCurrent = recentActivityTimeMax;
         }
 
@@ -492,6 +498,24 @@ public class PlayerStatus : MonoBehaviour
         {
             GameManager.game.EliminatePlayer(this);
         }
+    }
+
+    public void IncreaseSpotlightMeter(float value)
+    {
+        spotlight += value;
+
+        if (spotlight > defaultMaxSpotlight) spotlight = defaultMaxSpotlight;
+
+        playerHeader.UpdateSpotlightMeter();
+    }
+
+    public void ReduceSpotlightMeter(float value)
+    {
+        spotlight -= value;
+
+        if (spotlight < 0) spotlight = 0;
+
+        playerHeader.UpdateSpotlightMeter();
     }
 
     /// <summary>
