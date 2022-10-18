@@ -34,15 +34,6 @@ public class Rest : BasicState
     {
         base.Update(status);
 
-        //restStaminaIncreaseCooldown += Time.deltaTime;
-
-        //if (restStaminaIncreaseCooldown >= restStaminaIncreaseCooldownMax)
-        //{
-        //    restStaminaIncreaseCooldown = 0;
-
-        //    status.IncreaseStamina(RestStaminaRegen);
-        //}
-
         if (status.spotlight > 0)
         {
             status.IncreaseStamina(SpotlightRestStaminaRegen * Time.deltaTime);

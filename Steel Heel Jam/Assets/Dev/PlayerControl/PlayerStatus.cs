@@ -27,10 +27,6 @@ public class PlayerStatus : MonoBehaviour
 
     [SerializeField] private const float HeelStaminaDamage = 5f;
 
-    [SerializeField] private const float HeelStaminaLossCooldownMax = 1f;
-
-    private float heelStaminaLossCooldown;
-
     public const float defaultMaxStamina = 100f;
     public const float defaultMaxSpotlight = 100f;
 
@@ -81,16 +77,6 @@ public class PlayerStatus : MonoBehaviour
     private bool isOOB = false;
 
     /// <summary>
-    /// The rate at which stamina is lost when out of bounds.
-    /// </summary>
-    [SerializeField] private const float OOBStaminaLossCooldownMax = 1f;
-
-    /// <summary>
-    /// The current timer for losing stamina when out of bounds.
-    /// </summary>
-    private float OOBStaminaLossCooldown;
-
-    /// <summary>
     /// The damage to stamina that the player takes every interval while out of bounds.
     /// </summary>
     [SerializeField] private const float OOBStaminaDamage = 10f;
@@ -99,16 +85,6 @@ public class PlayerStatus : MonoBehaviour
     /// The loss of max stamina that the player accrues every interval while out of bounds.
     /// </summary>
     [SerializeField] private const float OOBMaxStaminaDamage = 5f;
-
-    /// <summary>
-    /// The rate at which stamina is regained when not active.
-    /// </summary>
-    [SerializeField] private const float StaminaRegenCooldownMax = 1f;
-
-    /// <summary>
-    /// The current timer for regenerating stamina.
-    /// </summary>
-    private float staminaRegenCooldown;
 
     /// <summary>
     /// The amount of stamina restored every interval when not active.
@@ -228,31 +204,13 @@ public class PlayerStatus : MonoBehaviour
         // If the player is out of bounds . . .
         if (isOOB)
         {
-            // Reduce the timer for OOB stamina loss
-            OOBStaminaLossCooldown += Time.deltaTime;
-
-            // If the timer for OOB stamina loss runs out . . .
-            if (OOBStaminaLossCooldown >= OOBStaminaLossCooldownMax)
-            {
-                // Reset the timer for OOB stamina loss and decrease stamina
-                OOBStaminaLossCooldown = 0;
-                ReduceStamina(OOBStaminaDamage);
-            }
+            ReduceStamina(OOBStaminaDamage * Time.deltaTime);
         }
 
         // If the player is the Heel . . .
         if (isHeel)
         {
-            // Reduce the timer for Heel stamina loss
-            heelStaminaLossCooldown += Time.deltaTime;
-
-            // If the Heel stamina loss timer runs out . . .
-            if (heelStaminaLossCooldown >= HeelStaminaLossCooldownMax)
-            {
-                // Reset the timer for Heel stamina loss and decrease stamina
-                heelStaminaLossCooldown = 0;
-                ReduceStamina(HeelStaminaDamage);
-            }
+            ReduceStamina(HeelStaminaDamage * Time.deltaTime);
         }
 
         if (!isHeel && !IsResting)
@@ -540,7 +498,6 @@ public class PlayerStatus : MonoBehaviour
         if (other.tag == "Ring")
         {
             isOOB = true;
-            OOBStaminaLossCooldown = 0;
         }
     }
 }
