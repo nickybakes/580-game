@@ -68,7 +68,7 @@ public class DefaultState
 
     private float radius = 1;
 
-    private float height = 10;
+    private float height = 0.5f;
 
     private float startup = 0.1f; //TIME IS IN SECONDS
 
