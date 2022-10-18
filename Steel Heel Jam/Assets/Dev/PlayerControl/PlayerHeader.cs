@@ -40,6 +40,8 @@ public class PlayerHeader : MonoBehaviour
     public Image spotlightMeterBackground;
     private RectTransform spotlightMeterBackgroundRect;
 
+    public GameObject pickupIndicator;
+
 
 
     private bool blinkDangerText;
@@ -110,6 +112,10 @@ public class PlayerHeader : MonoBehaviour
     public void SetHeel(bool enabled)
     {
         heelText.SetActive(enabled);
+    }
+
+    public void SetPickup(bool enabled){
+        pickupIndicator.SetActive(enabled);
     }
 
     // Update is called once per frame

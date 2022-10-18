@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BuffSpotlight : MonoBehaviour
 {
+    [SerializeField] public Buff buff;
+
     [SerializeField] public float speed = 3.0f;
     [SerializeField] public float targetDistanceMax = 10.0f;
 
@@ -26,11 +28,17 @@ public class BuffSpotlight : MonoBehaviour
     void Start()
     {
         tr = GetComponent<Transform>();
+
+        buff = GenerateRandomBuff();
     }
 
     // Update is called once per frame
     void Update()
     {
+        // If a player flexes in the spotlight, begin following them
+        // NOTE: This prioritizes players in the order they entered the spotlight
+        CheckFlexers();
+
         if (playerTargeted)
         {
             MoveTowardTargetPlayer();
@@ -40,19 +48,18 @@ public class BuffSpotlight : MonoBehaviour
         else 
         {
             Wander();
-
-            // If a player flexes in the spotlight, begin following them
-            // NOTE: This prioritizes players in the order they entered the spotlight
-            // TODO: Maybe decide based on distance from the center of the spotlight
-            foreach (PlayerStatus status in players)
-            {
-                if (status.CurrentPlayerState is Rest)
-                {
-                    targetPlayerPosition = status.transform;
-                    playerTargeted = true;
-                }
-            }
         }
+    }
+
+    public void SetBuff(Buff _buff)
+    {
+        buff = _buff;
+    }
+
+    public Buff GenerateRandomBuff()
+    {
+        // Max = Total number of buffs in Buff enum
+        return (Buff)Random.Range(0, 4);
     }
 
     private void Wander()
@@ -66,12 +73,34 @@ public class BuffSpotlight : MonoBehaviour
             wanderDecisionCooldown = 0;
 
             wanderDirection = DecideWanderDirection();
+            print(wanderDirection);
         }
+
+        StayWithinBounds();
     }
 
     private Vector2 DecideWanderDirection()
     {
         return new Vector2(Random.Range(-1, 2), Random.Range(-1, 2));
+    }
+
+    private void CheckFlexers()
+    {
+        foreach (PlayerStatus status in players)
+        {
+            if (status.CurrentPlayerState is Rest)
+            {
+                targetPlayerPosition = status.transform;
+                playerTargeted = true;
+
+                if (status.spotlight == 100)
+                {
+                    
+                    players.Clear();
+                    gameObject.SetActive(false);
+                }
+            }
+        }
     }
 
     private void MoveTowardTargetPlayer()
@@ -85,6 +114,34 @@ public class BuffSpotlight : MonoBehaviour
         if (Vector3.Distance(targetPlayerPosition.position, tr.position) > targetDistanceMax) return false;
 
         return true;
+    }
+
+    private void StayWithinBounds()
+    {
+        if (tr.position.x > 35)
+        {
+            wanderDirection.x = -1;
+            wanderDecisionCooldown = 0;
+        }
+        else if (tr.position.x < -35)
+        {
+            wanderDirection.x = 1;
+            wanderDecisionCooldown = 0;
+        }
+
+        if (tr.position.z > 17)
+        {
+            // Z axis
+            wanderDirection.y = -1;
+            wanderDecisionCooldown = 0;
+        }
+        else if(tr.position.z < -9)
+        {
+            // Z axis
+            wanderDirection.y = 1;
+            wanderDecisionCooldown = 0;
+        }
+        
     }
 
     private void OnTriggerEnter(Collider other)

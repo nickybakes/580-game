@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem.Controls;
 
@@ -8,6 +9,13 @@ public enum PlayerChild
     Visuals = 3,
     PickUpSphere = 4,
     RingDecal = 5
+}
+
+public enum Buff
+{
+    Sample1,
+    Sample2,
+    Sample3
 }
 
 public enum Tag
@@ -23,13 +31,11 @@ public class PlayerStatus : MonoBehaviour
 {
     private AudioManager audioManager;
 
+    public List<Buff> buffs = new List<Buff>();
+
     [SerializeField] public bool isHeel = false;
 
     [SerializeField] private const float HeelStaminaDamage = 5f;
-
-    [SerializeField] private const float HeelStaminaLossCooldownMax = 1f;
-
-    private float heelStaminaLossCooldown;
 
     public const float defaultMaxStamina = 100f;
     public const float defaultMaxSpotlight = 100f;
@@ -81,16 +87,6 @@ public class PlayerStatus : MonoBehaviour
     private bool isOOB = false;
 
     /// <summary>
-    /// The rate at which stamina is lost when out of bounds.
-    /// </summary>
-    [SerializeField] private const float OOBStaminaLossCooldownMax = 1f;
-
-    /// <summary>
-    /// The current timer for losing stamina when out of bounds.
-    /// </summary>
-    private float OOBStaminaLossCooldown;
-
-    /// <summary>
     /// The damage to stamina that the player takes every interval while out of bounds.
     /// </summary>
     [SerializeField] private const float OOBStaminaDamage = 10f;
@@ -101,19 +97,9 @@ public class PlayerStatus : MonoBehaviour
     [SerializeField] private const float OOBMaxStaminaDamage = 5f;
 
     /// <summary>
-    /// The rate at which stamina is regained when not active.
-    /// </summary>
-    [SerializeField] private const float StaminaRegenCooldownMax = 1f;
-
-    /// <summary>
-    /// The current timer for regenerating stamina.
-    /// </summary>
-    private float staminaRegenCooldown;
-
-    /// <summary>
     /// The amount of stamina restored every interval when not active.
     /// </summary>
-    [SerializeField] private const float PassiveStaminaRegen = 2.0f;
+    [SerializeField] private const float PassiveStaminaRegen = 5.0f;
 
     public float totalDamageTaken;
 
@@ -228,63 +214,34 @@ public class PlayerStatus : MonoBehaviour
         // If the player is out of bounds . . .
         if (isOOB)
         {
-            // Reduce the timer for OOB stamina loss
-            OOBStaminaLossCooldown += Time.deltaTime;
-
-            // If the timer for OOB stamina loss runs out . . .
-            if (OOBStaminaLossCooldown >= OOBStaminaLossCooldownMax)
-            {
-                // Reset the timer for OOB stamina loss and decrease stamina
-                OOBStaminaLossCooldown = 0;
-                ReduceStamina(OOBStaminaDamage);
-            }
+            ReduceStamina(OOBStaminaDamage * Time.deltaTime);
         }
 
         // If the player is the Heel . . .
         if (isHeel)
         {
-            // Reduce the timer for Heel stamina loss
-            heelStaminaLossCooldown += Time.deltaTime;
+            ReduceStamina(HeelStaminaDamage * Time.deltaTime);
+        }
 
-            // If the Heel stamina loss timer runs out . . .
-            if (heelStaminaLossCooldown >= HeelStaminaLossCooldownMax)
+        if (!isHeel && !IsResting)
+        {
+            if (!combat.ActedRecently && !isOOB)
             {
-                // Reset the timer for Heel stamina loss and decrease stamina
-                heelStaminaLossCooldown = 0;
-                ReduceStamina(HeelStaminaDamage);
+                IncreaseStamina(PassiveStaminaRegen * Time.deltaTime);
             }
         }
 
-        // NOTE: Stamina Regen is disabled for now
-        //if (!isHeel && !IsResting)
-        //{
-        //    if (combat.ActedRecently || isOOB)
-        //    {
-        //        staminaRegenCooldown = StaminaRegenCooldownMax;
-        //    }
-        //    else
-        //    {
-        //        staminaRegenCooldown += Time.deltaTime;
+        if (recentDamageTimeCurrent > 0)
+        {
+            recentDamageTimeCurrent -= Time.deltaTime;
 
-        //        if (staminaRegenCooldown >= StaminaRegenCooldownMax)
-        //        {
-        //            IncreaseStamina(PassiveStaminaRegen);
-        //            staminaRegenCooldown = 0;
-        //        }
-        //    }
-        //}
+            recentDamageTaken = Mathf.Max(0, Mathf.Lerp(0, recentDamageTakenMax, recentDamageTimeCurrent / 10f));
+        }
 
-        //if (recentDamageTimeCurrent > 0)
-        //{
-        //    recentDamageTimeCurrent -= Time.deltaTime;
-
-        //    recentDamageTaken = Mathf.Max(0, Mathf.Lerp(0, recentDamageTakenMax, recentDamageTimeCurrent / 10f));
-        //}
-
-        //if (recentActivityTimeCurrent > 0)
-        //{
-        //    recentActivityTimeCurrent -= Time.deltaTime;
-        //}
+        if (recentActivityTimeCurrent > 0)
+        {
+            recentActivityTimeCurrent -= Time.deltaTime;
+        }
     }
 
     public void SetPlayerStateImmediately(BasicState state)
@@ -359,7 +316,7 @@ public class PlayerStatus : MonoBehaviour
             recentDamageTakenMax = recentDamageTaken;
             recentDamageTimeCurrent = 10f;
 
-            if (totalDamageTaken > 200f && recentDamageTaken > 30f)
+            if (totalDamageTaken > 100f && recentDamageTaken > 30f)
             {
                 combat.DropWeapon();
                 ReduceMaxStamina(damage);
@@ -465,6 +422,15 @@ public class PlayerStatus : MonoBehaviour
         }
     }
 
+    public void GiveBuff(Buff buff)
+    {
+        if (!buffs.Contains(buff))
+        {
+            buffs.Add(buff);
+            // Reset specific buff timer
+        }
+    }
+
     /// <summary>
     /// Increases the player's stamina. This value will never go above the max.
     /// </summary>
@@ -551,7 +517,6 @@ public class PlayerStatus : MonoBehaviour
         if (other.tag == "Ring")
         {
             isOOB = true;
-            OOBStaminaLossCooldown = 0;
         }
     }
 }
