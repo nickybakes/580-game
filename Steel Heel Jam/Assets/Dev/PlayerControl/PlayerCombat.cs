@@ -284,12 +284,15 @@ public class PlayerCombat : MonoBehaviour
 
     public void DropWeapon()
     {
+        if (!equippedItem)
+            return;
+
         equippedItem.transform.localRotation = Quaternion.identity;
         equippedItem.transform.parent = null;
         equippedItem.SetActive(true);
 
         equippedItem = null;
-        if(_status.playerHeader)
+        if (_status.playerHeader)
             _status.playerHeader.SetWeaponText("");
         weaponState = new Unarmed(_status.playerNumber, _hitbox);
     }

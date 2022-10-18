@@ -22,7 +22,16 @@ public class PickUpSphere : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        for (int i = 0; i < itemsWithinBounds.Count; i++)
+        {
+            if (!itemsWithinBounds[i].activeSelf)
+            {
+                itemsWithinBounds.RemoveAt(i);
+                if (itemsWithinBounds.Count == 0 && playerStatus.playerHeader)
+                    playerStatus.playerHeader.SetPickup(false);
+                i--;
+            }
+        }
     }
 
     public void TryPickup()
