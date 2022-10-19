@@ -26,7 +26,7 @@ public class GrabHitbox : MonoBehaviour
     {
         if (playersWithinBounds.Count == 0)
             return;
-
+        
         PlayerStatus g = playersWithinBounds[0].GetComponent<PlayerStatus>();
 
         // Make player grabbed unable to move and a child of the grabber.
@@ -37,7 +37,7 @@ public class GrabHitbox : MonoBehaviour
         // Set grabbed player to GrappleDuration state.
         // (Unable to do anything until they've been grounded, in which case they'll be put into the Knockback state.
         //g.SetPlayerStateImmediately(new GrappledDuration());
-        g.SetPlayerStateImmediately(new BlockedStun());
+        g.SetPlayerStateImmediately(new SuplexDuration());
 
         // Set Player to SuplexDuration state.
         //playerStatus.SetPlayerStateImmediately(new SuplexDuration());

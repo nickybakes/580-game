@@ -27,6 +27,7 @@ public class PlayerCombat : MonoBehaviour
     private const float recentActionCooldownMax = 1.0f;
 
     private float pickupHeldLength = 0;
+    private float timeInSuplexStartup = 0;
 
     public GameObject equippedItem;
 
@@ -151,9 +152,15 @@ public class PlayerCombat : MonoBehaviour
         }
         if (_status.CurrentPlayerState is SuplexStartup)
         {
-            _grabHitbox.TrySuplex();
+            timeInSuplexStartup += Time.deltaTime;
+
             // Create / SetActive hitbox in front of player.
             // If then this hits another player, send to other Suplex states.
+            if (timeInSuplexStartup >= 0.3f) // Time in startup before the grab actually "hits".
+            {
+                _grabHitbox.TrySuplex();
+                timeInSuplexStartup = 0;
+            }
         }
 
         // TryPickup should be called if the pickup button is released and it's not a suplex...

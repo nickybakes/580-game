@@ -12,7 +12,7 @@ public class SuplexDuration : BasicState
         canAttack = false;
         canDodgeRoll = false;
         canBlock = false;
-        updateMovement = true;
+        updateMovement = false; // False for now.
         countAttackCooldown = false;
         animationState = AnimationState.Knockback; // Will be Suplex
         stateToChangeTo = new Idle();
@@ -23,8 +23,11 @@ public class SuplexDuration : BasicState
     {
         base.Update(status);
 
+        //if (this.animationState != AnimationState.Knockback)
+        //    animationState = AnimationState.Knockback;
 
-        status.movement.SetVelocityToMoveSpeedTimesFowardDirection();
+
+        //status.movement.SetVelocityToMoveSpeedTimesFowardDirection();
     }
 
     // Give initial arc direction.
@@ -32,6 +35,6 @@ public class SuplexDuration : BasicState
     {
         base.OnEnterThisState(prevState, status);
 
-        status.movement.SetVelocityToMoveSpeedTimesFowardDirection();
+        //status.movement.SetVelocityToMoveSpeedTimesFowardDirection();
     }
 }
