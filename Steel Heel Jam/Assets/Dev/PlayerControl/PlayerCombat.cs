@@ -135,14 +135,14 @@ public class PlayerCombat : MonoBehaviour
         }
 
 
+        // If you hold the pickup button for 0.3 seconds, sends to SuplexStartup.
         if (canPickup && _input.pickUpPressed)
         {
             pickupHeldLength += Time.deltaTime;
 
             if (pickupHeldLength > 0.3f)
             {
-                //TrySuplex();
-                Debug.Log("TrySuplex method called.");
+                _status.SetPlayerStateImmediately(new SuplexStartup());
                 pickupHeldLength = 0;
                 _input.pickUpPressed = false;
             }
