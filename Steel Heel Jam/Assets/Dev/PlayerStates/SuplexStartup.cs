@@ -21,16 +21,17 @@ public class SuplexStartup : BasicState
 
     public override void Update(PlayerStatus status)
     {
-        Debug.Log("Suplex Startup");
         base.Update(status);
 
         if (timeInThisState >= 0.1f)
         {
+            //GrabHitbox grabHitbox = new GrabHitbox();
+            //grabHitbox.TrySuplex();
             // Create/SetActive hitbox in front of player.
             // If then this hits another player, send to other Suplex states.
         }
         // If nothing is grabbed, currently sends back to Idle state. Will send to SuplexRecovery state.
 
-        status.movement.SetVelocityToMoveSpeedTimesFowardDirection();
+        //status.movement.SetVelocityToMoveSpeedTimesFowardDirection();
     }
 }
