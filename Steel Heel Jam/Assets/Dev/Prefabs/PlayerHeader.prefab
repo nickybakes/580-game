@@ -1830,6 +1830,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3576783620507294474}
   - component: {fileID: 8336803804259235523}
+  - component: {fileID: 8213529332587807326}
   m_Layer: 5
   m_Name: Buff Description
   m_TagString: Untagged
@@ -1846,7 +1847,7 @@ RectTransform:
   m_GameObject: {fileID: 4277110852981236436}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0, y: 0, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3782127297504391647}
@@ -1868,6 +1869,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4277110852981236436}
   m_CullTransparentMesh: 1
+--- !u!95 &8213529332587807326
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4277110852981236436}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 27ba3cddbf4c4c94b8acd90573639f2a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &7618272071047975331
 GameObject:
   m_ObjectHideFlags: 0
