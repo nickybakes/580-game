@@ -13,6 +13,7 @@ public class PlayerCombat : MonoBehaviour
     private PlayerStatus _status;
 
     private PickUpSphere _pickUpSphere;
+    private GrabHitbox _grabHitbox;
 
     private PickUpSphere _pickUpSphereScript;
 
@@ -66,6 +67,7 @@ public class PlayerCombat : MonoBehaviour
         _hitbox = transform.GetChild((int)PlayerChild.Hitbox).gameObject;
 
         _pickUpSphere = GetComponentInChildren<PickUpSphere>();
+        _grabHitbox = GetComponentInChildren<GrabHitbox>();
 
         _pickUpSphereScript = transform.GetChild((int)PlayerChild.PickUpSphere).gameObject.GetComponent<PickUpSphere>();
 
@@ -146,6 +148,12 @@ public class PlayerCombat : MonoBehaviour
                 pickupHeldLength = 0;
                 _input.pickUpPressed = false;
             }
+        }
+        if (_status.CurrentPlayerState is SuplexStartup)
+        {
+            _grabHitbox.TrySuplex();
+            // Create / SetActive hitbox in front of player.
+            // If then this hits another player, send to other Suplex states.
         }
 
         // TryPickup should be called if the pickup button is released and it's not a suplex...

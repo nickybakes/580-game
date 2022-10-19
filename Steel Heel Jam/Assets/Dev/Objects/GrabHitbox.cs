@@ -41,14 +41,23 @@ public class GrabHitbox : MonoBehaviour
 
         // Set Player to SuplexDuration state.
         //playerStatus.SetPlayerStateImmediately(new SuplexDuration());
-        playerStatus.SetPlayerStateImmediately(new BlockedStun());
+        playerStatus.SetPlayerStateImmediately(new SuplexDuration());
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag(Tag.Player.ToString()))
+        // Attempting to ignore collision with parent. Set grab hitbox away from parent for now.
+        if (other.gameObject != this.gameObject && other.CompareTag(Tag.Player.ToString()))
         {
             playersWithinBounds.Add(other.gameObject);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag(Tag.Player.ToString()))
+        {
+            playersWithinBounds.Remove(other.gameObject);
         }
     }
 }

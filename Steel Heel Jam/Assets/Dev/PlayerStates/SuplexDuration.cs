@@ -1,25 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Animations;
 using UnityEngine;
 
-public class SuplexStartup : BasicState
+public class SuplexDuration : BasicState
 {
-    public SuplexStartup()
+    public SuplexDuration()
     {
-        timeToChangeState = 1.0f;
+        timeToChangeState = 0; // Until grounded.
         canPlayerControlMove = false;
         canPlayerControlRotate = false;
         canAttack = false;
         canDodgeRoll = false;
         canBlock = false;
-        updateMovement = false;
+        updateMovement = true;
         countAttackCooldown = false;
-        animationState = AnimationState.AttackGroundStartup_01;
+        animationState = AnimationState.Knockback; // Will be Suplex
         stateToChangeTo = new Idle();
     }
 
-    // Give forward walk direction and speed.
+    // Update the arc of the suplex.
+    public override void Update(PlayerStatus status)
+    {
+        base.Update(status);
+
+
+        status.movement.SetVelocityToMoveSpeedTimesFowardDirection();
+    }
+
+    // Give initial arc direction.
     public override void OnEnterThisState(BasicState prevState, PlayerStatus status)
     {
         base.OnEnterThisState(prevState, status);

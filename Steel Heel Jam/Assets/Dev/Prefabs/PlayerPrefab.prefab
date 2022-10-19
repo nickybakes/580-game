@@ -480,8 +480,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2717064355588239748}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.5, z: 0.5}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalPosition: {x: 0, y: 1.5, z: 1.867}
+  m_LocalScale: {x: 2.68005, y: 1.7351078, z: 2.68005}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1777015905490208790}
@@ -580,7 +580,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerStatus: {fileID: 0}
-  grabLocation: {fileID: 0}
+  playersWithinBounds: []
 --- !u!1 &3928377190470292315
 GameObject:
   m_ObjectHideFlags: 0
