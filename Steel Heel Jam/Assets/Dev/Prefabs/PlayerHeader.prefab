@@ -528,7 +528,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5363335864697177974
 RectTransform:
   m_ObjectHideFlags: 0
@@ -711,7 +711,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3377689146462066689
 RectTransform:
   m_ObjectHideFlags: 0
@@ -908,6 +908,9 @@ MonoBehaviour:
   spotlightMeterFill: {fileID: 8683072058920171973}
   spotlightMeterBackground: {fileID: 5768223677481174935}
   pickupIndicator: {fileID: 3019030410837029988}
+  buffHeaderAnimator: {fileID: 0}
+  buffHeaderTitle: {fileID: 0}
+  buffHeaderDescription: {fileID: 0}
 --- !u!1 &3377689147146413159
 GameObject:
   m_ObjectHideFlags: 0

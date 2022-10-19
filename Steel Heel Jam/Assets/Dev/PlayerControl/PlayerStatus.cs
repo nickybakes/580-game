@@ -53,7 +53,7 @@ public class PlayerStatus : MonoBehaviour
     /// The lowest a player's maximum stamina can get.
     /// </summary>
     /// 
-    
+
     public float spotlight;
     public bool isInSpotlight;
 
@@ -67,7 +67,8 @@ public class PlayerStatus : MonoBehaviour
     [HideInInspector]
     public PlayerCombat combat;
 
-    private PlayerVisuals visuals;
+    [HideInInspector]
+    public PlayerVisuals visuals;
 
     public int playerNumber;
 
@@ -291,7 +292,11 @@ public class PlayerStatus : MonoBehaviour
 
             playerLastHitBy = attackingPlayerStatus;
 
+
             Vector3 knockbackDir = (collisionPos - hitboxPos).normalized;
+
+            transform.forward = new Vector3(knockbackDir.x * -1, 0, knockbackDir.z * -1);
+
             knockback = knockback * (2 + stamina / defaultMaxStamina);
 
             float staminaRatio = (maxStamina - stamina) * 0.2f;
@@ -365,6 +370,7 @@ public class PlayerStatus : MonoBehaviour
             playerLastHitBy = attackingPlayerStatus;
 
         Vector3 knockbackDir = (collisionPos - hitboxPos).normalized;
+        transform.forward = new Vector3(knockbackDir.x * -1, 0, knockbackDir.z * -1);
         knockback = knockback * (2 + stamina / defaultMaxStamina);
 
         float staminaRatio = (maxStamina - stamina) * 0.2f;

@@ -38,7 +38,7 @@ public class PlayerVisuals
         status = _status;
 
         animator = tr.GetComponentInChildren<Animator>();
-        modelTransform = animator.transform;
+        modelTransform = tr.GetChild((int)PlayerChild.Model);
 
         blockSphere = tr.GetChild((int)PlayerChild.Visuals).GetChild((int)VisualChild.Block).gameObject;
         dodgeRollSphere = tr.GetChild((int)PlayerChild.Visuals).GetChild((int)VisualChild.DodgeRoll).gameObject;
@@ -47,17 +47,38 @@ public class PlayerVisuals
         knockbackSphere = tr.GetChild((int)PlayerChild.Visuals).GetChild((int)VisualChild.Knockback).gameObject;
     }
 
-/// <summary>
-/// Do this later, make the model rotate while in knockout state, so it looks
-/// like its drilling through the air
-/// </summary>
-/// <param name="radians">Angle in radians</param>
-    public void SetModelRotationX(float radians)
+    /// <summary>
+    /// Rotatethe character model on the X axis
+    /// </summary>
+    /// <param name="degrees">Angle in degrees</param>
+    public void SetModelRotationX(float degrees)
     {
-        Vector3 center = modelTransform.position + new Vector3(0, modelTransform.localScale.y, 0);
+        modelTransform.localRotation = Quaternion.Euler(degrees, 0, 0);
+    }
 
-        // modelTransform.RotateAround(center, Vector3.right, angle);
+    /// <summary>
+    /// When the character is flying through the air (like in the knockback state or suplex state)
+    /// this will angle the character model so their body is pointed in the direction they are moving head first
+    /// </summary>
+    public void RotateModelFlyingThroughAir()
+    {
+        float topDownSpeed = status.movement.ActualTopDownSpeed;
 
+        float angle = 0;
+
+        if (topDownSpeed == 0)
+        {
+            if (status.movement.velocity.y < 0)
+            {
+                angle = 90;
+            }
+        }
+        else
+        {
+            angle = Mathf.Rad2Deg * Mathf.Atan(status.movement.velocity.y / topDownSpeed);
+        }
+
+        SetModelRotationX(-90 + angle);
     }
 
     public void SetAnimationState(AnimationState state)
