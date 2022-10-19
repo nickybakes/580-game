@@ -2,17 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SuplexMissRecovery : MonoBehaviour
+public class SuplexMissRecovery : BasicState
 {
-    // Start is called before the first frame update
-    void Start()
+    public SuplexMissRecovery()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        timeToChangeState = 1.0f;
+        canPlayerControlMove = false;
+        canPlayerControlRotate = false;
+        canAttack = false;
+        canDodgeRoll = false;
+        canBlock = false;
+        updateMovement = true;
+        countAttackCooldown = false;
+        animationState = AnimationState.AttackGroundRecovery_01;
+        stateToChangeTo = new Idle();
     }
 }

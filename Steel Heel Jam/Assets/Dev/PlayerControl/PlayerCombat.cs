@@ -147,6 +147,7 @@ public class PlayerCombat : MonoBehaviour
             {
                 _status.SetPlayerStateImmediately(new SuplexStartup());
                 pickupHeldLength = 0;
+                timeInSuplexStartup = 0;
                 _input.pickUpPressed = false;
             }
         }

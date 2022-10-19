@@ -13,10 +13,10 @@ public class SuplexStartup : BasicState
         canAttack = false;
         canDodgeRoll = false;
         canBlock = false;
-        updateMovement = false;
+        updateMovement = true;
         countAttackCooldown = false;
         animationState = AnimationState.AttackGroundStartup_01;
-        stateToChangeTo = new Idle();
+        stateToChangeTo = new SuplexMissRecovery();
     }
 
     // Give forward walk direction and speed.
