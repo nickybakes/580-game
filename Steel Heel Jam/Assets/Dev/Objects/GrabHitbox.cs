@@ -46,8 +46,8 @@ public class GrabHitbox : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        // Attempting to ignore collision with parent. Set grab hitbox away from parent for now.
-        if (other.gameObject != this.gameObject && other.CompareTag(Tag.Player.ToString()))
+        // Checks if colliding with a player, ignoring own player number.
+        if (other.CompareTag(Tag.Player.ToString()) && other.GetComponent<PlayerStatus>().PlayerNumber != playerStatus.PlayerNumber)
         {
             playersWithinBounds.Add(other.gameObject);
         }

@@ -24,6 +24,6 @@ public class SuplexStartup : BasicState
     {
         base.OnEnterThisState(prevState, status);
 
-        status.movement.SetVelocityToMoveSpeedTimesFowardDirection();
+        //status.movement.SetVelocityToMoveSpeedTimesFowardDirection();
     }
 }
