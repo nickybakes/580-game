@@ -25,6 +25,8 @@ public class PlayerCombat : MonoBehaviour
     private float recentActionCooldown;
     private const float recentActionCooldownMax = 1.0f;
 
+    private float pickupHeldLength = 0;
+
     public GameObject equippedItem;
 
     private GameManager gameManager;
@@ -132,10 +134,18 @@ public class PlayerCombat : MonoBehaviour
             }
         }
 
-        if (canPickup && _input.suplex)
+
+        if (canPickup && _input.pickUpPressed)
         {
-            //TrySuplex();
-            Debug.Log("TrySuplex method called.");
+            pickupHeldLength += Time.deltaTime;
+
+            if (pickupHeldLength > 0.5f)
+            {
+                //TrySuplex();
+                Debug.Log("TrySuplex method called.");
+                pickupHeldLength = 0;
+                _input.pickUpPressed = false;
+            }
         }
 
         // TryPickup should be called if the pickup button is released and it's not a suplex...
@@ -230,7 +240,7 @@ public class PlayerCombat : MonoBehaviour
     private void TryPickup()
     {
         CameraManager.cam.ShakeCamera(.5f);
-        _input.pickUpPressed = false;
+        _input.wasPickUpPressed = false;
         _pickUpSphere.TryPickup();
     }
 
