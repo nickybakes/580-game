@@ -149,9 +149,10 @@ public class PlayerCombat : MonoBehaviour
         }
 
         // TryPickup should be called if the pickup button is released and it's not a suplex...
-        if (canPickup && !_input.pickUpPressed && _input.wasPickUpPressed && !_input.suplex)
+        if (canPickup && !_input.pickUpPressed && _input.wasPickUpPressed)
         {
             TryPickup();
+            pickupHeldLength = 0;
         }
 
         if (_status.CurrentPlayerState is ItemThrowing && equippedItem != null && !_input.throwIsHeld && _input.throwWasHeld)
