@@ -17,14 +17,11 @@ public class StarterAssetsInputs : MonoBehaviour
     private float timeSinceAttackWasPressed;
     private float timeSinceAttackWasPressedMax = .24f;
 
-    private float timeSincePickUpWasPressed;
-    private float timeSincePickUpWasPressedMax = .5f;
 
     // Combat Controls
     public bool attack;
     public bool pickUpPressed;
     public bool wasPickUpPressed;
-    public bool suplex;
 
     public bool throwIsHeld;
     public bool throwWasHeld;
@@ -83,26 +80,6 @@ public class StarterAssetsInputs : MonoBehaviour
         }
     }
 
-    public bool Suplex
-    {
-        get
-        {
-            return timeSincePickUpWasPressed < timeSincePickUpWasPressedMax;
-        }
-
-        set
-        {
-            if (value)
-            {
-                timeSincePickUpWasPressed = 0;
-            }
-            else
-            {
-                timeSincePickUpWasPressed = timeSincePickUpWasPressedMax;
-            }
-        }
-    }
-
     private void Update()
     {
         if (timeSinceJumpWasPressed <= timeSinceJumpWasPressedMax)
@@ -110,9 +87,6 @@ public class StarterAssetsInputs : MonoBehaviour
 
         if (timeSinceAttackWasPressed <= timeSinceAttackWasPressedMax)
             timeSinceAttackWasPressed += Time.deltaTime;
-
-        if (timeSincePickUpWasPressed <= timeSincePickUpWasPressedMax)
-            timeSincePickUpWasPressed += Time.deltaTime;
     }
 
     public void OnMove(InputValue value)
