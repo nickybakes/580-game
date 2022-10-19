@@ -139,7 +139,7 @@ public class PlayerCombat : MonoBehaviour
         {
             pickupHeldLength += Time.deltaTime;
 
-            if (pickupHeldLength > 0.5f)
+            if (pickupHeldLength > 0.3f)
             {
                 //TrySuplex();
                 Debug.Log("TrySuplex method called.");
