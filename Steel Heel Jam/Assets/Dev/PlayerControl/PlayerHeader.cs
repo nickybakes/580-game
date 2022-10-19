@@ -6,7 +6,6 @@ using TMPro;
 
 public class PlayerHeader : MonoBehaviour
 {
-
     private PlayerStatus playerStatus;
 
     private Canvas canvas;
@@ -42,7 +41,11 @@ public class PlayerHeader : MonoBehaviour
 
     public GameObject pickupIndicator;
 
+    public Animator buffHeaderAnimator;
 
+    public TextMeshProUGUI buffHeaderTitle;
+    
+    public TextMeshProUGUI buffHeaderDescription;
 
     private bool blinkDangerText;
     private float dangerBlinkTime;
@@ -53,8 +56,6 @@ public class PlayerHeader : MonoBehaviour
     {
         get { return playerStatus; }
     }
-
-
 
     public void Setup(PlayerStatus status, Canvas c)
     {
@@ -81,7 +82,11 @@ public class PlayerHeader : MonoBehaviour
         float spotlightPercentage = playerStatus.spotlight / PlayerStatus.defaultMaxSpotlight;
 
         //DECREASES BARS FROM THE BOTTOM SIDE
-        spotlightMeterFillRect.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Bottom, 0, height * spotlightPercentage);
+        spotlightMeterFillRect.SetInsetAndSizeFromParentEdge(
+            RectTransform.Edge.Bottom,
+            0,
+            height * spotlightPercentage
+        );
     }
 
     public void UpdateStaminaMeter()
@@ -95,8 +100,16 @@ public class PlayerHeader : MonoBehaviour
         // staminaBarBorderRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, width * staminaMaxPercentage);
 
         //DECREASES BARS FROM THE LEFT SIDE
-        staminaBarFillRect.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Left, 0, width * staminaPercentage);
-        staminaBarBorderRect.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Left, 0, width * staminaMaxPercentage);
+        staminaBarFillRect.SetInsetAndSizeFromParentEdge(
+            RectTransform.Edge.Left,
+            0,
+            width * staminaPercentage
+        );
+        staminaBarBorderRect.SetInsetAndSizeFromParentEdge(
+            RectTransform.Edge.Left,
+            0,
+            width * staminaMaxPercentage
+        );
 
         if (staminaPercentage <= staminaDangerThreshold)
         {
@@ -114,7 +127,8 @@ public class PlayerHeader : MonoBehaviour
         heelText.SetActive(enabled);
     }
 
-    public void SetPickup(bool enabled){
+    public void SetPickup(bool enabled)
+    {
         pickupIndicator.SetActive(enabled);
     }
 
