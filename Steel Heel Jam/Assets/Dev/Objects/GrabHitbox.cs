@@ -34,13 +34,7 @@ public class GrabHitbox : MonoBehaviour
         // Grabbed player's position is overlapping grabber's position, will be fixed in animation.
         g.transform.position = playerStatus.transform.position;
 
-        // Set grabbed player to GrappleDuration state.
-        // (Unable to do anything until they've been grounded, in which case they'll be put into the Knockback state.
-        //g.SetPlayerStateImmediately(new GrappledDuration());
         g.SetPlayerStateImmediately(new SuplexVictimStartup());
-
-        // Set Player to SuplexDuration state.
-        //playerStatus.SetPlayerStateImmediately(new SuplexDuration());
         playerStatus.SetPlayerStateImmediately(new SuplexStartup());
     }
 

@@ -6,7 +6,7 @@ public class SuplexVictimStartup : BasicState
 {
     public SuplexVictimStartup()
     {
-        timeToChangeState = 0.1f;
+        timeToChangeState = 0.5f;
         canPlayerControlMove = false;
         canPlayerControlRotate = false;
         canAttack = false;
@@ -14,7 +14,7 @@ public class SuplexVictimStartup : BasicState
         canBlock = false;
         updateMovement = false;
         countAttackCooldown = false;
-        animationState = AnimationState.Idle;
+        animationState = AnimationState.BlockRecovery;
         stateToChangeTo = new SuplexVictimDuration();
     }
 }

@@ -12,9 +12,9 @@ public class SuplexVictimDuration : BasicState
         canAttack = false;
         canDodgeRoll = false;
         canBlock = false;
-        updateMovement = false; // False for now.
+        updateMovement = true;
         countAttackCooldown = false;
-        animationState = AnimationState.Knockback; // Will be Suplexed
+        animationState = AnimationState.Idle; // Will be Suplexed
         stateToChangeTo = new Idle();
 
         // Set to different layer / temporarily disable collisions.

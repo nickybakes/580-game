@@ -6,7 +6,7 @@ public class SuplexStartup : BasicState
 {
     public SuplexStartup()
     {
-        timeToChangeState = 0.1f;
+        timeToChangeState = 0.5f;
         canPlayerControlMove = false;
         canPlayerControlRotate = false;
         canAttack = false;
@@ -14,7 +14,13 @@ public class SuplexStartup : BasicState
         canBlock = false;
         updateMovement = false;
         countAttackCooldown = false;
-        animationState = AnimationState.Idle;
+        animationState = AnimationState.BlockRecovery;
         stateToChangeTo = new SuplexDuration();
+    }
+
+    public override void OnEnterThisState(BasicState prevState, PlayerStatus status)
+    {
+        base.OnEnterThisState(prevState, status);
+        Debug.Log("got to the startup.");
     }
 }

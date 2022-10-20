@@ -15,7 +15,7 @@ public class GrabDuration : BasicState
         canBlock = false;
         updateMovement = true;
         countAttackCooldown = false;
-        animationState = AnimationState.AttackGroundStartup_01;
+        animationState = AnimationState.Block;
         stateToChangeTo = new GrabRecovery();
     }
 
