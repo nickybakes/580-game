@@ -89,6 +89,7 @@ public class PlayerVisuals
         currentAnimationState = state;
 
         animator.SetTrigger(state.ToString());
+        // animator.SetLayerWeight()
     }
 
     public void EnableVisual(VisualChild vc)
