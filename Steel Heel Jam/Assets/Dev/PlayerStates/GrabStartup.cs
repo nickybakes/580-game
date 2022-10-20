@@ -13,7 +13,8 @@ public class GrabStartup : BasicState
         canAttack = false;
         canDodgeRoll = false;
         canBlock = false;
-        updateMovement = false;
+        updateMovement = true;
+        alternateFriction = true;
         countAttackCooldown = false;
         animationState = AnimationState.Run;
         stateToChangeTo = new GrabDuration();

@@ -251,6 +251,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _hitbox: {fileID: 0}
+  grabHitbox: {fileID: 0}
   attackCooldown: 0
   equippedItem: {fileID: 0}
   targetAngle: 0.5
@@ -471,7 +472,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8374311134337151735
 Transform:
   m_ObjectHideFlags: 0
@@ -580,7 +581,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerStatus: {fileID: 0}
-  playersWithinBounds: []
 --- !u!1 &3928377190470292315
 GameObject:
   m_ObjectHideFlags: 0

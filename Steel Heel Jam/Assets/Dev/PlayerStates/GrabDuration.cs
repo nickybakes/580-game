@@ -33,9 +33,20 @@ public class GrabDuration : BasicState
     {
         base.OnEnterThisState(prevState, status);
 
+        // Set GrabHitbox active
+        //status.transform.parent.GetComponent<GrabHitbox>().gameObject.SetActive(true);
+
         status.movement.SetTheSetForwardDirection();
         status.movement.SetVelocityToMoveSpeedTimesFowardDirection();
 
         status.combat.grabHitbox.TrySuplex();
+    }
+
+    public override void OnExitThisState(BasicState nextState, PlayerStatus status)
+    {
+        base.OnExitThisState(nextState, status);
+
+        // Set GrabHitbox active
+        //status.transform.parent.GetComponent<GrabHitbox>().gameObject.SetActive(false);
     }
 }
