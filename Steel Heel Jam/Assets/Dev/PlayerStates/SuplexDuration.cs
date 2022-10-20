@@ -8,7 +8,7 @@ public class SuplexDuration : BasicState
     public SuplexDuration(PlayerStatus _victim)
     {
         timeToChangeState = 0; // Until grounded.
-        moveSpeedMultiplier = 0.5f;
+        moveSpeedMultiplier = 5f;
         canPlayerControlMove = false;
         canPlayerControlRotate = false;
         canAttack = false;
@@ -16,7 +16,7 @@ public class SuplexDuration : BasicState
         canBlock = false;
         updateMovement = true; // False for now.
         countAttackCooldown = false;
-        animationState = AnimationState.Idle; // Will be Suplex
+        animationState = AnimationState.SuplexDuration_01;
         stateToChangeTo = new Idle();
 
         victim = _victim;
@@ -26,18 +26,36 @@ public class SuplexDuration : BasicState
     {
         base.Update(status);
 
+        victim.movement.velocity = status.movement.velocity;
+
+        status.visuals.RotateModelFlyingThroughAir();
+
         // If player is grounded and moving downwards.
         if (status.movement.grounded && status.movement.velocity.y < 0)
         {
             // Set to AttackAirRecovery.
-            status.SetPlayerStateImmediately(new AttackAirRecovery());
+            status.SetPlayerStateImmediately(new SuplexRecovery());
+
+            Vector3 launchDir = status.transform.forward;
+
+            launchDir.x *= -1;
+            launchDir.z *= -1;
+
+            float launchTopDownSpeed = 20;
 
             // Set suplexed state to knockback.
-            Knockback knockback = new Knockback(new Vector3(0, 50, 0));
+            Knockback knockback = new Knockback(new Vector3(launchDir.x * launchTopDownSpeed, 50, launchDir.z * launchTopDownSpeed));
             knockback.timeToChangeState = 1.0f;
             victim.SetPlayerStateImmediately(knockback); // Set straight up for testing.
             //victim.GetHit(victim.transform.position, status.transform.position, 10, 20, 25, 2, status);
         }
+    }
+
+    public override void OnExitThisState(BasicState nextState, PlayerStatus status)
+    {
+        base.OnExitThisState(nextState, status);
+
+        status.visuals.SetModelRotationX(0);
     }
 
     // Give initial arc direction.

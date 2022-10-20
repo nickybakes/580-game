@@ -14,7 +14,7 @@ public class SuplexStartup : BasicState
         canBlock = false;
         updateMovement = false;
         countAttackCooldown = false;
-        animationState = AnimationState.BlockRecovery;
+        animationState = AnimationState.SuplexStartup_01;
         stateToChangeTo = new SuplexDuration(victim);
 
     }

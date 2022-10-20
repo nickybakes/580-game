@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SuplexVictimStartup : BasicState
+public class SuplexRecovery : BasicState
 {
-    public SuplexVictimStartup()
+    public SuplexRecovery()
     {
-        timeToChangeState = 0.5f;
+        timeToChangeState = .8f;
         canPlayerControlMove = false;
         canPlayerControlRotate = false;
         canAttack = false;
@@ -14,7 +14,8 @@ public class SuplexVictimStartup : BasicState
         canBlock = false;
         updateMovement = false;
         countAttackCooldown = false;
-        animationState = AnimationState.SuplexVictimStartup_01;
-        stateToChangeTo = new SuplexVictimDuration();
+        visual = VisualChild.Recovery;
+        animationState = AnimationState.SuplexRecovery_01;
+        stateToChangeTo = new Idle();
     }
 }

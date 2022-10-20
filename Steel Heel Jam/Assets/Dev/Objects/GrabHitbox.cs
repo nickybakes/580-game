@@ -27,15 +27,19 @@ public class GrabHitbox : MonoBehaviour
         if (playersWithinBounds.Count == 0)
             return;
         
-        PlayerStatus g = playersWithinBounds[0].GetComponent<PlayerStatus>();
+        PlayerStatus victim = playersWithinBounds[0].GetComponent<PlayerStatus>();
 
         // Make player grabbed unable to move and a child of the grabber.
-        g.transform.SetParent(playerStatus.transform);
+        victim.transform.SetParent(playerStatus.transform);
         // Grabbed player's position is overlapping grabber's position, will be fixed in animation.
-        g.transform.position = playerStatus.transform.position;
+        victim.transform.position = playerStatus.transform.position;
 
-        g.SetPlayerStateImmediately(new SuplexVictimStartup());
-        playerStatus.SetPlayerStateImmediately(new SuplexStartup(g));
+        Vector3 forward = playerStatus.transform.forward;
+
+        victim.transform.forward = new Vector3(forward.x, 0, forward.z);
+
+        victim.SetPlayerStateImmediately(new SuplexVictimStartup());
+        playerStatus.SetPlayerStateImmediately(new SuplexStartup(victim));
     }
 
     private void OnTriggerEnter(Collider other)

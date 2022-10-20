@@ -16,7 +16,14 @@ public class GrabStartup : BasicState
         updateMovement = true;
         alternateFriction = true;
         countAttackCooldown = false;
-        animationState = AnimationState.Run;
+        animationState = AnimationState.GrabStartup_01;
         stateToChangeTo = new GrabDuration();
+    }
+
+    public override void OnEnterThisState(BasicState prevState, PlayerStatus status)
+    {
+        base.OnEnterThisState(prevState, status);
+
+        status.movement.SetTheSetForwardDirection();
     }
 }

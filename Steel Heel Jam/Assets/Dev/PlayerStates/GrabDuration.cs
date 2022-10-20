@@ -15,7 +15,7 @@ public class GrabDuration : BasicState
         canBlock = false;
         updateMovement = true;
         countAttackCooldown = false;
-        animationState = AnimationState.Block;
+        animationState = AnimationState.GrabDuration_01;
         stateToChangeTo = new GrabRecovery();
     }
 
@@ -36,7 +36,6 @@ public class GrabDuration : BasicState
         // Set GrabHitbox active
         //status.transform.parent.GetComponent<GrabHitbox>().gameObject.SetActive(true);
 
-        status.movement.SetTheSetForwardDirection();
         status.movement.SetVelocityToMoveSpeedTimesFowardDirection();
 
         status.combat.grabHitbox.TrySuplex();

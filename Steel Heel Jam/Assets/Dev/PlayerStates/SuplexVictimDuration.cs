@@ -14,10 +14,17 @@ public class SuplexVictimDuration : BasicState
         canBlock = false;
         updateMovement = false;
         countAttackCooldown = false;
-        animationState = AnimationState.Idle; // Will be Suplexed
+        animationState = AnimationState.SuplexVictimDuration_01;
         stateToChangeTo = new Idle();
 
         // Set to different layer / temporarily disable collisions.
+    }
+
+    public override void Update(PlayerStatus status)
+    {
+        base.Update(status);
+
+        status.visuals.RotateModelFlyingThroughAir();
     }
 
     public override void OnExitThisState(BasicState nextState, PlayerStatus status)
@@ -25,5 +32,7 @@ public class SuplexVictimDuration : BasicState
         base.OnExitThisState(nextState, status);
 
         status.gameObject.transform.parent = null;
+        status.visuals.SetModelRotationX(0);
+
     }
 }
