@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SuplexMissRecovery : BasicState
+public class GrabRecovery : BasicState
 {
-    public SuplexMissRecovery()
+    public GrabRecovery()
     {
         timeToChangeState = 1.0f;
+        moveSpeedMultiplier = 0.1f;
         canPlayerControlMove = false;
         canPlayerControlRotate = false;
         canAttack = false;
@@ -14,7 +15,14 @@ public class SuplexMissRecovery : BasicState
         canBlock = false;
         updateMovement = true;
         countAttackCooldown = false;
-        animationState = AnimationState.AttackGroundRecovery_01;
+        animationState = AnimationState.BlockRecovery;
         stateToChangeTo = new Idle();
+    }
+
+    public override void Update(PlayerStatus status)
+    {
+        base.Update(status);
+
+        status.movement.SetVelocityToMoveSpeedTimesFowardDirection();
     }
 }

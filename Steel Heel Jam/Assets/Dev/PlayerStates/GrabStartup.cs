@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Animations;
 using UnityEngine;
 
-public class SuplexStartup : BasicState
+public class GrabStartup : BasicState
 {
-    public SuplexStartup()
+    public GrabStartup()
     {
-        timeToChangeState = 0.1f;
+        timeToChangeState = 1.0f;
         canPlayerControlMove = false;
         canPlayerControlRotate = false;
         canAttack = false;
@@ -14,7 +15,7 @@ public class SuplexStartup : BasicState
         canBlock = false;
         updateMovement = false;
         countAttackCooldown = false;
-        animationState = AnimationState.Idle;
-        stateToChangeTo = new SuplexDuration();
+        animationState = AnimationState.Run;
+        stateToChangeTo = new GrabDuration();
     }
 }

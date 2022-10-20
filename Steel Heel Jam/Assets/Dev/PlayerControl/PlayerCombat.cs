@@ -13,7 +13,8 @@ public class PlayerCombat : MonoBehaviour
     private PlayerStatus _status;
 
     private PickUpSphere _pickUpSphere;
-    private GrabHitbox _grabHitbox;
+    [HideInInspector]
+    public GrabHitbox grabHitbox;
 
     private PickUpSphere _pickUpSphereScript;
 
@@ -27,7 +28,6 @@ public class PlayerCombat : MonoBehaviour
     private const float recentActionCooldownMax = 1.0f;
 
     private float pickupHeldLength = 0;
-    private float timeInSuplexStartup = 0;
 
     public GameObject equippedItem;
 
@@ -68,7 +68,7 @@ public class PlayerCombat : MonoBehaviour
         _hitbox = transform.GetChild((int)PlayerChild.Hitbox).gameObject;
 
         _pickUpSphere = GetComponentInChildren<PickUpSphere>();
-        _grabHitbox = GetComponentInChildren<GrabHitbox>();
+        grabHitbox = GetComponentInChildren<GrabHitbox>();
 
         _pickUpSphereScript = transform.GetChild((int)PlayerChild.PickUpSphere).gameObject.GetComponent<PickUpSphere>();
 
@@ -145,22 +145,9 @@ public class PlayerCombat : MonoBehaviour
 
             if (pickupHeldLength > 0.3f)
             {
-                _status.SetPlayerStateImmediately(new SuplexStartup());
+                _status.SetPlayerStateImmediately(new GrabStartup());
                 pickupHeldLength = 0;
-                timeInSuplexStartup = 0;
                 _input.pickUpPressed = false;
-            }
-        }
-        if (_status.CurrentPlayerState is SuplexStartup)
-        {
-            timeInSuplexStartup += Time.deltaTime;
-
-            // Create / SetActive hitbox in front of player.
-            // If then this hits another player, send to other Suplex states.
-            if (timeInSuplexStartup >= 0.3f) // Time in startup before the grab actually "hits".
-            {
-                _grabHitbox.TrySuplex();
-                timeInSuplexStartup = 0;
             }
         }
 

@@ -18,16 +18,19 @@ public class SuplexDuration : BasicState
         stateToChangeTo = new Idle();
     }
 
-    // Update the arc of the suplex.
     public override void Update(PlayerStatus status)
     {
         base.Update(status);
 
-        //if (this.animationState != AnimationState.Knockback)
-        //    animationState = AnimationState.Knockback;
 
+        if (status.movement.grounded)
+        {
+            // Set to AttackAirRecovery.
+            status.SetPlayerStateImmediately(new AttackAirRecovery());
 
-        //status.movement.SetVelocityToMoveSpeedTimesFowardDirection();
+            // Set suplexed state to knockback.
+            // Reference.
+        }
     }
 
     // Give initial arc direction.
@@ -35,6 +38,6 @@ public class SuplexDuration : BasicState
     {
         base.OnEnterThisState(prevState, status);
 
-        //status.movement.SetVelocityToMoveSpeedTimesFowardDirection();
+        // Set velocity to arc.
     }
 }

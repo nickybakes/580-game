@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SuplexStartup : BasicState
+public class SuplexVictimStartup : BasicState
 {
-    public SuplexStartup()
+    public SuplexVictimStartup()
     {
         timeToChangeState = 0.1f;
         canPlayerControlMove = false;
@@ -15,6 +15,6 @@ public class SuplexStartup : BasicState
         updateMovement = false;
         countAttackCooldown = false;
         animationState = AnimationState.Idle;
-        stateToChangeTo = new SuplexDuration();
+        stateToChangeTo = new SuplexVictimDuration();
     }
 }
