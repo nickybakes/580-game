@@ -53,7 +53,7 @@ public class Saber : DefaultState
 
         maxComboCount = combo.Length;
         currentAttack = combo[0];
-        
+
         airAttack = new Attack( // *** 1st Hit ***
                 1.0f, // Damage Multiplier
                 1.0f, // Knockback Multiplier
