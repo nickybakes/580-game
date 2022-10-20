@@ -12,7 +12,7 @@ public class SuplexVictimDuration : BasicState
         canAttack = false;
         canDodgeRoll = false;
         canBlock = false;
-        updateMovement = true;
+        updateMovement = false;
         countAttackCooldown = false;
         animationState = AnimationState.Idle; // Will be Suplexed
         stateToChangeTo = new Idle();

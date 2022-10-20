@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SuplexStartup : BasicState
 {
-    public SuplexStartup()
+    public SuplexStartup(PlayerStatus victim)
     {
         timeToChangeState = 0.5f;
         canPlayerControlMove = false;
@@ -15,12 +15,7 @@ public class SuplexStartup : BasicState
         updateMovement = false;
         countAttackCooldown = false;
         animationState = AnimationState.BlockRecovery;
-        stateToChangeTo = new SuplexDuration();
-    }
+        stateToChangeTo = new SuplexDuration(victim);
 
-    public override void OnEnterThisState(BasicState prevState, PlayerStatus status)
-    {
-        base.OnEnterThisState(prevState, status);
-        Debug.Log("got to the startup.");
     }
 }

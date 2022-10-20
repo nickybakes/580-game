@@ -23,6 +23,8 @@ public class GrabDuration : BasicState
     {
         base.Update(status);
 
+        status.combat.grabHitbox.TrySuplex();
+
         status.movement.SetVelocityToMoveSpeedTimesFowardDirection();
     }
 

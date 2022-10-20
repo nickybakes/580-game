@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class SuplexDuration : BasicState
 {
-    public SuplexDuration()
+    private PlayerStatus victim;
+    public SuplexDuration(PlayerStatus _victim)
     {
         timeToChangeState = 0; // Until grounded.
         moveSpeedMultiplier = 0.5f;
@@ -13,10 +14,12 @@ public class SuplexDuration : BasicState
         canAttack = false;
         canDodgeRoll = false;
         canBlock = false;
-        updateMovement = false; // False for now.
+        updateMovement = true; // False for now.
         countAttackCooldown = false;
-        animationState = AnimationState.Knockback; // Will be Suplex
+        animationState = AnimationState.Idle; // Will be Suplex
         stateToChangeTo = new Idle();
+
+        victim = _victim;
     }
 
     public override void Update(PlayerStatus status)
@@ -30,9 +33,10 @@ public class SuplexDuration : BasicState
             status.SetPlayerStateImmediately(new AttackAirRecovery());
 
             // Set suplexed state to knockback.
-            // Reference.
-            PlayerStatus g = status.transform.parent.GetComponent<PlayerStatus>();
-            g.SetPlayerStateImmediately(new Knockback(new Vector3(0,10,0))); // Set straight up for testing.
+            Knockback knockback = new Knockback(new Vector3(0, 50, 0));
+            knockback.timeToChangeState = 1.0f;
+            victim.SetPlayerStateImmediately(knockback); // Set straight up for testing.
+            //victim.GetHit(victim.transform.position, status.transform.position, 10, 20, 25, 2, status);
         }
     }
 
@@ -40,10 +44,10 @@ public class SuplexDuration : BasicState
     public override void OnEnterThisState(BasicState prevState, PlayerStatus status)
     {
         base.OnEnterThisState(prevState, status);
-        Debug.Log("got to suplex duration");
+
         // Set velocity to arc. Moves opposite of ActualForwardDirection.
         Vector3 arc = -status.movement.ActualFowardDirection * moveSpeedMultiplier;
-        arc.y = 10.0f; // Height of arc.
+        arc.y = 50.0f; // Height of arc.
 
         status.movement.velocity = arc;
     }

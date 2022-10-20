@@ -35,7 +35,7 @@ public class GrabHitbox : MonoBehaviour
         g.transform.position = playerStatus.transform.position;
 
         g.SetPlayerStateImmediately(new SuplexVictimStartup());
-        playerStatus.SetPlayerStateImmediately(new SuplexStartup());
+        playerStatus.SetPlayerStateImmediately(new SuplexStartup(g));
     }
 
     private void OnTriggerEnter(Collider other)
