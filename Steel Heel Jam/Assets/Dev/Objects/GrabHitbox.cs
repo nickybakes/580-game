@@ -13,6 +13,7 @@ public class GrabHitbox : MonoBehaviour
     {
         playersWithinBounds = new List<GameObject>();
         playerStatus = transform.parent.GetComponent<PlayerStatus>();
+        this.gameObject.SetActive(false);
     }
 
     // Update is called once per frame

@@ -6,8 +6,8 @@ public class GrabDuration : BasicState
 {
     public GrabDuration()
     {
-        timeToChangeState = 1.0f;
-        moveSpeedMultiplier = 0.1f;
+        timeToChangeState = 0.3f;
+        moveSpeedMultiplier = 1.5f;
         canPlayerControlMove = false;
         canPlayerControlRotate = false;
         canAttack = false;
@@ -34,7 +34,7 @@ public class GrabDuration : BasicState
         base.OnEnterThisState(prevState, status);
 
         // Set GrabHitbox active
-        //status.transform.parent.GetComponent<GrabHitbox>().gameObject.SetActive(true);
+        status.combat.grabHitbox.gameObject.SetActive(true);
 
         status.movement.SetVelocityToMoveSpeedTimesFowardDirection();
 
@@ -45,7 +45,7 @@ public class GrabDuration : BasicState
     {
         base.OnExitThisState(nextState, status);
 
-        // Set GrabHitbox active
-        //status.transform.parent.GetComponent<GrabHitbox>().gameObject.SetActive(false);
+        // Set GrabHitbox inactive
+        status.combat.grabHitbox.gameObject.SetActive(false);
     }
 }

@@ -46,8 +46,8 @@ public class SuplexDuration : BasicState
             // Set suplexed state to knockback.
             Knockback knockback = new Knockback(new Vector3(launchDir.x * launchTopDownSpeed, 50, launchDir.z * launchTopDownSpeed));
             knockback.timeToChangeState = 1.0f;
-            victim.SetPlayerStateImmediately(knockback); // Set straight up for testing.
-            //victim.GetHit(victim.transform.position, status.transform.position, 10, 20, 25, 2, status);
+            victim.SetPlayerStateImmediately(knockback);
+            // Add GetSuplex Method to do values for knockback, damage, etc.
         }
     }
 

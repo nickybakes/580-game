@@ -7,7 +7,7 @@ public class GrabStartup : BasicState
 {
     public GrabStartup()
     {
-        timeToChangeState = 1.0f;
+        timeToChangeState = 0.8f;
         canPlayerControlMove = false;
         canPlayerControlRotate = false;
         canAttack = false;
