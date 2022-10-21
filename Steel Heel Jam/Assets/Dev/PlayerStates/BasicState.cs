@@ -27,25 +27,34 @@ public enum AnimationState
     SuplexRecovery_01,
     SuplexVictimStartup_01,
     SuplexVictimDuration_01,
-    AttackGroundStartup_01,
-    AttackGroundDuration_01,
-    AttackGroundRecovery_01,
     AttackAirStartup_01,
     AttackAirDuration_01,
     AttackAirRecovery_01,
+    AG_Punch_01_S, //ID = 26
+    AG_Punch_01_D,
+    AG_Punch_01_R,
+    AG_Punch_02_S,
+    AG_Punch_02_D,
+    AG_Punch_02_R,
+    AG_Punch_03_S,
+    AG_Punch_03_D,
+    AG_Punch_03_R,
+    AG_Swipe_01_S,
+    AG_Swipe_01_D,
+    AG_Swipe_01_R,
+    AG_Swipe_02_S,
+    AG_Swipe_02_D,
+    AG_Swipe_02_R,
+    AG_Stab_01_S,
+    AG_Stab_01_D,
+    AG_Stab_01_R,
+    AG_SwipeHeavy_01_S,
+    AG_SwipeHeavy_01_D,
+    AG_SwipeHeavy_01_R,
+    AG_SmashHeavy_01_S,
+    AG_SmashHeavy_01_D,
+    AG_SmashHeavy_01_R,
 }
-
-//public enum PlayerState
-//{
-//    Idle,
-//    Run,
-//    Jump,
-//    Fall,
-//    DodgeRoll,
-//    ImpactStun,
-//    HitStun,
-//    Knockback,
-//}
 
 /// <summary>
 /// The base class for Player States

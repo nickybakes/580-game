@@ -6,7 +6,7 @@ public class ExplosiveBarrel : DefaultState
 {
     public ExplosiveBarrel(int _playerNumber, GameObject _hitbox) : base(_playerNumber, _hitbox)
     {
-
+        animationModifier = AnimationModifier.CarryOverHead;
     }
 
     public override void InitializeAttacks()

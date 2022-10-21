@@ -6,7 +6,7 @@ public class Saber : DefaultState
 {
     public Saber(int _playerNumber, GameObject _hitbox) : base(_playerNumber, _hitbox)
     {
-
+        animationModifier = AnimationModifier.RightHandFist;
     }
 
     public override void InitializeAttacks()

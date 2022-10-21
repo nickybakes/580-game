@@ -4,7 +4,9 @@ using UnityEngine;
 public enum AnimationModifier
 {
     None,
-    Carry_01
+    CarryOverHead,
+    RightHandFist,
+    FistsOverHead,
 };
 
 public enum AttackAnimation
@@ -159,6 +161,16 @@ public class DefaultState
         {
             return forwardSpeedModifier * currentAttack.forwardSpeedModifierMultiplier;
         }
+    }
+
+/// <summary>
+/// Gets an AnimationState for a specific attack and section of the attack
+/// </summary>
+/// <param name="attack">The attack type, ie Punch_03, SmashHeavy_01</param>
+/// <param name="section">The section of the attack: 0 = startup, 1 = during, 2 = recovery</param>
+/// <returns></returns>
+    public static AnimationState GetAttackAnimation(AttackAnimation attack, int section){
+        return (AnimationState) 26 + ((int) attack * 3) + section;
     }
 
     //***************

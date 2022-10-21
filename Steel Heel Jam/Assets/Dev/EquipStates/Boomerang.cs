@@ -6,7 +6,6 @@ public class Boomerang : DefaultState
 {
     public Boomerang(int _playerNumber, GameObject _hitbox) : base(_playerNumber, _hitbox)
     {
-
     }
 
     public override void InitializeAttacks()

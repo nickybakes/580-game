@@ -13,7 +13,7 @@ public class AttackGroundDuration : BasicState
         canBlock = false;
         updateMovement = true;
         countAttackCooldown = false;
-        animationState = AnimationState.AttackGroundDuration_01;
+        animationState = AnimationState.AG_Punch_03_D;
         stateToChangeTo = new AttackGroundRecovery();
     }
 
@@ -24,10 +24,10 @@ public class AttackGroundDuration : BasicState
     {
         base.Update(status);
 
-        if(!gotAHitAlready && status.combat.weaponState.gotAHit){
-            gotAHitAlready = true;
-            moveSpeedMultiplier = moveSpeedMultiplier * .3f;
-        }
+        // if(!gotAHitAlready && status.combat.weaponState.gotAHit){
+        //     gotAHitAlready = true;
+        //     moveSpeedMultiplier = moveSpeedMultiplier * .3f;
+        // }
 
         status.movement.SetVelocityToMoveSpeedTimesFowardDirection();
     }

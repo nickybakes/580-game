@@ -87,6 +87,7 @@ public class PickUpSphere : MonoBehaviour
                 break;
         }
 
+
         // Destroy the object on the ground
         //Destroy(other.gameObject);
 
@@ -103,6 +104,8 @@ public class PickUpSphere : MonoBehaviour
 
         g.SetActive(false);
         playerCombat.equippedItem = g;
+
+        playerStatus.visuals.SetAnimationModifier(playerCombat.weaponState.animationModifier);
 
         // Set Player to pick up state
         playerStatus.SetPlayerStateImmediately(new ItemPickUp());

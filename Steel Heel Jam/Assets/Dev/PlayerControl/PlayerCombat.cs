@@ -197,6 +197,12 @@ public class PlayerCombat : MonoBehaviour
         _status.movement.velocity = Vector3.zero;
         _status.SetPlayerStateImmediately(new AttackGroundStartup());
 
+        weaponState.currentAttack = weaponState.combo[weaponState.currentComboCount];
+
+        _status.CurrentPlayerState.animationState = DefaultState.GetAttackAnimation(weaponState.currentAttack.animation, 0);
+        _status.CurrentPlayerState.stateToChangeTo.animationState = DefaultState.GetAttackAnimation(weaponState.currentAttack.animation, 1);
+        _status.CurrentPlayerState.stateToChangeTo.stateToChangeTo.animationState = DefaultState.GetAttackAnimation(weaponState.currentAttack.animation, 2);
+
         _status.CurrentPlayerState.timeToChangeState = weaponState.Startup;
         _status.CurrentPlayerState.stateToChangeTo.timeToChangeState = weaponState.Duration;
         _status.CurrentPlayerState.stateToChangeTo.moveSpeedMultiplier = weaponState.ForwardSpeedModifier;
@@ -215,7 +221,7 @@ public class PlayerCombat : MonoBehaviour
         weaponState.currentAttack = weaponState.airAttack;
 
         //_status.movement.velocity = Vector3.zero;
-        _status.SetPlayerStateImmediately(_status.movement.velocity.y > 0 ? new AttackAirStartup() : new AttackAirDuration());
+        _status.SetPlayerStateImmediately(new AttackAirStartup());
 
         if (weaponState.currentComboCount == 0)
             _status.movement.SetTheSetForwardDirection();
@@ -301,6 +307,7 @@ public class PlayerCombat : MonoBehaviour
         _status.SetPlayerStateImmediately(new ThrowRecovery());
 
         timeHeld = 0;
+        _status.visuals.SetAnimationModifier(AnimationModifier.None);
     }
 
     public void DropWeapon()
@@ -316,6 +323,8 @@ public class PlayerCombat : MonoBehaviour
         if (_status.playerHeader)
             _status.playerHeader.SetWeaponText("");
         weaponState = new Unarmed(_status.playerNumber, _hitbox);
+
+        _status.visuals.SetAnimationModifier(AnimationModifier.None);
     }
 
 }

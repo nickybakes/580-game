@@ -7,7 +7,7 @@ public class SteelChair : DefaultState
 {
     public SteelChair(int _playerNumber, GameObject _hitbox) : base(_playerNumber, _hitbox)
     {
-
+        animationModifier = AnimationModifier.FistsOverHead;
     }
 
     public override void InitializeAttacks()
@@ -54,7 +54,7 @@ public class SteelChair : DefaultState
 
         maxComboCount = combo.Length;
         currentAttack = combo[0];
-        
+
         airAttack = new Attack( // *** 1st Hit ***
                 1.0f, // Damage Multiplier
                 1.0f, // Knockback Multiplier

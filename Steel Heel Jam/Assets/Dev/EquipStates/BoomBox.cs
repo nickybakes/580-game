@@ -6,7 +6,7 @@ public class BoomBox : DefaultState
 {
     public BoomBox(int _playerNumber, GameObject _hitbox) : base(_playerNumber, _hitbox)
     {
-
+        animationModifier = AnimationModifier.CarryOverHead;
     }
 
     public override void InitializeAttacks()
