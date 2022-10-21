@@ -1,11 +1,23 @@
 using System.Linq;
 using UnityEngine;
 
-public enum EquipState
+public enum AnimationModifier
 {
-    DefaultState,
-    TestCubeState
+    None,
+    Carry_01
 };
+
+public enum AttackAnimation
+{
+    Punch_01,
+    Punch_02,
+    Punch_03,
+    Swipe_01,
+    Swipe_02,
+    Stab_01,
+    SwipeHeavy_01,
+    SmashHeavy_01
+}
 
 public struct Attack
 {
@@ -19,6 +31,7 @@ public struct Attack
     public float durationMultiplier;
     public float recoveryMultiplier;
     public float forwardSpeedModifierMultiplier;
+    public AttackAnimation animation;
 
     /// <summary>
     /// Creates an instance of an Attack struct.
@@ -33,7 +46,8 @@ public struct Attack
         float _startupMultiplier,
         float _durationMultiplier,
         float _recoveryMultiplier,
-        float _forwardSpeedModifierMultiplier
+        float _forwardSpeedModifierMultiplier,
+        AttackAnimation _animation = AttackAnimation.Punch_03
         )
     {
         damageMultiplier = _damageMultiplier;
@@ -46,6 +60,7 @@ public struct Attack
         durationMultiplier = _durationMultiplier;
         recoveryMultiplier = _recoveryMultiplier;
         forwardSpeedModifierMultiplier = _forwardSpeedModifierMultiplier;
+        animation = _animation;
     }
 }
 
@@ -75,12 +90,12 @@ public class DefaultState
     private float duration = 0.2f;
 
     private float recovery = 0.35f;
-    
+
     [SerializeField] protected float recoveryMultiplier = 1;
     private float forwardSpeedModifier = 0.8f;
     [SerializeField] protected float forwardSpeedModifierMultiplier = 1;
     public int maxComboCount;
-    
+
     public int currentComboCount = 0;
     public Attack[] combo;
     public Attack currentAttack;
@@ -91,6 +106,13 @@ public class DefaultState
     [SerializeField] public GameObject hitbox;
     private Hitbox hitboxScript;
     private CapsuleCollider hitboxCollider;
+
+    /// <summary>
+    /// A layer of animation to override parts of the base animations.
+    /// This is for things like having their hands above their heads to
+    /// carrey heavy objects, having only their fist closed, etc.
+    /// </summary>
+    public AnimationModifier animationModifier = AnimationModifier.None;
 
     /// <summary>
     /// set this to true for when doing a single attack, we got a hit.

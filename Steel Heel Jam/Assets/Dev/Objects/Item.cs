@@ -7,7 +7,6 @@ public class Item : MonoBehaviour
     PlayerStatus targetPlayer;
     public enum ItemType
     {
-        TestCube,
         Saber,
         BoomBox,
         ExplosiveBarrel,

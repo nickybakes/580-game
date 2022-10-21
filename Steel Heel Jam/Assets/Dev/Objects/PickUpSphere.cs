@@ -44,12 +44,6 @@ public class PickUpSphere : MonoBehaviour
         Item itemScript = g.GetComponent<Item>();
         switch (itemScript.itemType)
         {
-            case Item.ItemType.TestCube:
-                playerCombat.weaponState = new TestCubeState(playerStatus.playerNumber, playerCombat._hitbox);
-                if (playerStatus.playerHeader)
-                    playerStatus.playerHeader.SetWeaponText("Test Item");
-                break;
-
             case Item.ItemType.Saber:
                 playerCombat.weaponState = new Saber(playerStatus.playerNumber, playerCombat._hitbox);
                 if (playerStatus.playerHeader)
