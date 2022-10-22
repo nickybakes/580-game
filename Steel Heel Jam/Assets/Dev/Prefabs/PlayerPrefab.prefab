@@ -154,6 +154,8 @@ MonoBehaviour:
   attackBlocked: 0
   missedBlockStaminaDamage: 20
   dodgeRollStaminaDamage: 16
+  suplexStaminaDamage: 30
+  missedGrabStaminaDamage: 10
   totalDamageTaken: 0
   recentDamageTaken: 0
   totalDamagerDealt: 0
@@ -481,8 +483,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2717064355588239748}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.5, z: 1.867}
-  m_LocalScale: {x: 2.68005, y: 1.7351078, z: 2.68005}
+  m_LocalPosition: {x: 0, y: 1.5, z: 1.32}
+  m_LocalScale: {x: 3.122571, y: 2.021603, z: 1.1525098}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1777015905490208790}

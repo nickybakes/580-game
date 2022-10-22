@@ -48,5 +48,7 @@ public class Rest : BasicState
     public override void OnEnterThisState(BasicState prevState, PlayerStatus status)
     {
         base.OnEnterThisState(prevState, status);
+
+        status.audioManager.Play("flexing");
     }
 }

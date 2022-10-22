@@ -18,11 +18,5 @@ public class Block : BasicState
 
         animationState = AnimationState.Block;
         visual = VisualChild.Block;
-
-        // For testing
-        /*canPlayerControlMove = true;
-        canPlayerControlRotate = true;
-        canAttack = true;
-        updateMovement = true;*/
     }
 }

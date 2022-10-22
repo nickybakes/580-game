@@ -29,7 +29,7 @@ public enum Tag
 [RequireComponent(typeof(PlayerCombat))]
 public class PlayerStatus : MonoBehaviour
 {
-    private AudioManager audioManager;
+    public AudioManager audioManager;
 
     public List<Buff> buffs = new List<Buff>();
 
@@ -81,6 +81,9 @@ public class PlayerStatus : MonoBehaviour
     [SerializeField] public float missedBlockStaminaDamage = 20f;
 
     [SerializeField] public float dodgeRollStaminaDamage = 16f;
+
+    [SerializeField] public float suplexStaminaDamage = 30f;
+    [SerializeField] public float missedGrabStaminaDamage = 10f;
 
     /// <summary>
     /// A boolean that represents if the player is outside of the ring.

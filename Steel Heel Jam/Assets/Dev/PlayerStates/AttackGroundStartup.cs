@@ -16,4 +16,11 @@ public class AttackGroundStartup : BasicState
         animationState = AnimationState.AG_Punch_03_S;
         stateToChangeTo = new AttackGroundDuration();
     }
+
+    public override void OnEnterThisState(BasicState prevState, PlayerStatus status)
+    {
+        base.OnEnterThisState(prevState, status);
+
+        status.audioManager.Play("swing", 0.8f, 1.2f);
+    }
 }

@@ -59,7 +59,7 @@ MonoBehaviour:
     name: musicLoop
     clips:
     - {fileID: 8300000, guid: 1273ba5f279eabc43962128ed5a8706e, type: 3}
-    volume: 0.3
+    volume: 0.1
     pitch: 1
     loop: 1
     randStartPos: 0
@@ -197,7 +197,53 @@ MonoBehaviour:
   - audioType: 1
     name: blockedPunch
     clips:
-    - {fileID: 8300000, guid: ce94d6abcbf77ff4c90cc27a3a6552ea, type: 3}
+    - {fileID: 8300000, guid: ec90eb796a903f64292a817364d2461b, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    randStartPos: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - audioType: 1
+    name: crunch
+    clips:
+    - {fileID: 8300000, guid: 939d4411ee5344a48b1ee8ddfe346d0a, type: 3}
+    - {fileID: 8300000, guid: 31a653d72c45a5d4da184cc7f9e85eac, type: 3}
+    - {fileID: 8300000, guid: 09047bc51589b754a9ed3a9945e3abd9, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    randStartPos: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - audioType: 1
+    name: landing
+    clips:
+    - {fileID: 8300000, guid: 5f379ab2b00830b4a9697cbbe2b03fdf, type: 3}
+    - {fileID: 8300000, guid: 2a4b80154fb11514d9e5de95709dc4f2, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    randStartPos: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - audioType: 1
+    name: roll
+    clips:
+    - {fileID: 8300000, guid: 3ba11678535b1e542ba20c3aff81a59e, type: 3}
+    - {fileID: 8300000, guid: 920af459d7eeca24b88fc7cfef04f5db, type: 3}
+    - {fileID: 8300000, guid: fe4b109d3d6545e409ab7831089f5e51, type: 3}
+    - {fileID: 8300000, guid: e9b724779a819f044a3358c71c7d87c9, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    randStartPos: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - audioType: 1
+    name: grab
+    clips:
+    - {fileID: 8300000, guid: b01f8f4181f7c7c4b8860f5b0d57acee, type: 3}
     volume: 1
     pitch: 1
     loop: 0

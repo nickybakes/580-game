@@ -39,5 +39,12 @@ public class AttackAirDuration : BasicState
         base.OnExitThisState(nextState, status);
 
         status.combat.weaponState.ForceEndAttack();
+
+        // Play ground sound. Louder when moving faster.
+        float vol = -status.movement.velocity.y / 50;
+
+        status.audioManager.Play("crunch", vol / 3);
+        status.audioManager.Play("punch", vol);
+        status.audioManager.Play("landing", vol / 2);
     }
 }

@@ -16,6 +16,7 @@ public class SuplexDuration : BasicState
         canBlock = false;
         updateMovement = true; // False for now.
         countAttackCooldown = false;
+        extraFallGravityMultiplier = 2f;
         animationState = AnimationState.SuplexDuration_01;
         stateToChangeTo = new Idle();
 
@@ -56,6 +57,15 @@ public class SuplexDuration : BasicState
         base.OnExitThisState(nextState, status);
 
         status.visuals.SetModelRotationX(0);
+
+        // Play ground sound. Louder when moving faster.
+        float vol = -status.movement.velocity.y / 50;
+        AudioManager audioManager = GameObject.FindObjectOfType<AudioManager>();
+
+        audioManager.Play("crunch", vol / 3);
+        audioManager.Play("punch", vol);
+        audioManager.Play("landing", vol / 2);
+        audioManager.Play("orchestraHitLong");
     }
 
     // Give initial arc direction.
