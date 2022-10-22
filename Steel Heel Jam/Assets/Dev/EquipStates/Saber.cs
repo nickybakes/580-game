@@ -6,48 +6,65 @@ public class Saber : DefaultState
 {
     public Saber(int _playerNumber, GameObject _hitbox) : base(_playerNumber, _hitbox)
     {
-        //SetupHitboxReferences(_hitbox);
-
-        SetInitialHit();
-        maxComboCount = 3;
+        animationModifier = AnimationModifier.RightHandFist;
     }
 
-    protected override void SetInitialHit()
+    public override void InitializeAttacks()
     {
-        damageMultiplier = 1.2f;
-        knockbackMultiplier = 1.2f;
-        knockbackHeightMultiplier = 0.4f;
-        hitstunMultiplier = 1.5f;
-        radiusMultiplier = 1.4f;
-        startupMultiplier = 1.0f;
-        durationMultiplier = 1.0f;
-        recoveryMultiplier = 1.0f;
-    }
-
-    public override void UpdateValues()
-    {
-        switch (currentComboCount)
+        combo = new Attack[]
         {
-            case 0:
-                SetInitialHit();
-                break;
-            case 1:
-                damageMultiplier = 1.2f;
-                knockbackMultiplier = 1.2f;
-                knockbackHeightMultiplier = 0.4f;
-                radiusMultiplier = 1.6f;
-                startupMultiplier = 0.7f;
-                forwardSpeedModifierMultiplier = 1.1f;
-                break;
-            case 2:
-                damageMultiplier = 1.5f;
-                knockbackMultiplier = 1.5f;
-                knockbackHeightMultiplier = 0.6f;
-                radiusMultiplier = 2.5f;
-                startupMultiplier = 0.7f;
-                forwardSpeedModifierMultiplier = 1.4f;
-                durationMultiplier = 1.4f;
-                break;
-        }
+            new Attack( // *** 1st Hit ***
+                1.5f, // Damage Multiplier
+                1.2f, // Knockback Multiplier
+                0.4f, // Knockback Height Multiplier
+                1.5f, // Hitstun Multiplier
+                1.5f, // Radius Multiplier
+                1.0f, // Height Multiplier
+                1.0f, // Startup Multiplier
+                1.0f, // Duration Multiplier
+                1.0f, // Recovery Multiplier
+                1.0f  // Forward Speed Multiplier
+                ),
+            new Attack( // *** 2nd Hit ***
+                1.8f, // Damage Multiplier
+                1.2f, // Knockback Multiplier
+                0.4f, // Knockback Height Multiplier
+                1.0f, // Hitstun Multiplier
+                2.3f, // Radius Multiplier
+                1.0f, // Height Multiplier
+                0.7f, // Startup Multiplier
+                1.3f, // Duration Multiplier
+                1.0f, // Recovery Multiplier
+                1.5f  // Forward Speed Multiplier
+                ),
+            new Attack( // *** 3rd Hit ***
+                2.0f, // Damage Multiplier
+                1.2f, // Knockback Multiplier
+                0.4f, // Knockback Height Multiplier
+                1.0f, // Hitstun Multiplier
+                2.9f, // Radius Multiplier
+                1.0f, // Height Multiplier
+                0.7f, // Startup Multiplier
+                1.6f, // Duration Multiplier
+                1.0f, // Recovery Multiplier
+                2.0f  // Forward Speed Multiplier
+                ),
+        };
+
+        maxComboCount = combo.Length;
+        currentAttack = combo[0];
+
+        airAttack = new Attack( // *** 1st Hit ***
+                1.0f, // Damage Multiplier
+                1.0f, // Knockback Multiplier
+                1.0f, // Knockback Height Multiplier
+                1.0f, // Hitstun Multiplier
+                1.0f, // Radius Multiplier
+                1.0f, // Height Multiplier
+                1.0f, // Startup Multiplier
+                1.0f, // Duration Multiplier
+                1.0f, // Recovery Multiplier
+                1.0f  // Forward Speed Multiplier
+                );
     }
 }

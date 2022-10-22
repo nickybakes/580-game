@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem.Controls;
 
@@ -6,7 +7,15 @@ public enum PlayerChild
     Model = 0,
     Hitbox = 1,
     Visuals = 3,
-    PickUpSphere = 4
+    PickUpSphere = 4,
+    RingDecal = 5
+}
+
+public enum Buff
+{
+    Sample1,
+    Sample2,
+    Sample3
 }
 
 public enum Tag
@@ -22,28 +31,32 @@ public class PlayerStatus : MonoBehaviour
 {
     private AudioManager audioManager;
 
+    public List<Buff> buffs = new List<Buff>();
+
     [SerializeField] public bool isHeel = false;
 
     [SerializeField] private const float HeelStaminaDamage = 5f;
 
-    [SerializeField] private const float HeelStaminaLossCooldownMax = 1f;
-
-    private float heelStaminaLossCooldown;
-
-    public const float deafaultMaxStamina = 100f;
+    public const float defaultMaxStamina = 100f;
+    public const float defaultMaxSpotlight = 100f;
 
     /// <summary>
     /// The stamina value for the player. Stamina is consumed for actions and is lost upon being hit, being the heel, or being outside of the ring.
     /// When a player's stamina is empty and they are knocked out of the zone, they are eliminated.
     /// </summary>
-    public float stamina = deafaultMaxStamina;
+    public float stamina = defaultMaxStamina;
     /// <summary>
     /// The player's current maximum stamina value.
     /// </summary>
-    public float maxStamina = deafaultMaxStamina;
+    public float maxStamina = defaultMaxStamina;
     /// <summary>
     /// The lowest a player's maximum stamina can get.
     /// </summary>
+    /// 
+
+    public float spotlight;
+    public bool isInSpotlight;
+
     [SerializeField] private const float MinMaxStamina = 20f;
 
     private BasicState currentPlayerState;
@@ -54,7 +67,8 @@ public class PlayerStatus : MonoBehaviour
     [HideInInspector]
     public PlayerCombat combat;
 
-    private PlayerVisuals visuals;
+    [HideInInspector]
+    public PlayerVisuals visuals;
 
     public int playerNumber;
 
@@ -74,16 +88,6 @@ public class PlayerStatus : MonoBehaviour
     private bool isOOB = false;
 
     /// <summary>
-    /// The rate at which stamina is lost when out of bounds.
-    /// </summary>
-    [SerializeField] private const float OOBStaminaLossCooldownMax = 1f;
-
-    /// <summary>
-    /// The current timer for losing stamina when out of bounds.
-    /// </summary>
-    private float OOBStaminaLossCooldown;
-
-    /// <summary>
     /// The damage to stamina that the player takes every interval while out of bounds.
     /// </summary>
     [SerializeField] private const float OOBStaminaDamage = 10f;
@@ -94,19 +98,9 @@ public class PlayerStatus : MonoBehaviour
     [SerializeField] private const float OOBMaxStaminaDamage = 5f;
 
     /// <summary>
-    /// The rate at which stamina is regained when not active.
-    /// </summary>
-    [SerializeField] private const float StaminaRegenCooldownMax = 1f;
-
-    /// <summary>
-    /// The current timer for regenerating stamina.
-    /// </summary>
-    private float staminaRegenCooldown;
-
-    /// <summary>
     /// The amount of stamina restored every interval when not active.
     /// </summary>
-    [SerializeField] private const float PassiveStaminaRegen = 3f;
+    [SerializeField] private const float PassiveStaminaRegen = 5.0f;
 
     public float totalDamageTaken;
 
@@ -221,48 +215,20 @@ public class PlayerStatus : MonoBehaviour
         // If the player is out of bounds . . .
         if (isOOB)
         {
-            // Reduce the timer for OOB stamina loss
-            OOBStaminaLossCooldown += Time.deltaTime;
-
-            // If the timer for OOB stamina loss runs out . . .
-            if (OOBStaminaLossCooldown >= OOBStaminaLossCooldownMax)
-            {
-                // Reset the timer for OOB stamina loss and decrease stamina
-                OOBStaminaLossCooldown = 0;
-                ReduceStamina(OOBStaminaDamage);
-            }
+            ReduceStamina(OOBStaminaDamage * Time.deltaTime);
         }
 
         // If the player is the Heel . . .
         if (isHeel)
         {
-            // Reduce the timer for Heel stamina loss
-            heelStaminaLossCooldown += Time.deltaTime;
-
-            // If the Heel stamina loss timer runs out . . .
-            if (heelStaminaLossCooldown >= HeelStaminaLossCooldownMax)
-            {
-                // Reset the timer for Heel stamina loss and decrease stamina
-                heelStaminaLossCooldown = 0;
-                ReduceStamina(HeelStaminaDamage);
-            }
+            ReduceStamina(HeelStaminaDamage * Time.deltaTime);
         }
 
         if (!isHeel && !IsResting)
         {
-            if (combat.ActedRecently || isOOB)
+            if (!combat.ActedRecently && !isOOB)
             {
-                staminaRegenCooldown = StaminaRegenCooldownMax;
-            }
-            else
-            {
-                staminaRegenCooldown += Time.deltaTime;
-
-                if (staminaRegenCooldown >= StaminaRegenCooldownMax)
-                {
-                    IncreaseStamina(PassiveStaminaRegen);
-                    staminaRegenCooldown = 0;
-                }
+                IncreaseStamina(PassiveStaminaRegen * Time.deltaTime);
             }
         }
 
@@ -338,8 +304,12 @@ public class PlayerStatus : MonoBehaviour
 
             playerLastHitBy = attackingPlayerStatus;
 
+
             Vector3 knockbackDir = (collisionPos - hitboxPos).normalized;
-            knockback = knockback * (2 + stamina / deafaultMaxStamina);
+
+            transform.forward = new Vector3(knockbackDir.x * -1, 0, knockbackDir.z * -1);
+
+            knockback = knockback * (2 + stamina / defaultMaxStamina);
 
             float staminaRatio = (maxStamina - stamina) * 0.2f;
 
@@ -357,18 +327,20 @@ public class PlayerStatus : MonoBehaviour
             //print(knockbackVelocity.magnitude);
             ReduceStamina(damage);
             totalDamageTaken += damage;
+            IncreaseSpotlightMeter(damage / 4);
 
             recentDamageTaken += damage;
             recentDamageTakenMax = recentDamageTaken;
             recentDamageTimeCurrent = 10f;
 
-            if (totalDamageTaken > 200f && recentDamageTaken > 30f)
+            if (totalDamageTaken > 100f && recentDamageTaken > 30f)
             {
                 combat.DropWeapon();
                 ReduceMaxStamina(damage);
             }
 
             attackingPlayerStatus.totalDamagerDealt += damage;
+            attackingPlayerStatus.IncreaseSpotlightMeter(damage / 3);
             attackingPlayerStatus.combat.weaponState.gotAHit = true;
 
             recentActivityTimeCurrent = recentActivityTimeMax;
@@ -410,7 +382,8 @@ public class PlayerStatus : MonoBehaviour
             playerLastHitBy = attackingPlayerStatus;
 
         Vector3 knockbackDir = (collisionPos - hitboxPos).normalized;
-        knockback = knockback * (2 + stamina / deafaultMaxStamina);
+        transform.forward = new Vector3(knockbackDir.x * -1, 0, knockbackDir.z * -1);
+        knockback = knockback * (2 + stamina / defaultMaxStamina);
 
         float staminaRatio = (maxStamina - stamina) * 0.2f;
 
@@ -427,6 +400,7 @@ public class PlayerStatus : MonoBehaviour
         movement.grounded = false;
         ReduceStamina(damage);
         totalDamageTaken += damage;
+        IncreaseSpotlightMeter(damage / 4);
 
         recentDamageTaken += damage;
         recentDamageTakenMax = recentDamageTaken;
@@ -444,6 +418,7 @@ public class PlayerStatus : MonoBehaviour
         if (attackingPlayerStatus != null)
         {
             attackingPlayerStatus.totalDamagerDealt += damage;
+            attackingPlayerStatus.IncreaseSpotlightMeter(damage / 3);
             attackingPlayerStatus.recentActivityTimeCurrent = recentActivityTimeMax;
         }
 
@@ -465,6 +440,15 @@ public class PlayerStatus : MonoBehaviour
         }
     }
 
+    public void GiveBuff(Buff buff)
+    {
+        if (!buffs.Contains(buff))
+        {
+            buffs.Add(buff);
+            // Reset specific buff timer
+        }
+    }
+
     /// <summary>
     /// Increases the player's stamina. This value will never go above the max.
     /// </summary>
@@ -476,7 +460,7 @@ public class PlayerStatus : MonoBehaviour
         if (stamina > maxStamina) stamina = maxStamina;
 
         if (playerHeader != null)
-            playerHeader.UpdateStaminaBar();
+            playerHeader.UpdateStaminaMeter();
     }
 
     /// <summary>
@@ -493,12 +477,30 @@ public class PlayerStatus : MonoBehaviour
         if (stamina < 0) stamina = 0;
 
         if (playerHeader != null)
-            playerHeader.UpdateStaminaBar();
+            playerHeader.UpdateStaminaMeter();
 
         if (!eliminated && stamina == 0 && isOOB)
         {
             GameManager.game.EliminatePlayer(this);
         }
+    }
+
+    public void IncreaseSpotlightMeter(float value)
+    {
+        spotlight += value;
+
+        if (spotlight > defaultMaxSpotlight) spotlight = defaultMaxSpotlight;
+
+        playerHeader.UpdateSpotlightMeter();
+    }
+
+    public void ReduceSpotlightMeter(float value)
+    {
+        spotlight -= value;
+
+        if (spotlight < 0) spotlight = 0;
+
+        playerHeader.UpdateSpotlightMeter();
     }
 
     /// <summary>
@@ -517,7 +519,7 @@ public class PlayerStatus : MonoBehaviour
         }
 
         if (playerHeader != null)
-            playerHeader.UpdateStaminaBar();
+            playerHeader.UpdateStaminaMeter();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -533,7 +535,6 @@ public class PlayerStatus : MonoBehaviour
         if (other.tag == "Ring")
         {
             isOOB = true;
-            OOBStaminaLossCooldown = 0;
         }
     }
 }

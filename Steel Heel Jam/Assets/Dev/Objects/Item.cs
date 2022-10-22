@@ -6,7 +6,6 @@ public class Item : MonoBehaviour
 {
     public enum ItemType
     {
-        TestCube,
         Saber,
         BoomBox,
         ExplosiveBarrel,

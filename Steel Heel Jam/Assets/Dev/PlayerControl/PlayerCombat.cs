@@ -12,7 +12,9 @@ public class PlayerCombat : MonoBehaviour
     private Hitbox _hitboxScript;
     private PlayerStatus _status;
 
-    private GameObject _pickUpSphere;
+    private PickUpSphere _pickUpSphere;
+    [HideInInspector]
+    public GrabHitbox grabHitbox;
 
     private PickUpSphere _pickUpSphereScript;
 
@@ -23,7 +25,9 @@ public class PlayerCombat : MonoBehaviour
     public const float attackCooldownMax = .35f;
 
     private float recentActionCooldown;
-    private const float recentActionCooldownMax = 0.5f;
+    private const float recentActionCooldownMax = 1.0f;
+
+    private float pickupHeldLength = 0;
 
     public GameObject equippedItem;
 
@@ -63,7 +67,8 @@ public class PlayerCombat : MonoBehaviour
         _input = GetComponent<StarterAssetsInputs>();
         _hitbox = transform.GetChild((int)PlayerChild.Hitbox).gameObject;
 
-        _pickUpSphere = transform.GetChild((int)PlayerChild.PickUpSphere).gameObject;
+        _pickUpSphere = GetComponentInChildren<PickUpSphere>();
+        grabHitbox = GetComponentInChildren<GrabHitbox>();
 
         _pickUpSphereScript = transform.GetChild((int)PlayerChild.PickUpSphere).gameObject.GetComponent<PickUpSphere>();
 
@@ -132,9 +137,25 @@ public class PlayerCombat : MonoBehaviour
             }
         }
 
-        if (canPickup && _input.pickUpPressed && !_input.wasPickUpPressed)
+
+        // If you hold the pickup button for 0.3 seconds, sends to SuplexStartup.
+        if (canPickup && _input.pickUpPressed)
+        {
+            pickupHeldLength += Time.deltaTime;
+
+            if (pickupHeldLength > 0.3f)
+            {
+                _status.SetPlayerStateImmediately(new GrabStartup());
+                pickupHeldLength = 0;
+                _input.pickUpPressed = false;
+            }
+        }
+
+        // TryPickup should be called if the pickup button is released and it's not a suplex...
+        if (canPickup && !_input.pickUpPressed && _input.wasPickUpPressed)
         {
             TryPickup();
+            pickupHeldLength = 0;
         }
 
         if (_status.CurrentPlayerState is ItemThrowing && equippedItem != null && !_input.throwIsHeld && _input.throwWasHeld)
@@ -176,7 +197,11 @@ public class PlayerCombat : MonoBehaviour
         _status.movement.velocity = Vector3.zero;
         _status.SetPlayerStateImmediately(new AttackGroundStartup());
 
-        weaponState.UpdateValues();
+        weaponState.currentAttack = weaponState.combo[weaponState.currentComboCount];
+
+        _status.CurrentPlayerState.animationState = DefaultState.GetAttackAnimation(weaponState.currentAttack.animation, 0);
+        _status.CurrentPlayerState.stateToChangeTo.animationState = DefaultState.GetAttackAnimation(weaponState.currentAttack.animation, 1);
+        _status.CurrentPlayerState.stateToChangeTo.stateToChangeTo.animationState = DefaultState.GetAttackAnimation(weaponState.currentAttack.animation, 2);
 
         _status.CurrentPlayerState.timeToChangeState = weaponState.Startup;
         _status.CurrentPlayerState.stateToChangeTo.timeToChangeState = weaponState.Duration;
@@ -192,10 +217,11 @@ public class PlayerCombat : MonoBehaviour
     private void AttackAir()
     {
         _input.Attack = false;
-        //_status.movement.velocity = Vector3.zero;
-        _status.SetPlayerStateImmediately(_status.movement.velocity.y > 0 ? new AttackAirStartup() : new AttackAirDuration());
 
-        //weaponState.UpdateValues();
+        weaponState.currentAttack = weaponState.airAttack;
+
+        //_status.movement.velocity = Vector3.zero;
+        _status.SetPlayerStateImmediately(new AttackAirStartup());
 
         if (weaponState.currentComboCount == 0)
             _status.movement.SetTheSetForwardDirection();
@@ -203,6 +229,7 @@ public class PlayerCombat : MonoBehaviour
 
     private void DodgeRoll()
     {
+        CameraManager.cam.ShakeCamera(.25f);
         _input.dodgeRoll = false;
         dodgeRollCoolDown = 0;
         _status.SetPlayerStateImmediately(new DodgeRoll());
@@ -212,6 +239,7 @@ public class PlayerCombat : MonoBehaviour
 
     private void Block()
     {
+        CameraManager.cam.ShakeCamera(1f);
         _input.block = false;
         _status.attackBlocked = false;
         blockCoolDown = 0;
@@ -221,8 +249,9 @@ public class PlayerCombat : MonoBehaviour
 
     private void TryPickup()
     {
-        _input.pickUpPressed = false;
-        _pickUpSphere.SetActive(true);
+        CameraManager.cam.ShakeCamera(.5f);
+        _input.wasPickUpPressed = false;
+        _pickUpSphere.TryPickup();
     }
 
     private void Throw()
@@ -278,20 +307,27 @@ public class PlayerCombat : MonoBehaviour
 
         timeHeld = 0;
 
+        _status.visuals.SetAnimationModifier(AnimationModifier.None);
+
         // Plays initial item throw sfx.
         audioManager.Play("throw", 0.8f, 1.2f);
     }
 
     public void DropWeapon()
     {
+        if (!equippedItem)
+            return;
+
         equippedItem.transform.localRotation = Quaternion.identity;
         equippedItem.transform.parent = null;
         equippedItem.SetActive(true);
 
         equippedItem = null;
-        if(_status.playerHeader)
+        if (_status.playerHeader)
             _status.playerHeader.SetWeaponText("");
         weaponState = new Unarmed(_status.playerNumber, _hitbox);
+
+        _status.visuals.SetAnimationModifier(AnimationModifier.None);
     }
 
 }

@@ -17,6 +17,7 @@ public class StarterAssetsInputs : MonoBehaviour
     private float timeSinceAttackWasPressed;
     private float timeSinceAttackWasPressedMax = .24f;
 
+
     // Combat Controls
     public bool attack;
     public bool pickUpPressed;

@@ -6,7 +6,6 @@ using TMPro;
 
 public class PlayerHeader : MonoBehaviour
 {
-
     private PlayerStatus playerStatus;
 
     private Canvas canvas;
@@ -33,6 +32,20 @@ public class PlayerHeader : MonoBehaviour
 
     public TextMeshProUGUI weaponText;
 
+    public Image spotlightMeterFill;
+
+    private RectTransform spotlightMeterFillRect;
+
+    public Image spotlightMeterBackground;
+    private RectTransform spotlightMeterBackgroundRect;
+
+    public GameObject pickupIndicator;
+
+    public Animator buffHeaderAnimator;
+
+    public TextMeshProUGUI buffHeaderTitle;
+    
+    public TextMeshProUGUI buffHeaderDescription;
 
     private bool blinkDangerText;
     private float dangerBlinkTime;
@@ -43,8 +56,6 @@ public class PlayerHeader : MonoBehaviour
     {
         get { return playerStatus; }
     }
-
-
 
     public void Setup(PlayerStatus status, Canvas c)
     {
@@ -60,21 +71,45 @@ public class PlayerHeader : MonoBehaviour
         staminaBarFillRect = staminaBarFill.GetComponent<RectTransform>();
         staminaBarBorderRect = staminaBarBorder.GetComponent<RectTransform>();
         staminaBarBackgroundRect = staminaBarBackground.GetComponent<RectTransform>();
+
+        spotlightMeterFillRect = spotlightMeterFill.GetComponent<RectTransform>();
+        spotlightMeterBackgroundRect = spotlightMeterBackground.GetComponent<RectTransform>();
     }
 
-    public void UpdateStaminaBar()
+    public void UpdateSpotlightMeter()
+    {
+        float height = spotlightMeterBackgroundRect.rect.height;
+        float spotlightPercentage = playerStatus.spotlight / PlayerStatus.defaultMaxSpotlight;
+
+        //DECREASES BARS FROM THE BOTTOM SIDE
+        spotlightMeterFillRect.SetInsetAndSizeFromParentEdge(
+            RectTransform.Edge.Bottom,
+            0,
+            height * spotlightPercentage
+        );
+    }
+
+    public void UpdateStaminaMeter()
     {
         float width = staminaBarBackgroundRect.rect.width;
-        float staminaPercentage = playerStatus.stamina / PlayerStatus.deafaultMaxStamina;
-        float staminaMaxPercentage = playerStatus.maxStamina / PlayerStatus.deafaultMaxStamina;
+        float staminaPercentage = playerStatus.stamina / PlayerStatus.defaultMaxStamina;
+        float staminaMaxPercentage = playerStatus.maxStamina / PlayerStatus.defaultMaxStamina;
 
         //decreases bars from the center
         // staminaBarFillRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, width * staminaPercentage);
         // staminaBarBorderRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, width * staminaMaxPercentage);
 
         //DECREASES BARS FROM THE LEFT SIDE
-        staminaBarFillRect.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Left, 0, width * staminaPercentage);
-        staminaBarBorderRect.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Left, 0, width * staminaMaxPercentage);
+        staminaBarFillRect.SetInsetAndSizeFromParentEdge(
+            RectTransform.Edge.Left,
+            0,
+            width * staminaPercentage
+        );
+        staminaBarBorderRect.SetInsetAndSizeFromParentEdge(
+            RectTransform.Edge.Left,
+            0,
+            width * staminaMaxPercentage
+        );
 
         if (staminaPercentage <= staminaDangerThreshold)
         {
@@ -90,6 +125,11 @@ public class PlayerHeader : MonoBehaviour
     public void SetHeel(bool enabled)
     {
         heelText.SetActive(enabled);
+    }
+
+    public void SetPickup(bool enabled)
+    {
+        pickupIndicator.SetActive(enabled);
     }
 
     // Update is called once per frame

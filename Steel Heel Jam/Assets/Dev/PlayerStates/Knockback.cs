@@ -26,7 +26,7 @@ public class Knockback : BasicState
     public override void OnEnterThisState(BasicState prevState, PlayerStatus status)
     {
         base.OnEnterThisState(prevState, status);
-        
+
         status.movement.velocity = velocity;
         status.movement.grounded = false;
     }
@@ -35,6 +35,14 @@ public class Knockback : BasicState
     {
         base.OnExitThisState(nextState, status);
 
+        status.visuals.SetModelRotationX(0);
+    }
+
+    public override void Update(PlayerStatus status)
+    {
+        base.Update(status);
+
+        status.visuals.RotateModelFlyingThroughAir();
     }
 
 }

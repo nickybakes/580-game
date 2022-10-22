@@ -13,7 +13,7 @@ public class AttackGroundStartup : BasicState
         canBlock = false;
         updateMovement = false;
         countAttackCooldown = false;
-        animationState = AnimationState.AttackGroundStartup_01;
+        animationState = AnimationState.AG_Punch_03_S;
         stateToChangeTo = new AttackGroundDuration();
     }
 }
