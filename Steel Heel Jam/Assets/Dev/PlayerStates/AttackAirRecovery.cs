@@ -18,23 +18,4 @@ public class AttackAirRecovery : BasicState
         animationState = AnimationState.Eliminated;
         stateToChangeTo = new Idle();
     }
-
-    public override void Update(PlayerStatus status)
-    {
-        base.Update(status);
-    }
-
-    public override void OnEnterThisState(BasicState prevState, PlayerStatus status)
-    {
-        base.OnEnterThisState(prevState, status);
-
-
-    }
-
-    public override void OnExitThisState(BasicState nextState, PlayerStatus status)
-    {
-        base.OnExitThisState(nextState, status);
-
-
-    }
 }

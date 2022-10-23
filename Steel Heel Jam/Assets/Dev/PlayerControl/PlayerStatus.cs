@@ -139,11 +139,11 @@ public class PlayerStatus : MonoBehaviour
         }
     }
 
-    public bool IsResting
+    public bool IsFlexing
     {
         get
         {
-            return (currentPlayerState is Rest);
+            return (currentPlayerState is Flexing);
         }
     }
 
@@ -227,7 +227,7 @@ public class PlayerStatus : MonoBehaviour
             ReduceStamina(HeelStaminaDamage * Time.deltaTime);
         }
 
-        if (!isHeel && !IsResting)
+        if (!isHeel && !IsFlexing)
         {
             if (!combat.ActedRecently && !isOOB)
             {
@@ -245,16 +245,6 @@ public class PlayerStatus : MonoBehaviour
         if (recentActivityTimeCurrent > 0)
         {
             recentActivityTimeCurrent -= Time.deltaTime;
-        }
-
-        if (IsResting)
-        {
-            if (!audioManager.IsPlaying("flexing"))
-                audioManager.Play("flexing");
-        }
-        else
-        {
-            audioManager.Stop("flexing");
         }
     }
 

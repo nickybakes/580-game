@@ -40,7 +40,7 @@ public class GrabDuration : BasicState
 
         status.combat.grabHitbox.TrySuplex();
 
-        status.audioManager.Play("");
+        status.audioManager.Play("grab", 0.8f, 1.2f);
     }
 
     public override void OnExitThisState(BasicState nextState, PlayerStatus status)

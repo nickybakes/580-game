@@ -16,6 +16,5 @@ public class SuplexStartup : BasicState
         countAttackCooldown = false;
         animationState = AnimationState.SuplexStartup_01;
         stateToChangeTo = new SuplexDuration(victim);
-
     }
 }

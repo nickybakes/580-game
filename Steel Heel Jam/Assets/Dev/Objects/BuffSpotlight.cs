@@ -88,7 +88,7 @@ public class BuffSpotlight : MonoBehaviour
     {
         foreach (PlayerStatus status in players)
         {
-            if (status.CurrentPlayerState is Rest)
+            if (status.CurrentPlayerState is Flexing)
             {
                 targetPlayerPosition = status.transform;
                 playerTargeted = true;

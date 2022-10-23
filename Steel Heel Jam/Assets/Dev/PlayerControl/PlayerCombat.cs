@@ -161,7 +161,7 @@ public class PlayerCombat : MonoBehaviour
             Throw();
         }
 
-        if (_status.CurrentPlayerState is Rest && _input.throwWasHeld)
+        if (_status.CurrentPlayerState is Flexing && _input.throwWasHeld)
         {
             _status.SetPlayerStateImmediately(new Idle());
         }
@@ -184,9 +184,9 @@ public class PlayerCombat : MonoBehaviour
             }
             else
             {
-                if (_status.CurrentPlayerState is not Rest)
+                if (_status.CurrentPlayerState is not Flexing)
                 {
-                    _status.SetPlayerStateImmediately(new Rest());
+                    _status.SetPlayerStateImmediately(new Flexing());
                 }
             }
         }
