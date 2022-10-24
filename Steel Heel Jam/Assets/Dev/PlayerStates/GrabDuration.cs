@@ -39,11 +39,16 @@ public class GrabDuration : BasicState
         status.movement.SetVelocityToMoveSpeedTimesFowardDirection();
 
         status.combat.grabHitbox.TrySuplex();
+
+        status.audioManager.Play("grab", 0.8f, 1.2f);
     }
 
     public override void OnExitThisState(BasicState nextState, PlayerStatus status)
     {
         base.OnExitThisState(nextState, status);
+
+        // Reduce stamina for missed grab.
+        status.ReduceStamina(status.missedGrabStaminaDamage);
 
         // Set GrabHitbox inactive
         status.combat.grabHitbox.gameObject.SetActive(false);

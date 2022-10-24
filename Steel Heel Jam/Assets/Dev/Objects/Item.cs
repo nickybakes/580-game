@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 {
-    PlayerStatus targetPlayer;
     public enum ItemType
     {
         Saber,

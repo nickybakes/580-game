@@ -32,7 +32,6 @@ public class PlayerCombat : MonoBehaviour
     public GameObject equippedItem;
 
     private GameManager gameManager;
-    private AudioManager audioManager;
 
     // -1 = 360 deg arc, 0 = 180 degree arc, 0.5 = 90 deg...
     [SerializeField]
@@ -62,13 +61,12 @@ public class PlayerCombat : MonoBehaviour
     public void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
-        audioManager = FindObjectOfType<AudioManager>();
 
         _input = GetComponent<StarterAssetsInputs>();
         _hitbox = transform.GetChild((int)PlayerChild.Hitbox).gameObject;
 
         _pickUpSphere = GetComponentInChildren<PickUpSphere>();
-        grabHitbox = GetComponentInChildren<GrabHitbox>();
+        grabHitbox = GetComponentInChildren<GrabHitbox>(true); // Set true for inactive objects.
 
         _pickUpSphereScript = transform.GetChild((int)PlayerChild.PickUpSphere).gameObject.GetComponent<PickUpSphere>();
 
@@ -163,7 +161,7 @@ public class PlayerCombat : MonoBehaviour
             Throw();
         }
 
-        if (_status.CurrentPlayerState is Rest && _input.throwWasHeld)
+        if (_status.CurrentPlayerState is Flexing && _input.throwWasHeld)
         {
             _status.SetPlayerStateImmediately(new Idle());
         }
@@ -186,7 +184,10 @@ public class PlayerCombat : MonoBehaviour
             }
             else
             {
-                if (_status.CurrentPlayerState is not Rest) _status.SetPlayerStateImmediately(new Rest());
+                if (_status.CurrentPlayerState is not Flexing)
+                {
+                    _status.SetPlayerStateImmediately(new Flexing());
+                }
             }
         }
     }
@@ -210,8 +211,6 @@ public class PlayerCombat : MonoBehaviour
 
         if (weaponState.currentComboCount == 0)
             _status.movement.SetTheSetForwardDirection();
-
-        audioManager.Play("swing", 0.8f, 1.2f);
     }
 
     private void AttackAir()
@@ -229,7 +228,6 @@ public class PlayerCombat : MonoBehaviour
 
     private void DodgeRoll()
     {
-        CameraManager.cam.ShakeCamera(.25f);
         _input.dodgeRoll = false;
         dodgeRollCoolDown = 0;
         _status.SetPlayerStateImmediately(new DodgeRoll());
@@ -239,7 +237,6 @@ public class PlayerCombat : MonoBehaviour
 
     private void Block()
     {
-        CameraManager.cam.ShakeCamera(1f);
         _input.block = false;
         _status.attackBlocked = false;
         blockCoolDown = 0;
@@ -282,9 +279,8 @@ public class PlayerCombat : MonoBehaviour
         {
             potentialTargets = potentialTargets.OrderBy(x => Vector3.Distance(_status.transform.position, x.transform.position)).ToList();
 
-            // Now check if there are any obstacles in the way of the first player in the list, if not, pass to itemTrajectory, else cont. list, if none, pass null.
-
-            // Raycasting magic.
+            // Now check if there are any obstacles in the way of the first player in the list (Raycasting),
+            // if not, pass to itemTrajectory, else cont. list, if none, pass null.
 
             // For now, adds the first in potentialTargets.
             itemTrajectory.target = potentialTargets[0];
@@ -307,6 +303,7 @@ public class PlayerCombat : MonoBehaviour
         _status.SetPlayerStateImmediately(new ThrowRecovery());
 
         timeHeld = 0;
+
         _status.visuals.SetAnimationModifier(AnimationModifier.None);
     }
 

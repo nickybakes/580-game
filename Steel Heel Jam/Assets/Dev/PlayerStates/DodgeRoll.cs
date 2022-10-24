@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class DodgeRoll : BasicState
 {
-
-
     public DodgeRoll()
     {
         timeToChangeState = .45f;
@@ -53,6 +51,13 @@ public class DodgeRoll : BasicState
 
 
         status.movement.velocity = status.movement.velocity.normalized * status.movement.CurrentMoveSpeed;
+    }
+
+    public override void OnEnterThisState(BasicState prevState, PlayerStatus status)
+    {
+        base.OnEnterThisState(prevState, status);
+
+        status.audioManager.Play("roll");
     }
 
 }

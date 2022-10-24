@@ -22,21 +22,10 @@ public class ItemThrowing : BasicState
         stateToChangeTo = new ThrowRecovery();
     }
 
-    public override void Update(PlayerStatus status)
-    {
-        base.Update(status);
-
-        // Decrease movespeed to a cap. (2 seconds to lerp from 1.0 to 0.2 movespeed.)
-        //moveSpeedMultiplier = Mathf.Lerp(1.0f, 0.2f, timeInThisState / 2.0f);
-
-        //status.movement.SetVelocityToMoveSpeedTimesFowardDirection();
-    }
-
     public override void OnEnterThisState(BasicState prevState, PlayerStatus status)
     {
         base.OnEnterThisState(prevState, status);
 
-        //status.movement.velocity = status.movement.velocity.normalized * moveSpeedMultiplier;
-        // status.movement.SetTopDownVelocityToZero();
+        status.audioManager.Play("throw", 0.8f, 1.2f);
     }
 }

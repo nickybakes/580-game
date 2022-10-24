@@ -41,6 +41,9 @@ public class GrabHitbox : MonoBehaviour
 
         victim.SetPlayerStateImmediately(new SuplexVictimStartup());
         playerStatus.SetPlayerStateImmediately(new SuplexStartup(victim));
+
+        // Removes victim from grabHitbox.
+        playersWithinBounds.Remove(victim.gameObject);
     }
 
     private void OnTriggerEnter(Collider other)

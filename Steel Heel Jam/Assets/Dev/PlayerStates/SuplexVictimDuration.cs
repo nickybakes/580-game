@@ -6,7 +6,7 @@ public class SuplexVictimDuration : BasicState
 {
     public SuplexVictimDuration()
     {
-        timeToChangeState = 0; // Until grounded. (or parent grounded?)
+        timeToChangeState = 0; // Until parent grounded.
         canPlayerControlMove = false;
         canPlayerControlRotate = false;
         canAttack = false;
@@ -16,8 +16,6 @@ public class SuplexVictimDuration : BasicState
         countAttackCooldown = false;
         animationState = AnimationState.SuplexVictimDuration_01;
         stateToChangeTo = new Idle();
-
-        // Set to different layer / temporarily disable collisions.
     }
 
     public override void Update(PlayerStatus status)
@@ -34,5 +32,6 @@ public class SuplexVictimDuration : BasicState
         status.gameObject.transform.parent = null;
         status.visuals.SetModelRotationX(0);
 
+        status.ReduceStamina(status.suplexStaminaDamage);
     }
 }
