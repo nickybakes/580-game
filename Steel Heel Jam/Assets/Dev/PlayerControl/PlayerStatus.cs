@@ -267,7 +267,7 @@ public class PlayerStatus : MonoBehaviour
 
     public void SetPlayerStateImmediately(BasicState state)
     {
-        if (eliminated)
+        if (eliminated && !(state is Eliminated))
             return;
 
         currentPlayerState.OnExitThisState(state, this);

@@ -165,6 +165,7 @@ public class GameManager : MonoBehaviour
 
     public void EliminatePlayer(PlayerStatus status)
     {
+        status.eliminated = true;
         status.SetPlayerStateImmediately(new Eliminated());
 
         if (status.playerLastHitBy != null)
@@ -173,7 +174,6 @@ public class GameManager : MonoBehaviour
             status.playerLastHitBy.IncreaseSpotlightMeter(25.0f);
         }
 
-        status.eliminated = true;
         alivePlayerStatuses.Remove(status);
         eliminatedPlayerStatuses.Add(status);
         status.timeOfEliminiation = gameTime;

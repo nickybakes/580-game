@@ -44,49 +44,49 @@ public class PickUpSphere : MonoBehaviour
         Item itemScript = g.GetComponent<Item>();
         switch (itemScript.itemType)
         {
-            case Item.ItemType.Saber:
+            case ItemType.Saber:
                 playerCombat.weaponState = new Saber(playerStatus.playerNumber, playerCombat._hitbox);
                 if (playerStatus.playerHeader)
                     playerStatus.playerHeader.SetWeaponText("Saber");
                 break;
 
-            case Item.ItemType.BoomBox:
+            case ItemType.BoomBox:
                 playerCombat.weaponState = new BoomBox(playerStatus.playerNumber, playerCombat._hitbox);
                 if (playerStatus.playerHeader)
                     playerStatus.playerHeader.SetWeaponText("Boom Box");
                 break;
 
-            case Item.ItemType.ExplosiveBarrel:
+            case ItemType.ExplosiveBarrel:
                 playerCombat.weaponState = new ExplosiveBarrel(playerStatus.playerNumber, playerCombat._hitbox);
                 if (playerStatus.playerHeader)
                     playerStatus.playerHeader.SetWeaponText("Barrel");
                 break;
 
-            case Item.ItemType.SteelChair:
+            case ItemType.SteelChair:
                 playerCombat.weaponState = new SteelChair(playerStatus.playerNumber, playerCombat._hitbox);
                 if (playerStatus.playerHeader)
                     playerStatus.playerHeader.SetWeaponText("Steel Chair");
                 break;
 
-            case Item.ItemType.BaseballBat:
+            case ItemType.BaseballBat:
                 playerCombat.weaponState = new BaseballBat(playerStatus.playerNumber, playerCombat._hitbox);
                 if (playerStatus.playerHeader)
                     playerStatus.playerHeader.SetWeaponText("Baseball Bat");
                 break;
 
-            case Item.ItemType.Gauntlets:
+            case ItemType.Gauntlets:
                 playerCombat.weaponState = new Gauntlets(playerStatus.playerNumber, playerCombat._hitbox);
                 if (playerStatus.playerHeader)
                     playerStatus.playerHeader.SetWeaponText("Boxer Gloves");
                 break;
 
-            case Item.ItemType.LeadPipe:
+            case ItemType.LeadPipe:
                 playerCombat.weaponState = new LeadPipe(playerStatus.playerNumber, playerCombat._hitbox);
                 if (playerStatus.playerHeader)
                     playerStatus.playerHeader.SetWeaponText("Lead Pipe");
                 break;
 
-            case Item.ItemType.Ladder:
+            case ItemType.Ladder:
                 playerCombat.weaponState = new Ladder(playerStatus.playerNumber, playerCombat._hitbox);
                 if (playerStatus.playerHeader)
                     playerStatus.playerHeader.SetWeaponText("Ladder");
@@ -112,6 +112,7 @@ public class PickUpSphere : MonoBehaviour
         playerCombat.equippedItem = g;
 
         playerStatus.visuals.SetAnimationModifier(playerCombat.weaponState.animationModifier);
+        playerStatus.visuals.ShowWeaponVisual(itemScript.itemType);
 
         // Set Player to pick up state
         playerStatus.SetPlayerStateImmediately(new ItemPickUp());

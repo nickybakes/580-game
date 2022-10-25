@@ -13,6 +13,7 @@ public class PlayerCombat : MonoBehaviour
     private PlayerStatus _status;
 
     private PickUpSphere _pickUpSphere;
+
     [HideInInspector]
     public GrabHitbox grabHitbox;
 
@@ -45,7 +46,8 @@ public class PlayerCombat : MonoBehaviour
     {
         get
         {
-            if (recentActionCooldown > 0) return true;
+            if (recentActionCooldown > 0)
+                return true;
             return false;
         }
     }
@@ -55,7 +57,6 @@ public class PlayerCombat : MonoBehaviour
 
     private float blockCoolDown;
     private const float blockCoolDownMax = 1f;
-
 
     // Start is called before the first frame update
     public void Start()
@@ -68,7 +69,9 @@ public class PlayerCombat : MonoBehaviour
         _pickUpSphere = GetComponentInChildren<PickUpSphere>();
         grabHitbox = GetComponentInChildren<GrabHitbox>(true); // Set true for inactive objects.
 
-        _pickUpSphereScript = transform.GetChild((int)PlayerChild.PickUpSphere).gameObject.GetComponent<PickUpSphere>();
+        _pickUpSphereScript = transform
+            .GetChild((int)PlayerChild.PickUpSphere)
+            .gameObject.GetComponent<PickUpSphere>();
 
         _status = GetComponent<PlayerStatus>();
 
@@ -81,8 +84,14 @@ public class PlayerCombat : MonoBehaviour
     /// <param name="canAttack">True if the player can interrupt their current state and begin an Attack. Base off the player's current PlayerState</param>
     /// <param name="canDodgeRoll">True if the player can interrupt their current state and go into a dodge roll. Base off the player's current PlayerState</param>
     /// <param name="canBlock">True if the player can interrupt their current state and activate a block. Base off the player's current PlayerState</param>
-    /// 
-    public void UpdateManual(bool canAttack, bool canDodgeRoll, bool canBlock, bool canPickup, bool canThrow)
+    ///
+    public void UpdateManual(
+        bool canAttack,
+        bool canDodgeRoll,
+        bool canBlock,
+        bool canPickup,
+        bool canThrow
+    )
     {
         //fixes the null ref exception when recompiling in the Editor
 #if UNITY_EDITOR
@@ -95,7 +104,10 @@ public class PlayerCombat : MonoBehaviour
         if (_status.CurrentPlayerState.countAttackCooldown && attackCooldown < attackCooldownMax)
             attackCooldown += Time.deltaTime;
 
-        if (_status.CurrentPlayerState.countDodgeRollCooldown && dodgeRollCoolDown < dodgeRollCoolDownMax)
+        if (
+            _status.CurrentPlayerState.countDodgeRollCooldown
+            && dodgeRollCoolDown < dodgeRollCoolDownMax
+        )
             dodgeRollCoolDown += Time.deltaTime;
 
         if (_status.CurrentPlayerState.countBlockCooldown && blockCoolDown < blockCoolDownMax)
@@ -122,7 +134,12 @@ public class PlayerCombat : MonoBehaviour
                 recentActionCooldown = recentActionCooldownMax;
             }
 
-            if (canDodgeRoll && dodgeRollCoolDown > dodgeRollCoolDownMax && _input.dodgeRoll && !_input.wasDodgeRolling)
+            if (
+                canDodgeRoll
+                && dodgeRollCoolDown > dodgeRollCoolDownMax
+                && _input.dodgeRoll
+                && !_input.wasDodgeRolling
+            )
             {
                 DodgeRoll();
                 recentActionCooldown = recentActionCooldownMax;
@@ -134,7 +151,6 @@ public class PlayerCombat : MonoBehaviour
                 recentActionCooldown = recentActionCooldownMax;
             }
         }
-
 
         // If you hold the pickup button for 0.3 seconds, sends to SuplexStartup.
         if (canPickup && _input.pickUpPressed)
@@ -156,7 +172,12 @@ public class PlayerCombat : MonoBehaviour
             pickupHeldLength = 0;
         }
 
-        if (_status.CurrentPlayerState is ItemThrowing && equippedItem != null && !_input.throwIsHeld && _input.throwWasHeld)
+        if (
+            _status.CurrentPlayerState is ItemThrowing
+            && equippedItem != null
+            && !_input.throwIsHeld
+            && _input.throwWasHeld
+        )
         {
             Throw();
         }
@@ -170,7 +191,6 @@ public class PlayerCombat : MonoBehaviour
         {
             if (equippedItem != null)
             {
-
                 if (_status.CurrentPlayerState != new ItemThrowing())
                 {
                     _status.SetPlayerStateImmediately(new ItemThrowing());
@@ -180,7 +200,6 @@ public class PlayerCombat : MonoBehaviour
 
                 if (timeHeld > 2)
                     timeHeld = 2;
-
             }
             else
             {
@@ -200,19 +219,28 @@ public class PlayerCombat : MonoBehaviour
 
         weaponState.currentAttack = weaponState.combo[weaponState.currentComboCount];
 
-        if (weaponState.currentComboCount >= weaponState.maxComboCount && _status.buffs[(int)Buff.TheStink])
-        {
+        if (
+            weaponState.currentComboCount >= weaponState.maxComboCount
+            && _status.buffs[(int)Buff.TheStink]
+        ) { }
 
-        }
-
-        _status.CurrentPlayerState.animationState = DefaultState.GetAttackAnimation(weaponState.currentAttack.animation, 0);
-        _status.CurrentPlayerState.stateToChangeTo.animationState = DefaultState.GetAttackAnimation(weaponState.currentAttack.animation, 1);
-        _status.CurrentPlayerState.stateToChangeTo.stateToChangeTo.animationState = DefaultState.GetAttackAnimation(weaponState.currentAttack.animation, 2);
+        _status.CurrentPlayerState.animationState = DefaultState.GetAttackAnimation(
+            weaponState.currentAttack.animation,
+            0
+        );
+        _status.CurrentPlayerState.stateToChangeTo.animationState = DefaultState.GetAttackAnimation(
+            weaponState.currentAttack.animation,
+            1
+        );
+        _status.CurrentPlayerState.stateToChangeTo.stateToChangeTo.animationState =
+            DefaultState.GetAttackAnimation(weaponState.currentAttack.animation, 2);
 
         _status.CurrentPlayerState.timeToChangeState = weaponState.Startup;
         _status.CurrentPlayerState.stateToChangeTo.timeToChangeState = weaponState.Duration;
-        _status.CurrentPlayerState.stateToChangeTo.moveSpeedMultiplier = weaponState.ForwardSpeedModifier;
-        _status.CurrentPlayerState.stateToChangeTo.stateToChangeTo.timeToChangeState = weaponState.Recovery;
+        _status.CurrentPlayerState.stateToChangeTo.moveSpeedMultiplier =
+            weaponState.ForwardSpeedModifier;
+        _status.CurrentPlayerState.stateToChangeTo.stateToChangeTo.timeToChangeState =
+            weaponState.Recovery;
 
         if (weaponState.currentComboCount == 0)
             _status.movement.SetTheSetForwardDirection();
@@ -271,7 +299,6 @@ public class PlayerCombat : MonoBehaviour
         else
             itemTrajectory.target = null;
 
-
         itemTrajectory.isMidAir = false;
         itemTrajectory.isFirstFrameOfThrow = true;
         itemTrajectory.chargeAmount = timeHeld;
@@ -287,6 +314,7 @@ public class PlayerCombat : MonoBehaviour
         timeHeld = 0;
 
         _status.visuals.SetAnimationModifier(AnimationModifier.None);
+        _status.visuals.ShowWeaponVisual(ItemType.Unarmed);
     }
 
     public void DropWeapon()
@@ -304,6 +332,7 @@ public class PlayerCombat : MonoBehaviour
         weaponState = new Unarmed(_status.playerNumber, _hitbox);
 
         _status.visuals.SetAnimationModifier(AnimationModifier.None);
+        _status.visuals.ShowWeaponVisual(ItemType.Unarmed);
     }
 
     /// <summary>
@@ -318,10 +347,15 @@ public class PlayerCombat : MonoBehaviour
         // Grab all players. (gameManager does this)
         foreach (PlayerStatus s in gameManager.alivePlayerStatuses)
         {
-            Vector3 vectorToCollider = (s.transform.position - _status.transform.position).normalized;
+            Vector3 vectorToCollider = (
+                s.transform.position - _status.transform.position
+            ).normalized;
             // 180 degree arc, change 0 to 0.5 for a 90 degree "pie"
-            if (Vector3.Dot(vectorToCollider, _status.movement.ActualFowardDirection) > targetAngle &&
-                Vector3.Distance(_status.transform.position, s.transform.position) < dist && Mathf.Abs(_status.transform.position.y - s.transform.position.y) < 10)
+            if (
+                Vector3.Dot(vectorToCollider, _status.movement.ActualFowardDirection) > targetAngle
+                && Vector3.Distance(_status.transform.position, s.transform.position) < dist
+                && Mathf.Abs(_status.transform.position.y - s.transform.position.y) < 10
+            )
             {
                 // If in the arc, add to potential target list.
                 potentialTargets.Add(s);
@@ -330,9 +364,29 @@ public class PlayerCombat : MonoBehaviour
 
         // Now sort the list by distance, shortest to furthest.
         if (potentialTargets.Count != 0)
-            potentialTargets = potentialTargets.OrderBy(x => Vector3.Distance(_status.transform.position, x.transform.position)).ToList();
+            potentialTargets = potentialTargets
+                .OrderBy(x => Vector3.Distance(_status.transform.position, x.transform.position))
+                .ToList();
 
         return potentialTargets;
     }
 
+    public void PauseWeaponAnimationModifier()
+    {
+        switch (weaponState.animationModifier)
+        {
+            case (AnimationModifier.CarryOverHead):
+                _status.visuals.SetAnimationModifier(AnimationModifier.None);
+                break;
+
+            case (AnimationModifier.FistsOverHead):
+                _status.visuals.SetAnimationModifier(AnimationModifier.RightHandFist);
+                break;
+        }
+    }
+
+    public void ResumeWeaponAnimationModifier()
+    {
+        _status.visuals.SetAnimationModifier(weaponState.animationModifier);
+    }
 }

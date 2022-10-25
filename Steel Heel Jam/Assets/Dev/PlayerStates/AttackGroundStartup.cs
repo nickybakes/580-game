@@ -20,5 +20,15 @@ public class AttackGroundStartup : BasicState
     public override void OnEnterThisState(BasicState prevState, PlayerStatus status)
     {
         base.OnEnterThisState(prevState, status);
+
+        status.combat.PauseWeaponAnimationModifier();
+    }
+
+    public override void OnExitThisState(BasicState nextState, PlayerStatus status)
+    {
+        base.OnExitThisState(nextState, status);
+
+        if (!(nextState is AttackGroundDuration))
+            status.combat.ResumeWeaponAnimationModifier();
     }
 }

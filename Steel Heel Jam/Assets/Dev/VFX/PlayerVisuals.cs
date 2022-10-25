@@ -24,6 +24,8 @@ public class PlayerVisuals
 
     private Transform modelTransform;
 
+    private PlayerWeaponVisual weaponHolder;
+
     private AnimationState currentAnimationState;
 
     private GameObject blockSphere;
@@ -39,6 +41,10 @@ public class PlayerVisuals
 
         animator = tr.GetComponentInChildren<Animator>();
         modelTransform = tr.GetChild((int)PlayerChild.Model);
+
+        weaponHolder = modelTransform.GetComponentInChildren<PlayerWeaponVisual>();
+
+        Debug.Log(weaponHolder);
 
         blockSphere = tr.GetChild((int)PlayerChild.Visuals).GetChild((int)VisualChild.Block).gameObject;
         dodgeRollSphere = tr.GetChild((int)PlayerChild.Visuals).GetChild((int)VisualChild.DodgeRoll).gameObject;
@@ -102,6 +108,10 @@ public class PlayerVisuals
         {
             animator.SetLayerWeight((int)mod, 1);
         }
+    }
+
+    public void ShowWeaponVisual(ItemType item){
+        weaponHolder.ShowWeapon(item);
     }
 
     public void EnableVisual(VisualChild vc)

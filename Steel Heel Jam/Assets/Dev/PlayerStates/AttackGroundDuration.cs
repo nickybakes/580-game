@@ -22,7 +22,6 @@ public class AttackGroundDuration : BasicState
 
     private bool gotAHitAlready;
 
-
     public override void Update(PlayerStatus status)
     {
         base.Update(status);
@@ -44,7 +43,9 @@ public class AttackGroundDuration : BasicState
         // If there is someone in front of the player in the angle, adjust the players rotation
         if (potentialTargets.Count != 0)
         {
-            Vector3 newForwardDirection = (potentialTargets[0].transform.position - status.transform.position).normalized;
+            Vector3 newForwardDirection = (
+                potentialTargets[0].transform.position - status.transform.position
+            ).normalized;
             status.transform.forward = newForwardDirection;
             status.movement.SetTheSetForwardDirection(); // Set new forward direction.
         }
@@ -59,5 +60,7 @@ public class AttackGroundDuration : BasicState
     {
         base.OnExitThisState(nextState, status);
         status.combat.weaponState.ForceEndAttack();
+        if (!(nextState is AttackGroundRecovery))
+            status.combat.ResumeWeaponAnimationModifier();
     }
 }

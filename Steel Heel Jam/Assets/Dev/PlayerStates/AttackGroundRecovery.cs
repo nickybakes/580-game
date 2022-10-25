@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class AttackGroundRecovery : BasicState
 {
-
     private float prevSpeedModifier;
 
     public AttackGroundRecovery()
@@ -23,7 +22,6 @@ public class AttackGroundRecovery : BasicState
 
     private bool canCombo;
 
-
     public override void Update(PlayerStatus status)
     {
         base.Update(status);
@@ -34,7 +32,11 @@ public class AttackGroundRecovery : BasicState
             canAttack = true;
         }
 
-        moveSpeedMultiplier = Mathf.Lerp(prevSpeedModifier, 0, Mathf.Clamp01(timeInThisState / (timeToChangeState * 0.25f)));
+        moveSpeedMultiplier = Mathf.Lerp(
+            prevSpeedModifier,
+            0,
+            Mathf.Clamp01(timeInThisState / (timeToChangeState * 0.25f))
+        );
         status.movement.SetVelocityToMoveSpeedTimesFowardDirection();
     }
 
@@ -73,6 +75,7 @@ public class AttackGroundRecovery : BasicState
         {
             status.combat.weaponState.currentComboCount = 0;
             status.combat.attackCooldown = 0;
+            status.combat.ResumeWeaponAnimationModifier();
         }
     }
 }
