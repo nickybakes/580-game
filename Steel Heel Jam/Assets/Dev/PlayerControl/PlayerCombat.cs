@@ -251,7 +251,6 @@ public class PlayerCombat : MonoBehaviour
 
     private void TryPickup()
     {
-        CameraManager.cam.ShakeCamera(.5f);
         _input.wasPickUpPressed = false;
         _pickUpSphere.TryPickup();
     }
