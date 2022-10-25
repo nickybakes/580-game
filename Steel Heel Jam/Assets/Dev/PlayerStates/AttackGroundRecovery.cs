@@ -53,16 +53,16 @@ public class AttackGroundRecovery : BasicState
             status.ReduceStamina(status.combat.weaponState.staminaCost);
         }
         // If hit and is heel, remove heel status
-        else if (status.isHeel)
-        {
-            status.isHeel = false;
+        //else if (status.isHeel)
+        //{
+        //    status.isHeel = false;
 
-            if (status.playerHeader)
-            {
-                status.playerHeader.SetHeel(false);
-            }
+        //    if (status.playerHeader)
+        //    {
+        //        status.playerHeader.SetHeel(false);
+        //    }
 
-        }
+        //}
     }
 
     public override void OnExitThisState(BasicState nextState, PlayerStatus status)

@@ -14,10 +14,10 @@ public enum PlayerChild
 public enum Buff
 {
     PlotArmor,
-    RedemptionArc,
+    //RedemptionArc,
     SpeedySubversion,
     TopRopes,
-    MachoBlock,
+    //MachoBlock,
     TheStink,
     HeelFire
 }
@@ -36,8 +36,6 @@ public class PlayerStatus : MonoBehaviour
     public AudioManager audioManager;
 
     //public List<Buff> buffs = new List<Buff>();
-
-    [SerializeField] public bool isHeel = false;
 
     [SerializeField] private const float HeelStaminaDamage = 5f;
 
@@ -144,6 +142,7 @@ public class PlayerStatus : MonoBehaviour
     public float plotArmorAdditionalHeal = 4.0f;
     public float redemptionArcDamageMultiplier = 2.0f;
     public float redemptionArcKnockbackMultiplier = 2.0f;
+    public bool canDoubleJump = false;
     // ******************************
 
     public float ActivityScore
@@ -206,12 +205,10 @@ public class PlayerStatus : MonoBehaviour
         combat.Start();
 
         visuals = new PlayerVisuals(this, transform);
-        buffs = new bool[7]
+        buffs = new bool[5]
         {
-            false, false, false, false, false, false, false
+            false, false, false, false, false
         };
-
-        GiveBuff(Buff.SpeedySubversion);
     }
 
     // Update is called once per frame
@@ -242,13 +239,7 @@ public class PlayerStatus : MonoBehaviour
             ReduceStamina(OOBStaminaDamage * Time.deltaTime);
         }
 
-        // If the player is the Heel . . .
-        if (isHeel)
-        {
-            ReduceStamina(HeelStaminaDamage * Time.deltaTime);
-        }
-
-        if (!isHeel && !IsFlexing)
+        if (!IsFlexing)
         {
             if (!combat.ActedRecently && !isOOB)
             {
@@ -312,17 +303,7 @@ public class PlayerStatus : MonoBehaviour
 
         if (!IsDodgeRolling)
         {
-            if (attackingPlayerStatus.isHeel)
-            {
-                SetHeel();
-
-                damage *= 1.6f;
-                knockback *= 1.6f;
-                knockbackHeight *= 1.6f;
-            }
-
             playerLastHitBy = attackingPlayerStatus;
-
 
             Vector3 knockbackDir = (collisionPos - hitboxPos).normalized;
 
@@ -451,8 +432,6 @@ public class PlayerStatus : MonoBehaviour
 
     public void SetHeel()
     {
-        isHeel = true;
-
         if (playerHeader)
         {
             playerHeader.SetHeel(true);
@@ -463,16 +442,23 @@ public class PlayerStatus : MonoBehaviour
     /// Provides a buff to the player (Maximum of 2).
     /// </summary>
     /// <param name="buff">Enum of the buff to provide.</param>
-    public void GiveBuff(Buff buff)
+    public void GiveBuff()
     {
-        if (buff != Buff.HeelFire)
+        if (buffCount == 2)
         {
-            if (buffCount >= maxBuffs) return;
+            buffs[(int)Buff.HeelFire] = true;
+        } 
+        else
+        {
+            buffCount++;
 
-            if (buffs[(int)buff] == true) buffCount++;
+            Buff buffToGive = (Buff)Random.Range(0, buffs.Length);
+            while (buffs[(int)buffToGive] == true)
+            {
+                buffToGive = (Buff)Random.Range(0, buffs.Length);
+            }
+            buffs[Random.Range(0, buffs.Length)] = true;
         }
-
-        buffs[(int)buff] = true;
     }
 
     /// <summary>

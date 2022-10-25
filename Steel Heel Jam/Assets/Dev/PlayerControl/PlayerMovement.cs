@@ -407,6 +407,12 @@ public class PlayerMovement : MonoBehaviour
 
         if (grounded)
         {
+            // Reset double jump availability
+            if (_status.buffs[(int)Buff.TopRopes])
+            {
+                _status.canDoubleJump = true;
+            }
+
             //reset time in air
             timeInAir = 0;
 
@@ -448,16 +454,26 @@ public class PlayerMovement : MonoBehaviour
             //increment time in air
             timeInAir += Time.deltaTime;
 
-            // allow player to Jump with road runner time
-            if (controlMovement && roadRunnerJumpAvailable && timeInAir < roadRunnerTimeMax && _input.Jump)
+            if (controlMovement && _input.Jump)
             {
-                // the square root of H * -2 * G = how much velocity needed to reach desired height
-                velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
-                roadRunnerJumpAvailable = false;
-                _input.Jump = false;
+                // allow player to Jump with road runner time
+                if (roadRunnerJumpAvailable && timeInAir < roadRunnerTimeMax)
+                {
+                    // the square root of H * -2 * G = how much velocity needed to reach desired height
+                    velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+                    roadRunnerJumpAvailable = false;
+                    _input.Jump = false;
+                }
+                // Double jump if possible
+                else if (_status.canDoubleJump)
+                {
+                    // the square root of H * -2 * G = how much velocity needed to reach desired height
+                    velocity.y = Mathf.Sqrt((jumpHeight * 1.2f) * -2f * gravity);
+                    _status.canDoubleJump = false;
+                    _input.Jump = false;
+                }
             }
-
-
+            
 
             // fall timeout
             if (_fallTimeoutDelta >= 0.0f)

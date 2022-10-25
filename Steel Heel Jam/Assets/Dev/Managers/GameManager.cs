@@ -180,12 +180,12 @@ public class GameManager : MonoBehaviour
         hudManager.RemoveHeader(status);
         status.playerHeader = null;
 
-        if (status.isHeel)
-        {
-            heelSpotlightScript.gameObject.transform.position = new Vector3(status.gameObject.transform.position.x, heelSpotlightScript.gameObject.transform.position.y, status.gameObject.transform.position.z);
+        //if (status.isHeel)
+        //{
+        //    heelSpotlightScript.gameObject.transform.position = new Vector3(status.gameObject.transform.position.x, heelSpotlightScript.gameObject.transform.position.y, status.gameObject.transform.position.z);
 
-            heelSpotlightScript.gameObject.SetActive(true);
-        }
+        //    heelSpotlightScript.gameObject.SetActive(true);
+        //}
 
         if (alivePlayerStatuses.Count == 1)
             gameWon = true;

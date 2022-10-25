@@ -41,7 +41,11 @@ public class DodgeRollRecovery : BasicState
     {
         base.OnEnterThisState(prevState, status);
 
-        //if (status.buffs[2]) timeToChangeState = 0.07f;
+        if (status.buffs[(int)Buff.SpeedySubversion])
+        {
+            moveSpeedMultiplier *= 2.0f;
+            timeToChangeState /= 2.0f;
+        }
 
         status.movement.velocity = status.movement.velocity.normalized * status.movement.CurrentMoveSpeed;
     }

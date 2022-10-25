@@ -106,7 +106,7 @@ public class PlayerCombat : MonoBehaviour
             recentActionCooldown -= Time.deltaTime;
         }
 
-        if (_status.stamina > 0 || _status.isHeel)
+        if (_status.stamina > 0)
         {
             if (canAttack && attackCooldown > attackCooldownMax && _input.Attack)
             {
@@ -199,6 +199,11 @@ public class PlayerCombat : MonoBehaviour
         _status.SetPlayerStateImmediately(new AttackGroundStartup());
 
         weaponState.currentAttack = weaponState.combo[weaponState.currentComboCount];
+
+        if (weaponState.currentComboCount >= weaponState.maxComboCount && _status.buffs[(int)Buff.TheStink])
+        {
+
+        }
 
         _status.CurrentPlayerState.animationState = DefaultState.GetAttackAnimation(weaponState.currentAttack.animation, 0);
         _status.CurrentPlayerState.stateToChangeTo.animationState = DefaultState.GetAttackAnimation(weaponState.currentAttack.animation, 1);
