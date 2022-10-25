@@ -13,9 +13,13 @@ public enum PlayerChild
 
 public enum Buff
 {
-    Sample1,
-    Sample2,
-    Sample3
+    PlotArmor,
+    //RedemptionArc,
+    SpeedySubversion,
+    TopRopes,
+    //MachoBlock,
+    TheStink,
+    HeelFire
 }
 
 public enum Tag
@@ -31,9 +35,7 @@ public class PlayerStatus : MonoBehaviour
 {
     public AudioManager audioManager;
 
-    public List<Buff> buffs = new List<Buff>();
-
-    [SerializeField] public bool isHeel = false;
+    //public List<Buff> buffs = new List<Buff>();
 
     [SerializeField] private const float HeelStaminaDamage = 5f;
 
@@ -131,6 +133,18 @@ public class PlayerStatus : MonoBehaviour
 
     private new Transform transform;
 
+    // ******************************
+    // Buff Values
+    public bool[] buffs;
+    private int maxBuffs = 2;
+    private int buffCount = 0;
+
+    public float plotArmorAdditionalHeal = 4.0f;
+    public float redemptionArcDamageMultiplier = 2.0f;
+    public float redemptionArcKnockbackMultiplier = 2.0f;
+    public bool canDoubleJump = false;
+    // ******************************
+
     public float ActivityScore
     {
         get
@@ -191,6 +205,10 @@ public class PlayerStatus : MonoBehaviour
         combat.Start();
 
         visuals = new PlayerVisuals(this, transform);
+        buffs = new bool[5]
+        {
+            false, false, false, false, false
+        };
     }
 
     // Update is called once per frame
@@ -221,13 +239,7 @@ public class PlayerStatus : MonoBehaviour
             ReduceStamina(OOBStaminaDamage * Time.deltaTime);
         }
 
-        // If the player is the Heel . . .
-        if (isHeel)
-        {
-            ReduceStamina(HeelStaminaDamage * Time.deltaTime);
-        }
-
-        if (!isHeel && !IsFlexing)
+        if (!IsFlexing)
         {
             if (!combat.ActedRecently && !isOOB)
             {
@@ -246,6 +258,11 @@ public class PlayerStatus : MonoBehaviour
         {
             recentActivityTimeCurrent -= Time.deltaTime;
         }
+    }
+
+    public void PrintStuff<T>(T stuff)
+    {
+        print(stuff);
     }
 
     public void SetPlayerStateImmediately(BasicState state)
@@ -286,17 +303,7 @@ public class PlayerStatus : MonoBehaviour
 
         if (!IsDodgeRolling)
         {
-            if (attackingPlayerStatus.isHeel)
-            {
-                SetHeel();
-
-                damage *= 1.6f;
-                knockback *= 1.6f;
-                knockbackHeight *= 1.6f;
-            }
-
             playerLastHitBy = attackingPlayerStatus;
-
 
             Vector3 knockbackDir = (collisionPos - hitboxPos).normalized;
 
@@ -425,20 +432,32 @@ public class PlayerStatus : MonoBehaviour
 
     public void SetHeel()
     {
-        isHeel = true;
-
         if (playerHeader)
         {
             playerHeader.SetHeel(true);
         }
     }
 
-    public void GiveBuff(Buff buff)
+    /// <summary>
+    /// Provides a buff to the player (Maximum of 2).
+    /// </summary>
+    /// <param name="buff">Enum of the buff to provide.</param>
+    public void GiveBuff()
     {
-        if (!buffs.Contains(buff))
+        if (buffCount == 2)
         {
-            buffs.Add(buff);
-            // Reset specific buff timer
+            buffs[(int)Buff.HeelFire] = true;
+        } 
+        else
+        {
+            buffCount++;
+
+            Buff buffToGive = (Buff)Random.Range(0, buffs.Length);
+            while (buffs[(int)buffToGive] == true)
+            {
+                buffToGive = (Buff)Random.Range(0, buffs.Length);
+            }
+            buffs[Random.Range(0, buffs.Length)] = true;
         }
     }
 

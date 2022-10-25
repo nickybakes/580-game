@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class GrabDuration : BasicState
 {
+    private float angle = 0.7f;
+    private float dist = 10;
+
     public GrabDuration()
     {
         timeToChangeState = 0.3f;
@@ -35,6 +38,16 @@ public class GrabDuration : BasicState
 
         // Set GrabHitbox active
         status.combat.grabHitbox.gameObject.SetActive(true);
+
+        List<PlayerStatus> potentialTargets = status.combat.ReturnPotentialTargets(angle, dist);
+
+        // If there is someone in front of the player in the angle, adjust the players rotation
+        if (potentialTargets.Count != 0)
+        {
+            Vector3 newForwardDirection = (potentialTargets[0].transform.position - status.transform.position).normalized;
+            status.transform.forward = newForwardDirection;
+            status.movement.SetTheSetForwardDirection(); // Set new forward direction.
+        }
 
         status.movement.SetVelocityToMoveSpeedTimesFowardDirection();
 

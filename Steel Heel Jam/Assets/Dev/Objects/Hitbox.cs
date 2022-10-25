@@ -55,7 +55,7 @@ public class Hitbox : MonoBehaviour
 
             player.GetHit(
                 playerStatus.transform.position,
-                other.transform.position,
+                player.transform.position,
                 damage,
                 knockback,
                 knockbackHeight,

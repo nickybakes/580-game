@@ -14,6 +14,8 @@ public class Flexing : BasicState
     private const float SpotlightRestStaminaRegen = 12.0f;
     private const float RestSpotlightLoss = 6.0f;
 
+    private const float spotlightFillRate = 10.0f;
+
     public Flexing()
     {
         timeToChangeState = 0; // Only change state on button release.
@@ -36,16 +38,22 @@ public class Flexing : BasicState
 
         if (status.spotlight > 0)
         {
-            status.IncreaseStamina(SpotlightRestStaminaRegen * Time.deltaTime);
+            status.IncreaseStamina((SpotlightRestStaminaRegen + (status.buffs[(int)Buff.PlotArmor] == true ? status.plotArmorAdditionalHeal : 0)) * Time.deltaTime);
             status.ReduceSpotlightMeter(RestSpotlightLoss * Time.deltaTime);
         }
         else if (status.isInSpotlight)
         {
-            status.IncreaseStamina(SpotlightRestStaminaRegen * Time.deltaTime);
+            status.IncreaseStamina((SpotlightRestStaminaRegen + (status.buffs[(int)Buff.PlotArmor] == true ? status.plotArmorAdditionalHeal : 0)) * Time.deltaTime);
+            status.IncreaseSpotlightMeter(spotlightFillRate * Time.deltaTime);
+
+            if (status.spotlight == 100)
+            {
+                status.GiveBuff();
+            }
         }
         else
         {
-            status.IncreaseStamina(DefaultRestStaminaRegen * Time.deltaTime);
+            status.IncreaseStamina((DefaultRestStaminaRegen + (status.buffs[(int)Buff.PlotArmor] == true ? status.plotArmorAdditionalHeal : 0)) * Time.deltaTime);
         }
     }
 

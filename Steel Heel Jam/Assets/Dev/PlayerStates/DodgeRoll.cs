@@ -57,6 +57,12 @@ public class DodgeRoll : BasicState
     {
         base.OnEnterThisState(prevState, status);
 
+        if (status.buffs[(int)Buff.SpeedySubversion])
+        {
+            moveSpeedMultiplier *= 2.0f;
+            timeToChangeState /= 2.0f;
+        }
+
         status.audioManager.Play("roll");
     }
 
