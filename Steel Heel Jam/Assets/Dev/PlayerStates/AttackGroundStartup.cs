@@ -20,7 +20,5 @@ public class AttackGroundStartup : BasicState
     public override void OnEnterThisState(BasicState prevState, PlayerStatus status)
     {
         base.OnEnterThisState(prevState, status);
-
-        status.audioManager.Play("swing", 0.8f, 1.2f);
     }
 }

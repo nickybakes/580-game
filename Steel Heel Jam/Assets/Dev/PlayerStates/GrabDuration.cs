@@ -48,7 +48,8 @@ public class GrabDuration : BasicState
         base.OnExitThisState(nextState, status);
 
         // Reduce stamina for missed grab.
-        status.ReduceStamina(status.missedGrabStaminaDamage);
+        if (nextState is GrabRecovery)
+            status.ReduceStamina(status.missedGrabStaminaDamage);
 
         // Set GrabHitbox inactive
         status.combat.grabHitbox.gameObject.SetActive(false);

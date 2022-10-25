@@ -12,7 +12,7 @@ public class Hitbox : MonoBehaviour
     public float knockbackHeight;
     public float hitstun;
     public float radius;
-    public float length;
+    public float height;
     public float duration;
     public int playerNumber;
 

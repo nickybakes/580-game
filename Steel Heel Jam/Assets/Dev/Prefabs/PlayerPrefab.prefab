@@ -142,6 +142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7cb1247224ed184c8485afd8e5cd846, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioManager: {fileID: 0}
   buffs: 
   isHeel: 0
   stamina: 100
@@ -154,7 +155,7 @@ MonoBehaviour:
   attackBlocked: 0
   missedBlockStaminaDamage: 20
   dodgeRollStaminaDamage: 16
-  suplexStaminaDamage: 30
+  suplexStaminaDamage: 50
   missedGrabStaminaDamage: 10
   totalDamageTaken: 0
   recentDamageTaken: 0
@@ -2945,7 +2946,7 @@ PrefabInstance:
     - target: {fileID: 2295276495909386343, guid: aadce769ff4519044b76ad34195f7df0,
         type: 3}
       propertyPath: m_Layer
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2295276495909386343, guid: aadce769ff4519044b76ad34195f7df0,
         type: 3}

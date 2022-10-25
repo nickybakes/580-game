@@ -21,6 +21,13 @@ public enum AttackAnimation
     SmashHeavy_01
 }
 
+public enum AttackDirection
+{
+    Horizontal = 0,
+    Vertical = 1,
+    Forward = 2
+}
+
 public struct Attack
 {
     public float damageMultiplier;
@@ -259,15 +266,25 @@ public class DefaultState
         hitboxScript.knockbackHeight = knockbackHeight * currentAttack.knockbackHeightMultiplier;
         hitboxScript.hitstun = hitstun * currentAttack.hitstunMultiplier;
         hitboxScript.radius = radius * currentAttack.radiusMultiplier; // Radius is only passed through for gizmo drawing
+        hitboxScript.height = height * currentAttack.heightMultiplier;
         hitboxScript.duration = duration * currentAttack.durationMultiplier;
         hitboxScript.playerNumber = playerNumber;
 
         // Resize hitbox
         hitboxCollider.radius = radius * currentAttack.radiusMultiplier;
         hitboxCollider.height = height * currentAttack.heightMultiplier;
+        hitboxCollider.direction = (int)AttackDirection.Forward; // Currently defaulting to forward. Will be changed later.
+
         //hitboxScript.tr.localPosition = new Vector3(0, 1, 1 + (radius * currentAttack.radiusMultiplier) / 2); // Experimental
-        hitboxScript.tr.localPosition = new Vector3(0, 1, hitboxCollider.height / 2);
-        hitboxScript.tr.GetChild(0).localScale = new Vector3(hitboxCollider.radius * 2, hitboxCollider.height, hitboxCollider.radius * 2);
+        hitboxScript.tr.localPosition = new Vector3(0, 1, 1 + hitboxCollider.height / 2);
+
+        float y = (hitboxCollider.height / 2) > hitboxCollider.radius ? hitboxCollider.height : hitboxCollider.radius;
+
+        Transform attackSphere = hitboxScript.tr.GetChild(0);
+        attackSphere.localScale = new Vector3(hitboxCollider.radius * 2, y, hitboxCollider.radius * 2);
+
+        // Logic for rotating hitbox (new attack shapes)
+        //attackSphere.rotation = new Quaternion(hitboxScript.attackDirection == 2 ? 90 : 0, 0, hitboxScript.attackDirection == 0 ? 90 : 0);
 
         return hitboxScript;
     }
@@ -289,9 +306,9 @@ public class DefaultState
 
         // Resize hitbox
         hitboxCollider.radius = radius * airAttack.radiusMultiplier * 5;
-        hitboxCollider.height = hitboxCollider.radius * 2;
+        hitboxCollider.height = 0;
         hitboxScript.tr.localPosition = new Vector3(0, 0, 0);
-        hitboxScript.tr.GetChild(0).localScale = new Vector3(hitboxCollider.radius * 2, hitboxCollider.height, hitboxCollider.radius * 2);
+        hitboxScript.tr.GetChild(0).localScale = new Vector3(hitboxCollider.radius * 2, hitboxCollider.radius, hitboxCollider.radius * 2);
 
         return hitboxScript;
     }

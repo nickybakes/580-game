@@ -37,6 +37,8 @@ public class AttackGroundDuration : BasicState
         base.OnEnterThisState(prevState, status);
         status.combat.weaponState.Attack();
         status.movement.SetVelocityToMoveSpeedTimesFowardDirection();
+
+        status.audioManager.Play("swing", 0.8f, 1.2f);
     }
 
     public override void OnExitThisState(BasicState nextState, PlayerStatus status)

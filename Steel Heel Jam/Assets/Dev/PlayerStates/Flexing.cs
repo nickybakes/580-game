@@ -39,6 +39,10 @@ public class Flexing : BasicState
             status.IncreaseStamina(SpotlightRestStaminaRegen * Time.deltaTime);
             status.ReduceSpotlightMeter(RestSpotlightLoss * Time.deltaTime);
         }
+        else if (status.isInSpotlight)
+        {
+            status.IncreaseStamina(SpotlightRestStaminaRegen * Time.deltaTime);
+        }
         else
         {
             status.IncreaseStamina(DefaultRestStaminaRegen * Time.deltaTime);
