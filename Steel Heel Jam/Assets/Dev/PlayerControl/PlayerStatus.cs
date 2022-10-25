@@ -57,7 +57,7 @@ public class PlayerStatus : MonoBehaviour
     public float spotlight;
     public bool isInSpotlight;
 
-    [SerializeField] private const float MinMaxStamina = 20f;
+    [SerializeField] private const float MinMaxStamina = 50;
 
     private BasicState currentPlayerState;
 
