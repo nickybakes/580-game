@@ -20,10 +20,10 @@ public class Gauntlets : DefaultState
                 1.0f, // Hitstun Multiplier
                 2.0f, // Radius Multiplier
                 1.0f, // Height Multiplier
-                5.0f, // Startup Multiplier
+                4.0f, // Startup Multiplier
                 2.5f, // Duration Multiplier
                 2.0f, // Recovery Multiplier
-                4.0f  // Forward Speed Multiplier
+                3.0f  // Forward Speed Multiplier
                 )
         };
 
