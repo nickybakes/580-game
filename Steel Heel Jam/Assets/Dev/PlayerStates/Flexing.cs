@@ -36,16 +36,16 @@ public class Flexing : BasicState
 
         if (status.spotlight > 0)
         {
-            status.IncreaseStamina(SpotlightRestStaminaRegen * Time.deltaTime);
+            status.IncreaseStamina((SpotlightRestStaminaRegen + (status.buffs[0] == true ? status.plotArmorAdditionalHeal : 0)) * Time.deltaTime);
             status.ReduceSpotlightMeter(RestSpotlightLoss * Time.deltaTime);
         }
         else if (status.isInSpotlight)
         {
-            status.IncreaseStamina(SpotlightRestStaminaRegen * Time.deltaTime);
+            status.IncreaseStamina((SpotlightRestStaminaRegen + (status.buffs[0] == true ? status.plotArmorAdditionalHeal : 0)) * Time.deltaTime);
         }
         else
         {
-            status.IncreaseStamina(DefaultRestStaminaRegen * Time.deltaTime);
+            status.IncreaseStamina((DefaultRestStaminaRegen + (status.buffs[0] == true ? status.plotArmorAdditionalHeal : 0)) * Time.deltaTime);
         }
     }
 

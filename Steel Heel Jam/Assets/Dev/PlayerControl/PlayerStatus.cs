@@ -13,9 +13,13 @@ public enum PlayerChild
 
 public enum Buff
 {
-    Sample1,
-    Sample2,
-    Sample3
+    PlotArmor,
+    RedemptionArc,
+    SpeedySubversion,
+    TopRopes,
+    MachoBlock,
+    TheStink,
+    HeelFire
 }
 
 public enum Tag
@@ -31,7 +35,7 @@ public class PlayerStatus : MonoBehaviour
 {
     public AudioManager audioManager;
 
-    public List<Buff> buffs = new List<Buff>();
+    //public List<Buff> buffs = new List<Buff>();
 
     [SerializeField] public bool isHeel = false;
 
@@ -131,6 +135,17 @@ public class PlayerStatus : MonoBehaviour
 
     private new Transform transform;
 
+    // ******************************
+    // Buff Values
+    public bool[] buffs;
+    private int maxBuffs = 2;
+    private int buffCount = 0;
+
+    public float plotArmorAdditionalHeal = 4.0f;
+    public float redemptionArcDamageMultiplier = 2.0f;
+    public float redemptionArcKnockbackMultiplier = 2.0f;
+    // ******************************
+
     public float ActivityScore
     {
         get
@@ -191,6 +206,12 @@ public class PlayerStatus : MonoBehaviour
         combat.Start();
 
         visuals = new PlayerVisuals(this, transform);
+        buffs = new bool[7]
+        {
+            false, false, false, false, false, false, false
+        };
+
+        GiveBuff(Buff.SpeedySubversion);
     }
 
     // Update is called once per frame
@@ -246,6 +267,11 @@ public class PlayerStatus : MonoBehaviour
         {
             recentActivityTimeCurrent -= Time.deltaTime;
         }
+    }
+
+    public void PrintStuff<T>(T stuff)
+    {
+        print(stuff);
     }
 
     public void SetPlayerStateImmediately(BasicState state)
@@ -433,13 +459,20 @@ public class PlayerStatus : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Provides a buff to the player (Maximum of 2).
+    /// </summary>
+    /// <param name="buff">Enum of the buff to provide.</param>
     public void GiveBuff(Buff buff)
     {
-        if (!buffs.Contains(buff))
+        if (buff != Buff.HeelFire)
         {
-            buffs.Add(buff);
-            // Reset specific buff timer
+            if (buffCount >= maxBuffs) return;
+
+            if (buffs[(int)buff] == true) buffCount++;
         }
+
+        buffs[(int)buff] = true;
     }
 
     /// <summary>

@@ -56,10 +56,10 @@ public class Hitbox : MonoBehaviour
             player.GetHit(
                 playerStatus.transform.position,
                 other.transform.position,
-                damage,
-                knockback,
-                knockbackHeight,
-                hitstun,
+                damage * (playerStatus.buffs[1] ? playerStatus.redemptionArcDamageMultiplier : 1.0f),
+                knockback * (playerStatus.buffs[1] ? playerStatus.redemptionArcKnockbackMultiplier : 1.0f),
+                knockbackHeight * (playerStatus.buffs[1] ? playerStatus.redemptionArcKnockbackMultiplier : 1.0f),
+                hitstun * (playerStatus.buffs[1] ? playerStatus.redemptionArcDamageMultiplier : 1.0f),
                 playerStatus
                 );
         }
