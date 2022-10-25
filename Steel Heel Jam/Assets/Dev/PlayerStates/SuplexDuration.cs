@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class SuplexDuration : BasicState
@@ -42,13 +43,14 @@ public class SuplexDuration : BasicState
             launchDir.x *= -1;
             launchDir.z *= -1;
 
-            float launchTopDownSpeed = 20;
+            float staminaMultiplier = (100 - victim.stamina) * 0.2f;
+            float launchTopDownSpeed = 20 + staminaMultiplier;
+            float launchHeight = 50 + staminaMultiplier;
 
             // Set suplexed state to knockback.
-            Knockback knockback = new Knockback(new Vector3(launchDir.x * launchTopDownSpeed, 50, launchDir.z * launchTopDownSpeed));
+            Knockback knockback = new Knockback(new Vector3(launchDir.x * launchTopDownSpeed, launchHeight, launchDir.z * launchTopDownSpeed));
             knockback.timeToChangeState = 1.0f;
             victim.SetPlayerStateImmediately(knockback);
-            // Add GetSuplex Method to do values for knockback, damage, etc.
         }
     }
 

@@ -82,7 +82,7 @@ public class PlayerStatus : MonoBehaviour
 
     [SerializeField] public float dodgeRollStaminaDamage = 16f;
 
-    [SerializeField] public float suplexStaminaDamage = 30f;
+    [SerializeField] public float suplexStaminaDamage = 50f;
     [SerializeField] public float missedGrabStaminaDamage = 10f;
 
     /// <summary>
