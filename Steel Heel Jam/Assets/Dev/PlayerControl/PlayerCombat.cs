@@ -258,7 +258,6 @@ public class PlayerCombat : MonoBehaviour
 
     private void Throw()
     {
-        List<PlayerStatus> potentialTargets = new List<PlayerStatus>();
         equippedItem.transform.localRotation = Quaternion.identity;
         equippedItem.transform.parent = null;
         equippedItem.SetActive(true);
@@ -266,34 +265,13 @@ public class PlayerCombat : MonoBehaviour
         // Look for target, if there is one, use targeted throw, else use straight throw.
         ItemTrajectory itemTrajectory = equippedItem.GetComponent<ItemTrajectory>();
 
-        // Grab all players. (gameManager does this)
-        foreach (PlayerStatus s in gameManager.alivePlayerStatuses)
-        {
-            Vector3 vectorToCollider = (s.transform.position - _status.transform.position).normalized;
-            // 180 degree arc, change 0 to 0.5 for a 90 degree "pie"
-            if (Vector3.Dot(vectorToCollider, _status.movement.ActualFowardDirection) > targetAngle &&
-                Vector3.Distance(_status.transform.position, s.transform.position) < 25 && Mathf.Abs(_status.transform.position.y - s.transform.position.y) < 10)
-            {
-                // If in the arc, add to potential target list.
-                potentialTargets.Add(s);
-            }
-        }
+        List<PlayerStatus> potentialTargets = ReturnPotentialTargets();
 
-        // Now sort the list by distance, shortest to furthest.
         if (potentialTargets.Count != 0)
-        {
-            potentialTargets = potentialTargets.OrderBy(x => Vector3.Distance(_status.transform.position, x.transform.position)).ToList();
-
-            // Now check if there are any obstacles in the way of the first player in the list (Raycasting),
-            // if not, pass to itemTrajectory, else cont. list, if none, pass null.
-
-            // For now, adds the first in potentialTargets.
             itemTrajectory.target = potentialTargets[0];
-        }
         else
-        {
             itemTrajectory.target = null;
-        }
+
 
         itemTrajectory.isMidAir = false;
         itemTrajectory.isFirstFrameOfThrow = true;
@@ -327,6 +305,35 @@ public class PlayerCombat : MonoBehaviour
         weaponState = new Unarmed(_status.playerNumber, _hitbox);
 
         _status.visuals.SetAnimationModifier(AnimationModifier.None);
+    }
+
+    /// <summary>
+    /// Looks for players in an arc in front of current player.
+    /// </summary>
+    /// <param name="targetAngle">Angle in front of the player that it looks in.</param>
+    /// <returns>Returns list of players in front sorted by shortest to furthest, null if none.</returns>
+    public List<PlayerStatus> ReturnPotentialTargets(float targetAngle = 0.5f, float dist = 25)
+    {
+        List<PlayerStatus> potentialTargets = new List<PlayerStatus>();
+
+        // Grab all players. (gameManager does this)
+        foreach (PlayerStatus s in gameManager.alivePlayerStatuses)
+        {
+            Vector3 vectorToCollider = (s.transform.position - _status.transform.position).normalized;
+            // 180 degree arc, change 0 to 0.5 for a 90 degree "pie"
+            if (Vector3.Dot(vectorToCollider, _status.movement.ActualFowardDirection) > targetAngle &&
+                Vector3.Distance(_status.transform.position, s.transform.position) < dist && Mathf.Abs(_status.transform.position.y - s.transform.position.y) < 10)
+            {
+                // If in the arc, add to potential target list.
+                potentialTargets.Add(s);
+            }
+        }
+
+        // Now sort the list by distance, shortest to furthest.
+        if (potentialTargets.Count != 0)
+            potentialTargets = potentialTargets.OrderBy(x => Vector3.Distance(_status.transform.position, x.transform.position)).ToList();
+
+        return potentialTargets;
     }
 
 }

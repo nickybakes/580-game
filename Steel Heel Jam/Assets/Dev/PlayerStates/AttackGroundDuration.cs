@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class AttackGroundDuration : BasicState
 {
+    private float angle = 0.8f;
+    private float dist = 10;
+
     public AttackGroundDuration()
     {
         canPlayerControlMove = false;
@@ -35,6 +38,17 @@ public class AttackGroundDuration : BasicState
     public override void OnEnterThisState(BasicState prevState, PlayerStatus status)
     {
         base.OnEnterThisState(prevState, status);
+
+        List<PlayerStatus> potentialTargets = status.combat.ReturnPotentialTargets(angle, dist);
+
+        // If there is someone in front of the player in the angle, adjust the players rotation
+        if (potentialTargets.Count != 0)
+        {
+            Vector3 newForwardDirection = (potentialTargets[0].transform.position - status.transform.position).normalized;
+            status.transform.forward = newForwardDirection;
+            status.movement.SetTheSetForwardDirection(); // Set new forward direction.
+        }
+
         status.combat.weaponState.Attack();
         status.movement.SetVelocityToMoveSpeedTimesFowardDirection();
 
