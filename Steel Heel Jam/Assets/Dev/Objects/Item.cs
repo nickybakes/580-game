@@ -10,9 +10,10 @@ public class Item : MonoBehaviour
         BoomBox,
         ExplosiveBarrel,
         SteelChair,
-        Boomerang,
+        LeadPipe,
         Gauntlets,
-        HomingMissile
+        Ladder,
+        BaseballBat
     }
 
     public ItemType itemType;
