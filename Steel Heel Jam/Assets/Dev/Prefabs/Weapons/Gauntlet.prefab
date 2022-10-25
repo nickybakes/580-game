@@ -162,8 +162,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee029f438a544a8439c3767444360003, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemType: 6
-  isOnScreen: 0
+  itemType: 5
 --- !u!114 &418479347739417610
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -176,10 +175,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdb9b354026ea1b42a367cc98a3774c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isThrown: 0
+  isFirstFrameOfThrow: 0
+  isMidAir: 0
   chargeAmount: 0
-  chargeAmountMultiplier: 20
-  aimAssistMultiplier: 300
   target: {fileID: 0}
   thrower: {fileID: 0}
   throwerObject: {fileID: 0}

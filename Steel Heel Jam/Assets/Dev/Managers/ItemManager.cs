@@ -9,6 +9,7 @@ public class ItemManager : MonoBehaviour
     public List<GameObject> itemsToSpawn = new List<GameObject>();
     float spawnTimer;
     float spawnTimerMax;
+    float spawnCap = 12f;
     Random r = new Random();
 
     // Start is called before the first frame update
@@ -27,10 +28,17 @@ public class ItemManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(itemsOnGround.Count);
         if (GameManager.game.gameWon)
             return;
 
         spawnTimer += Time.deltaTime;
+
+        if (itemsOnGround.Count >= spawnCap)
+        {
+            spawnTimer = 0;
+        }
+
         if (spawnTimer >= spawnTimerMax + (10 * Mathf.Clamp01(GameManager.game.gameTime / GameManager.game.maxGameTime)))
         {
             SpawnRandomItem();

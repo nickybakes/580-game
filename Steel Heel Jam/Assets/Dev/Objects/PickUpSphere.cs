@@ -68,10 +68,10 @@ public class PickUpSphere : MonoBehaviour
                     playerStatus.playerHeader.SetWeaponText("Steel Chair");
                 break;
 
-            case Item.ItemType.Boomerang:
-                playerCombat.weaponState = new Boomerang(playerStatus.playerNumber, playerCombat._hitbox);
+            case Item.ItemType.BaseballBat:
+                playerCombat.weaponState = new BaseballBat(playerStatus.playerNumber, playerCombat._hitbox);
                 if (playerStatus.playerHeader)
-                    playerStatus.playerHeader.SetWeaponText("Boomerang");
+                    playerStatus.playerHeader.SetWeaponText("Baseball Bat");
                 break;
 
             case Item.ItemType.Gauntlets:
@@ -80,10 +80,16 @@ public class PickUpSphere : MonoBehaviour
                     playerStatus.playerHeader.SetWeaponText("Boxer Gloves");
                 break;
 
-            case Item.ItemType.HomingMissile:
-                playerCombat.weaponState = new HomingMissile(playerStatus.playerNumber, playerCombat._hitbox);
+            case Item.ItemType.LeadPipe:
+                playerCombat.weaponState = new LeadPipe(playerStatus.playerNumber, playerCombat._hitbox);
                 if (playerStatus.playerHeader)
-                    playerStatus.playerHeader.SetWeaponText("Homing Missile");
+                    playerStatus.playerHeader.SetWeaponText("Lead Pipe");
+                break;
+
+            case Item.ItemType.Ladder:
+                playerCombat.weaponState = new Ladder(playerStatus.playerNumber, playerCombat._hitbox);
+                if (playerStatus.playerHeader)
+                    playerStatus.playerHeader.SetWeaponText("Ladder");
                 break;
         }
 
