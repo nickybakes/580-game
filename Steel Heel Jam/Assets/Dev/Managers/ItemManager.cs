@@ -28,7 +28,7 @@ public class ItemManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(itemsOnGround.Count);
+        //Debug.Log(itemsOnGround.Count);
         if (GameManager.game.gameWon)
             return;
 
