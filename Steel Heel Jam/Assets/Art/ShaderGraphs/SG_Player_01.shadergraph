@@ -1276,7 +1276,7 @@
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "Shading",
-    "m_StageCapability": 3,
+    "m_StageCapability": 2,
     "m_Value": 0.0,
     "m_DefaultValue": 0.0,
     "m_Labels": []
@@ -1496,6 +1496,21 @@
     "m_CustomColors": {
         "m_SerializableColors": []
     }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
+    "m_ObjectId": "2c5b51e9e0e449dca14b2392510cb6b9",
+    "m_Id": -779118180,
+    "m_DisplayName": "Flip Normal Map",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "_Flip_Normal_Map",
+    "m_StageCapability": 2,
+    "m_Value": -1.0,
+    "m_DefaultValue": 0.0,
+    "m_Labels": []
 }
 
 {
@@ -1979,6 +1994,9 @@
             "m_Id": "e96598a61f2e484eab6df9f48941780c"
         },
         {
+            "m_Id": "2c5b51e9e0e449dca14b2392510cb6b9"
+        },
+        {
             "m_Id": "23944b62b7c64fd3bf72a19c2c3c526c"
         },
         {
@@ -2002,12 +2020,14 @@
     "m_PropertyGuids": [
         "881e89a7-31dc-44d2-80de-d1aaf7d215c5",
         "75132fbb-4941-4665-ae28-22a125c6e3d5",
-        "8b432847-fbed-4c90-91be-1962fa11f80d"
+        "8b432847-fbed-4c90-91be-1962fa11f80d",
+        "f5ece940-14a3-4633-91e8-5e5fee8c0e3d"
     ],
     "m_PropertyIds": [
         -1559710708,
         1203210353,
-        -1473086271
+        -1473086271,
+        -779118180
     ],
     "m_Dropdowns": [],
     "m_DropdownSelectedEntries": []
@@ -2215,7 +2235,7 @@
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "Highlight",
-    "m_StageCapability": 3,
+    "m_StageCapability": 2,
     "m_Value": 0.0,
     "m_DefaultValue": 0.0,
     "m_Labels": []
@@ -2263,7 +2283,7 @@
     "m_SlotType": 0,
     "m_Hidden": false,
     "m_ShaderOutputName": "_Light_Angle",
-    "m_StageCapability": 3,
+    "m_StageCapability": 2,
     "m_Value": 45.0,
     "m_DefaultValue": 0.0,
     "m_Labels": []
@@ -3340,7 +3360,7 @@
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "Rim_Lighting",
-    "m_StageCapability": 3,
+    "m_StageCapability": 2,
     "m_Value": 0.0,
     "m_DefaultValue": 0.0,
     "m_Labels": []
@@ -3753,7 +3773,7 @@
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "Metal_Reflection",
-    "m_StageCapability": 3,
+    "m_StageCapability": 2,
     "m_Value": 0.0,
     "m_DefaultValue": 0.0,
     "m_Labels": []
@@ -4340,7 +4360,7 @@
     "m_SlotType": 0,
     "m_Hidden": false,
     "m_ShaderOutputName": "_Smoothness",
-    "m_StageCapability": 3,
+    "m_StageCapability": 2,
     "m_Value": 0.5,
     "m_DefaultValue": 0.0,
     "m_Labels": []
@@ -4679,7 +4699,7 @@
     "m_SlotType": 0,
     "m_Hidden": false,
     "m_ShaderOutputName": "_Metalness",
-    "m_StageCapability": 3,
+    "m_StageCapability": 2,
     "m_Value": 0.20000000298023225,
     "m_DefaultValue": 0.0,
     "m_Labels": []
