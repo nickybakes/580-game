@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class BuffSpotlight : MonoBehaviour
 {
-    [SerializeField] public Buff buff;
-
     [SerializeField] public float speed = 3.0f;
     [SerializeField] public float targetDistanceMax = 10.0f;
 
@@ -18,7 +16,7 @@ public class BuffSpotlight : MonoBehaviour
     /// </summary>
     private List<PlayerStatus> players = new List<PlayerStatus>();
 
-    private Transform tr;
+    public Transform tr;
 
     private Transform targetPlayerPosition;
 
@@ -28,8 +26,6 @@ public class BuffSpotlight : MonoBehaviour
     void Start()
     {
         tr = GetComponent<Transform>();
-
-        buff = GenerateRandomBuff();
     }
 
     // Update is called once per frame
@@ -49,17 +45,6 @@ public class BuffSpotlight : MonoBehaviour
         {
             Wander();
         }
-    }
-
-    public void SetBuff(Buff _buff)
-    {
-        buff = _buff;
-    }
-
-    public Buff GenerateRandomBuff()
-    {
-        // Max = Total number of buffs in Buff enum
-        return (Buff)Random.Range(0, 4);
     }
 
     private void Wander()
@@ -97,7 +82,7 @@ public class BuffSpotlight : MonoBehaviour
                 {
                     
                     players.Clear();
-                    gameObject.SetActive(false);
+                    GameManager.game.DespawnSpotlight();
                 }
             }
         }

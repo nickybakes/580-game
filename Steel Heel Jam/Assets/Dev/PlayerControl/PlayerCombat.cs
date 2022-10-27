@@ -228,7 +228,7 @@ public class PlayerCombat : MonoBehaviour
             weaponState.currentAttack.animation,
             0
         );
-        _status.SetPlayerStateImmediately(new AttackGroundStartup());
+        _status.SetPlayerStateImmediately(attackState);
 
         _status.CurrentPlayerState.stateToChangeTo.animationState = DefaultState.GetAttackAnimation(
             weaponState.currentAttack.animation,

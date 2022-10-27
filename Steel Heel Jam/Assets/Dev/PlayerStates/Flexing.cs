@@ -36,7 +36,7 @@ public class Flexing : BasicState
     {
         base.Update(status);
 
-        if (status.spotlight > 0)
+        if (status.spotlight > 0 && !status.isInSpotlight)
         {
             status.IncreaseStamina((SpotlightRestStaminaRegen + (status.buffs[(int)Buff.PlotArmor] == true ? status.plotArmorAdditionalHeal : 0)) * Time.deltaTime);
             status.ReduceSpotlightMeter(RestSpotlightLoss * Time.deltaTime);

@@ -25195,6 +25195,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6805674360510968633, guid: 4a76a2b278d543f459cef859a22f5af0,
         type: 3}
+      propertyPath: spotlight
+      value: 
+      objectReference: {fileID: 7616529729250789578}
+    - target: {fileID: 6805674360510968633, guid: 4a76a2b278d543f459cef859a22f5af0,
+        type: 3}
       propertyPath: hudManager
       value: 
       objectReference: {fileID: 7924586174504487228}
@@ -48177,8 +48182,19 @@ PrefabInstance:
       propertyPath: m_Name
       value: Spotlight
       objectReference: {fileID: 0}
+    - target: {fileID: 7616529729895618283, guid: f6a262e7b3ec7284f838627dbee7aa6b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f6a262e7b3ec7284f838627dbee7aa6b, type: 3}
+--- !u!1 &7616529729250789578 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7616529729895618283, guid: f6a262e7b3ec7284f838627dbee7aa6b,
+    type: 3}
+  m_PrefabInstance: {fileID: 7616529729250789577}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7924586174504487227
 PrefabInstance:
   m_ObjectHideFlags: 0
