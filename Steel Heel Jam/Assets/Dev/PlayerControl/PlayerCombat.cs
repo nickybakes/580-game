@@ -215,7 +215,7 @@ public class PlayerCombat : MonoBehaviour
     {
         _input.Attack = false;
         _status.movement.velocity = Vector3.zero;
-        _status.SetPlayerStateImmediately(new AttackGroundStartup());
+        AttackGroundStartup attackState = new AttackGroundStartup();
 
         weaponState.currentAttack = weaponState.combo[weaponState.currentComboCount];
 
@@ -224,10 +224,12 @@ public class PlayerCombat : MonoBehaviour
             && _status.buffs[(int)Buff.TheStink]
         ) { }
 
-        _status.CurrentPlayerState.animationState = DefaultState.GetAttackAnimation(
+        attackState.animationState = DefaultState.GetAttackAnimation(
             weaponState.currentAttack.animation,
             0
         );
+        _status.SetPlayerStateImmediately(new AttackGroundStartup());
+
         _status.CurrentPlayerState.stateToChangeTo.animationState = DefaultState.GetAttackAnimation(
             weaponState.currentAttack.animation,
             1
