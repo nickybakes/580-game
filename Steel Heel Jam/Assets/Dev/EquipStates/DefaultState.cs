@@ -287,7 +287,7 @@ public class DefaultState
         attackSphere.localScale = new Vector3(hitboxCollider.radius * 2, y, hitboxCollider.radius * 2);
 
         // Logic for rotating hitbox (new attack shapes)
-        //attackSphere.rotation = new Quaternion(hitboxScript.attackDirection == 2 ? 90 : 0, 0, hitboxScript.attackDirection == 0 ? 90 : 0);
+        attackSphere.rotation = new Quaternion((int)currentAttack.attackDirection == 2 ? 90 : 0, (int)currentAttack.attackDirection == 0 ? 90 : 0, 0, 1);
 
         return hitboxScript;
     }

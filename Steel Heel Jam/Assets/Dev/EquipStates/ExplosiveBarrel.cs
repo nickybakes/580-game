@@ -28,7 +28,7 @@ public class ExplosiveBarrel : DefaultState
                 )
         };
 
-        maxComboCount = 1;
+        maxComboCount = combo.Length;
         currentAttack = combo[0];
         
         airAttack = new Attack( // *** 1st Hit ***
