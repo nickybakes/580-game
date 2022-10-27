@@ -14,7 +14,7 @@ public class Flexing : BasicState
     private const float SpotlightRestStaminaRegen = 12.0f;
     private const float RestSpotlightLoss = 6.0f;
 
-    private const float spotlightFillRate = 10.0f;
+    private const float spotlightFillRate = 20.0f;
 
     public Flexing()
     {
@@ -36,7 +36,7 @@ public class Flexing : BasicState
     {
         base.Update(status);
 
-        if (status.spotlight > 0 && !status.isInSpotlight)
+        if (status.spotlight > 0 && !status.isInSpotlight && status.stamina < PlayerStatus.defaultMaxStamina)
         {
             status.IncreaseStamina((SpotlightRestStaminaRegen + (status.buffs[(int)Buff.PlotArmor] == true ? status.plotArmorAdditionalHeal : 0)) * Time.deltaTime);
             status.ReduceSpotlightMeter(RestSpotlightLoss * Time.deltaTime);
@@ -51,7 +51,7 @@ public class Flexing : BasicState
                 status.GiveBuff();
             }
         }
-        else
+        else if (status.spotlight == 0)
         {
             status.IncreaseStamina((DefaultRestStaminaRegen + (status.buffs[(int)Buff.PlotArmor] == true ? status.plotArmorAdditionalHeal : 0)) * Time.deltaTime);
         }

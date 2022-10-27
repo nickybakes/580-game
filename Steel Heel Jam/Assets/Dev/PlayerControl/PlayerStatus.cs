@@ -444,6 +444,7 @@ public class PlayerStatus : MonoBehaviour
     /// <param name="buff">Enum of the buff to provide.</param>
     public void GiveBuff()
     {
+        // Heel Fire
         if (buffCount == 2)
         {
             buffs[(int)Buff.HeelFire] = true;
@@ -459,8 +460,6 @@ public class PlayerStatus : MonoBehaviour
             }
             buffs[Random.Range(0, buffs.Length)] = true;
         }
-
-        spotlight = 0;
     }
 
     /// <summary>

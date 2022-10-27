@@ -243,7 +243,7 @@ public class GameManager : MonoBehaviour
         float xOffset = Random.Range(-10.0f - ringScript.tr.localScale.x, 11.0f + ringScript.tr.localScale.x);
         float zOffset = Random.Range(-10.0f - ringScript.tr.localScale.z, 11.0f + ringScript.tr.localScale.z);
 
-        spotlightScript.tr.localPosition = new Vector3(ringScript.tr.position.x, 0, ringScript.tr.position.z);
+        spotlightScript.tr.localPosition = new Vector3(ringScript.tr.position.x + xOffset, 0, ringScript.tr.position.z + zOffset);
         spotlight.SetActive(true);
     }
 

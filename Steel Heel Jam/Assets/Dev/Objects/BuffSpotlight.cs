@@ -71,6 +71,7 @@ public class BuffSpotlight : MonoBehaviour
 
     private void CheckFlexers()
     {
+        bool spotlightFilled = false;
         foreach (PlayerStatus status in players)
         {
             if (status.CurrentPlayerState is Flexing)
@@ -78,13 +79,19 @@ public class BuffSpotlight : MonoBehaviour
                 targetPlayerPosition = status.transform;
                 playerTargeted = true;
 
-                if (status.spotlight == 100)
+                if (status.spotlight >= PlayerStatus.defaultMaxSpotlight)
                 {
-                    
-                    players.Clear();
-                    GameManager.game.DespawnSpotlight();
+                    spotlightFilled = true;
+                    status.spotlight = 0;
+                    break;
                 }
             }
+        }
+
+        if (spotlightFilled)
+        {
+            players.Clear();
+            GameManager.game.DespawnSpotlight();
         }
     }
 
