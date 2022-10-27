@@ -459,6 +459,8 @@ public class PlayerStatus : MonoBehaviour
             }
             buffs[Random.Range(0, buffs.Length)] = true;
         }
+
+        spotlight = 0;
     }
 
     /// <summary>
