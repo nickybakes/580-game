@@ -40,22 +40,24 @@ public struct Attack
     public float durationMultiplier;
     public float recoveryMultiplier;
     public float forwardSpeedModifierMultiplier;
+    public AttackDirection attackDirection;
     public AttackAnimation animation;
 
     /// <summary>
     /// Creates an instance of an Attack struct.
     /// </summary>
     public Attack(
-        float _damageMultiplier,
-        float _knockbackMultiplier,
-        float _knockbackHeightMultiplier,
-        float _hitstunMultiplier,
-        float _radiusMultiplier,
-        float _heightMultiplier,
-        float _startupMultiplier,
-        float _durationMultiplier,
-        float _recoveryMultiplier,
-        float _forwardSpeedModifierMultiplier,
+        float _damageMultiplier = 1.0f,
+        float _knockbackMultiplier = 1.0f,
+        float _knockbackHeightMultiplier = 1.0f,
+        float _hitstunMultiplier = 1.0f,
+        float _radiusMultiplier = 1.0f,
+        float _heightMultiplier = 1.0f,
+        float _startupMultiplier = 1.0f,
+        float _durationMultiplier = 1.0f,
+        float _recoveryMultiplier = 1.0f,
+        float _forwardSpeedModifierMultiplier = 1.0f,
+        AttackDirection _attackDirection = AttackDirection.Forward,
         AttackAnimation _animation = AttackAnimation.Punch_03
         )
     {
@@ -69,6 +71,7 @@ public struct Attack
         durationMultiplier = _durationMultiplier;
         recoveryMultiplier = _recoveryMultiplier;
         forwardSpeedModifierMultiplier = _forwardSpeedModifierMultiplier;
+        attackDirection = _attackDirection;
         animation = _animation;
     }
 }
@@ -273,7 +276,7 @@ public class DefaultState
         // Resize hitbox
         hitboxCollider.radius = radius * currentAttack.radiusMultiplier;
         hitboxCollider.height = height * currentAttack.heightMultiplier;
-        hitboxCollider.direction = (int)AttackDirection.Forward; // Currently defaulting to forward. Will be changed later.
+        hitboxCollider.direction = (int)currentAttack.attackDirection;
 
         //hitboxScript.tr.localPosition = new Vector3(0, 1, 1 + (radius * currentAttack.radiusMultiplier) / 2); // Experimental
         hitboxScript.tr.localPosition = new Vector3(0, 1, 1 + hitboxCollider.height / 2);
