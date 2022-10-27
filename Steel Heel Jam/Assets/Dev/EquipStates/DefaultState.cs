@@ -40,8 +40,8 @@ public struct Attack
     public float durationMultiplier;
     public float recoveryMultiplier;
     public float forwardSpeedModifierMultiplier;
-    public AttackDirection attackDirection;
     public AttackAnimation animation;
+    public AttackDirection attackDirection;
 
     /// <summary>
     /// Creates an instance of an Attack struct.
@@ -57,8 +57,8 @@ public struct Attack
         float _durationMultiplier = 1.0f,
         float _recoveryMultiplier = 1.0f,
         float _forwardSpeedModifierMultiplier = 1.0f,
-        AttackDirection _attackDirection = AttackDirection.Forward,
-        AttackAnimation _animation = AttackAnimation.Punch_03
+        AttackAnimation _animation = AttackAnimation.Punch_03,
+        AttackDirection _attackDirection = AttackDirection.Forward
         )
     {
         damageMultiplier = _damageMultiplier;

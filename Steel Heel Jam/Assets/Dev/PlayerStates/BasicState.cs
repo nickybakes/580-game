@@ -48,12 +48,12 @@ public enum AnimationState
     AG_Stab_01_S,
     AG_Stab_01_D,
     AG_Stab_01_R,
-    AG_SwipeHeavy_01_S,
-    AG_SwipeHeavy_01_D,
-    AG_SwipeHeavy_01_R,
-    AG_SmashHeavy_01_S,
-    AG_SmashHeavy_01_D,
-    AG_SmashHeavy_01_R,
+    AG_HeavySwipe_01_S,
+    AG_HeavySwipe_01_D,
+    AG_HeavySwipe_01_R,
+    AG_HeavySmash_01_S,
+    AG_HeavySmash_01_D,
+    AG_HeavySmash_01_R,
 }
 
 /// <summary>
