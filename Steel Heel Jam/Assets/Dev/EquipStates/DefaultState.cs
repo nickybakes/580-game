@@ -279,7 +279,11 @@ public class DefaultState
         hitboxCollider.direction = (int)currentAttack.attackDirection;
 
         //hitboxScript.tr.localPosition = new Vector3(0, 1, 1 + (radius * currentAttack.radiusMultiplier) / 2); // Experimental
-        hitboxScript.tr.localPosition = new Vector3(0, 1, 1 + hitboxCollider.height / 2);
+        hitboxScript.tr.localPosition = new Vector3(0, 1, 1 + (
+            currentAttack.attackDirection == AttackDirection.Forward 
+            ? hitboxCollider.height / 2 
+            : (radius * currentAttack.radiusMultiplier) / 2)
+            );
 
         float y = (hitboxCollider.height / 2) > hitboxCollider.radius ? hitboxCollider.height : hitboxCollider.radius;
 
@@ -287,7 +291,12 @@ public class DefaultState
         attackSphere.localScale = new Vector3(hitboxCollider.radius * 2, y, hitboxCollider.radius * 2);
 
         // Logic for rotating hitbox (new attack shapes)
-        attackSphere.rotation = new Quaternion((int)currentAttack.attackDirection == 2 ? 90 : 0, (int)currentAttack.attackDirection == 0 ? 90 : 0, 0, 1);
+        attackSphere.rotation = new Quaternion(
+            currentAttack.attackDirection == AttackDirection.Forward ? 90 : 0, 
+            0, 
+            currentAttack.attackDirection == AttackDirection.Horizontal ? 90 : 0, 
+            1
+            );
 
         return hitboxScript;
     }
