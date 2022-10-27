@@ -41,8 +41,14 @@ public class GameManager : MonoBehaviour
 
     public bool gameWon;
 
-    public GameObject heelSpotlightPrefab;
-    public HeelSpotlight heelSpotlightScript;
+    //public GameObject heelSpotlightPrefab;
+    //public HeelSpotlight heelSpotlightScript;
+
+    public GameObject spotlight;
+    private BuffSpotlight spotlightScript;
+
+    public const float spotlightRespawnCooldownMax = 3.0f;
+    public float spotlightRespawnCooldown;
 
     private bool heelSpotlightSpawned;
 
@@ -62,6 +68,9 @@ public class GameManager : MonoBehaviour
 
         SpawnPlayerPrefabs();
         SpawnRing();
+
+        spotlightScript = spotlight.GetComponent<BuffSpotlight>();
+        SpawnSpotlight();
 
         //Grabs the countdown text from GameHUD and starts a countdown.
         countdownDisplay = hudCountdown.GetComponent<TextMeshProUGUI>();
@@ -97,6 +106,16 @@ public class GameManager : MonoBehaviour
     {
         gameTime += Time.deltaTime;
         cameraManager.UpdateCamera(alivePlayerStatuses, eliminatedPlayerStatuses);
+
+        if (spotlightRespawnCooldown < spotlightRespawnCooldownMax)
+        {
+            spotlightRespawnCooldown += Time.deltaTime;
+
+            if (spotlightRespawnCooldown > spotlightRespawnCooldownMax)
+            {
+                SpawnSpotlight();
+            }
+        }
 
         // if (gameTime > 13 && !heelSpotlightSpawned)
         // {
@@ -219,12 +238,27 @@ public class GameManager : MonoBehaviour
         ringScript.ResizeRing(10, maxGameTime);
     }
 
-    public void SpawnHeelSpotlight()
+    public void SpawnSpotlight()
     {
-        GameObject g = Instantiate(heelSpotlightPrefab);
+        float xOffset = Random.Range(-10.0f - ringScript.tr.localScale.x, 11.0f + ringScript.tr.localScale.x);
+        float zOffset = Random.Range(-10.0f - ringScript.tr.localScale.z, 11.0f + ringScript.tr.localScale.z);
 
-        heelSpotlightScript = g.GetComponent<HeelSpotlight>();
-
-
+        spotlightScript.tr.localPosition = new Vector3(ringScript.tr.position.x, 0, ringScript.tr.position.z);
+        spotlight.SetActive(true);
     }
+
+    public void DespawnSpotlight()
+    {
+        spotlightRespawnCooldown = 0;
+        spotlight.SetActive(false);
+    }
+
+    //public void SpawnHeelSpotlight()
+    //{
+    //    GameObject g = Instantiate(heelSpotlightPrefab);
+
+    //    heelSpotlightScript = g.GetComponent<HeelSpotlight>();
+
+
+    //}
 }
