@@ -25,7 +25,7 @@ public class SteelChair : DefaultState
                 1.0f, // Duration Multiplier
                 1.0f, // Recovery Multiplier
                 0.5f,  // Forward Speed Multiplier
-                AttackAnimation.Swipe_01
+                AttackAnimation.Stab_01
                 ),
             new Attack( // *** 2nd Hit ***
                 1.0f, // Damage Multiplier

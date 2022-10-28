@@ -186,6 +186,7 @@ public class GameManager : MonoBehaviour
     {
         status.eliminated = true;
         status.SetPlayerStateImmediately(new Eliminated());
+        status.combat.DropWeapon();
 
         if (status.playerLastHitBy != null)
         {
@@ -240,10 +241,17 @@ public class GameManager : MonoBehaviour
 
     public void SpawnSpotlight()
     {
-        float xOffset = Random.Range(-10.0f - ringScript.tr.localScale.x, 11.0f + ringScript.tr.localScale.x);
-        float zOffset = Random.Range(-10.0f - ringScript.tr.localScale.z, 11.0f + ringScript.tr.localScale.z);
+        //int randomXCoordinate = r.Next(-40, 40);
+        //int randomZCoordinate = r.Next(-40, 40);
+        float radius = (GameManager.game.ringScript.tr.localScale.x / 2) + 8;
+        float xMin = Mathf.Max(GameManager.game.ringScript.transform.position.x - radius, GameManager.game.gameSceneSettings.minItemSpawnBoundaries.x);
+        float xMax = Mathf.Min(GameManager.game.ringScript.transform.position.x + radius, GameManager.game.gameSceneSettings.maxItemSpawnBoundaries.x);
+        float zMin = Mathf.Max(GameManager.game.ringScript.transform.position.z - radius, GameManager.game.gameSceneSettings.minItemSpawnBoundaries.z);
+        float zMax = Mathf.Min(GameManager.game.ringScript.transform.position.z + radius, GameManager.game.gameSceneSettings.maxItemSpawnBoundaries.z);
+        float randomXCoordinate = Random.Range(xMin, xMax);
+        float randomZCoordinate = Random.Range(zMin, zMax);
 
-        spotlightScript.tr.localPosition = new Vector3(ringScript.tr.position.x + xOffset, 0, ringScript.tr.position.z + zOffset);
+        spotlightScript.tr.position = new Vector3(randomXCoordinate, 0, randomZCoordinate);
         spotlight.SetActive(true);
     }
 

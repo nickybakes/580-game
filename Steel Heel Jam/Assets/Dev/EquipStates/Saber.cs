@@ -23,7 +23,8 @@ public class Saber : DefaultState
                 1.0f, // Startup Multiplier
                 1.0f, // Duration Multiplier
                 1.0f, // Recovery Multiplier
-                1.0f  // Forward Speed Multiplier
+                1.0f,  // Forward Speed Multiplier
+                AttackAnimation.Swipe_01
                 ),
             new Attack( // *** 2nd Hit ***
                 1.8f, // Damage Multiplier
@@ -35,7 +36,8 @@ public class Saber : DefaultState
                 0.7f, // Startup Multiplier
                 1.3f, // Duration Multiplier
                 1.0f, // Recovery Multiplier
-                1.5f  // Forward Speed Multiplier
+                1.5f,  // Forward Speed Multiplier
+                AttackAnimation.Swipe_02
                 ),
             new Attack( // *** 3rd Hit ***
                 2.0f, // Damage Multiplier
@@ -47,7 +49,8 @@ public class Saber : DefaultState
                 0.7f, // Startup Multiplier
                 1.6f, // Duration Multiplier
                 1.0f, // Recovery Multiplier
-                2.0f  // Forward Speed Multiplier
+                2.0f,  // Forward Speed Multiplier
+                AttackAnimation.Stab_01
                 ),
         };
 

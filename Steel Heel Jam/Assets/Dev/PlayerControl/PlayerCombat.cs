@@ -321,6 +321,8 @@ public class PlayerCombat : MonoBehaviour
 
     public void DropWeapon()
     {
+        Debug.Log("Dropped Weapon!");
+
         if (!equippedItem)
             return;
 
@@ -382,7 +384,7 @@ public class PlayerCombat : MonoBehaviour
                 break;
 
             case (AnimationModifier.FistsOverHead):
-                _status.visuals.SetAnimationModifier(AnimationModifier.RightHandFist);
+                // _status.visuals.SetAnimationModifier(AnimationModifier.RightHandFist);
                 break;
         }
     }

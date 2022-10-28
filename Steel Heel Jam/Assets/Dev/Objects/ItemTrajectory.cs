@@ -47,6 +47,9 @@ public class ItemTrajectory : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (rb == null)
+            return;
+
         // Prevent collision with thrower
         if (collision.gameObject != throwerObject)
         {
@@ -82,7 +85,7 @@ public class ItemTrajectory : MonoBehaviour
             initialDirection.z *= chargeAmount * chargeAmountMultiplier + minThrowSpeed;
             initialDirection.y = 4; // Set general height of non-targeted throw.
 
-            rb.velocity = new Vector3(0,0,0);
+            rb.velocity = new Vector3(0, 0, 0);
             rb.AddForce(initialDirection, ForceMode.Impulse);
             rb.useGravity = true;
         }

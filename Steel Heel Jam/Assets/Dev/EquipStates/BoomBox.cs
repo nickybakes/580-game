@@ -24,7 +24,7 @@ public class BoomBox : DefaultState
                 1.0f, // Duration Multiplier
                 1.0f, // Recovery Multiplier
                 1.2f,  // Forward Speed Multiplier
-                AttackAnimation.Swipe_02
+                AttackAnimation.SwipeHeavy_01
                 ),
             new Attack( // *** 2nd Hit ***
                 2.5f, // Damage Multiplier

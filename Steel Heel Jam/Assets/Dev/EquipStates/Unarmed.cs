@@ -24,7 +24,8 @@ public class Unarmed : DefaultState
                 1.0f, // Startup Multiplier
                 1.0f, // Duration Multiplier
                 1.0f, // Recovery Multiplier
-                1.0f  // Forward Speed Multiplier
+                1.0f,  // Forward Speed Multiplier
+                AttackAnimation.Punch_01
                 ),
             new Attack( // *** 2nd Hit ***
                 0.8f, // Damage Multiplier
@@ -36,7 +37,8 @@ public class Unarmed : DefaultState
                 0.7f, // Startup Multiplier
                 1.0f, // Duration Multiplier
                 1.0f, // Recovery Multiplier
-                1.1f  // Forward Speed Multiplier
+                1.1f,  // Forward Speed Multiplier
+                AttackAnimation.Punch_02
                 ),
             new Attack( // *** 3rd Hit ***
                 1.5f, // Damage Multiplier
@@ -48,7 +50,8 @@ public class Unarmed : DefaultState
                 0.7f, // Startup Multiplier
                 1.0f, // Duration Multiplier
                 1.0f, // Recovery Multiplier
-                1.3f  // Forward Speed Multiplier
+                1.3f,  // Forward Speed Multiplier
+                AttackAnimation.Punch_03
                 ),
         };
 

@@ -61,6 +61,10 @@ public class AttackGroundDuration : BasicState
         base.OnExitThisState(nextState, status);
         status.combat.weaponState.ForceEndAttack();
         if (!(nextState is AttackGroundRecovery))
+        {
+            status.combat.weaponState.currentComboCount = 0;
+            status.combat.attackCooldown = 0;
             status.combat.ResumeWeaponAnimationModifier();
+        }
     }
 }

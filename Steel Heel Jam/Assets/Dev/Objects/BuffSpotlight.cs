@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class BuffSpotlight : MonoBehaviour
 {
-    [SerializeField] public float speed = 3.0f;
-    [SerializeField] public float targetDistanceMax = 10.0f;
+    [SerializeField] public float targetingSpeed = 5f;
+    [SerializeField] public float wanderingSpeed = 3.5f;
+    [SerializeField] public float targetDistanceMax = 14.0f;
 
     [SerializeField] public float wanderDecisionCooldownMax = 10.0f;
     private float wanderDecisionCooldown;
@@ -16,6 +17,7 @@ public class BuffSpotlight : MonoBehaviour
     /// </summary>
     private List<PlayerStatus> players = new List<PlayerStatus>();
 
+    [HideInInspector]
     public Transform tr;
 
     private Transform targetPlayerPosition;
@@ -40,8 +42,8 @@ public class BuffSpotlight : MonoBehaviour
             MoveTowardTargetPlayer();
 
             playerTargeted = ShouldContinueTargetingPlayer();
-        } 
-        else 
+        }
+        else
         {
             Wander();
         }
@@ -49,7 +51,7 @@ public class BuffSpotlight : MonoBehaviour
 
     private void Wander()
     {
-        tr.position += new Vector3(wanderDirection.x, 0, wanderDirection.y) * Time.deltaTime;
+        tr.position += new Vector3(wanderDirection.x, 0, wanderDirection.y) * wanderingSpeed * Time.deltaTime;
 
         wanderDecisionCooldown += Time.deltaTime;
 
@@ -66,7 +68,8 @@ public class BuffSpotlight : MonoBehaviour
 
     private Vector2 DecideWanderDirection()
     {
-        return new Vector2(Random.Range(-1, 2), Random.Range(-1, 2));
+        float angle = Random.Range(0, Mathf.PI * 2);
+        return new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
     }
 
     private void CheckFlexers()
@@ -82,7 +85,7 @@ public class BuffSpotlight : MonoBehaviour
                 if (status.spotlight >= PlayerStatus.defaultMaxSpotlight)
                 {
                     spotlightFilled = true;
-                    status.spotlight = 0;
+                    status.ReduceSpotlightMeter(PlayerStatus.defaultMaxSpotlight);
                     break;
                 }
             }
@@ -90,6 +93,10 @@ public class BuffSpotlight : MonoBehaviour
 
         if (spotlightFilled)
         {
+            foreach (PlayerStatus status in players)
+            {
+                status.isInSpotlight = false;
+            }
             players.Clear();
             GameManager.game.DespawnSpotlight();
         }
@@ -97,7 +104,7 @@ public class BuffSpotlight : MonoBehaviour
 
     private void MoveTowardTargetPlayer()
     {
-        Vector3 movement = (targetPlayerPosition.position - tr.position).normalized * speed * Time.deltaTime;
+        Vector3 movement = (targetPlayerPosition.position - tr.position).normalized * targetingSpeed * Time.deltaTime;
         tr.position += new Vector3(movement.x, 0, movement.z);
     }
 
@@ -110,30 +117,17 @@ public class BuffSpotlight : MonoBehaviour
 
     private void StayWithinBounds()
     {
-        if (tr.position.x > 35)
+        if ((tr.position.x > GameManager.game.gameSceneSettings.maxItemSpawnBoundaries.x && wanderDirection.x > 0) || (tr.position.x < GameManager.game.gameSceneSettings.minItemSpawnBoundaries.x && wanderDirection.x < 0))
         {
-            wanderDirection.x = -1;
-            wanderDecisionCooldown = 0;
-        }
-        else if (tr.position.x < -35)
-        {
-            wanderDirection.x = 1;
+            wanderDirection.x *= -1;
             wanderDecisionCooldown = 0;
         }
 
-        if (tr.position.z > 17)
+        if ((tr.position.z > GameManager.game.gameSceneSettings.maxItemSpawnBoundaries.z && wanderDirection.y > 0) || (tr.position.z < GameManager.game.gameSceneSettings.minItemSpawnBoundaries.z && wanderDirection.y < 0))
         {
-            // Z axis
-            wanderDirection.y = -1;
+            wanderDirection.y *= -1;
             wanderDecisionCooldown = 0;
         }
-        else if(tr.position.z < -9)
-        {
-            // Z axis
-            wanderDirection.y = 1;
-            wanderDecisionCooldown = 0;
-        }
-        
     }
 
     private void OnTriggerEnter(Collider other)

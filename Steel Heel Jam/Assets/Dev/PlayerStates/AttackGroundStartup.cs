@@ -29,6 +29,10 @@ public class AttackGroundStartup : BasicState
         base.OnExitThisState(nextState, status);
 
         if (!(nextState is AttackGroundDuration))
+        {
+            status.combat.weaponState.currentComboCount = 0;
+            status.combat.attackCooldown = 0;
             status.combat.ResumeWeaponAnimationModifier();
+        }
     }
 }

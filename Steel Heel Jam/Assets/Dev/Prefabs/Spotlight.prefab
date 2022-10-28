@@ -362,8 +362,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 455d38e7d0a8b50498e20143e0f53848, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3
-  targetDistanceMax: 10
+  targetingSpeed: 5
+  wanderingSpeed: 3.5
+  targetDistanceMax: 14
+  wanderDecisionCooldownMax: 10
+  tr: {fileID: 0}
 --- !u!1001 &7616529729833424876
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Random = System.Random;
 
 public class ItemManager : MonoBehaviour
 {
@@ -10,7 +9,6 @@ public class ItemManager : MonoBehaviour
     float spawnTimer;
     float spawnTimerMax;
     float spawnCap = 12f;
-    Random r = new Random();
 
     // Start is called before the first frame update
     void Start()
@@ -21,7 +19,7 @@ public class ItemManager : MonoBehaviour
         //itemsOnGround = new List<GameObject>();
         for (int i = 0; i < 7; i++)
         {
-            SpawnRandomItem(20);
+            SpawnRandomItemCenter(20);
         }
     }
 
@@ -45,35 +43,38 @@ public class ItemManager : MonoBehaviour
         }
     }
 
-    void SpawnRandomItem(float radius)
+    void SpawnRandomItemCenter(float radius)
     {
-        int randomItemIndex = r.Next(0, itemsToSpawn.Count);
+        int randomItemIndex = Random.Range(0, itemsToSpawn.Count);
         //int randomXCoordinate = r.Next(-40, 40);
         //int randomZCoordinate = r.Next(-40, 40);
-        float randomXCoordinate = NextFloat(GameManager.game.gameSceneSettings.heelSpotlightStart.position.x - radius, GameManager.game.gameSceneSettings.heelSpotlightStart.position.x + radius);
-        float randomZCoordinate = NextFloat(GameManager.game.gameSceneSettings.heelSpotlightStart.position.z - radius, GameManager.game.gameSceneSettings.heelSpotlightStart.position.z + radius);
-        Vector3 spawnLocation = new Vector3(randomXCoordinate, 35, randomZCoordinate);
+        Vector3 center = Vector3.Lerp(GameManager.game.gameSceneSettings.minItemSpawnBoundaries, GameManager.game.gameSceneSettings.maxItemSpawnBoundaries, .5f);
+        float xMin = Mathf.Max(center.x - radius, GameManager.game.gameSceneSettings.minItemSpawnBoundaries.x);
+        float xMax = Mathf.Min(center.x + radius, GameManager.game.gameSceneSettings.maxItemSpawnBoundaries.x);
+        float zMin = Mathf.Max(center.z - radius, GameManager.game.gameSceneSettings.minItemSpawnBoundaries.z);
+        float zMax = Mathf.Min(center.z + radius, GameManager.game.gameSceneSettings.maxItemSpawnBoundaries.z);
+        float randomXCoordinate = Random.Range(xMin, xMax);
+        float randomZCoordinate = Random.Range(zMin, zMax);
+        Vector3 spawnLocation = new Vector3(randomXCoordinate, Random.Range(GameManager.game.gameSceneSettings.minItemSpawnBoundaries.y, GameManager.game.gameSceneSettings.maxItemSpawnBoundaries.y), randomZCoordinate);
         GameObject newItem = Instantiate(itemsToSpawn[randomItemIndex], spawnLocation, Quaternion.identity);
         itemsOnGround.Add(newItem);
     }
 
     void SpawnRandomItem()
     {
-        int randomItemIndex = r.Next(0, itemsToSpawn.Count);
+        int randomItemIndex = Random.Range(0, itemsToSpawn.Count);
         //int randomXCoordinate = r.Next(-40, 40);
         //int randomZCoordinate = r.Next(-40, 40);
         float radius = (GameManager.game.ringScript.tr.localScale.x / 2) + 8;
-        float randomXCoordinate = NextFloat(GameManager.game.ringScript.transform.position.x - radius, GameManager.game.ringScript.transform.position.x + radius);
-        float randomZCoordinate = NextFloat(GameManager.game.ringScript.transform.position.z - radius, GameManager.game.ringScript.transform.position.z + radius);
-        Vector3 spawnLocation = new Vector3(randomXCoordinate, 35, randomZCoordinate);
+        float xMin = Mathf.Max(GameManager.game.ringScript.transform.position.x - radius, GameManager.game.gameSceneSettings.minItemSpawnBoundaries.x);
+        float xMax = Mathf.Min(GameManager.game.ringScript.transform.position.x + radius, GameManager.game.gameSceneSettings.maxItemSpawnBoundaries.x);
+        float zMin = Mathf.Max(GameManager.game.ringScript.transform.position.z - radius, GameManager.game.gameSceneSettings.minItemSpawnBoundaries.z);
+        float zMax = Mathf.Min(GameManager.game.ringScript.transform.position.z + radius, GameManager.game.gameSceneSettings.maxItemSpawnBoundaries.z);
+        float randomXCoordinate = Random.Range(xMin, xMax);
+        float randomZCoordinate = Random.Range(zMin, zMax);
+        Vector3 spawnLocation = new Vector3(randomXCoordinate, Random.Range(GameManager.game.gameSceneSettings.minItemSpawnBoundaries.y, GameManager.game.gameSceneSettings.maxItemSpawnBoundaries.y), randomZCoordinate);
         GameObject newItem = Instantiate(itemsToSpawn[randomItemIndex], spawnLocation, Quaternion.identity);
         itemsOnGround.Add(newItem);
-    }
-
-    private float NextFloat(float min, float max)
-    {
-        double val = (r.NextDouble() * (max - min) + min);
-        return (float)val;
     }
 
     /*public string DeleteItemAndRemoveFromList(int indexToDelete)

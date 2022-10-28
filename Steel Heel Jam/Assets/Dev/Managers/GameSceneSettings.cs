@@ -18,6 +18,9 @@ public class GameSceneSettings : MonoBehaviour
     public Transform ringCenters;
     public Transform heelSpotlightStart;
 
+    public Vector3 minItemSpawnBoundaries = new Vector3(-100, 0, -100);
+    public Vector3 maxItemSpawnBoundaries = new Vector3(100, 100, 100);
+
     // Start is called before the first frame update
     void Start()
     {

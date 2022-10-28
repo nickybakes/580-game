@@ -23,7 +23,8 @@ public class Gauntlets : DefaultState
                 4.0f, // Startup Multiplier
                 2.5f, // Duration Multiplier
                 2.0f, // Recovery Multiplier
-                3.0f  // Forward Speed Multiplier
+                3.0f,  // Forward Speed Multiplier
+                AttackAnimation.Punch_03
                 )
         };
 

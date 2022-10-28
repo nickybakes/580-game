@@ -59,7 +59,7 @@ public class PickUpSphere : MonoBehaviour
             case ItemType.ExplosiveBarrel:
                 playerCombat.weaponState = new ExplosiveBarrel(playerStatus.playerNumber, playerCombat._hitbox);
                 if (playerStatus.playerHeader)
-                    playerStatus.playerHeader.SetWeaponText("Barrel");
+                    playerStatus.playerHeader.SetWeaponText("Explosive Barrel");
                 break;
 
             case ItemType.SteelChair:
@@ -92,7 +92,6 @@ public class PickUpSphere : MonoBehaviour
                     playerStatus.playerHeader.SetWeaponText("Ladder");
                 break;
         }
-
 
         // Destroy the object on the ground
         //Destroy(other.gameObject);
