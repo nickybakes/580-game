@@ -299,7 +299,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 352, y: -86.283295}
+  m_AnchoredPosition: {x: 273, y: -86.283295}
   m_SizeDelta: {x: 231.765, y: 231.765}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &142439705
@@ -375,7 +375,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -222, y: 12}
+  m_AnchoredPosition: {x: -222, y: 0}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &142825267
@@ -398,9 +398,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Single press: Attack
-
-    Double tap: Grab Suplex'
+  m_text: Attack
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e162f25dbf485d94dbe27a7d391b2278, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: c04666277e158a94d833ab8c68af3979, type: 2}
@@ -867,7 +865,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 283.4282, y: 12}
+  m_AnchoredPosition: {x: 283.4282, y: -0}
   m_SizeDelta: {x: 312.856, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &369516183
@@ -890,7 +888,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Throw weapon or hold to Flex and gain Approval
+  m_text: Throw weapon or hold to Flex and gain Approval. Spend meter to gain faster.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e162f25dbf485d94dbe27a7d391b2278, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: c04666277e158a94d833ab8c68af3979, type: 2}
@@ -953,7 +951,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: -52.71425, w: 0}
+  m_margin: {x: 0, y: 0, z: -208.63283, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1178,7 +1176,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -500, y: -86.283295}
+  m_AnchoredPosition: {x: -357, y: -38}
   m_SizeDelta: {x: 325.199, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &555840910
@@ -1226,7 +1224,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -500, y: 152.16579}
+  m_AnchoredPosition: {x: -361, y: 212}
   m_SizeDelta: {x: 171.334, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &620434936
@@ -1325,7 +1323,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Pick up weapon
+  m_text: 'Tap: Pick up weapon
+
+    Hold: Grab into suplex'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e162f25dbf485d94dbe27a7d391b2278, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: c04666277e158a94d833ab8c68af3979, type: 2}
@@ -1360,7 +1360,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 512
+  m_VerticalAlignment: 1024
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -1893,13 +1893,10 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Lose Approval while out of the ring.
 
-    Heel = lose Approval over time
-    but do more damage.
+    Flex in Spotlights to fill meter
+    and gain a buff!
 
-    Hit someone to transfer Heel status to them.
-
-    Out
-    of ring AND 0 Approval = KO''d!'
+    Out of ring AND No Approval = KO''d!'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 382f909292acf1e41928e56b37f83a14, type: 2}
   m_sharedMaterial: {fileID: 7907999476742806842, guid: 382f909292acf1e41928e56b37f83a14,
@@ -2014,7 +2011,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 500, y: 152.16579}
+  m_AnchoredPosition: {x: 500, y: 211.99998}
   m_SizeDelta: {x: 171.334, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1404449267
@@ -2364,7 +2361,10 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: 'Debug Controls: [1]/(Start): to enter gameplay map 1. [Esc]/(Select):
-    Return to/refresh this Join scene.'
+    Return to/clear this Join scene.
+
+    [Space]/(South Button): Join, [Backspace]/(East
+    Button): Leave'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 36094137a67a24d4cb170eeaae013add, type: 2}
   m_sharedMaterial: {fileID: 2155410805165912589, guid: 36094137a67a24d4cb170eeaae013add,
@@ -2400,7 +2400,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0

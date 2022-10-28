@@ -27,8 +27,11 @@ public class GrabHitbox : MonoBehaviour
     {
         if (playersWithinBounds.Count == 0)
             return;
-        
+
         PlayerStatus victim = playersWithinBounds[0].GetComponent<PlayerStatus>();
+
+        if (victim.IsDodgeRolling)
+            return;
 
         // Make player grabbed unable to move and a child of the grabber.
         victim.transform.SetParent(playerStatus.transform);
@@ -48,6 +51,8 @@ public class GrabHitbox : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (playerStatus == null)
+            return;
         // Checks if colliding with a player, ignoring own player number.
         if (other.CompareTag(Tag.Player.ToString()) && other.GetComponent<PlayerStatus>().PlayerNumber != playerStatus.PlayerNumber)
         {

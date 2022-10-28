@@ -44,7 +44,6 @@ public class PlayerVisuals
 
         weaponHolder = modelTransform.GetComponentInChildren<PlayerWeaponVisual>();
 
-        Debug.Log(weaponHolder);
 
         blockSphere = tr.GetChild((int)PlayerChild.Visuals).GetChild((int)VisualChild.Block).gameObject;
         dodgeRollSphere = tr.GetChild((int)PlayerChild.Visuals).GetChild((int)VisualChild.DodgeRoll).gameObject;
