@@ -1893,10 +1893,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Lose Approval while out of the ring.
 
-    Flex in Spotlights to fill meter
-    and gain a buff!
+    Out of ring AND No Approval
+    = KO''d!
 
-    Out of ring AND No Approval = KO''d!'
+    Flex in Spotlights to fill meter and gain a buff!
+
+    Fighting
+    also fills meter.
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 382f909292acf1e41928e56b37f83a14, type: 2}
   m_sharedMaterial: {fileID: 7907999476742806842, guid: 382f909292acf1e41928e56b37f83a14,
@@ -1936,7 +1941,7 @@ MonoBehaviour:
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
-  m_lineSpacing: 0
+  m_lineSpacing: -20.44
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
@@ -2360,8 +2365,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Debug Controls: [1]/(Start): to enter gameplay map 1. [Esc]/(Select):
-    Return to/clear this Join scene.
+  m_text: 'Debug Controls: [1]/(Start): to Start/Restart match, [Esc]/(Select): Return
+    to/clear this Join scene.
 
     [Space]/(South Button): Join, [Backspace]/(East
     Button): Leave'

@@ -47,7 +47,7 @@ public class PickUpSphere : MonoBehaviour
             case ItemType.Saber:
                 playerCombat.weaponState = new Saber(playerStatus.playerNumber, playerCombat._hitbox);
                 if (playerStatus.playerHeader)
-                    playerStatus.playerHeader.SetWeaponText("Saber");
+                    playerStatus.playerHeader.SetWeaponText("Sabre");
                 break;
 
             case ItemType.BoomBox:
@@ -77,7 +77,7 @@ public class PickUpSphere : MonoBehaviour
             case ItemType.Gauntlets:
                 playerCombat.weaponState = new Gauntlets(playerStatus.playerNumber, playerCombat._hitbox);
                 if (playerStatus.playerHeader)
-                    playerStatus.playerHeader.SetWeaponText("Boxer Gloves");
+                    playerStatus.playerHeader.SetWeaponText("Boxing Glove");
                 break;
 
             case ItemType.LeadPipe:

@@ -67,7 +67,7 @@ public class CameraManager : MonoBehaviour
                 {
                     positions.Add(status.GetTransform.position);
                 }
-                else if (eliminationTimeAmount > 3 && eliminationTimeAmount < 6)
+                else if (eliminationTimeAmount > 3 && eliminationTimeAmount < 6 && positions.Count > 0)
                 {
                     positions.Add(Vector3.Lerp(status.GetTransform.position, positions[0], (GameManager.game.gameTime - status.timeOfEliminiation - 3) / 3f));
                 }
