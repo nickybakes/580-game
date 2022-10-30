@@ -525,7 +525,7 @@ public class PlayerMovement : MonoBehaviour
     //{
     //    if (animationEvent.animatorClipInfo.weight > 0.5f)
     //    {
-    //        audioManager.Play("Footstep", 0.2f, 0.8f, 1.2f);
+    //        _audioManager.Play("Footstep", 0.2f, 0.8f, 1.2f);
     //    }
     //}
 
@@ -533,7 +533,7 @@ public class PlayerMovement : MonoBehaviour
     //{
     //    if (animationEvent.animatorClipInfo.weight > 0.5f)
     //    {
-    //        audioManager.Play("Landing", 0.2f, 0.8f, 1.2f);
+    //        _audioManager.Play("Landing", 0.2f, 0.8f, 1.2f);
     //    }
     //}
 }
