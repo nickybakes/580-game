@@ -16,9 +16,6 @@ public class ItemThrowing : BasicState
         alternateFriction = true;
         canThrow = true;
         animationState = AnimationState.ThrowCharging_01;
-        //visual = VisualChild.Throw;
-
-
         stateToChangeTo = new ThrowRecovery();
     }
 
@@ -26,6 +23,6 @@ public class ItemThrowing : BasicState
     {
         base.OnEnterThisState(prevState, status);
 
-        status.audioManager.Play("throw", 0.8f, 1.2f);
+        AudioManager.aud.Play("throw", 0.8f, 1.2f);
     }
 }

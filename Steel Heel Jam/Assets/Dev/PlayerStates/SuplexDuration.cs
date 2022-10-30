@@ -63,10 +63,10 @@ public class SuplexDuration : BasicState
         // Play ground sound. Louder when moving faster.
         float vol = -status.movement.velocity.y / 50;
 
-        status.audioManager.Play("crunch", vol / 3);
-        status.audioManager.Play("punch", vol);
-        status.audioManager.Play("landing", vol / 2);
-        status.audioManager.Play("orchestraHitLong");
+        AudioManager.aud.Play("crunch", vol / 3);
+        AudioManager.aud.Play("punch", vol);
+        AudioManager.aud.Play("landing", vol / 2);
+        AudioManager.aud.Play("orchestraHitLong");
     }
 
     // Give initial arc direction.

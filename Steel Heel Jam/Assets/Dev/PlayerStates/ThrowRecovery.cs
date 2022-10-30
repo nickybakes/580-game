@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class ThrowRecovery : BasicState
 {
-
     public ThrowRecovery()
     {
         timeToChangeState = .15f;
@@ -20,17 +19,5 @@ public class ThrowRecovery : BasicState
 
         animationState = AnimationState.Throw_01;
         stateToChangeTo = new Idle();
-    }
-
-    public override void Update(PlayerStatus status)
-    {
-        base.Update(status);
-
-    }
-
-    public override void OnEnterThisState(BasicState prevState, PlayerStatus status)
-    {
-        base.OnEnterThisState(prevState, status);
-
     }
 }

@@ -21,5 +21,7 @@ public class ItemPickUp : BasicState
         base.OnEnterThisState(prevState, status);
 
         // status.movement.SetTopDownVelocityToZero();
+
+        AudioManager.aud.Play("pickup");
     }
 }

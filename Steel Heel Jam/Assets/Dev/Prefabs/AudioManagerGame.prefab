@@ -75,8 +75,28 @@ MonoBehaviour:
     randStartPos: 0
     playOnAwake: 0
     source: {fileID: 0}
+  - audioType: 3
+    name: market
+    clips:
+    - {fileID: 8300000, guid: 65ed942379f6b6340a3528852f44ff1a, type: 3}
+    volume: 0.1
+    pitch: 1
+    loop: 1
+    randStartPos: 0
+    playOnAwake: 1
+    source: {fileID: 0}
+  - audioType: 2
+    name: exhibition
+    clips:
+    - {fileID: 8300000, guid: 906f04367f4257f49be231309b4af50a, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    randStartPos: 0
+    playOnAwake: 0
+    source: {fileID: 0}
   - audioType: 1
-    name: smack
+    name: hitByItem
     clips:
     - {fileID: 8300000, guid: a3046481ba3e4044b9c0a43b1b295938, type: 3}
     volume: 1
@@ -105,41 +125,6 @@ MonoBehaviour:
     randStartPos: 0
     playOnAwake: 0
     source: {fileID: 0}
-  - audioType: 3
-    name: market
-    clips:
-    - {fileID: 8300000, guid: 65ed942379f6b6340a3528852f44ff1a, type: 3}
-    volume: 0.1
-    pitch: 1
-    loop: 1
-    randStartPos: 0
-    playOnAwake: 1
-    source: {fileID: 0}
-  - audioType: 2
-    name: exhibition
-    clips:
-    - {fileID: 8300000, guid: 906f04367f4257f49be231309b4af50a, type: 3}
-    volume: 1
-    pitch: 1
-    loop: 0
-    randStartPos: 0
-    playOnAwake: 0
-    source: {fileID: 0}
-  - audioType: 1
-    name: footstep
-    clips:
-    - {fileID: 8300000, guid: 631d8d7e336097c48b769f1ac18dcade, type: 3}
-    - {fileID: 8300000, guid: e9da0d50a446a4644b974581f12c5860, type: 3}
-    - {fileID: 8300000, guid: 10e189d41a324de4b8a24f6543cad0d0, type: 3}
-    - {fileID: 8300000, guid: d7faae07b8c7cac4f8705c1b09135918, type: 3}
-    - {fileID: 8300000, guid: 9178353c7edc3f64b842676a3e1be685, type: 3}
-    - {fileID: 8300000, guid: ad0f875b9e5ce884b95c74b6648789db, type: 3}
-    volume: 1
-    pitch: 1
-    loop: 0
-    randStartPos: 0
-    playOnAwake: 0
-    source: {fileID: 0}
   - audioType: 1
     name: swing
     clips:
@@ -156,9 +141,9 @@ MonoBehaviour:
   - audioType: 1
     name: throw
     clips:
-    - {fileID: 8300000, guid: 8c4829008977bd44a850ee8999fcb625, type: 3}
-    - {fileID: 8300000, guid: 05d499229fe6f1349b5689c81c3d7f24, type: 3}
-    volume: 1
+    - {fileID: 8300000, guid: 264d58a36f05c1040b17a383f3ce9e85, type: 3}
+    - {fileID: 8300000, guid: 70139b382a6b5514d97d9d1eaa34eae8, type: 3}
+    volume: 0.5
     pitch: 1
     loop: 0
     randStartPos: 0
@@ -251,7 +236,7 @@ MonoBehaviour:
     playOnAwake: 0
     source: {fileID: 0}
   - audioType: 1
-    name: footsteps
+    name: footstep
     clips:
     - {fileID: 8300000, guid: 631d8d7e336097c48b769f1ac18dcade, type: 3}
     - {fileID: 8300000, guid: e9da0d50a446a4644b974581f12c5860, type: 3}
@@ -260,6 +245,38 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 9178353c7edc3f64b842676a3e1be685, type: 3}
     - {fileID: 8300000, guid: ad0f875b9e5ce884b95c74b6648789db, type: 3}
     volume: 1
+    pitch: 1
+    loop: 0
+    randStartPos: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - audioType: 1
+    name: jump
+    clips:
+    - {fileID: 8300000, guid: d3e85648af8bfc3418a28a5470238032, type: 3}
+    - {fileID: 8300000, guid: a7169c89519de3e4fb1af4c29e7be185, type: 3}
+    volume: 0.2
+    pitch: 1
+    loop: 0
+    randStartPos: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - audioType: 1
+    name: land
+    clips:
+    - {fileID: 8300000, guid: 9d542c3d95089d5469a28fb4a07fb6b3, type: 3}
+    - {fileID: 8300000, guid: ef4dcb80877cf734aa810774218402c8, type: 3}
+    volume: 0.2
+    pitch: 1
+    loop: 0
+    randStartPos: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - audioType: 1
+    name: pickup
+    clips:
+    - {fileID: 8300000, guid: 0192a4c25c90fe041a44e5a9a8336196, type: 3}
+    volume: 0.5
     pitch: 1
     loop: 0
     randStartPos: 0

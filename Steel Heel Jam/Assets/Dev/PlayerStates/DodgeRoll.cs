@@ -61,9 +61,13 @@ public class DodgeRoll : BasicState
         {
             moveSpeedMultiplier *= 2.0f;
             timeToChangeState /= 2.0f;
-        }
 
-        status.audioManager.Play("roll");
+            AudioManager.aud.Play("roll", 1.2f, 1.2f); // Higher pitched for faster rolling.
+        }
+        else
+        {
+            AudioManager.aud.Play("roll");
+        }
     }
 
 }

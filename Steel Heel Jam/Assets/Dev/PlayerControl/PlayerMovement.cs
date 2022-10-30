@@ -109,8 +109,6 @@ public class PlayerMovement : MonoBehaviour
     private StarterAssetsInputs _input;
     private PlayerStatus _status;
 
-    private AudioManager _audioManager;
-
     /// <summary>
     /// a set forward direction we want to player to be moving toward
     /// </summary>
@@ -170,7 +168,6 @@ public class PlayerMovement : MonoBehaviour
         _input = GetComponent<StarterAssetsInputs>();
         _playerInput = GetComponent<PlayerInput>();
         _status = GetComponent<PlayerStatus>();
-        _audioManager = FindObjectOfType<AudioManager>();
 
         // reset our timeouts on start
         _jumpTimeoutDelta = jumpTimeout;
@@ -520,20 +517,4 @@ public class PlayerMovement : MonoBehaviour
     //         groundedRadius
     //     );
     // }
-
-    //private void OnFootstep(AnimationEvent animationEvent)
-    //{
-    //    if (animationEvent.animatorClipInfo.weight > 0.5f)
-    //    {
-    //        _audioManager.Play("Footstep", 0.2f, 0.8f, 1.2f);
-    //    }
-    //}
-
-    //private void OnLand(AnimationEvent animationEvent)
-    //{
-    //    if (animationEvent.animatorClipInfo.weight > 0.5f)
-    //    {
-    //        _audioManager.Play("Landing", 0.2f, 0.8f, 1.2f);
-    //    }
-    //}
 }

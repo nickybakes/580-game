@@ -33,8 +33,6 @@ public enum Tag
 [RequireComponent(typeof(PlayerCombat))]
 public class PlayerStatus : MonoBehaviour
 {
-    public AudioManager audioManager;
-
     //public List<Buff> buffs = new List<Buff>();
 
     [SerializeField] private const float HeelStaminaDamage = 5f;
@@ -195,7 +193,6 @@ public class PlayerStatus : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        audioManager = FindObjectOfType<AudioManager>();
         transform = gameObject.transform;
         currentPlayerState = new Idle();
         movement = GetComponent<PlayerMovement>();
@@ -297,7 +294,7 @@ public class PlayerStatus : MonoBehaviour
             SetPlayerStateImmediately(new Idle());
             attackBlocked = true;
 
-            audioManager.Play("blockedPunch");
+            AudioManager.aud.Play("blockedPunch");
             return;
         }
 
@@ -351,13 +348,13 @@ public class PlayerStatus : MonoBehaviour
 
             // Plays orchestra hits for combo.
             int combo = attackingPlayerStatus.combat.weaponState.currentComboCount;
-
+            
             if (combo == 1 || combo == 2)
-                audioManager.Play("orchestraHitShort", combo, combo);
+                AudioManager.aud.Play("orchestraHitShort", combo, combo);
             if (combo == 3)
-                audioManager.Play("orchestraHitLong");
+                AudioManager.aud.Play("orchestraHitLong");
 
-            audioManager.Play("punch", 0.8f, 1.2f);
+            AudioManager.aud.Play("punch", 0.8f, 1.2f);
         }
 
     }
@@ -427,7 +424,7 @@ public class PlayerStatus : MonoBehaviour
         SetPlayerStateImmediately(new ImpactStun(null, knockbackVelocity));
         currentPlayerState.stateToChangeTo.timeToChangeState = .3f;
 
-        audioManager.Play("smack", 0.8f, 1.2f);
+        AudioManager.aud.Play("hitByItem", 0.8f, 1.2f);
     }
 
     public void SetHeel()

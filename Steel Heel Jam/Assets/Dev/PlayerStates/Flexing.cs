@@ -61,13 +61,13 @@ public class Flexing : BasicState
     {
         base.OnEnterThisState(prevState, status);
 
-        status.audioManager.Play("flexing");
+        AudioManager.aud.Play("flexing");
     }
 
     public override void OnExitThisState(BasicState nextState, PlayerStatus status)
     {
         base.OnExitThisState(nextState, status);
 
-        status.audioManager.Stop("flexing");
+        AudioManager.aud.Stop("flexing");
     }
 }
