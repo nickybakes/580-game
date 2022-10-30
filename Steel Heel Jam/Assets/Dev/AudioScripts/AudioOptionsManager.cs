@@ -24,34 +24,34 @@ public class AudioOptionsManager : MonoBehaviour
     {
         masterVolume = value;
         //masterSliderText.text = ((int)(value * 100)).ToString();
-        AudioManager.instance.UpdateMixerVolume();
+        AudioManager.aud.UpdateMixerVolume();
     }
 
     public void OnMusicSliderValueChange(float value)
     {
         musicVolume = value;
         //musicSliderText.text = ((int)(value * 100)).ToString();
-        AudioManager.instance.UpdateMixerVolume();
+        AudioManager.aud.UpdateMixerVolume();
     }
 
     public void OnSoundEffectSliderValueChange(float value)
     {
         soundEffectsVolume = value;
         //soundEffectSliderText.text = ((int)(value * 100)).ToString();
-        AudioManager.instance.UpdateMixerVolume();
+        AudioManager.aud.UpdateMixerVolume();
     }
 
     public void OnVoiceOverSliderValueChange(float value)
     {
         voiceOverVolume = value;
         //voiceOverSliderText.text = ((int)(value * 100)).ToString();
-        AudioManager.instance.UpdateMixerVolume();
+        AudioManager.aud.UpdateMixerVolume();
     }
 
     public void OnAmbientSliderValueChange(float value)
     {
         ambientVolume = value;
         //ambientSliderText.text = ((int)(value * 100)).ToString();
-        AudioManager.instance.UpdateMixerVolume();
+        AudioManager.aud.UpdateMixerVolume();
     }
 }

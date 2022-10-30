@@ -186,9 +186,6 @@ MonoBehaviour:
   moveSpeed: 11.5
   rotationSmoothTime: 0.026
   speedChangeRate: 16
-  landingAudioClip: {fileID: 0}
-  footstepAudioClips: []
-  FootstepAudioVolume: 0.5
   jumpHeight: 4.8
   gravity: -70
   fallGravityMultiplier: 1.7
@@ -2263,6 +2260,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &7037033220816056835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 305828327127546589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf260ad9137cce54189f5c1b75072d6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &336816203314627594 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8335194915674307706, guid: 839d2d6400555c94886aa6253b371e28,

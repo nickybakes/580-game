@@ -59,7 +59,7 @@ MonoBehaviour:
     name: musicLoop
     clips:
     - {fileID: 8300000, guid: 1273ba5f279eabc43962128ed5a8706e, type: 3}
-    volume: 0.1
+    volume: 0.366
     pitch: 1
     loop: 1
     randStartPos: 0
@@ -244,6 +244,21 @@ MonoBehaviour:
     name: grab
     clips:
     - {fileID: 8300000, guid: b01f8f4181f7c7c4b8860f5b0d57acee, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    randStartPos: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - audioType: 1
+    name: footsteps
+    clips:
+    - {fileID: 8300000, guid: 631d8d7e336097c48b769f1ac18dcade, type: 3}
+    - {fileID: 8300000, guid: e9da0d50a446a4644b974581f12c5860, type: 3}
+    - {fileID: 8300000, guid: 10e189d41a324de4b8a24f6543cad0d0, type: 3}
+    - {fileID: 8300000, guid: d7faae07b8c7cac4f8705c1b09135918, type: 3}
+    - {fileID: 8300000, guid: 9178353c7edc3f64b842676a3e1be685, type: 3}
+    - {fileID: 8300000, guid: ad0f875b9e5ce884b95c74b6648789db, type: 3}
     volume: 1
     pitch: 1
     loop: 0
