@@ -15,7 +15,7 @@ public class SuplexDuration : BasicState
         canAttack = false;
         canDodgeRoll = false;
         canBlock = false;
-        updateMovement = true; // False for now.
+        updateMovement = true;
         countAttackCooldown = false;
         extraFallGravityMultiplier = 2f;
         animationState = AnimationState.SuplexDuration_01;
@@ -75,7 +75,8 @@ public class SuplexDuration : BasicState
         base.OnEnterThisState(prevState, status);
 
         // Set velocity to arc. Moves opposite of ActualForwardDirection.
-        Vector3 arc = -status.movement.ActualFowardDirection * moveSpeedMultiplier;
+        Vector3 arc = -status.transform.forward * moveSpeedMultiplier;
+
         arc.y = 50.0f; // Height of arc.
 
         status.movement.velocity = arc;
