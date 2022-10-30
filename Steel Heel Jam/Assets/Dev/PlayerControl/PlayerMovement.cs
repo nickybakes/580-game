@@ -397,7 +397,18 @@ public class PlayerMovement : MonoBehaviour
     {
 
         if (!wasGrounded && grounded)
+        {
             timeGrounded = 0;
+
+            // Change landing volume based on velocity.
+            // Clamped between 0.0f and 0.5f.
+            if (velocity.y < 0)
+            {
+                float landVol = Mathf.Clamp(-velocity.y / 100, 0.0f, 0.5f);
+                AudioManager.aud.Play("land", landVol, 0.8f, 1.2f);
+            }
+        }
+
 
         if (grounded)
         {
@@ -432,6 +443,8 @@ public class PlayerMovement : MonoBehaviour
                 _input.Jump = false;
                 grounded = false;
                 roadRunnerJumpAvailable = false;
+
+                AudioManager.aud.Play("jump", 0.8f, 1.2f);
             }
 
             // jump timeout
@@ -457,6 +470,8 @@ public class PlayerMovement : MonoBehaviour
                     velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
                     roadRunnerJumpAvailable = false;
                     _input.Jump = false;
+
+                    AudioManager.aud.Play("jump", 0.8f, 1.2f);
                 }
                 // Double jump if possible
                 else if (_status.canDoubleJump)
@@ -465,6 +480,8 @@ public class PlayerMovement : MonoBehaviour
                     velocity.y = Mathf.Sqrt((jumpHeight * 1.2f) * -2f * gravity);
                     _status.canDoubleJump = false;
                     _input.Jump = false;
+
+                    AudioManager.aud.Play("jump", 0.5f, 0.8f, 1.2f); // Plays jump sound louder for double jump.
                 }
             }
             
