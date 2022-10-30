@@ -22,12 +22,6 @@ public class PlayerMovement : MonoBehaviour
     [Tooltip("Acceleration and deceleration")]
     public float speedChangeRate = 16;
 
-    public AudioClip landingAudioClip;
-    public AudioClip[] footstepAudioClips;
-
-    [Range(0, 1)]
-    public float FootstepAudioVolume = 0.5f;
-
     [Space(10)]
     [Tooltip("The height the player can jump")]
     public float jumpHeight = 3.4f;
@@ -115,6 +109,8 @@ public class PlayerMovement : MonoBehaviour
     private StarterAssetsInputs _input;
     private PlayerStatus _status;
 
+    private AudioManager _audioManager;
+
     /// <summary>
     /// a set forward direction we want to player to be moving toward
     /// </summary>
@@ -174,6 +170,7 @@ public class PlayerMovement : MonoBehaviour
         _input = GetComponent<StarterAssetsInputs>();
         _playerInput = GetComponent<PlayerInput>();
         _status = GetComponent<PlayerStatus>();
+        _audioManager = FindObjectOfType<AudioManager>();
 
         // reset our timeouts on start
         _jumpTimeoutDelta = jumpTimeout;
@@ -524,31 +521,19 @@ public class PlayerMovement : MonoBehaviour
     //     );
     // }
 
-    // private void OnFootstep(AnimationEvent animationEvent)
-    // {
-    //     if (animationEvent.animatorClipInfo.weight > 0.5f)
-    //     {
-    //         if (FootstepAudioClips.Length > 0)
-    //         {
-    //             var index = Random.Range(0, FootstepAudioClips.Length);
-    //             AudioSource.PlayClipAtPoint(
-    //                 FootstepAudioClips[index],
-    //                 transform.TransformPoint(_controller.center),
-    //                 FootstepAudioVolume
-    //             );
-    //         }
-    //     }
-    // }
+    //private void OnFootstep(AnimationEvent animationEvent)
+    //{
+    //    if (animationEvent.animatorClipInfo.weight > 0.5f)
+    //    {
+    //        audioManager.Play("Footstep", 0.2f, 0.8f, 1.2f);
+    //    }
+    //}
 
-    // private void OnLand(AnimationEvent animationEvent)
-    // {
-    //     if (animationEvent.animatorClipInfo.weight > 0.5f)
-    //     {
-    //         AudioSource.PlayClipAtPoint(
-    //             LandingAudioClip,
-    //             transform.TransformPoint(_controller.center),
-    //             FootstepAudioVolume
-    //         );
-    //     }
-    // }
+    //private void OnLand(AnimationEvent animationEvent)
+    //{
+    //    if (animationEvent.animatorClipInfo.weight > 0.5f)
+    //    {
+    //        audioManager.Play("Landing", 0.2f, 0.8f, 1.2f);
+    //    }
+    //}
 }
