@@ -6,6 +6,10 @@ using TMPro;
 
 public class PlayerHeader : MonoBehaviour
 {
+    public static string[] BuffTitles = {"Plot Armor", "Redemption Arc", "Speedy Subversion", "Top Ropes", "Macho Block", "The Stink"};
+    public static string[] BuffDescriptions = {"Heal more while flexing!", "Full combos are explosive!", "Dodge rolls are better!", "You can double jump!", "Successful blocks are explosive!", "Full combos are poisonous!"};
+
+
     private PlayerStatus playerStatus;
 
     private Canvas canvas;
@@ -44,8 +48,10 @@ public class PlayerHeader : MonoBehaviour
     public Animator buffHeaderAnimator;
 
     public TextMeshProUGUI buffHeaderTitle;
-    
+
     public TextMeshProUGUI buffHeaderDescription;
+
+    public Image buffHeaderImage;
 
     private bool blinkDangerText;
     private float dangerBlinkTime;
@@ -121,6 +127,16 @@ public class PlayerHeader : MonoBehaviour
             dangerText.SetActive(false);
         }
     }
+
+    public void ShowBuff(Buff buff) {
+        if(buff != Buff.HeelFire){
+            buffHeaderTitle.text = BuffTitles[(int) buff];
+            buffHeaderDescription.text = BuffDescriptions[(int) buff];
+            
+            buffHeaderAnimator.SetTrigger("ShowHeader");
+        }
+
+     }
 
     public void SetHeel(bool enabled)
     {

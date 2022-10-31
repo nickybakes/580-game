@@ -14,12 +14,12 @@ public enum PlayerChild
 public enum Buff
 {
     PlotArmor,
-    //RedemptionArc,
+    RedemptionArc,
     SpeedySubversion,
     TopRopes,
-    //MachoBlock,
+    MachoBlock,
     TheStink,
-    HeelFire
+    HeelFire = -1,
 }
 
 public enum Tag
@@ -202,10 +202,7 @@ public class PlayerStatus : MonoBehaviour
         combat.Start();
 
         visuals = new PlayerVisuals(this, transform);
-        buffs = new bool[5]
-        {
-            false, false, false, false, false
-        };
+        buffs = new bool[6];
     }
 
     // Update is called once per frame
@@ -392,9 +389,10 @@ public class PlayerStatus : MonoBehaviour
     public void GiveBuff()
     {
         // Heel Fire
-        if (buffCount == 2)
+        if (buffCount == maxBuffs)
         {
-            buffs[(int)Buff.HeelFire] = true;
+            Debug.Log("HEEL FIRE");
+            // buffs[(int)Buff.HeelFire] = true;
         }
         else
         {
@@ -405,7 +403,9 @@ public class PlayerStatus : MonoBehaviour
             {
                 buffToGive = (Buff)Random.Range(0, buffs.Length);
             }
-            buffs[Random.Range(0, buffs.Length)] = true;
+            buffs[(int)buffToGive] = true;
+
+            playerHeader.ShowBuff(buffToGive);
         }
     }
 

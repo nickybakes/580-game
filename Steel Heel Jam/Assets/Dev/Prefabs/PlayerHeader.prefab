@@ -908,9 +908,10 @@ MonoBehaviour:
   spotlightMeterFill: {fileID: 8683072058920171973}
   spotlightMeterBackground: {fileID: 5768223677481174935}
   pickupIndicator: {fileID: 3019030410837029988}
-  buffHeaderAnimator: {fileID: 0}
-  buffHeaderTitle: {fileID: 0}
-  buffHeaderDescription: {fileID: 0}
+  buffHeaderAnimator: {fileID: 8213529332587807326}
+  buffHeaderTitle: {fileID: 7544748418919647178}
+  buffHeaderDescription: {fileID: 4763319003308014502}
+  buffHeaderImage: {fileID: 7919901646758600893}
 --- !u!1 &3377689147146413159
 GameObject:
   m_ObjectHideFlags: 0
@@ -2079,7 +2080,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 42.325, y: 37.1442}
+  m_AnchoredPosition: {x: 47, y: 37.1442}
   m_SizeDelta: {x: 218.3, y: 69.2496}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6326277983785632099
@@ -2110,7 +2111,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Heal more while flexing! And do this and that and this.
+  m_text: Dodge rolls are better!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c60c8e972587c85488842471d19e66c4, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: a4409e4b5e4177f4b8806177c2830d08, type: 2}
@@ -2173,7 +2174,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: 11.144592, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
