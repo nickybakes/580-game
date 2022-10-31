@@ -111,6 +111,9 @@ public class BasicState
 
     public bool canThrow = false;
 
+    public bool isInvincibleToAttacks = false;
+    public bool isInvincibleToRing = false;
+
 
     public AnimationState animationState = AnimationState.Idle;
 

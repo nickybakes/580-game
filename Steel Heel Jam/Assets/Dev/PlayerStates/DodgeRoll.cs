@@ -16,6 +16,7 @@ public class DodgeRoll : BasicState
         moveSpeedMultiplier = 1.8f;
         extraFallGravityMultiplier = .8f;
         countDodgeRollCooldown = false;
+        isInvincibleToAttacks = true;
 
         visual = VisualChild.DodgeRoll;
 
@@ -30,7 +31,7 @@ public class DodgeRoll : BasicState
 
         status.movement.SetVelocityToMoveSpeedTimesFowardDirection();
 
-        if (!status.movement.grounded && status.movement.wasGrounded)
+        if (!status.movement.grounded && status.movement.wasGrounded && timeToChangeState - timeInThisState >= .1f)
         {
             status.SetPlayerStateImmediately(new DodgeRollFall());
         }

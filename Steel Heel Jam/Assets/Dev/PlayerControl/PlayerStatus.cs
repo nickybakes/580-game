@@ -231,7 +231,7 @@ public class PlayerStatus : MonoBehaviour
             SetPlayerStateImmediately(currentPlayerState.stateToChangeTo);
 
         // If the player is out of bounds . . .
-        if (isOOB)
+        if (isOOB && !currentPlayerState.isInvincibleToRing)
         {
             ReduceStamina(OOBStaminaDamage * Time.deltaTime);
         }
@@ -281,104 +281,12 @@ public class PlayerStatus : MonoBehaviour
         visuals.SetAnimationState(state);
     }
 
-    public void GetHit(Vector3 hitboxPos, Vector3 collisionPos, float damage, float knockback, float knockbackHeight, float hitstun, PlayerStatus attackingPlayerStatus)
+    private void GetHit(Vector3 hitDirection, float damage, float knockback, float knockbackHeight, float hitstun, PlayerStatus attackingPlayerStatus, bool moveVictimWithAttacker)
     {
-        if (eliminated)
-            return;
-
-        if (IsBlocking)
-        {
-            attackingPlayerStatus.SetPlayerStateImmediately(new BlockedStun());
-            attackingPlayerStatus.movement.velocity = attackingPlayerStatus.transform.position - transform.position;
-            attackingPlayerStatus.combat.weaponState.currentComboCount = 0;
-            SetPlayerStateImmediately(new Idle());
-            attackBlocked = true;
-
-            AudioManager.aud.Play("blockedPunch");
-            return;
-        }
-
-        if (!IsDodgeRolling)
-        {
-            playerLastHitBy = attackingPlayerStatus;
-
-            Vector3 knockbackDir = (collisionPos - hitboxPos).normalized;
-
-            transform.forward = new Vector3(knockbackDir.x * -1, 0, knockbackDir.z * -1);
-
-            knockback = knockback * (2 + stamina / defaultMaxStamina);
-
-            float staminaRatio = (maxStamina - stamina) * 0.2f;
-
-            float staminaRatioX = staminaRatio;
-            float staminaRatioZ = staminaRatio;
-
-            if (knockbackDir.x < 0) staminaRatioX = -staminaRatio;
-            else if (knockbackDir.x == 0) staminaRatioX = 0;
-
-            if (knockbackDir.z < 0) staminaRatioZ = -staminaRatio;
-            else if (knockbackDir.z == 0) staminaRatioZ = 0;
-
-            Vector3 knockbackVelocity = new Vector3(knockbackDir.x * knockback + staminaRatioX, knockbackHeight + staminaRatio, knockbackDir.z * knockback + staminaRatioZ);
-            movement.grounded = false;
-            //print(knockbackVelocity.magnitude);
-            ReduceStamina(damage);
-            totalDamageTaken += damage;
-            IncreaseSpotlightMeter(damage / 4);
-
-            recentDamageTaken += damage;
-            recentDamageTakenMax = recentDamageTaken;
-            recentDamageTimeCurrent = 10f;
-
-            if (totalDamageTaken > 100f && recentDamageTaken > 30f)
-            {
-                combat.DropWeapon();
-                ReduceMaxStamina(damage);
-            }
-
-            attackingPlayerStatus.totalDamagerDealt += damage;
-            attackingPlayerStatus.IncreaseSpotlightMeter(damage / 3);
-            attackingPlayerStatus.combat.weaponState.gotAHit = true;
-
-            recentActivityTimeCurrent = recentActivityTimeMax;
-            attackingPlayerStatus.recentActivityTimeCurrent = recentActivityTimeMax;
-
-            SetPlayerStateImmediately(new ImpactStun(attackingPlayerStatus, knockbackVelocity));
-            currentPlayerState.stateToChangeTo.timeToChangeState = hitstun;
-
-            // Plays orchestra hits for combo.
-            int combo = attackingPlayerStatus.combat.weaponState.currentComboCount;
-            
-            if (combo == 1 || combo == 2)
-                AudioManager.aud.Play("orchestraHitShort", combo, combo);
-            if (combo == 3)
-                AudioManager.aud.Play("orchestraHitLong");
-
-            AudioManager.aud.Play("punch", 0.8f, 1.2f);
-        }
-
-    }
-
-    public void GetHitByThrowable(Vector3 hitboxPos, Vector3 collisionPos, float damage, float knockback, float knockbackHeight, PlayerStatus attackingPlayerStatus)
-    {
-        // If eliminated/blocking/dodgerolling, nothing happens.
-        if (eliminated || IsBlocking || IsDodgeRolling)
-            return;
-
-
-        //if (attackingPlayerStatus.isHeel)
-        //{
-        //    SetHeel();
-
-        //    damage *= 1.6f;
-        //    knockback *= 1.6f;
-        //    knockbackHeight *= 1.6f;
-        //}
-
         if (attackingPlayerStatus != null)
             playerLastHitBy = attackingPlayerStatus;
 
-        Vector3 knockbackDir = (collisionPos - hitboxPos).normalized;
+        Vector3 knockbackDir = hitDirection;
         transform.forward = new Vector3(knockbackDir.x * -1, 0, knockbackDir.z * -1);
         knockback = knockback * (2 + stamina / defaultMaxStamina);
 
@@ -395,6 +303,7 @@ public class PlayerStatus : MonoBehaviour
 
         Vector3 knockbackVelocity = new Vector3(knockbackDir.x * knockback + staminaRatioX, knockbackHeight + staminaRatio, knockbackDir.z * knockback + staminaRatioZ);
         movement.grounded = false;
+        //print(knockbackVelocity.magnitude);
         ReduceStamina(damage);
         totalDamageTaken += damage;
         IncreaseSpotlightMeter(damage / 4);
@@ -403,26 +312,67 @@ public class PlayerStatus : MonoBehaviour
         recentDamageTakenMax = recentDamageTaken;
         recentDamageTimeCurrent = 10f;
 
-        if (totalDamageTaken > 200f && recentDamageTaken > 30f)
+        if (totalDamageTaken > 100f && recentDamageTaken > 30f)
         {
             combat.DropWeapon();
             ReduceMaxStamina(damage);
         }
 
-        recentActivityTimeCurrent = recentActivityTimeMax;
-
-
         if (attackingPlayerStatus != null)
         {
             attackingPlayerStatus.totalDamagerDealt += damage;
             attackingPlayerStatus.IncreaseSpotlightMeter(damage / 3);
+            attackingPlayerStatus.combat.weaponState.gotAHit = true;
             attackingPlayerStatus.recentActivityTimeCurrent = recentActivityTimeMax;
         }
 
-        // Set a knockback on the player.
-        movement.velocity += knockbackVelocity;
-        SetPlayerStateImmediately(new ImpactStun(null, knockbackVelocity));
-        currentPlayerState.stateToChangeTo.timeToChangeState = .3f;
+        recentActivityTimeCurrent = recentActivityTimeMax;
+
+        SetPlayerStateImmediately(new ImpactStun(attackingPlayerStatus, knockbackVelocity, moveVictimWithAttacker));
+        currentPlayerState.stateToChangeTo.timeToChangeState = hitstun;
+    }
+
+
+    public void GetHitByMelee(Vector3 hitboxPos, Vector3 collisionPos, float damage, float knockback, float knockbackHeight, float hitstun, PlayerStatus attackingPlayerStatus)
+    {
+        if (eliminated)
+            return;
+
+        if (IsBlocking)
+        {
+            attackingPlayerStatus.SetPlayerStateImmediately(new BlockedStun());
+            attackingPlayerStatus.movement.velocity = attackingPlayerStatus.transform.position - transform.position;
+            attackingPlayerStatus.combat.weaponState.currentComboCount = 0;
+            SetPlayerStateImmediately(new Idle());
+            attackBlocked = true;
+
+            AudioManager.aud.Play("blockedPunch");
+            return;
+        }
+
+        if (!currentPlayerState.isInvincibleToAttacks)
+        {
+            GetHit(attackingPlayerStatus.transform.forward, damage, knockback, knockbackHeight, hitstun, attackingPlayerStatus, true);
+
+            // Plays orchestra hits for combo.
+            int combo = attackingPlayerStatus.combat.weaponState.currentComboCount;
+
+            if (combo == 1 || combo == 2)
+                AudioManager.aud.Play("orchestraHitShort", combo, combo);
+            if (combo == 3)
+                AudioManager.aud.Play("orchestraHitLong");
+
+            AudioManager.aud.Play("punch", 0.8f, 1.2f);
+        }
+    }
+
+    public void GetHitByThrowable(Vector3 hitboxPos, Vector3 collisionPos, float damage, float knockback, float knockbackHeight, PlayerStatus attackingPlayerStatus)
+    {
+        // If eliminated/blocking/dodgerolling, nothing happens.
+        if (eliminated || IsBlocking || currentPlayerState.isInvincibleToAttacks)
+            return;
+
+        GetHit((collisionPos - hitboxPos).normalized, damage, knockback, knockbackHeight, .3f, attackingPlayerStatus, false);
 
         AudioManager.aud.Play("hitByItem", 0.8f, 1.2f);
     }
@@ -445,7 +395,7 @@ public class PlayerStatus : MonoBehaviour
         if (buffCount == 2)
         {
             buffs[(int)Buff.HeelFire] = true;
-        } 
+        }
         else
         {
             buffCount++;
@@ -501,7 +451,8 @@ public class PlayerStatus : MonoBehaviour
 
         if (spotlight > defaultMaxSpotlight) spotlight = defaultMaxSpotlight;
 
-        playerHeader.UpdateSpotlightMeter();
+        if (playerHeader != null)
+            playerHeader.UpdateSpotlightMeter();
     }
 
     public void ReduceSpotlightMeter(float value)
@@ -510,7 +461,8 @@ public class PlayerStatus : MonoBehaviour
 
         if (spotlight < 0) spotlight = 0;
 
-        playerHeader.UpdateSpotlightMeter();
+        if (playerHeader != null)
+            playerHeader.UpdateSpotlightMeter();
     }
 
     /// <summary>

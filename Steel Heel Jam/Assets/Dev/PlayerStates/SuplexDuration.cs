@@ -17,6 +17,9 @@ public class SuplexDuration : BasicState
         canBlock = false;
         updateMovement = true;
         countAttackCooldown = false;
+        isInvincibleToAttacks = true;
+        isInvincibleToRing = true;
+
         extraFallGravityMultiplier = 2f;
         animationState = AnimationState.SuplexDuration_01;
         stateToChangeTo = new Idle();

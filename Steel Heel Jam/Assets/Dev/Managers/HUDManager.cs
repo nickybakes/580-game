@@ -36,7 +36,7 @@ public class HUDManager : MonoBehaviour
 
         if(header != null){
             headers.Remove(header);
-            Destroy(header.gameObject);
+            header.gameObject.SetActive(false);
         }
     }
 

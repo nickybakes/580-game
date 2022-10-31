@@ -14,7 +14,18 @@ public class SuplexVictimStartup : BasicState
         canBlock = false;
         updateMovement = false;
         countAttackCooldown = false;
+        isInvincibleToAttacks = true;
+        isInvincibleToRing = true;
+
         animationState = AnimationState.SuplexVictimStartup_01;
         stateToChangeTo = new SuplexVictimDuration();
+    }
+
+    public override void OnExitThisState(BasicState nextState, PlayerStatus status)
+    {
+        base.OnExitThisState(nextState, status);
+
+        if(!(nextState is SuplexVictimDuration))
+            status.gameObject.transform.parent = null;
     }
 }

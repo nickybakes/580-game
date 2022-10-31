@@ -53,7 +53,7 @@ public class Hitbox : MonoBehaviour
 
             if (playerNumber == player.PlayerNumber) return;
 
-            player.GetHit(
+            player.GetHitByMelee(
                 playerStatus.transform.position,
                 player.transform.position,
                 damage,

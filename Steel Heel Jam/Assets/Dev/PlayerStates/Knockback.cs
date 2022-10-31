@@ -7,6 +7,10 @@ public class Knockback : BasicState
 
     private Vector3 velocity;
 
+    private const float maxTimeGrounded = .3f;
+
+    private float timeGrounded;
+
     public Knockback(Vector3 _velocity)
     {
         timeToChangeState = 0;
@@ -43,6 +47,14 @@ public class Knockback : BasicState
         base.Update(status);
 
         status.visuals.RotateModelFlyingThroughAir();
+
+        if (status.movement.grounded)
+        {
+            timeGrounded += Time.deltaTime;
+            if(timeGrounded >= maxTimeGrounded){
+                status.SetPlayerStateImmediately(stateToChangeTo);
+            }
+        }
     }
 
 }

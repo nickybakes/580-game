@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class SuplexStartup : BasicState
 {
-    public SuplexStartup(PlayerStatus victim)
+
+    private PlayerStatus victim;
+    public SuplexStartup(PlayerStatus _victim)
     {
         timeToChangeState = 0.5f;
         canPlayerControlMove = false;
@@ -15,6 +17,19 @@ public class SuplexStartup : BasicState
         updateMovement = false;
         countAttackCooldown = false;
         animationState = AnimationState.SuplexStartup_01;
-        stateToChangeTo = new SuplexDuration(victim);
+        stateToChangeTo = new SuplexDuration(_victim);
+        isInvincibleToAttacks = true;
+        isInvincibleToRing = true;
+        victim = _victim;
+    }
+
+    public override void OnExitThisState(BasicState nextState, PlayerStatus status)
+    {
+        base.OnExitThisState(nextState, status);
+
+        if(!(nextState is SuplexDuration)){
+            victim.SetPlayerStateImmediately(new Idle());
+        }
+
     }
 }

@@ -7,12 +7,14 @@ public class ImpactStun : BasicState
 
     private PlayerStatus attackingPlayer;
 
-/// <summary>
-/// 
-/// </summary>
-/// <param name="_attackingPlayer">the attacking player that caused this impact stun. use only for MELEE hits, otherwise just set to null</param>
-/// <param name="knockbackVelocity"></param>
-    public ImpactStun(PlayerStatus _attackingPlayer, Vector3 knockbackVelocity)
+    private bool moveVictimWithAttacker;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="_attackingPlayer">the attacking player that caused this impact stun. use only for MELEE hits, otherwise just set to null</param>
+    /// <param name="knockbackVelocity"></param>
+    public ImpactStun(PlayerStatus _attackingPlayer, Vector3 knockbackVelocity, bool _moveVictimWithAttacker)
     {
         timeToChangeState = .2f;
         canPlayerControlMove = false;
@@ -23,7 +25,7 @@ public class ImpactStun : BasicState
         updateMovement = false;
         animationState = AnimationState.Knockback;
         stateToChangeTo = new Knockback(knockbackVelocity);
-
+        moveVictimWithAttacker = _moveVictimWithAttacker;
         animationState = AnimationState.ImpactStun;
 
         visual = VisualChild.Stun;
@@ -41,7 +43,7 @@ public class ImpactStun : BasicState
     {
         base.Update(status);
 
-        if (attackingPlayer != null && (attackingPlayer.CurrentPlayerState is AttackGroundDuration || attackingPlayer.CurrentPlayerState is AttackGroundRecovery))
+        if (moveVictimWithAttacker && attackingPlayer != null && (attackingPlayer.CurrentPlayerState is AttackGroundDuration || attackingPlayer.CurrentPlayerState is AttackGroundRecovery))
             status.movement.velocity = attackingPlayer.movement.velocity;
         else
             status.movement.velocity = Vector3.zero;
