@@ -8,7 +8,8 @@ public enum PlayerChild
     Hitbox = 1,
     Visuals = 3,
     PickUpSphere = 4,
-    RingDecal = 5
+    GrabHitbox = 5,
+    RingDecal = 6
 }
 
 public enum Buff
@@ -278,7 +279,7 @@ public class PlayerStatus : MonoBehaviour
         visuals.SetAnimationState(state);
     }
 
-    private void GetHit(Vector3 hitDirection, float damage, float knockback, float knockbackHeight, float hitstun, PlayerStatus attackingPlayerStatus, bool moveVictimWithAttacker)
+    private void GetHit(Vector3 hitDirection, float damage, float knockback, float knockbackHeight, float timeInKnockback, PlayerStatus attackingPlayerStatus, bool moveVictimWithAttacker)
     {
         if (attackingPlayerStatus != null)
             playerLastHitBy = attackingPlayerStatus;
@@ -305,6 +306,8 @@ public class PlayerStatus : MonoBehaviour
         totalDamageTaken += damage;
         IncreaseSpotlightMeter(damage / 4);
 
+        CameraManager.cam.ShakeCamera(Mathf.Clamp01(knockback - 14f) / 4f);
+
         recentDamageTaken += damage;
         recentDamageTakenMax = recentDamageTaken;
         recentDamageTimeCurrent = 10f;
@@ -326,11 +329,10 @@ public class PlayerStatus : MonoBehaviour
         recentActivityTimeCurrent = recentActivityTimeMax;
 
         SetPlayerStateImmediately(new ImpactStun(attackingPlayerStatus, knockbackVelocity, moveVictimWithAttacker));
-        currentPlayerState.stateToChangeTo.timeToChangeState = hitstun;
+        currentPlayerState.stateToChangeTo.timeToChangeState = timeInKnockback;
     }
 
-
-    public void GetHitByMelee(Vector3 hitboxPos, Vector3 collisionPos, float damage, float knockback, float knockbackHeight, float hitstun, PlayerStatus attackingPlayerStatus)
+    public void GetHitByElbowDrop(Vector3 hitboxPos, Vector3 collisionPos, float damage, float knockback, float knockbackHeight, float timeInKnockback, PlayerStatus attackingPlayerStatus)
     {
         if (eliminated)
             return;
@@ -349,15 +351,47 @@ public class PlayerStatus : MonoBehaviour
 
         if (!currentPlayerState.isInvincibleToAttacks)
         {
-            GetHit(attackingPlayerStatus.transform.forward, damage, knockback, knockbackHeight, hitstun, attackingPlayerStatus, true);
+            Vector3 direction = transform.position - attackingPlayerStatus.transform.position;
+            direction.y = 0;
+            GetHit(direction.normalized, damage, knockback, knockbackHeight, timeInKnockback, attackingPlayerStatus, false);
+
+            //play crunch sound
+            AudioManager.aud.Play("punch", 0.8f, 1.2f);
+        }
+    }
+
+
+    public void GetHitByMelee(Vector3 hitboxPos, Vector3 collisionPos, float damage, float knockback, float knockbackHeight, float timeInKnockback, PlayerStatus attackingPlayerStatus)
+    {
+        if (eliminated)
+            return;
+
+        if (IsBlocking)
+        {
+            attackingPlayerStatus.SetPlayerStateImmediately(new BlockedStun());
+            attackingPlayerStatus.movement.velocity = attackingPlayerStatus.transform.position - transform.position;
+            attackingPlayerStatus.combat.weaponState.currentComboCount = 0;
+            SetPlayerStateImmediately(new Idle());
+            attackBlocked = true;
+
+            AudioManager.aud.Play("blockedPunch");
+            return;
+        }
+
+        if (!currentPlayerState.isInvincibleToAttacks)
+        {
+            GetHit(attackingPlayerStatus.transform.forward, damage, knockback, knockbackHeight, timeInKnockback, attackingPlayerStatus, true);
 
             // Plays orchestra hits for combo.
             int combo = attackingPlayerStatus.combat.weaponState.currentComboCount;
 
-            if (combo == 1 || combo == 2)
+            if (combo > 0 && combo < attackingPlayerStatus.combat.weaponState.maxComboCount)
                 AudioManager.aud.Play("orchestraHitShort", combo, combo);
-            if (combo == 3)
+            if (combo == attackingPlayerStatus.combat.weaponState.maxComboCount)
+            {
                 AudioManager.aud.Play("orchestraHitLong");
+                CameraManager.cam.ShakeCamera(.2f);
+            }
 
             AudioManager.aud.Play("punch", 0.8f, 1.2f);
         }
@@ -407,6 +441,7 @@ public class PlayerStatus : MonoBehaviour
 
             playerHeader.ShowBuff(buffToGive);
         }
+        CameraManager.cam.ShakeCamera(.5f);
     }
 
     /// <summary>

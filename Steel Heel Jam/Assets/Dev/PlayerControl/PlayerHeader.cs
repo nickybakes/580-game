@@ -6,8 +6,14 @@ using TMPro;
 
 public class PlayerHeader : MonoBehaviour
 {
-    public static string[] BuffTitles = {"Plot Armor", "Redemption Arc", "Speedy Subversion", "Top Ropes", "Macho Block", "The Stink"};
-    public static string[] BuffDescriptions = {"Heal more while flexing!", "Full combos are explosive!", "Dodge rolls are better!", "You can double jump!", "Successful blocks are explosive!", "Full combos are poisonous!"};
+    public static string[] BuffTitles = { "Plot Armor", "Redemption Arc", "Speedy Subversion", "Top Ropes", "Macho Block", "The Stink" };
+    public static string[] BuffDescriptions = {
+        "Heal more while flexing!",
+        "Full combos are explosive!",
+        "Dodge rolls are better!",
+        "You can double jump!",
+        "Successful blocks are explosive!",
+        "Full combos are poisonous!" };
 
 
     private PlayerStatus playerStatus;
@@ -128,15 +134,17 @@ public class PlayerHeader : MonoBehaviour
         }
     }
 
-    public void ShowBuff(Buff buff) {
-        if(buff != Buff.HeelFire){
-            buffHeaderTitle.text = BuffTitles[(int) buff];
-            buffHeaderDescription.text = BuffDescriptions[(int) buff];
-            
+    public void ShowBuff(Buff buff)
+    {
+        if (buff != Buff.HeelFire)
+        {
+            buffHeaderTitle.text = BuffTitles[(int)buff];
+            buffHeaderDescription.text = BuffDescriptions[(int)buff];
+
             buffHeaderAnimator.SetTrigger("ShowHeader");
         }
 
-     }
+    }
 
     public void SetHeel(bool enabled)
     {

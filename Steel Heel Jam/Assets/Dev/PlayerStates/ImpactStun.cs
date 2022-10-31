@@ -23,7 +23,7 @@ public class ImpactStun : BasicState
         canDodgeRoll = false;
         canBlock = false;
         updateMovement = false;
-        animationState = AnimationState.Knockback;
+        animationState = AnimationState.ImpactStun;
         stateToChangeTo = new Knockback(knockbackVelocity);
         moveVictimWithAttacker = _moveVictimWithAttacker;
         animationState = AnimationState.ImpactStun;

@@ -54,6 +54,8 @@ public class SuplexDuration : BasicState
             Knockback knockback = new Knockback(new Vector3(launchDir.x * launchTopDownSpeed, launchHeight, launchDir.z * launchTopDownSpeed));
             knockback.timeToChangeState = 1.0f;
             victim.SetPlayerStateImmediately(knockback);
+
+            CameraManager.cam.ShakeCamera(.7f);
         }
     }
 

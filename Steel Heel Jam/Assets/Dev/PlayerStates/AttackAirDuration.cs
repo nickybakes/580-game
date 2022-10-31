@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class AttackAirDuration : BasicState
 {
+
     public AttackAirDuration()
     {
         canPlayerControlMove = true;
@@ -29,7 +30,7 @@ public class AttackAirDuration : BasicState
     {
         base.OnEnterThisState(prevState, status);
 
-        status.movement.velocity.y -= 10f;
+        status.movement.velocity.y -= 8f;
 
         status.combat.weaponState.AirAttack();
     }
@@ -40,11 +41,25 @@ public class AttackAirDuration : BasicState
 
         status.combat.weaponState.ForceEndAttack();
 
-        // Play ground sound. Louder when moving faster.
-        float vol = -status.movement.velocity.y / 50;
+        if (nextState is AttackAirRecovery)
+        {
+            ((AttackAirRecovery)nextState).velocityYAirAttack = -status.movement.velocity.y;
 
-        AudioManager.aud.Play("crunch", vol / 3);
-        AudioManager.aud.Play("punch", vol);
-        AudioManager.aud.Play("landing", vol / 2);
+            CameraManager.cam.ShakeCamera(Mathf.Clamp01((-status.movement.velocity.y - 41f)/70f) * .6f);
+
+            GameObject decal = VisualsManager.SpawnDecal(DecalName.Crack_01, status.transform.position);
+
+            float scale = Mathf.Clamp01((-status.movement.velocity.y - 36f)/53f);
+            decal.transform.localScale = new Vector3(scale, scale, 1);
+
+            // Play ground sound. Louder when moving faster.
+            float vol = -status.movement.velocity.y / 50;
+
+            AudioManager.aud.Play("crunch", vol / 3);
+            AudioManager.aud.Play("punch", vol);
+            AudioManager.aud.Play("landing", vol / 2);
+        }
+
+
     }
 }

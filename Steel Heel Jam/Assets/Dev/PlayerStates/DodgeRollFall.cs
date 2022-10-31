@@ -11,7 +11,7 @@ public class DodgeRollFall : BasicState
         timeToChangeState = 0;
         canPlayerControlMove = false;
         canPlayerControlRotate = false;
-        canAttack = false;
+        canAttack = true;
         canDodgeRoll = false;
         canBlock = false;
         updateMovement = true;

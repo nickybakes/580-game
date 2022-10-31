@@ -198,7 +198,11 @@ public class GameManager : MonoBehaviour
         eliminatedPlayerStatuses.Add(status);
         status.timeOfEliminiation = gameTime;
         hudManager.RemoveHeader(status);
-        status.playerHeader = null;
+        // status.playerHeader = null;
+
+        status.transform.GetChild((int)PlayerChild.GrabHitbox).gameObject.SetActive(false);
+        status.transform.GetChild((int)PlayerChild.PickUpSphere).gameObject.SetActive(false);
+        status.transform.GetChild((int)PlayerChild.RingDecal).gameObject.SetActive(false);
 
         //if (status.isHeel)
         //{

@@ -137,11 +137,16 @@ public class CameraManager : MonoBehaviour
     /// be higher than 1 if wanted</param>
     public void ShakeCamera(float magnitudePercentage)
     {
-        currentShakePercentage = magnitudePercentage;
-        currentShakeOffsetCos = Random.value * 3;
-        currentShakeOffsetSin = Random.value * 3;
+        if (currentShakeTime == 0 || magnitudePercentage >= currentShakePercentage)
+        {
+            currentShakePercentage = magnitudePercentage;
+        }
+        currentShakeOffsetCos = Random.value * 3f;
+        currentShakeOffsetSin = Random.value * 3f;
 
-        currentShakeTime = currentShakeTimeMax;
+        float newShakeTimeMax = .2f + magnitudePercentage;
+        currentShakeTime += newShakeTimeMax;
+        currentShakeTimeMax = currentShakeTime;
     }
 
     // Start is called before the first frame update

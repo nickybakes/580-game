@@ -10,11 +10,13 @@ public class Hitbox : MonoBehaviour
     public float damage;
     public float knockback;
     public float knockbackHeight;
-    public float hitstun;
+    public float timeInKnockback;
     public float radius;
     public float height;
     public float duration;
     public int playerNumber;
+
+    public bool airAttack;
 
     public PlayerStatus playerStatus;
 
@@ -26,23 +28,23 @@ public class Hitbox : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gameObject.SetActive(true);
-
         playerStatus = transform.parent.GetComponent<PlayerStatus>();
         tr = transform;
+
+        gameObject.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(duration >= 0)
-            duration -= Time.deltaTime;
+        // if(duration >= 0)
+        //     duration -= Time.deltaTime;
 
-        if (duration <= 0)
-        {
-            gameObject.SetActive(false);
-        }
-        
+        // if (duration <= 0)
+        // {
+        //     gameObject.SetActive(false);
+        // }
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -53,15 +55,32 @@ public class Hitbox : MonoBehaviour
 
             if (playerNumber == player.PlayerNumber) return;
 
-            player.GetHitByMelee(
-                playerStatus.transform.position,
-                player.transform.position,
-                damage,
-                knockback,
-                knockbackHeight,
-                hitstun,
-                playerStatus
-                );
+            if (airAttack)
+            {
+                player.GetHitByElbowDrop(
+                    playerStatus.transform.position,
+                    player.transform.position,
+                    damage,
+                    knockback,
+                    knockbackHeight,
+                    timeInKnockback,
+                    playerStatus
+                    );
+            }
+            else
+            {
+                player.GetHitByMelee(
+                    playerStatus.transform.position,
+                    player.transform.position,
+                    damage,
+                    knockback,
+                    knockbackHeight,
+                    timeInKnockback,
+                    playerStatus
+                    );
+            }
+
+
         }
     }
 

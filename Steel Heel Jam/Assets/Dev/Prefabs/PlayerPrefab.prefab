@@ -142,7 +142,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7cb1247224ed184c8485afd8e5cd846, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioManager: {fileID: 0}
   stamina: 100
   maxStamina: 100
   spotlight: 0
@@ -484,8 +483,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2717064355588239748}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.5, z: 1.32}
-  m_LocalScale: {x: 3.122571, y: 2.021603, z: 1.1525098}
+  m_LocalPosition: {x: 0, y: 1.039, z: 1.16}
+  m_LocalScale: {x: 1.9518677, y: 1.205574, z: 0.72041494}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1777015905490208790}
@@ -551,8 +550,8 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
+  m_Radius: 0.45
+  m_Height: 1.64
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &6594842416606265989
@@ -613,8 +612,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3928377190470292315}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 1.43}
-  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_LocalPosition: {x: 0, y: 1, z: 1.23}
+  m_LocalScale: {x: 3.6918588, y: 3.6918588, z: 3.6918588}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1777015905490208790}

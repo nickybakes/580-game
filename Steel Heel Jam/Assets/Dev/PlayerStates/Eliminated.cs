@@ -16,14 +16,4 @@ public class Eliminated : BasicState
 
         animationState = AnimationState.Eliminated;
     }
-
-    public override void OnEnterThisState(BasicState prevState, PlayerStatus status)
-    {
-        base.OnEnterThisState(prevState, status);
-
-        //this 'disables' players colliding with the dead body
-        status.gameObject.GetComponent<CharacterController>().radius = .17f;
-        status.gameObject.GetComponent<CharacterController>().height = .5f;
-        status.gameObject.GetComponent<CharacterController>().center =  new Vector3(0, .25f, 0);
-    }
 }

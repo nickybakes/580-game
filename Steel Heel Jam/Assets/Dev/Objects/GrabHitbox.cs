@@ -30,7 +30,7 @@ public class GrabHitbox : MonoBehaviour
 
         PlayerStatus victim = playersWithinBounds[0].GetComponent<PlayerStatus>();
 
-        if (victim.CurrentPlayerState.isInvincibleToAttacks)
+        if (victim.CurrentPlayerState.isInvincibleToAttacks || victim.eliminated || playerStatus.eliminated)
             return;
 
         // Make player grabbed unable to move and a child of the grabber.

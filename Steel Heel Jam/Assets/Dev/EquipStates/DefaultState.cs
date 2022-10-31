@@ -33,7 +33,7 @@ public struct Attack
     public float damageMultiplier;
     public float knockbackMultiplier;
     public float knockbackHeightMultiplier;
-    public float hitstunMultiplier;
+    public float timeInKnockbackMultiplier;
     public float radiusMultiplier;
     public float heightMultiplier;
     public float startupMultiplier;
@@ -50,7 +50,7 @@ public struct Attack
         float _damageMultiplier = 1.0f,
         float _knockbackMultiplier = 1.0f,
         float _knockbackHeightMultiplier = 1.0f,
-        float _hitstunMultiplier = 1.0f,
+        float _timeInKnockbackMultiplier = 1.0f,
         float _radiusMultiplier = 1.0f,
         float _heightMultiplier = 1.0f,
         float _startupMultiplier = 1.0f,
@@ -64,7 +64,7 @@ public struct Attack
         damageMultiplier = _damageMultiplier;
         knockbackMultiplier = _knockbackMultiplier;
         knockbackHeightMultiplier = _knockbackHeightMultiplier;
-        hitstunMultiplier = _hitstunMultiplier;
+        timeInKnockbackMultiplier = _timeInKnockbackMultiplier;
         radiusMultiplier = _radiusMultiplier;
         heightMultiplier = _heightMultiplier;
         startupMultiplier = _startupMultiplier;
@@ -91,7 +91,7 @@ public class DefaultState
 
     private float knockbackHeight = 20;
 
-    private float hitstun = .75f;
+    private float timeInKnockback = .75f;
 
     private float radius = 1;
 
@@ -173,14 +173,15 @@ public class DefaultState
         }
     }
 
-/// <summary>
-/// Gets an AnimationState for a specific attack and section of the attack
-/// </summary>
-/// <param name="attack">The attack type, ie Punch_03, SmashHeavy_01</param>
-/// <param name="section">The section of the attack: 0 = startup, 1 = during, 2 = recovery</param>
-/// <returns></returns>
-    public static AnimationState GetAttackAnimation(AttackAnimation attack, int section){
-        return (AnimationState) 26 + ((int) attack * 3) + section;
+    /// <summary>
+    /// Gets an AnimationState for a specific attack and section of the attack
+    /// </summary>
+    /// <param name="attack">The attack type, ie Punch_03, SmashHeavy_01</param>
+    /// <param name="section">The section of the attack: 0 = startup, 1 = during, 2 = recovery</param>
+    /// <returns></returns>
+    public static AnimationState GetAttackAnimation(AttackAnimation attack, int section)
+    {
+        return (AnimationState)26 + ((int)attack * 3) + section;
     }
 
     //***************
@@ -252,6 +253,17 @@ public class DefaultState
         hitbox.SetActive(true);
     }
 
+    public virtual void AirAttackLand(float extraSizeMultiplier = 1)
+    {
+        gotAHit = false;
+
+        currentAttack = airAttack;
+
+        LoadAirHitbox(extraSizeMultiplier);
+
+        hitbox.SetActive(true);
+    }
+
     public virtual void ForceEndAttack()
     {
         hitbox.SetActive(false);
@@ -267,11 +279,12 @@ public class DefaultState
         hitboxScript.damage = damage * currentAttack.damageMultiplier;
         hitboxScript.knockback = knockback * currentAttack.knockbackMultiplier;
         hitboxScript.knockbackHeight = knockbackHeight * currentAttack.knockbackHeightMultiplier;
-        hitboxScript.hitstun = hitstun * currentAttack.hitstunMultiplier;
+        hitboxScript.timeInKnockback = timeInKnockback * currentAttack.timeInKnockbackMultiplier;
         hitboxScript.radius = radius * currentAttack.radiusMultiplier; // Radius is only passed through for gizmo drawing
         hitboxScript.height = height * currentAttack.heightMultiplier;
         hitboxScript.duration = duration * currentAttack.durationMultiplier;
         hitboxScript.playerNumber = playerNumber;
+        hitboxScript.airAttack = false;
 
         // Resize hitbox
         hitboxCollider.radius = radius * currentAttack.radiusMultiplier;
@@ -280,8 +293,8 @@ public class DefaultState
 
         //hitboxScript.tr.localPosition = new Vector3(0, 1, 1 + (radius * currentAttack.radiusMultiplier) / 2); // Experimental
         hitboxScript.tr.localPosition = new Vector3(0, 1, 1 + (
-            currentAttack.attackDirection == AttackDirection.Forward 
-            ? hitboxCollider.height / 2 
+            currentAttack.attackDirection == AttackDirection.Forward
+            ? hitboxCollider.height / 2
             : (radius * currentAttack.radiusMultiplier) / 2)
             );
 
@@ -292,9 +305,9 @@ public class DefaultState
 
         // Logic for rotating hitbox (new attack shapes)
         attackSphere.rotation = new Quaternion(
-            currentAttack.attackDirection == AttackDirection.Forward ? 90 : 0, 
-            0, 
-            currentAttack.attackDirection == AttackDirection.Horizontal ? 90 : 0, 
+            currentAttack.attackDirection == AttackDirection.Forward ? 90 : 0,
+            0,
+            currentAttack.attackDirection == AttackDirection.Horizontal ? 90 : 0,
             1
             );
 
@@ -305,22 +318,25 @@ public class DefaultState
     /// Sets the hitbox values for the air attack.
     /// </summary>
     /// <returns>A reference to the hitbox script.</returns>
-    protected virtual Hitbox LoadAirHitbox()
+    protected virtual Hitbox LoadAirHitbox(float extraSizeMultiplier = 1)
     {
         // Set up hitbox values
         hitboxScript.damage = damage * airAttack.damageMultiplier;
         hitboxScript.knockback = knockback * airAttack.knockbackMultiplier;
         hitboxScript.knockbackHeight = knockbackHeight * airAttack.knockbackHeightMultiplier;
-        hitboxScript.hitstun = hitstun * airAttack.hitstunMultiplier;
+        hitboxScript.timeInKnockback = timeInKnockback * airAttack.timeInKnockbackMultiplier;
         hitboxScript.radius = radius * airAttack.radiusMultiplier; // Radius is only passed through for gizmo drawing
         hitboxScript.duration = duration * airAttack.durationMultiplier;
         hitboxScript.playerNumber = playerNumber;
 
+        hitboxCollider.direction = 2;
+
         // Resize hitbox
-        hitboxCollider.radius = radius * airAttack.radiusMultiplier * 5;
-        hitboxCollider.height = 0;
+        hitboxCollider.radius = radius * airAttack.radiusMultiplier * 1.5f * extraSizeMultiplier;
+        hitboxCollider.height = 3;
         hitboxScript.tr.localPosition = new Vector3(0, 0, 0);
         hitboxScript.tr.GetChild(0).localScale = new Vector3(hitboxCollider.radius * 2, hitboxCollider.radius, hitboxCollider.radius * 2);
+        hitboxScript.airAttack = true;
 
         return hitboxScript;
     }
