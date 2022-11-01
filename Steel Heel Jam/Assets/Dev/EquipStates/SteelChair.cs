@@ -20,12 +20,13 @@ public class SteelChair : DefaultState
                 0.2f, // Knockback Height Multiplier
                 1.0f, // Hitstun Multiplier
                 1.0f, // Radius Multiplier
-                1.0f, // Height Multiplier
+                5.0f, // Height Multiplier
                 1.0f, // Startup Multiplier
                 1.0f, // Duration Multiplier
                 1.0f, // Recovery Multiplier
                 0.5f,  // Forward Speed Multiplier
-                AttackAnimation.Stab_01
+                AttackAnimation.Stab_01,
+                AttackDirection.Horizontal
                 ),
             new Attack( // *** 2nd Hit ***
                 1.0f, // Damage Multiplier
@@ -33,12 +34,13 @@ public class SteelChair : DefaultState
                 0.5f, // Knockback Height Multiplier
                 1.0f, // Hitstun Multiplier
                 1.5f, // Radius Multiplier
-                1.0f, // Height Multiplier
+                10.0f, // Height Multiplier
                 1.0f, // Startup Multiplier
                 2.0f, // Duration Multiplier
                 1.0f, // Recovery Multiplier
                 0.5f,  // Forward Speed Multiplier
-                AttackAnimation.SmashHeavy_01
+                AttackAnimation.SmashHeavy_01,
+                AttackDirection.Vertical
                 )
         };
 

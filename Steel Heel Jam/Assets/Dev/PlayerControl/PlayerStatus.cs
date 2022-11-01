@@ -341,6 +341,8 @@ public class PlayerStatus : MonoBehaviour
             ReduceMaxStamina(damage);
         }
 
+        combat.ActedRecently = true;
+
         recentActivityTimeCurrent = recentActivityTimeMax;
 
     }

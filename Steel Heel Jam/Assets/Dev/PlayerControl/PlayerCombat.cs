@@ -50,6 +50,17 @@ public class PlayerCombat : MonoBehaviour
                 return true;
             return false;
         }
+
+        set
+        {
+            if(value){
+                recentActionCooldown = recentActionCooldownMax;
+            }
+            else
+            {
+                recentActionCooldown = 0;
+            }
+        }
     }
 
     private float dodgeRollCoolDown;
