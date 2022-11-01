@@ -252,6 +252,9 @@ public class PlayerMovement : MonoBehaviour
                     velocity.z = CurrentMoveSpeed * inputDirection.z;
                 }
             }
+
+            if(Mathf.Abs(velocity.x) < .5) velocity.x = 0;
+            if(Mathf.Abs(velocity.z) < .5) velocity.z = 0;
         }
         else
         {
