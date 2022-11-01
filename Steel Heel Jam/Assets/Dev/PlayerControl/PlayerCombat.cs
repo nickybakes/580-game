@@ -321,8 +321,6 @@ public class PlayerCombat : MonoBehaviour
 
     public void DropWeapon()
     {
-        Debug.Log("Dropped Weapon!");
-
         if (!equippedItem)
             return;
 
@@ -359,6 +357,7 @@ public class PlayerCombat : MonoBehaviour
                 Vector3.Dot(vectorToCollider, _status.movement.ActualFowardDirection) > targetAngle
                 && Vector3.Distance(_status.transform.position, s.transform.position) < dist
                 && Mathf.Abs(_status.transform.position.y - s.transform.position.y) < 10
+                && !s.waitingToBeEliminated
             )
             {
                 // If in the arc, add to potential target list.

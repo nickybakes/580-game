@@ -59,17 +59,16 @@ public class BuffSpotlight : MonoBehaviour
         {
             wanderDecisionCooldown = 0;
 
-            wanderDirection = DecideWanderDirection();
-            print(wanderDirection);
+            DecideWanderDirection();
         }
 
         StayWithinBounds();
     }
 
-    private Vector2 DecideWanderDirection()
+    public void DecideWanderDirection()
     {
         float angle = Random.Range(0, Mathf.PI * 2);
-        return new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
+        wanderDirection = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
     }
 
     private void CheckFlexers()

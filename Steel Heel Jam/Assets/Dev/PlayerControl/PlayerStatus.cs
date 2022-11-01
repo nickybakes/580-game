@@ -125,6 +125,7 @@ public class PlayerStatus : MonoBehaviour
     public float recentActivityTimeCurrent;
 
     public bool eliminated;
+    public bool waitingToBeEliminated;
 
     public float timeOfEliminiation;
 
@@ -228,6 +229,11 @@ public class PlayerStatus : MonoBehaviour
         if (currentPlayerState.changeStateNow)
             SetPlayerStateImmediately(currentPlayerState.stateToChangeTo);
 
+        if (!eliminated && waitingToBeEliminated && !(currentPlayerState is Knockback || currentPlayerState is ImpactStun))
+        {
+            GameManager.game.EliminatePlayer(this);
+        }
+
         // If the player is out of bounds . . .
         if (isOOB && !currentPlayerState.isInvincibleToRing)
         {
@@ -301,12 +307,24 @@ public class PlayerStatus : MonoBehaviour
 
         Vector3 knockbackVelocity = new Vector3(knockbackDir.x * knockback + staminaRatioX, knockbackHeight + staminaRatio, knockbackDir.z * knockback + staminaRatioZ);
         movement.grounded = false;
-        //print(knockbackVelocity.magnitude);
-        ReduceStamina(damage);
-        totalDamageTaken += damage;
-        IncreaseSpotlightMeter(damage / 4);
 
         CameraManager.cam.ShakeCamera(Mathf.Clamp01(knockback - 14f) / 4f);
+
+        SetPlayerStateImmediately(new ImpactStun(attackingPlayerStatus, knockbackVelocity, moveVictimWithAttacker));
+        currentPlayerState.stateToChangeTo.timeToChangeState = timeInKnockback;
+
+        if (attackingPlayerStatus != null)
+        {
+            attackingPlayerStatus.totalDamagerDealt += damage;
+            attackingPlayerStatus.IncreaseSpotlightMeter(damage / 3);
+            attackingPlayerStatus.combat.weaponState.gotAHit = true;
+            attackingPlayerStatus.recentActivityTimeCurrent = recentActivityTimeMax;
+        }
+
+        ReduceStamina(damage);
+        totalDamageTaken += damage;
+
+        IncreaseSpotlightMeter(damage / 4);
 
         recentDamageTaken += damage;
         recentDamageTakenMax = recentDamageTaken;
@@ -318,18 +336,8 @@ public class PlayerStatus : MonoBehaviour
             ReduceMaxStamina(damage);
         }
 
-        if (attackingPlayerStatus != null)
-        {
-            attackingPlayerStatus.totalDamagerDealt += damage;
-            attackingPlayerStatus.IncreaseSpotlightMeter(damage / 3);
-            attackingPlayerStatus.combat.weaponState.gotAHit = true;
-            attackingPlayerStatus.recentActivityTimeCurrent = recentActivityTimeMax;
-        }
-
         recentActivityTimeCurrent = recentActivityTimeMax;
 
-        SetPlayerStateImmediately(new ImpactStun(attackingPlayerStatus, knockbackVelocity, moveVictimWithAttacker));
-        currentPlayerState.stateToChangeTo.timeToChangeState = timeInKnockback;
     }
 
     public void GetHitByElbowDrop(Vector3 hitboxPos, Vector3 collisionPos, float damage, float knockback, float knockbackHeight, float timeInKnockback, PlayerStatus attackingPlayerStatus)
@@ -363,7 +371,7 @@ public class PlayerStatus : MonoBehaviour
 
     public void GetHitByMelee(Vector3 hitboxPos, Vector3 collisionPos, float damage, float knockback, float knockbackHeight, float timeInKnockback, PlayerStatus attackingPlayerStatus)
     {
-        if (eliminated)
+        if (eliminated || waitingToBeEliminated)
             return;
 
         if (IsBlocking)
@@ -400,7 +408,7 @@ public class PlayerStatus : MonoBehaviour
     public void GetHitByThrowable(Vector3 hitboxPos, Vector3 collisionPos, float damage, float knockback, float knockbackHeight, PlayerStatus attackingPlayerStatus)
     {
         // If eliminated/blocking/dodgerolling, nothing happens.
-        if (eliminated || IsBlocking || currentPlayerState.isInvincibleToAttacks)
+        if (eliminated || IsBlocking || currentPlayerState.isInvincibleToAttacks || waitingToBeEliminated)
             return;
 
         GetHit((collisionPos - hitboxPos).normalized, damage, knockback, knockbackHeight, .3f, attackingPlayerStatus, false);
@@ -476,7 +484,7 @@ public class PlayerStatus : MonoBehaviour
 
         if (!eliminated && stamina == 0 && isOOB)
         {
-            GameManager.game.EliminatePlayer(this);
+            waitingToBeEliminated = true;
         }
     }
 

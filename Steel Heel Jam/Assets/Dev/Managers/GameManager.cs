@@ -47,7 +47,7 @@ public class GameManager : MonoBehaviour
     public GameObject spotlight;
     private BuffSpotlight spotlightScript;
 
-    public const float spotlightRespawnCooldownMax = 3.0f;
+    public float spotlightRespawnCooldownMax;
     public float spotlightRespawnCooldown;
 
     private bool heelSpotlightSpawned;
@@ -70,7 +70,7 @@ public class GameManager : MonoBehaviour
         SpawnRing();
 
         spotlightScript = spotlight.GetComponent<BuffSpotlight>();
-        SpawnSpotlight();
+        DespawnSpotlight();
 
         //Grabs the countdown text from GameHUD and starts a countdown.
         countdownDisplay = hudCountdown.GetComponent<TextMeshProUGUI>();
@@ -256,12 +256,14 @@ public class GameManager : MonoBehaviour
         float randomZCoordinate = Random.Range(zMin, zMax);
 
         spotlightScript.tr.position = new Vector3(randomXCoordinate, 0, randomZCoordinate);
+        spotlightScript.DecideWanderDirection();
         spotlight.SetActive(true);
     }
 
     public void DespawnSpotlight()
     {
         spotlightRespawnCooldown = 0;
+        spotlightRespawnCooldownMax = Random.Range(13, 24);
         spotlight.SetActive(false);
     }
 
