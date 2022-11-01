@@ -17,8 +17,8 @@ public enum Buff
     PlotArmor,
     RedemptionArc,
     SpeedySubversion,
-    TopRopes,
     MachoBlock,
+    TopRopes,
     TheStink,
     HeelFire = -1,
 }
@@ -184,6 +184,11 @@ public class PlayerStatus : MonoBehaviour
     public Transform GetTransform
     {
         get { return transform; }
+    }
+
+    public int BuffCount
+    {
+        get { return buffCount; }
     }
 
     /// <summary>

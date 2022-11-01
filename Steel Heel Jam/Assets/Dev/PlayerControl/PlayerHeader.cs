@@ -6,13 +6,13 @@ using TMPro;
 
 public class PlayerHeader : MonoBehaviour
 {
-    public static string[] BuffTitles = { "Plot Armor", "Redemption Arc", "Speedy Subversion", "Top Ropes", "Macho Block", "The Stink" };
+    public static string[] BuffTitles = { "Plot Armor", "Redemption Arc", "Speedy Subversion", "Macho Block", "Top Ropes", "The Stink" };
     public static string[] BuffDescriptions = {
         "Heal more while flexing!",
         "Full combos are explosive!",
         "Dodge rolls are better!",
-        "You can double jump!",
         "Successful blocks are explosive!",
+        "You can double jump!",
         "Full combos are poisonous!" };
 
 
@@ -58,6 +58,8 @@ public class PlayerHeader : MonoBehaviour
     public TextMeshProUGUI buffHeaderDescription;
 
     public Image buffHeaderImage;
+
+    public Image[] gottenBuffIcons;
 
     private bool blinkDangerText;
     private float dangerBlinkTime;
@@ -140,8 +142,13 @@ public class PlayerHeader : MonoBehaviour
         {
             buffHeaderTitle.text = BuffTitles[(int)buff];
             buffHeaderDescription.text = BuffDescriptions[(int)buff];
+            buffHeaderImage.sprite = HUDManager.GetBuffIcon(buff);
 
             buffHeaderAnimator.SetTrigger("ShowHeader");
+
+            Image i = gottenBuffIcons[playerStatus.BuffCount - 1];
+            i.color = Color.white;
+            i.sprite = HUDManager.GetBuffIcon(buff);
         }
 
     }

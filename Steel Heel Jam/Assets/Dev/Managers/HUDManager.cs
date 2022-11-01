@@ -5,6 +5,8 @@ using UnityEngine;
 public class HUDManager : MonoBehaviour
 {
 
+    public static HUDManager hud;
+
     public GameObject headerPanel;
 
     private Canvas canvas;
@@ -12,6 +14,8 @@ public class HUDManager : MonoBehaviour
     public GameObject headerPrefab;
 
     public List<PlayerHeader> headers;
+
+    public List<Sprite> buffIcons;
 
 
     public void CreatePlayerHeader(PlayerStatus status)
@@ -28,21 +32,30 @@ public class HUDManager : MonoBehaviour
     public void RemoveHeader(PlayerStatus status)
     {
         PlayerHeader header = null;
-        foreach(PlayerHeader h in headers){
-            if(h.Status == status){
+        foreach (PlayerHeader h in headers)
+        {
+            if (h.Status == status)
+            {
                 header = h;
             }
         }
 
-        if(header != null){
+        if (header != null)
+        {
             headers.Remove(header);
             header.gameObject.SetActive(false);
         }
+    }
+
+    public static Sprite GetBuffIcon(Buff buff)
+    {
+        return hud.buffIcons[(int)buff];
     }
 
     // Start is called before the first frame update
     void Start()
     {
         canvas = GetComponent<Canvas>();
+        hud = this;
     }
 }
