@@ -145,6 +145,8 @@ public class PlayerStatus : MonoBehaviour
     public bool canDoubleJump = false;
     // ******************************
 
+    private bool iFrames;
+
     public float ActivityScore
     {
         get
@@ -189,6 +191,28 @@ public class PlayerStatus : MonoBehaviour
     public int BuffCount
     {
         get { return buffCount; }
+    }
+
+    public bool IFrames
+    {
+        get
+        {
+            return iFrames;
+        }
+
+        set
+        {
+            if (value)
+            {
+                iFrames = true;
+                visuals.EnableIFrames();
+            }
+            else
+            {
+                iFrames = false;
+                visuals.DisableIFrames();
+            }
+        }
     }
 
     /// <summary>
@@ -290,7 +314,7 @@ public class PlayerStatus : MonoBehaviour
         visuals.SetAnimationState(state);
     }
 
-    private void GetHit(Vector3 hitDirection, float damage, float knockback, float knockbackHeight, float timeInKnockback, PlayerStatus attackingPlayerStatus, bool moveVictimWithAttacker)
+    private void GetHit(Vector3 hitDirection, float damage, float knockback, float knockbackHeight, float timeInKnockback, PlayerStatus attackingPlayerStatus, bool moveVictimWithAttacker, bool forceActivateIFrames)
     {
         if (attackingPlayerStatus != null)
             playerLastHitBy = attackingPlayerStatus;
@@ -335,6 +359,11 @@ public class PlayerStatus : MonoBehaviour
         recentDamageTakenMax = recentDamageTaken;
         recentDamageTimeCurrent = 10f;
 
+        if (forceActivateIFrames || recentDamageTaken >= 40f)
+        {
+            IFrames = true;
+        }
+
         if (totalDamageTaken > 100f && recentDamageTaken > 30f)
         {
             combat.DropWeapon();
@@ -364,11 +393,11 @@ public class PlayerStatus : MonoBehaviour
             return;
         }
 
-        if (!currentPlayerState.isInvincibleToAttacks)
+        if (!currentPlayerState.isInvincibleToAttacks && !iFrames)
         {
             Vector3 direction = transform.position - attackingPlayerStatus.transform.position;
             direction.y = 0;
-            GetHit(direction.normalized, damage, knockback, knockbackHeight, timeInKnockback, attackingPlayerStatus, false);
+            GetHit(direction.normalized, damage, knockback, knockbackHeight, timeInKnockback, attackingPlayerStatus, false, true);
 
             //play crunch sound
             AudioManager.aud.Play("punch", 0.8f, 1.2f);
@@ -393,9 +422,9 @@ public class PlayerStatus : MonoBehaviour
             return;
         }
 
-        if (!currentPlayerState.isInvincibleToAttacks)
+        if (!currentPlayerState.isInvincibleToAttacks && !iFrames)
         {
-            GetHit(attackingPlayerStatus.transform.forward, damage, knockback, knockbackHeight, timeInKnockback, attackingPlayerStatus, true);
+            GetHit(attackingPlayerStatus.transform.forward, damage, knockback, knockbackHeight, timeInKnockback, attackingPlayerStatus, true, false);
 
             // Plays orchestra hits for combo.
             int combo = attackingPlayerStatus.combat.weaponState.currentComboCount;
@@ -415,10 +444,10 @@ public class PlayerStatus : MonoBehaviour
     public void GetHitByThrowable(Vector3 hitboxPos, Vector3 collisionPos, float damage, float knockback, float knockbackHeight, PlayerStatus attackingPlayerStatus)
     {
         // If eliminated/blocking/dodgerolling, nothing happens.
-        if (eliminated || IsBlocking || currentPlayerState.isInvincibleToAttacks || waitingToBeEliminated)
+        if (eliminated || IsBlocking || currentPlayerState.isInvincibleToAttacks || waitingToBeEliminated || iFrames)
             return;
 
-        GetHit((collisionPos - hitboxPos).normalized, damage, knockback, knockbackHeight, .3f, attackingPlayerStatus, false);
+        GetHit((collisionPos - hitboxPos).normalized, damage, knockback, knockbackHeight, .3f, attackingPlayerStatus, false, false);
 
         AudioManager.aud.Play("hitByItem", 0.8f, 1.2f);
     }

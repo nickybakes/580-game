@@ -40,6 +40,7 @@ public class Knockback : BasicState
         base.OnExitThisState(nextState, status);
 
         status.visuals.SetModelRotationX(0);
+        status.IFrames = false;
     }
 
     public override void Update(PlayerStatus status)
