@@ -23,6 +23,7 @@ public class PlayerVisuals
     private Animator animator;
 
     private Transform modelTransform;
+    private SkinnedMeshRenderer modelMeshRenderer;
 
     private PlayerWeaponVisual weaponHolder;
 
@@ -41,6 +42,7 @@ public class PlayerVisuals
 
         animator = tr.GetComponentInChildren<Animator>();
         modelTransform = tr.GetChild((int)PlayerChild.Model);
+        modelMeshRenderer = modelTransform.GetChild(0).GetChild(1).GetComponent<SkinnedMeshRenderer>();
 
         weaponHolder = modelTransform.GetComponentInChildren<PlayerWeaponVisual>();
 
@@ -109,8 +111,19 @@ public class PlayerVisuals
         }
     }
 
-    public void ShowWeaponVisual(ItemType item){
+    public void ShowWeaponVisual(ItemType item)
+    {
         weaponHolder.ShowWeapon(item);
+    }
+
+    public void EnableIFrames()
+    {
+        modelMeshRenderer.material.SetFloat("_I_Frames_Blink", 1);
+    }
+
+    public void DisableIFrames()
+    {
+        modelMeshRenderer.material.SetFloat("_I_Frames_Blink", 0);
     }
 
     public void EnableVisual(VisualChild vc)
