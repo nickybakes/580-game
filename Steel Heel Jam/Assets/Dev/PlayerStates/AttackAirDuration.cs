@@ -44,16 +44,20 @@ public class AttackAirDuration : BasicState
         if (nextState is AttackAirRecovery)
         {
             ((AttackAirRecovery)nextState).velocityYAirAttack = -status.movement.velocity.y;
+            Debug.Log(-status.movement.velocity.y);
+            // If traveling fast enough downwards, creates a decal and shakes camera.
+            if (-status.movement.velocity.y > 50)
+            {
+                CameraManager.cam.ShakeCamera(Mathf.Clamp01((-status.movement.velocity.y - 41f) / 70f) * .6f);
 
-            CameraManager.cam.ShakeCamera(Mathf.Clamp01((-status.movement.velocity.y - 41f)/70f) * .6f);
+                GameObject decal = VisualsManager.SpawnDecal(DecalName.Crack_01, status.transform.position);
 
-            GameObject decal = VisualsManager.SpawnDecal(DecalName.Crack_01, status.transform.position);
-
-            float scale = Mathf.Clamp01((-status.movement.velocity.y - 36f)/53f);
-            decal.transform.localScale = new Vector3(scale, scale, 1);
+                float scale = Mathf.Clamp01((-status.movement.velocity.y - 36f) / 53f);
+                decal.transform.localScale = new Vector3(scale, scale, 1);
+            }
 
             // Play ground sound. Louder when moving faster.
-            float vol = -status.movement.velocity.y / 50;
+            float vol = -status.movement.velocity.y / 75;
 
             AudioManager.aud.Play("crunch", vol / 3);
             AudioManager.aud.Play("punch", vol);

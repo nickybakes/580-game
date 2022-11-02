@@ -6,7 +6,7 @@ public class GrabRecovery : BasicState
 {
     public GrabRecovery()
     {
-        timeToChangeState = 0.5f;
+        timeToChangeState = 0.3f;
         moveSpeedMultiplier = 1.5f;
         canPlayerControlMove = false;
         canPlayerControlRotate = false;
