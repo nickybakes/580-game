@@ -144,6 +144,7 @@ public class PlayerStatus : MonoBehaviour
     public float redemptionArcDamageMultiplier = 2.0f;
     public float redemptionArcKnockbackMultiplier = 2.0f;
     public bool canDoubleJump = false;
+    public bool isHeel = false;
     public const float heelFireCooldownMax = 10.0f;
     public float heelFireCooldown;
     // ******************************
@@ -264,6 +265,16 @@ public class PlayerStatus : MonoBehaviour
         if (!eliminated && waitingToBeEliminated && !(currentPlayerState is Knockback || currentPlayerState is ImpactStun))
         {
             GameManager.game.EliminatePlayer(this);
+        }
+
+        if (isHeel)
+        {
+            heelFireCooldown += Time.deltaTime;
+
+            if (heelFireCooldown > heelFireCooldownMax)
+            {
+                heelFireHitbox.SetActive(false);
+            }
         }
 
         // If the player is out of bounds . . .
@@ -460,7 +471,8 @@ public class PlayerStatus : MonoBehaviour
         if (playerHeader)
         {
             playerHeader.SetHeel(true);
-            
+            heelFireCooldown = 0;
+            heelFireHitbox.SetActive(true);
         }
     }
 

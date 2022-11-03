@@ -34,7 +34,7 @@ Transform:
   - {fileID: 3861052546219309350}
   - {fileID: 3931965086709777512}
   m_Father: {fileID: 1777015905490208790}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1777015905490208814
 GameObject:
@@ -72,12 +72,12 @@ Transform:
   m_Children:
   - {fileID: 5911376567294058970}
   - {fileID: 536859927702069172}
-  - {fileID: 5586694761708648931}
   - {fileID: 1777015906093603490}
   - {fileID: 8188171632429326040}
   - {fileID: 6998295571700524817}
   - {fileID: 8374311134337151735}
   - {fileID: 5410108421679597912}
+  - {fileID: 5586694761708648931}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -141,6 +141,8 @@ MonoBehaviour:
   redemptionArcDamageMultiplier: 2
   redemptionArcKnockbackMultiplier: 2
   canDoubleJump: 0
+  isHeel: 0
+  heelFireCooldown: 0
 --- !u!114 &1777015905490208810
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -257,7 +259,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1777015905490208790}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2717064355588239748
 GameObject:
@@ -293,7 +295,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1777015905490208790}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &1362456186655544102
 MeshFilter:
@@ -422,7 +424,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1777015905490208790}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &7333569583715415302
 MeshFilter:
@@ -549,7 +551,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1777015905490208790}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!114 &1759431549868926922
 MonoBehaviour:
@@ -735,7 +737,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5586694761708648931
 Transform:
   m_ObjectHideFlags: 0
@@ -749,7 +751,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1777015905490208790}
-  m_RootOrder: 2
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8117278838479474653
 MeshFilter:
