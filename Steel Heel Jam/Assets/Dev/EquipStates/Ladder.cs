@@ -20,8 +20,8 @@ public class Ladder : DefaultState
                 1.2f, // Hitstun Multiplier
                 1.0f, // Radius Multiplier
                 15.0f, // Height Multiplier
-                1.0f, // Startup Multiplier
-                1.0f, // Duration Multiplier
+                1.5f, // Startup Multiplier
+                1.2f, // Duration Multiplier
                 1.0f, // Recovery Multiplier
                 1.2f,  // Forward Speed Multiplier
                 AttackAnimation.SwipeHeavy_01,
@@ -34,8 +34,8 @@ public class Ladder : DefaultState
                 1.5f, // Hitstun Multiplier
                 1.5f, // Radius Multiplier
                 15.0f, // Height Multiplier
-                1.2f, // Startup Multiplier
-                1.2f, // Duration Multiplier
+                1.5f, // Startup Multiplier
+                1.5f, // Duration Multiplier
                 1.4f, // Recovery Multiplier
                 1.0f,  // Forward Speed Multiplier
                 AttackAnimation.SmashHeavy_01,
@@ -45,18 +45,7 @@ public class Ladder : DefaultState
 
         maxComboCount = combo.Length;
         currentAttack = combo[0];
-        
-        airAttack = new Attack( // *** 1st Hit ***
-                1.0f, // Damage Multiplier
-                1.0f, // Knockback Multiplier
-                1.0f, // Knockback Height Multiplier
-                1.0f, // Hitstun Multiplier
-                1.0f, // Radius Multiplier
-                1.0f, // Height Multiplier
-                1.0f, // Startup Multiplier
-                1.0f, // Duration Multiplier
-                1.0f, // Recovery Multiplier
-                1.0f  // Forward Speed Multiplier
-                );
+
+        InitializeAirAttack();
     }
 }

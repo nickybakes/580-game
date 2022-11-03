@@ -42,6 +42,8 @@ public class AttackAirRecovery : BasicState
     {
         base.OnEnterThisState(prevState, status);
 
-        status.combat.weaponState.AirAttackLand(.75f + Mathf.Clamp((velocityYAirAttack - 43f)/20f, 0f, 10f));
+        float fallHeightMultiplier = .75f + Mathf.Clamp((velocityYAirAttack - 43f) / 20f, 0f, 10f);
+
+        status.combat.weaponState.AirAttackLand(fallHeightMultiplier, fallHeightMultiplier);
     }
 }

@@ -138,19 +138,15 @@ public class PlayerHeader : MonoBehaviour
 
     public void ShowBuff(Buff buff)
     {
-        if (buff != Buff.HeelFire)
-        {
-            buffHeaderTitle.text = BuffTitles[(int)buff];
-            buffHeaderDescription.text = BuffDescriptions[(int)buff];
-            buffHeaderImage.sprite = HUDManager.GetBuffIcon(buff);
+        buffHeaderTitle.text = BuffTitles[(int)buff];
+        buffHeaderDescription.text = BuffDescriptions[(int)buff];
+        buffHeaderImage.sprite = HUDManager.GetBuffIcon(buff);
 
-            buffHeaderAnimator.SetTrigger("ShowHeader");
+        buffHeaderAnimator.SetTrigger("ShowHeader");
 
-            Image i = gottenBuffIcons[playerStatus.BuffCount - 1];
-            i.color = Color.white;
-            i.sprite = HUDManager.GetBuffIcon(buff);
-        }
-
+        Image i = gottenBuffIcons[playerStatus.BuffCount - 1];
+        i.color = Color.white;
+        i.sprite = HUDManager.GetBuffIcon(buff);
     }
 
     public void SetHeel(bool enabled)

@@ -8,7 +8,7 @@ public class ItemManager : MonoBehaviour
     public List<GameObject> itemsToSpawn = new List<GameObject>();
     float spawnTimer;
     float spawnTimerMax;
-    float spawnCap = 12f;
+    float spawnCap = 20f;
 
     // Start is called before the first frame update
     void Start()
@@ -19,7 +19,7 @@ public class ItemManager : MonoBehaviour
         //itemsOnGround = new List<GameObject>();
         for (int i = 0; i < 7; i++)
         {
-            SpawnRandomItemCenter(20);
+            //SpawnRandomItemCenter(20);
         }
     }
 

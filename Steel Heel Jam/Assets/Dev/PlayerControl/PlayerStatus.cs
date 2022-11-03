@@ -19,8 +19,7 @@ public enum Buff
     SpeedySubversion,
     MachoBlock,
     TopRopes,
-    TheStink,
-    HeelFire = -1,
+    TheStink
 }
 
 public enum Tag
@@ -129,6 +128,8 @@ public class PlayerStatus : MonoBehaviour
 
     public float timeOfEliminiation;
 
+    public GameObject heelFireHitbox;
+
     public PlayerHeader playerHeader;
 
     private new Transform transform;
@@ -143,6 +144,9 @@ public class PlayerStatus : MonoBehaviour
     public float redemptionArcDamageMultiplier = 2.0f;
     public float redemptionArcKnockbackMultiplier = 2.0f;
     public bool canDoubleJump = false;
+    public bool isHeel = false;
+    public const float heelFireCooldownMax = 10.0f;
+    public float heelFireCooldown;
     // ******************************
 
     private bool iFrames;
@@ -261,6 +265,18 @@ public class PlayerStatus : MonoBehaviour
         if (!eliminated && waitingToBeEliminated && !(currentPlayerState is Knockback || currentPlayerState is ImpactStun))
         {
             GameManager.game.EliminatePlayer(this);
+        }
+
+        if (isHeel)
+        {
+            heelFireCooldown += Time.deltaTime;
+
+            if (heelFireCooldown > heelFireCooldownMax)
+            {
+                heelFireHitbox.SetActive(false);
+                isHeel = false;
+                playerHeader.SetHeel(false);
+            }
         }
 
         // If the player is out of bounds . . .
@@ -457,6 +473,9 @@ public class PlayerStatus : MonoBehaviour
         if (playerHeader)
         {
             playerHeader.SetHeel(true);
+            heelFireCooldown = 0;
+            heelFireHitbox.SetActive(true);
+            isHeel = true;
         }
     }
 
@@ -470,7 +489,8 @@ public class PlayerStatus : MonoBehaviour
         if (buffCount == maxBuffs)
         {
             Debug.Log("HEEL FIRE");
-            // buffs[(int)Buff.HeelFire] = true;
+            SetHeel();
+            //buffs[(int)Buff.HeelFire] = true;
         }
         else
         {
