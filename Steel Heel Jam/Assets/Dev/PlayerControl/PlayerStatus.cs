@@ -274,6 +274,8 @@ public class PlayerStatus : MonoBehaviour
             if (heelFireCooldown > heelFireCooldownMax)
             {
                 heelFireHitbox.SetActive(false);
+                isHeel = false;
+                playerHeader.SetHeel(false);
             }
         }
 
@@ -473,6 +475,7 @@ public class PlayerStatus : MonoBehaviour
             playerHeader.SetHeel(true);
             heelFireCooldown = 0;
             heelFireHitbox.SetActive(true);
+            isHeel = true;
         }
     }
 

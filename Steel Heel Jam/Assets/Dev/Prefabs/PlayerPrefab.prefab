@@ -731,6 +731,7 @@ GameObject:
   - component: {fileID: 8117278838479474653}
   - component: {fileID: 6647896866909002352}
   - component: {fileID: 7605501629344855088}
+  - component: {fileID: 6390082065430789076}
   m_Layer: 0
   m_Name: HeelFireHitbox
   m_TagString: Attack
@@ -817,6 +818,23 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &6390082065430789076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6322034003779150571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d807389e487c0b43a84ab22e11ce594, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerStatus: {fileID: 1777015905490208809}
+  damage: 10
+  knockback: 5
+  knockbackHeight: 5
+  timeInKnockback: 5
 --- !u!1 &6712985875332064484
 GameObject:
   m_ObjectHideFlags: 0
