@@ -64,6 +64,7 @@ MonoBehaviour:
   playerNumberText: {fileID: 1909445893838570188}
   cursorSprite: {fileID: 1909445892520770574}
   playerNumber: 0
+  normalizedPosition: {x: 0, y: 0}
 --- !u!114 &5133855186493725272
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -78,6 +79,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   move: {x: 0, y: 0}
   accept: 0
+  back: 0
   wasAccepting: 0
 --- !u!1 &1909445892520770568
 GameObject:
@@ -224,7 +226,7 @@ MonoBehaviour:
   m_text: P1
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c60c8e972587c85488842471d19e66c4, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: 97db1b4af3ddeb4458d0aef291e22b41, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: df9f87cb5a4c4d84b9de1e8da13fcf1c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

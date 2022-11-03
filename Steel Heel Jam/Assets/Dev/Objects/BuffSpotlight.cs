@@ -85,6 +85,7 @@ public class BuffSpotlight : MonoBehaviour
                 {
                     spotlightFilled = true;
                     status.ReduceSpotlightMeter(PlayerStatus.defaultMaxSpotlight);
+                    VisualsManager.SpawnParticle(ParticleName.SpotlightBuffGet_01, status.transform.position);
                     break;
                 }
             }
