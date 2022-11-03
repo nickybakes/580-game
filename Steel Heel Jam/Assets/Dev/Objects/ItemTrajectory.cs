@@ -15,6 +15,10 @@ public class ItemTrajectory : MonoBehaviour
     private Vector3 currentMoveDirection;
     private float speed;
 
+    private float blinkTimer;
+
+    public float despawnTimer;
+    public bool despawnTimerActive;
     public bool isFirstFrameOfThrow;
     public bool isMidAir;
     public float chargeAmount;
@@ -27,6 +31,8 @@ public class ItemTrajectory : MonoBehaviour
     {
         tr = transform;
         rb = GetComponent<Rigidbody>();
+        despawnTimer = 25f;
+        despawnTimerActive = false;
     }
 
     // Update is called once per frame
@@ -38,11 +44,32 @@ public class ItemTrajectory : MonoBehaviour
             InitialThrow();
             isFirstFrameOfThrow = false;
             isMidAir = true;
+            despawnTimerActive = true;
+            transform.GetChild(0).gameObject.SetActive(true);
         }
         else if (isMidAir && target != null)
         {
             UpdateTargetedThrow();
         }
+
+        if(despawnTimer <= 5)
+        {
+            // Start blink effect
+            blinkTimer += Time.deltaTime;
+            if(blinkTimer > 0.2f)
+            {
+                blinkTimer = 0;
+                transform.GetChild(0).gameObject.SetActive(!transform.GetChild(0).gameObject.activeSelf);
+            }
+
+            if(despawnTimer <= 0)
+            {
+                // Despawn Item
+                Destroy(this.gameObject);
+            }
+        }
+
+        if(despawnTimerActive) despawnTimer -= Time.deltaTime;
     }
 
     private void OnCollisionEnter(Collision collision)
