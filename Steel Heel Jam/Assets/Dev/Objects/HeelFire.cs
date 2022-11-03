@@ -23,7 +23,27 @@ public class HeelFire : MonoBehaviour
         
     }
 
-    private void OnTriggerEnter(Collider other)
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.tag == Tag.Player.ToString())
+    //    {
+    //        PlayerStatus player = other.GetComponent<PlayerStatus>();
+
+    //        if (playerNumber == player.PlayerNumber) return;
+
+    //        player.GetHitByElbowDrop(
+    //            playerStatus.transform.position,
+    //            player.transform.position,
+    //            damage,
+    //            knockback,
+    //            knockbackHeight,
+    //            timeInKnockback,
+    //            playerStatus
+    //            );
+    //    }
+    //}
+
+    private void OnTriggerStay(Collider other)
     {
         if (other.tag == Tag.Player.ToString())
         {
