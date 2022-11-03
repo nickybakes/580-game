@@ -5,9 +5,6 @@ using UnityEngine;
 
 public class Flexing : BasicState
 {
-    //private float restStaminaIncreaseCooldown;
-    //private float restStaminaIncreaseCooldownMax = 1f;
-
     private const float DefaultRestStaminaRegen = 7.0f;
 
     // MAINTAIN 2 to 1 Ratio
@@ -45,11 +42,6 @@ public class Flexing : BasicState
         {
             status.IncreaseStamina((SpotlightRestStaminaRegen + (status.buffs[(int)Buff.PlotArmor] == true ? status.plotArmorAdditionalHeal : 0)) * Time.deltaTime);
             status.IncreaseSpotlightMeter(spotlightFillRate * Time.deltaTime);
-
-            if (status.spotlight == 100)
-            {
-                status.GiveBuff();
-            }
         }
         else if (status.spotlight == 0)
         {

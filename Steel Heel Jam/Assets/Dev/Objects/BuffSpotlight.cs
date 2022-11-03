@@ -85,6 +85,8 @@ public class BuffSpotlight : MonoBehaviour
                 {
                     spotlightFilled = true;
                     status.ReduceSpotlightMeter(PlayerStatus.defaultMaxSpotlight);
+                    status.GiveBuff();
+                    status.isInSpotlight = false;
                     break;
                 }
             }

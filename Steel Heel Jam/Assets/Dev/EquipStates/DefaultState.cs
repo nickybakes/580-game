@@ -223,6 +223,22 @@ public class DefaultState
         airAttack = new Attack();
     }
 
+    public virtual void InitializeAirAttack()
+    {
+        airAttack = new Attack( // *** 1st Hit ***
+                1.0f, // Damage Multiplier
+                0.5f, // Knockback Multiplier
+                0.5f, // Knockback Height Multiplier
+                1.0f, // Hitstun Multiplier
+                1.0f, // Radius Multiplier
+                1.0f, // Height Multiplier
+                1.0f, // Startup Multiplier
+                1.0f, // Duration Multiplier
+                1.0f, // Recovery Multiplier
+                1.0f  // Forward Speed Multiplier
+                );
+    }
+
     /// <summary>
     /// Activates the hitbox prefab attached to the player.
     /// </summary>
@@ -253,13 +269,13 @@ public class DefaultState
         hitbox.SetActive(true);
     }
 
-    public virtual void AirAttackLand(float extraSizeMultiplier = 1)
+    public virtual void AirAttackLand(float extraSizeMultiplier = 1, float extraKnockbackMultiplier = 1)
     {
         gotAHit = false;
 
         currentAttack = airAttack;
 
-        LoadAirHitbox(extraSizeMultiplier);
+        LoadAirHitbox(extraSizeMultiplier, extraKnockbackMultiplier);
 
         hitbox.SetActive(true);
     }
@@ -318,12 +334,12 @@ public class DefaultState
     /// Sets the hitbox values for the air attack.
     /// </summary>
     /// <returns>A reference to the hitbox script.</returns>
-    protected virtual Hitbox LoadAirHitbox(float extraSizeMultiplier = 1)
+    protected virtual Hitbox LoadAirHitbox(float extraSizeMultiplier = 1, float extraKnockbackMultipler = 1)
     {
         // Set up hitbox values
         hitboxScript.damage = damage * airAttack.damageMultiplier;
-        hitboxScript.knockback = knockback * airAttack.knockbackMultiplier;
-        hitboxScript.knockbackHeight = knockbackHeight * airAttack.knockbackHeightMultiplier;
+        hitboxScript.knockback = knockback * airAttack.knockbackMultiplier * extraKnockbackMultipler;
+        hitboxScript.knockbackHeight = knockbackHeight * airAttack.knockbackHeightMultiplier * extraKnockbackMultipler;
         hitboxScript.timeInKnockback = timeInKnockback * airAttack.timeInKnockbackMultiplier;
         hitboxScript.radius = radius * airAttack.radiusMultiplier; // Radius is only passed through for gizmo drawing
         hitboxScript.duration = duration * airAttack.durationMultiplier;
