@@ -10,7 +10,7 @@ public enum VisualChild
     DodgeRoll = 1,
     Stun = 2,
     Recovery = 3,
-    Knockback = 4
+    Flexing = 4
 }
 
 public class PlayerVisuals
@@ -51,7 +51,7 @@ public class PlayerVisuals
         dodgeRollSphere = tr.GetChild((int)PlayerChild.Visuals).GetChild((int)VisualChild.DodgeRoll).gameObject;
         stunSphere = tr.GetChild((int)PlayerChild.Visuals).GetChild((int)VisualChild.Stun).gameObject;
         recoverySphere = tr.GetChild((int)PlayerChild.Visuals).GetChild((int)VisualChild.Recovery).gameObject;
-        knockbackSphere = tr.GetChild((int)PlayerChild.Visuals).GetChild((int)VisualChild.Knockback).gameObject;
+        knockbackSphere = tr.GetChild((int)PlayerChild.Visuals).GetChild((int)VisualChild.Flexing).gameObject;
     }
 
     /// <summary>
@@ -140,7 +140,7 @@ public class PlayerVisuals
             case (VisualChild.Stun):
                 Stun();
                 break;
-            case (VisualChild.Knockback):
+            case (VisualChild.Flexing):
                 Knockback();
                 break;
             case (VisualChild.Recovery):

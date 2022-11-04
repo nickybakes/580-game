@@ -488,7 +488,6 @@ public class PlayerStatus : MonoBehaviour
         // Heel Fire
         if (buffCount == maxBuffs)
         {
-            Debug.Log("HEEL FIRE");
             SetHeel();
             //buffs[(int)Buff.HeelFire] = true;
         }

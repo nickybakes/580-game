@@ -24,7 +24,7 @@ public class Flexing : BasicState
         canBlock = true;
         alternateFriction = true;
         animationState = AnimationState.Taunt_01;
-        visual = VisualChild.Knockback;
+        visual = VisualChild.Flexing;
 
         stateToChangeTo = new Idle();
     }

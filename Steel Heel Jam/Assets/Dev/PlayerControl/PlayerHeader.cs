@@ -62,8 +62,11 @@ public class PlayerHeader : MonoBehaviour
     public Image[] gottenBuffIcons;
 
     private bool blinkDangerText;
+    private bool blinkHeelText;
     private float dangerBlinkTime;
     private const float dangerBlinkTimeMax = .15f;
+    private float heelBlinkTime;
+    private const float heelBlinkTimeMax = .075f;
     private const float staminaDangerThreshold = .12f;
 
     public PlayerStatus Status
@@ -152,6 +155,7 @@ public class PlayerHeader : MonoBehaviour
     public void SetHeel(bool enabled)
     {
         heelText.SetActive(enabled);
+        blinkHeelText = enabled;
     }
 
     public void SetPickup(bool enabled)
@@ -173,6 +177,16 @@ public class PlayerHeader : MonoBehaviour
             {
                 dangerBlinkTime = 0;
                 dangerText.SetActive(!dangerText.activeSelf);
+            }
+        }
+
+        if (blinkHeelText)
+        {
+            heelBlinkTime += Time.deltaTime;
+            if (heelBlinkTime > heelBlinkTimeMax)
+            {
+                heelBlinkTime = 0;
+                heelText.SetActive(!heelText.activeSelf);
             }
         }
     }
