@@ -64,7 +64,8 @@ public class Hitbox : MonoBehaviour
                     knockback,
                     knockbackHeight,
                     timeInKnockback,
-                    playerStatus
+                    playerStatus,
+                    false
                     );
             }
             else

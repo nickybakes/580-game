@@ -58,7 +58,8 @@ public class HeelFire : MonoBehaviour
                 knockback,
                 knockbackHeight,
                 timeInKnockback,
-                playerStatus
+                playerStatus,
+                true
                 );
         }
     }

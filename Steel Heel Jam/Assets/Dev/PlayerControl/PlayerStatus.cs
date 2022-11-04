@@ -392,16 +392,17 @@ public class PlayerStatus : MonoBehaviour
 
     }
 
-    public void GetHitByElbowDrop(Vector3 hitboxPos, Vector3 collisionPos, float damage, float knockback, float knockbackHeight, float timeInKnockback, PlayerStatus attackingPlayerStatus)
+    public void GetHitByElbowDrop(Vector3 hitboxPos, Vector3 collisionPos, float damage, float knockback, float knockbackHeight, float timeInKnockback, PlayerStatus attackingPlayerStatus, bool unblockable)
     {
         if (eliminated)
             return;
 
-        if (IsBlocking)
+        if (!unblockable && IsBlocking)
         {
             attackingPlayerStatus.SetPlayerStateImmediately(new BlockedStun());
             attackingPlayerStatus.movement.velocity = attackingPlayerStatus.transform.position - transform.position;
             attackingPlayerStatus.combat.weaponState.currentComboCount = 0;
+            IncreaseSpotlightMeter(15);
             SetPlayerStateImmediately(new Idle());
             attackBlocked = true;
 
@@ -431,6 +432,7 @@ public class PlayerStatus : MonoBehaviour
             attackingPlayerStatus.SetPlayerStateImmediately(new BlockedStun());
             attackingPlayerStatus.movement.velocity = attackingPlayerStatus.transform.position - transform.position;
             attackingPlayerStatus.combat.weaponState.currentComboCount = 0;
+            IncreaseSpotlightMeter(20);
             SetPlayerStateImmediately(new Idle());
             attackBlocked = true;
 
@@ -460,8 +462,19 @@ public class PlayerStatus : MonoBehaviour
     public void GetHitByThrowable(Vector3 hitboxPos, Vector3 collisionPos, float damage, float knockback, float knockbackHeight, PlayerStatus attackingPlayerStatus)
     {
         // If eliminated/blocking/dodgerolling, nothing happens.
-        if (eliminated || IsBlocking || currentPlayerState.isInvincibleToAttacks || waitingToBeEliminated || iFrames)
+        if (eliminated || currentPlayerState.isInvincibleToAttacks || waitingToBeEliminated || iFrames)
             return;
+
+        if (IsBlocking)
+        {
+            IncreaseSpotlightMeter(20);
+            IncreaseStamina(15);
+            SetPlayerStateImmediately(new Idle());
+            attackBlocked = true;
+
+            AudioManager.aud.Play("blockedPunch");
+            return;
+        }
 
         GetHit((collisionPos - hitboxPos).normalized, damage, knockback, knockbackHeight, .3f, attackingPlayerStatus, false, false);
 

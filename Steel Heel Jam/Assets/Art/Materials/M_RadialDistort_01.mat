@@ -74,8 +74,12 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_9c0e5cc13cad4b9a9db0a21d0aebfda1_Texture_1:
+        m_Texture: {fileID: 2800000, guid: 578dd30dcb9ad6840a2af3ffd297a8a5, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _SampleTexture2D_ab87ba007295436ba9b3e14bed816611_Texture_1:
-        m_Texture: {fileID: 2800000, guid: 00c19a9e1dcabe64faf4be190eca7cdf, type: 3}
+        m_Texture: {fileID: 2800000, guid: 18aa2dcc37da9544892f2cb29c6b8453, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
@@ -97,6 +101,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _AlphaClip: 0
+    - _Alpha_Multiply: 20
     - _Blend: 0
     - _BumpScale: 1
     - _ClearCoatMask: 0
@@ -105,17 +110,21 @@ Material:
     - _Cutoff: 0.5
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
+    - _Distort_Amount: 1
     - _DstBlend: 0
     - _EnvironmentReflections: 1
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _Metallic: 0
+    - _Noise_Scale: 1
+    - _Noise_Speed: 3
     - _OcclusionStrength: 1
     - _Parallax: 0.005
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
+    - _Rotate_Speed: 4.85
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
