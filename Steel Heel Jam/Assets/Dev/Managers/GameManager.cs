@@ -96,7 +96,12 @@ public class GameManager : MonoBehaviour
 
         // Player movement limited by PlayerStatus update().
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
+
+        // Play matchBegin announcer line.
+        AudioManager.aud.Play("matchBegin");
+
+        yield return new WaitForSeconds(0.5f);
 
         countdownDisplay.gameObject.SetActive(false);
     }
@@ -258,6 +263,9 @@ public class GameManager : MonoBehaviour
         spotlightScript.tr.position = new Vector3(randomXCoordinate, 0, randomZCoordinate);
         spotlightScript.DecideWanderDirection();
         spotlight.SetActive(true);
+
+        // VO
+        AudioManager.aud.Play("spotlight");
     }
 
     public void DespawnSpotlight()
@@ -267,12 +275,4 @@ public class GameManager : MonoBehaviour
         spotlight.SetActive(false);
     }
 
-    //public void SpawnHeelSpotlight()
-    //{
-    //    GameObject g = Instantiate(heelSpotlightPrefab);
-
-    //    heelSpotlightScript = g.GetComponent<HeelSpotlight>();
-
-
-    //}
 }

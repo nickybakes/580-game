@@ -503,6 +503,9 @@ public class PlayerStatus : MonoBehaviour
         {
             SetHeel();
             //buffs[(int)Buff.HeelFire] = true;
+
+            // VO
+            AudioManager.aud.Play("heelFire");
         }
         else
         {
@@ -516,6 +519,9 @@ public class PlayerStatus : MonoBehaviour
             buffs[(int)buffToGive] = true;
 
             playerHeader.ShowBuff(buffToGive);
+
+            // VO
+            AudioManager.aud.Play(buffToGive.ToString());
         }
         CameraManager.cam.ShakeCamera(.5f);
     }
