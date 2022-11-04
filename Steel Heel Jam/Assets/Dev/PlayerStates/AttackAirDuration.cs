@@ -54,6 +54,11 @@ public class AttackAirDuration : BasicState
 
                 float scale = Mathf.Clamp01((-status.movement.velocity.y - 36f) / 53f);
                 decal.transform.localScale = new Vector3(scale, scale, 1);
+
+                GameObject particle = VisualsManager.SpawnParticle(ParticleName.AirAttackLand_01, status.transform.position);
+
+                float scale2 = Mathf.Clamp((-status.movement.velocity.y - 36f) / 53f, 1.2f, 2f);
+                decal.transform.localScale = new Vector3(scale2, scale2, scale2);
             }
 
             // Play ground sound. Louder when moving faster.

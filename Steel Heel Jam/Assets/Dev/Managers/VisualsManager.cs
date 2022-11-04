@@ -9,7 +9,8 @@ public enum DecalName
 
 public enum ParticleName
 {
-    SpotlightBuffGet_01
+    SpotlightBuffGet_01,
+    AirAttackLand_01,
 }
 
 public class VisualsManager : MonoBehaviour

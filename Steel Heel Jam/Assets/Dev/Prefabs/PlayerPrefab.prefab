@@ -135,7 +135,6 @@ MonoBehaviour:
   waitingToBeEliminated: 0
   timeOfEliminiation: 0
   heelFireHitbox: {fileID: 6322034003779150571}
-  heelFireAnimator: {fileID: 8062767381886254949}
   playerHeader: {fileID: 0}
   buffs: 
   plotArmorAdditionalHeal: 4
@@ -738,7 +737,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5586694761708648931
 Transform:
   m_ObjectHideFlags: 0
@@ -747,8 +746,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6322034003779150571}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.000000018401, y: 0.0039977, z: -0.000000022998}
-  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.000000018401, y: 0.52, z: -0.000000022998}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 917965263189550400}
