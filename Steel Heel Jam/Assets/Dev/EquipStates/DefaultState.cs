@@ -316,17 +316,6 @@ public class DefaultState
 
         float y = (hitboxCollider.height / 2) > hitboxCollider.radius ? hitboxCollider.height : hitboxCollider.radius;
 
-        Transform attackSphere = hitboxScript.tr.GetChild(0);
-        attackSphere.localScale = new Vector3(hitboxCollider.radius * 2, y, hitboxCollider.radius * 2);
-
-        // Logic for rotating hitbox (new attack shapes)
-        attackSphere.rotation = new Quaternion(
-            currentAttack.attackDirection == AttackDirection.Forward ? 90 : 0,
-            0,
-            currentAttack.attackDirection == AttackDirection.Horizontal ? 90 : 0,
-            1
-            );
-
         return hitboxScript;
     }
 
@@ -351,7 +340,6 @@ public class DefaultState
         hitboxCollider.radius = radius * airAttack.radiusMultiplier * 1.5f * extraSizeMultiplier;
         hitboxCollider.height = 3;
         hitboxScript.tr.localPosition = new Vector3(0, 0, 0);
-        hitboxScript.tr.GetChild(0).localScale = new Vector3(hitboxCollider.radius * 2, hitboxCollider.radius, hitboxCollider.radius * 2);
         hitboxScript.airAttack = true;
 
         return hitboxScript;

@@ -35,6 +35,8 @@ public class SuplexVictimDuration : BasicState
         status.gameObject.transform.parent = null;
         status.visuals.SetModelRotationX(0);
 
+        status.transform.GetChild((int)PlayerChild.RingDecal).gameObject.SetActive(true);
+
         status.ReduceStamina(status.suplexStaminaDamage);
     }
 }

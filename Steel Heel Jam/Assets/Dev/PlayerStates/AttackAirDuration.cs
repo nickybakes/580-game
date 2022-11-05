@@ -49,17 +49,17 @@ public class AttackAirDuration : BasicState
             if (-status.movement.velocity.y > 50)
             {
                 CameraManager.cam.ShakeCamera(Mathf.Clamp01((-status.movement.velocity.y - 41f) / 70f) * .6f);
-
-                GameObject decal = VisualsManager.SpawnDecal(DecalName.Crack_01, status.transform.position);
-
-                float scale = Mathf.Clamp01((-status.movement.velocity.y - 36f) / 53f);
-                decal.transform.localScale = new Vector3(scale, scale, 1);
-
-                GameObject particle = VisualsManager.SpawnParticle(ParticleName.AirAttackLand_01, status.transform.position);
-
-                float scale2 = Mathf.Clamp((-status.movement.velocity.y - 36f) / 53f, 1.2f, 2f);
-                decal.transform.localScale = new Vector3(scale2, scale2, scale2);
             }
+
+            GameObject decal = VisualsManager.SpawnDecal(DecalName.Crack_01, status.transform.position);
+
+            float scale = Mathf.Clamp((-status.movement.velocity.y - 36f) / 53f, .3f, 1);
+            decal.transform.localScale = new Vector3(scale, scale, 1);
+
+            GameObject particle = VisualsManager.SpawnParticle(ParticleName.AirAttackLand_01, status.transform.position);
+
+            float scale2 = Mathf.Clamp((-status.movement.velocity.y - 39f) / 53f, .5f, 2f);
+            particle.transform.localScale = new Vector3(scale2, scale2, scale2);
 
             // Play ground sound. Louder when moving faster.
             float vol = -status.movement.velocity.y / 75;
