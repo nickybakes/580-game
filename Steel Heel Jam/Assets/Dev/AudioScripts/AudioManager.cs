@@ -83,6 +83,10 @@ public class AudioManager : MonoBehaviour
         if (s.randStartPos)
             s.source.time = UnityEngine.Random.Range(0, s.source.clip.length);
 
+        // VO check for overlap.
+        if (s.audioType == Sound.AudioTypes.VoiceOver && IsPlaying(Sound.AudioTypes.VoiceOver))
+            return;
+
         s.source.Play();
     }
 
@@ -104,6 +108,10 @@ public class AudioManager : MonoBehaviour
 
         if (s.randStartPos)
             s.source.time = UnityEngine.Random.Range(0, s.source.clip.length);
+
+        // VO check for overlap.
+        if (s.audioType == Sound.AudioTypes.VoiceOver && IsPlaying(Sound.AudioTypes.VoiceOver))
+            return;
 
         s.source.Play();
     }
@@ -127,6 +135,10 @@ public class AudioManager : MonoBehaviour
         if (s.randStartPos)
             s.source.time = UnityEngine.Random.Range(0, s.source.clip.length);
 
+        // VO check for overlap.
+        if (s.audioType == Sound.AudioTypes.VoiceOver && IsPlaying(Sound.AudioTypes.VoiceOver))
+            return;
+
         s.source.Play();
     }
 
@@ -149,6 +161,10 @@ public class AudioManager : MonoBehaviour
 
         if (s.randStartPos)
             s.source.time = UnityEngine.Random.Range(0, s.source.clip.length);
+
+        // VO check for overlap.
+        if (s.audioType == Sound.AudioTypes.VoiceOver && IsPlaying(Sound.AudioTypes.VoiceOver))
+            return;
 
         s.source.Play();
     }
@@ -193,6 +209,23 @@ public class AudioManager : MonoBehaviour
     public bool IsPlaying(string name)
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);
+        if (s.source.isPlaying)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    /// <summary>
+    /// Finds if a specified audioType is currently playing.
+    /// </summary>
+    /// <returns>Returns true if anything from that type is playing, else false.</returns>
+    public bool IsPlaying(Sound.AudioTypes audioType)
+    {
+        Sound s = Array.Find(sounds, sound => sound.audioType == audioType);
         if (s.source.isPlaying)
         {
             return true;
