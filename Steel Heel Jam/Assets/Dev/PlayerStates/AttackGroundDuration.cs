@@ -18,6 +18,7 @@ public class AttackGroundDuration : BasicState
         countAttackCooldown = false;
         animationState = AnimationState.AG_Punch_03_D;
         stateToChangeTo = new AttackGroundRecovery();
+        visual = VisualChild.Attack;
     }
 
     private bool gotAHitAlready;

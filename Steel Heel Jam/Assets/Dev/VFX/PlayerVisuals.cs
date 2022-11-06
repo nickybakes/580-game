@@ -10,7 +10,8 @@ public enum VisualChild
     DodgeRoll = 1,
     Stun = 2,
     Recovery = 3,
-    Flexing = 4
+    Flexing = 4,
+    Attack = 5,
 }
 
 public class PlayerVisuals
@@ -34,6 +35,8 @@ public class PlayerVisuals
     private GameObject stunSphere;
     private GameObject recoverySphere;
     private GameObject knockbackSphere;
+    private GameObject attackVisual;
+    private int currentAttackParticle;
 
     public PlayerVisuals(PlayerStatus _status, Transform _tr)
     {
@@ -52,6 +55,7 @@ public class PlayerVisuals
         stunSphere = tr.GetChild((int)PlayerChild.Visuals).GetChild((int)VisualChild.Stun).gameObject;
         recoverySphere = tr.GetChild((int)PlayerChild.Visuals).GetChild((int)VisualChild.Recovery).gameObject;
         knockbackSphere = tr.GetChild((int)PlayerChild.Visuals).GetChild((int)VisualChild.Flexing).gameObject;
+        attackVisual = tr.GetChild((int)PlayerChild.Visuals).GetChild((int)VisualChild.Attack).gameObject;
     }
 
     /// <summary>
@@ -126,6 +130,13 @@ public class PlayerVisuals
         modelMeshRenderer.material.SetFloat("_I_Frames_Blink", 0);
     }
 
+    public void SetAttackParticle(int index)
+    {
+        attackVisual.transform.GetChild(currentAttackParticle).gameObject.SetActive(false);
+        attackVisual.transform.GetChild(index).gameObject.SetActive(true);
+        currentAttackParticle = index;
+    }
+
     public void EnableVisual(VisualChild vc)
     {
         ClearAll();
@@ -146,6 +157,9 @@ public class PlayerVisuals
             case (VisualChild.Recovery):
                 Recovery();
                 break;
+            case (VisualChild.Attack):
+                AttackVisual();
+                break;
         }
     }
 
@@ -156,6 +170,7 @@ public class PlayerVisuals
         stunSphere.SetActive(false);
         recoverySphere.SetActive(false);
         knockbackSphere.SetActive(false);
+        attackVisual.SetActive(false);
     }
 
     private void Block()
@@ -181,5 +196,10 @@ public class PlayerVisuals
     private void Knockback()
     {
         knockbackSphere.SetActive(true);
+    }
+
+    private void AttackVisual()
+    {
+        attackVisual.SetActive(true);
     }
 }

@@ -21,11 +21,22 @@ public class SuplexVictimStartup : BasicState
         stateToChangeTo = new SuplexVictimDuration();
     }
 
+    public override void OnEnterThisState(BasicState prevState, PlayerStatus status)
+    {
+        base.OnEnterThisState(prevState, status);
+
+        status.transform.GetChild((int)PlayerChild.RingDecal).gameObject.SetActive(false);
+    }
+
     public override void OnExitThisState(BasicState nextState, PlayerStatus status)
     {
         base.OnExitThisState(nextState, status);
 
-        if(!(nextState is SuplexVictimDuration))
+        if (!(nextState is SuplexVictimDuration))
+        {
             status.gameObject.transform.parent = null;
+
+            status.transform.GetChild((int)PlayerChild.RingDecal).gameObject.SetActive(true);
+        }
     }
 }
