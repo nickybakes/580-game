@@ -404,6 +404,83 @@ MonoBehaviour:
     randStartPos: 0
     playOnAwake: 0
     source: {fileID: 0}
+  - audioType: 2
+    name: block
+    clips:
+    - {fileID: 8300000, guid: 67a2272fbbfaaf044a8173134e8e00f1, type: 3}
+    - {fileID: 8300000, guid: 3bdf5f9eb8b3e8545b156bdf3809de29, type: 3}
+    - {fileID: 8300000, guid: d34001f42097ebd48891ef24070ab8bb, type: 3}
+    - {fileID: 8300000, guid: 9231255c38ca42b4aa6ffe889df5cd6a, type: 3}
+    - {fileID: 8300000, guid: 3b904c4711ba5284aa3c9423c9774958, type: 3}
+    - {fileID: 8300000, guid: 3350a14271efd8048b6482cff173af12, type: 3}
+    - {fileID: 8300000, guid: efaceb6d7c7261b42b7a69d4d51d9572, type: 3}
+    - {fileID: 8300000, guid: 0994549009c62ab4c8fb05770263a1df, type: 3}
+    - {fileID: 8300000, guid: abfab071cdc727a40aff514c80aaf8df, type: 3}
+    - {fileID: 8300000, guid: fadf48d7d9348754fb815f48db1f66cf, type: 3}
+    - {fileID: 8300000, guid: 2c1905e236ef40d4dbcddd36e6a9a46d, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    randStartPos: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - audioType: 2
+    name: eliminated
+    clips:
+    - {fileID: 8300000, guid: 651105aa1f9d9f84ab43a07d3a0db7f8, type: 3}
+    - {fileID: 8300000, guid: eeba97d0953822a4482825383769e9c5, type: 3}
+    - {fileID: 8300000, guid: 0373062b9151d3a44907e9fa4d00ce96, type: 3}
+    - {fileID: 8300000, guid: c0729d4480894214687fde6a12a0f1f6, type: 3}
+    - {fileID: 8300000, guid: 05b6821cb8b475841806916c406c2b49, type: 3}
+    - {fileID: 8300000, guid: c7cfc2f40b73f1a47b6d0fa89a5499a6, type: 3}
+    - {fileID: 8300000, guid: 932d41baf5ad8a84f9d2d12e5d764573, type: 3}
+    - {fileID: 8300000, guid: d670e4a3af06e2e48a7a39d427534c1d, type: 3}
+    - {fileID: 8300000, guid: 712a193bb64495e4686bdedd8c423b90, type: 3}
+    - {fileID: 8300000, guid: 243c46c96de89ce4a8da6ce47fa4507d, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    randStartPos: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - audioType: 2
+    name: bigHitCombo
+    clips:
+    - {fileID: 8300000, guid: 3d39e4a983a060b46b3191634bee05b9, type: 3}
+    - {fileID: 8300000, guid: 1c4d074707f257d41be0da4209d74b46, type: 3}
+    - {fileID: 8300000, guid: 93cb96e358ff6c14d920b3ba7916066f, type: 3}
+    - {fileID: 8300000, guid: 17e264870be08204a82e02b5ade25d19, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    randStartPos: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - audioType: 2
+    name: bigHitDropWeapon
+    clips:
+    - {fileID: 8300000, guid: 3d39e4a983a060b46b3191634bee05b9, type: 3}
+    - {fileID: 8300000, guid: 1c4d074707f257d41be0da4209d74b46, type: 3}
+    - {fileID: 8300000, guid: 93cb96e358ff6c14d920b3ba7916066f, type: 3}
+    - {fileID: 8300000, guid: c5901895469e82741858675b38f04070, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    randStartPos: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - audioType: 2
+    name: bigHitSuplex
+    clips:
+    - {fileID: 8300000, guid: 83d0f21bd780dd1439af9cd90d9fbcc6, type: 3}
+    - {fileID: 8300000, guid: 93cb96e358ff6c14d920b3ba7916066f, type: 3}
+    - {fileID: 8300000, guid: ecf44701f76d9f545af55c2cd9cc2db1, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    randStartPos: 0
+    playOnAwake: 0
+    source: {fileID: 0}
 --- !u!114 &8454066521746509047
 MonoBehaviour:
   m_ObjectHideFlags: 0

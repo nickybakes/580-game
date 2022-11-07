@@ -56,12 +56,13 @@ MonoBehaviour:
     type: 2}
   sounds:
   - audioType: 2
-    name: exhibition
+    name: VO_Exhibition
     clips:
     - {fileID: 8300000, guid: 906f04367f4257f49be231309b4af50a, type: 3}
     volume: 1
     pitch: 1
     loop: 0
+    randStartPos: 0
     playOnAwake: 1
     source: {fileID: 0}
   - audioType: 3
@@ -71,6 +72,7 @@ MonoBehaviour:
     volume: 0.5
     pitch: 1
     loop: 1
+    randStartPos: 0
     playOnAwake: 1
     source: {fileID: 0}
   - audioType: 1
@@ -80,6 +82,7 @@ MonoBehaviour:
     volume: 1
     pitch: 1
     loop: 0
+    randStartPos: 0
     playOnAwake: 0
     source: {fileID: 0}
   - audioType: 1
@@ -89,6 +92,7 @@ MonoBehaviour:
     volume: 1
     pitch: 1
     loop: 0
+    randStartPos: 0
     playOnAwake: 0
     source: {fileID: 0}
 --- !u!114 &8454066521746509047

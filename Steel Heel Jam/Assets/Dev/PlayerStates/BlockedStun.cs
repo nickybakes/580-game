@@ -23,4 +23,12 @@ public class BlockedStun : BasicState
 
         stateToChangeTo = new Idle();
     }
+
+    public override void OnEnterThisState(BasicState prevState, PlayerStatus status)
+    {
+        base.OnEnterThisState(prevState, status);
+
+        // Play VO line for player who blocked.
+        AudioManager.aud.Play("block");
+    }
 }

@@ -384,6 +384,9 @@ public class PlayerStatus : MonoBehaviour
         {
             combat.DropWeapon();
             ReduceMaxStamina(damage);
+
+            // For now, bigHit sounds will coincide with dropping a weapon (as an audio queue)
+            AudioManager.aud.Play("bigHitDropWeapon");
         }
 
         combat.ActedRecently = true;
@@ -451,6 +454,10 @@ public class PlayerStatus : MonoBehaviour
                 AudioManager.aud.Play("orchestraHitShort", combo, combo);
             if (combo == attackingPlayerStatus.combat.weaponState.maxComboCount)
             {
+                // If the full combo does a certain amount of knockback, plays VO line.
+                if (knockback > 7)
+                    AudioManager.aud.Play("bigHitCombo");
+
                 AudioManager.aud.Play("orchestraHitLong");
                 CameraManager.cam.ShakeCamera(.2f);
             }
