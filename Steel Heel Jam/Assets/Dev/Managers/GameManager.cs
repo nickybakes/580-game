@@ -231,7 +231,7 @@ public class GameManager : MonoBehaviour
         ringScript.UpdateRingShaderProperties();
 
         // Resize ring to a diameter of 10 units in 2-ish minutes
-        ringScript.ResizeRing(10, maxGameTime);
+        ringScript.ResizeRing(10, 5);
     }
 
     public void SpawnSpotlight()
