@@ -72,6 +72,16 @@ public class SuplexDuration : BasicState
         AudioManager.aud.Play("punch", vol);
         AudioManager.aud.Play("landing", vol / 2);
         AudioManager.aud.Play("orchestraHitLong");
+
+        GameObject decal = VisualsManager.SpawnDecal(DecalName.Crack_01, status.transform.position);
+
+        float scale = Mathf.Clamp((-status.movement.velocity.y - 36f) / 53f, .3f, 1);
+        decal.transform.localScale = new Vector3(scale, scale, 1);
+
+        GameObject particle = VisualsManager.SpawnParticle(ParticleName.AirAttackLand_01, status.transform.position);
+
+        float scale2 = Mathf.Clamp((-status.movement.velocity.y - 39f) / 53f, .5f, 2f);
+        particle.transform.localScale = new Vector3(scale2, scale2, scale2);
     }
 
     // Give initial arc direction.
