@@ -49,10 +49,10 @@ public class PlayerCombat : MonoBehaviour
                 return true;
             return false;
         }
-
         set
         {
-            if(value){
+            if (value)
+            {
                 recentActionCooldown = recentActionCooldownMax;
             }
             else
@@ -337,6 +337,9 @@ public class PlayerCombat : MonoBehaviour
         equippedItem.transform.localRotation = Quaternion.identity;
         equippedItem.transform.parent = null;
         equippedItem.SetActive(true);
+
+        ItemTrajectory itemTrajectory = equippedItem.GetComponent<ItemTrajectory>();
+        itemTrajectory.despawnTimerActive = true;
 
         equippedItem = null;
         if (_status.playerHeader)

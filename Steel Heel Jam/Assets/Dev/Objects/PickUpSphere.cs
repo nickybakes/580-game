@@ -106,8 +106,9 @@ public class PickUpSphere : MonoBehaviour
         // Make object inactive and a child of the player
         g.transform.SetParent(playerStatus.transform);
         g.transform.position = pickUpLocation.transform.position;
-        g.GetComponent<ItemTrajectory>().despawnTimerActive = false;
-        g.GetComponent<ItemTrajectory>().despawnTimer = 10f;
+        ItemTrajectory itemTrajectory = g.GetComponent<ItemTrajectory>();
+        itemTrajectory.despawnTimerActive = false;
+        itemTrajectory.despawnTimer = 10f;
 
         g.SetActive(false);
         playerCombat.equippedItem = g;

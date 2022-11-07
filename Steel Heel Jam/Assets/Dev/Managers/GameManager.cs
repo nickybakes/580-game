@@ -184,8 +184,7 @@ public class GameManager : MonoBehaviour
 
     public void EliminatePlayer(PlayerStatus status)
     {
-        status.eliminated = true;
-        status.SetPlayerStateImmediately(new Eliminated());
+        status.waitingToBeEliminated = true;
         status.combat.DropWeapon();
 
         if (status.playerLastHitBy != null)
@@ -198,18 +197,10 @@ public class GameManager : MonoBehaviour
         eliminatedPlayerStatuses.Add(status);
         status.timeOfEliminiation = gameTime;
         hudManager.RemoveHeader(status);
-        // status.playerHeader = null;
 
         status.transform.GetChild((int)PlayerChild.GrabHitbox).gameObject.SetActive(false);
         status.transform.GetChild((int)PlayerChild.PickUpSphere).gameObject.SetActive(false);
         status.transform.GetChild((int)PlayerChild.RingDecal).gameObject.SetActive(false);
-
-        //if (status.isHeel)
-        //{
-        //    heelSpotlightScript.gameObject.transform.position = new Vector3(status.gameObject.transform.position.x, heelSpotlightScript.gameObject.transform.position.y, status.gameObject.transform.position.z);
-
-        //    heelSpotlightScript.gameObject.SetActive(true);
-        //}
 
         if (alivePlayerStatuses.Count == 1)
             gameWon = true;

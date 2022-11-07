@@ -264,7 +264,8 @@ public class PlayerStatus : MonoBehaviour
 
         if (!eliminated && waitingToBeEliminated && !(currentPlayerState is Knockback || currentPlayerState is ImpactStun))
         {
-            GameManager.game.EliminatePlayer(this);
+            eliminated = true;
+            SetPlayerStateImmediately(new Eliminated());
         }
 
         if (isHeel)
@@ -552,7 +553,7 @@ public class PlayerStatus : MonoBehaviour
 
         if (!eliminated && stamina == 0 && isOOB)
         {
-            waitingToBeEliminated = true;
+            GameManager.game.EliminatePlayer(this);
         }
     }
 
