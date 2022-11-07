@@ -17,6 +17,8 @@ public enum VisualChild
 public class PlayerVisuals
 {
 
+    private static GameObject[] visualChildren;
+
     private PlayerStatus status;
 
     private Transform tr;
@@ -36,7 +38,8 @@ public class PlayerVisuals
     private GameObject recoverySphere;
     private GameObject knockbackSphere;
     private GameObject attackVisual;
-    private int currentAttackParticle;
+    private AttackParticle currentAttackParticle = AttackParticle.LeftHook;
+    private VisualChild currentVisual = VisualChild.Block;
 
     public PlayerVisuals(PlayerStatus _status, Transform _tr)
     {
@@ -56,6 +59,9 @@ public class PlayerVisuals
         recoverySphere = tr.GetChild((int)PlayerChild.Visuals).GetChild((int)VisualChild.Recovery).gameObject;
         knockbackSphere = tr.GetChild((int)PlayerChild.Visuals).GetChild((int)VisualChild.Flexing).gameObject;
         attackVisual = tr.GetChild((int)PlayerChild.Visuals).GetChild((int)VisualChild.Attack).gameObject;
+
+        if (visualChildren == null)
+            visualChildren = new GameObject[] { blockSphere, dodgeRollSphere, stunSphere, recoverySphere, knockbackSphere, attackVisual };
     }
 
     /// <summary>
@@ -130,76 +136,21 @@ public class PlayerVisuals
         modelMeshRenderer.material.SetFloat("_I_Frames_Blink", 0);
     }
 
-    public void SetAttackParticle(int index)
+    public void SetAttackParticle(AttackParticle particle)
     {
-        attackVisual.transform.GetChild(currentAttackParticle).gameObject.SetActive(false);
-        attackVisual.transform.GetChild(index).gameObject.SetActive(true);
-        currentAttackParticle = index;
+        attackVisual.transform.GetChild((int)currentAttackParticle).gameObject.SetActive(false);
+        attackVisual.transform.GetChild((int)particle).gameObject.SetActive(true);
+        currentAttackParticle = particle;
     }
 
     public void EnableVisual(VisualChild vc)
     {
-        ClearAll();
-        switch (vc)
+        visualChildren[(int)currentVisual].SetActive(false);
+        if (vc != VisualChild.None)
         {
-            case (VisualChild.Block):
-                Block();
-                break;
-            case (VisualChild.DodgeRoll):
-                DodgeRoll();
-                break;
-            case (VisualChild.Stun):
-                Stun();
-                break;
-            case (VisualChild.Flexing):
-                Knockback();
-                break;
-            case (VisualChild.Recovery):
-                Recovery();
-                break;
-            case (VisualChild.Attack):
-                AttackVisual();
-                break;
+            visualChildren[(int)vc].SetActive(true);
+            currentVisual = vc;
         }
-    }
 
-    private void ClearAll()
-    {
-        blockSphere.SetActive(false);
-        dodgeRollSphere.SetActive(false);
-        stunSphere.SetActive(false);
-        recoverySphere.SetActive(false);
-        knockbackSphere.SetActive(false);
-        attackVisual.SetActive(false);
-    }
-
-    private void Block()
-    {
-        blockSphere.SetActive(true);
-    }
-
-    private void DodgeRoll()
-    {
-        dodgeRollSphere.SetActive(true);
-    }
-
-    private void Stun()
-    {
-        stunSphere.SetActive(true);
-    }
-
-    private void Recovery()
-    {
-        recoverySphere.SetActive(true);
-    }
-
-    private void Knockback()
-    {
-        knockbackSphere.SetActive(true);
-    }
-
-    private void AttackVisual()
-    {
-        attackVisual.SetActive(true);
     }
 }

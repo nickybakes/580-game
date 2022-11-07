@@ -26,7 +26,8 @@ public class SteelChair : DefaultState
                 1.0f, // Recovery Multiplier
                 0.5f,  // Forward Speed Multiplier
                 AttackAnimation.Stab_01,
-                AttackDirection.Horizontal
+                AttackDirection.Horizontal,
+                _attackParticle: AttackParticle.LeftHook
                 ),
             new Attack( // *** 2nd Hit ***
                 1.0f, // Damage Multiplier

@@ -21,6 +21,16 @@ public enum AttackAnimation
     SmashHeavy_01
 }
 
+public enum AttackParticle
+{
+    LeftHook,
+    RightHook,
+    Smash,
+    Thrust,
+    AirAttack,
+    AnimationDefault = -1
+}
+
 public enum AttackDirection
 {
     Horizontal = 0,
@@ -42,6 +52,7 @@ public struct Attack
     public float forwardSpeedModifierMultiplier;
     public AttackAnimation animation;
     public AttackDirection attackDirection;
+    public AttackParticle attackParticle;
 
     /// <summary>
     /// Creates an instance of an Attack struct.
@@ -58,7 +69,8 @@ public struct Attack
         float _recoveryMultiplier = 1.0f,
         float _forwardSpeedModifierMultiplier = 1.0f,
         AttackAnimation _animation = AttackAnimation.Punch_03,
-        AttackDirection _attackDirection = AttackDirection.Forward
+        AttackDirection _attackDirection = AttackDirection.Forward,
+        AttackParticle _attackParticle = AttackParticle.AnimationDefault
         )
     {
         damageMultiplier = _damageMultiplier;
@@ -73,6 +85,7 @@ public struct Attack
         forwardSpeedModifierMultiplier = _forwardSpeedModifierMultiplier;
         attackDirection = _attackDirection;
         animation = _animation;
+        attackParticle = _attackParticle;
     }
 }
 
@@ -81,6 +94,8 @@ public struct Attack
 /// </summary>
 public class DefaultState
 {
+    public static AttackParticle[] defaultAttackParticles = {AttackParticle.LeftHook, AttackParticle.RightHook, AttackParticle.LeftHook, AttackParticle.LeftHook, AttackParticle.RightHook, AttackParticle.Thrust, AttackParticle.LeftHook, AttackParticle.Smash};
+
     //**********
     // Fields
     //**********

@@ -254,6 +254,15 @@ public class PlayerCombat : MonoBehaviour
         _status.CurrentPlayerState.stateToChangeTo.stateToChangeTo.timeToChangeState =
             weaponState.Recovery;
 
+        if (weaponState.currentAttack.attackParticle == AttackParticle.AnimationDefault)
+        {
+            _status.visuals.SetAttackParticle(DefaultState.defaultAttackParticles[(int)weaponState.currentAttack.animation]);
+        }
+        else
+        {
+            _status.visuals.SetAttackParticle(weaponState.currentAttack.attackParticle);
+        }
+
         if (weaponState.currentComboCount == 0)
             _status.movement.SetTheSetForwardDirection();
     }
@@ -266,6 +275,8 @@ public class PlayerCombat : MonoBehaviour
 
         //_status.movement.velocity = Vector3.zero;
         _status.SetPlayerStateImmediately(new AttackAirStartup());
+
+        _status.visuals.SetAttackParticle(AttackParticle.AirAttack);
 
         if (weaponState.currentComboCount == 0)
             _status.movement.SetTheSetForwardDirection();
