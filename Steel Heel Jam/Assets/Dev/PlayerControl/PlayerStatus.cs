@@ -307,11 +307,6 @@ public class PlayerStatus : MonoBehaviour
         }
     }
 
-    public void PrintStuff<T>(T stuff)
-    {
-        print(stuff);
-    }
-
     public void SetPlayerStateImmediately(BasicState state)
     {
         if (eliminated && !(state is Eliminated))
@@ -577,7 +572,7 @@ public class PlayerStatus : MonoBehaviour
         if (playerHeader != null)
             playerHeader.UpdateStaminaMeter();
 
-        if (!eliminated && stamina == 0 && isOOB)
+        if ((!waitingToBeEliminated || !eliminated) && stamina == 0 && isOOB)
         {
             GameManager.game.EliminatePlayer(this);
         }
