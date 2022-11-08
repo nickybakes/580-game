@@ -22,6 +22,7 @@ public class Knockback : BasicState
         updateMovement = true;
         // alternateFriction = true;
         animationState = AnimationState.Knockback;
+        visual = VisualChild.Knockback;
         stateToChangeTo = new Idle();
 
         velocity = _velocity;
