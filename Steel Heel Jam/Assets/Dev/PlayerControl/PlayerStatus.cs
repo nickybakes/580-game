@@ -1,6 +1,4 @@
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem.Controls;
 
 public enum PlayerChild
 {
@@ -99,7 +97,7 @@ public class PlayerStatus : MonoBehaviour
     /// <summary>
     /// The damage to stamina that the player takes every interval while out of bounds.
     /// </summary>
-    [SerializeField] private const float OOBStaminaDamage = 10f;
+    [SerializeField] public const float OOBStaminaDamage = 10f;
 
     /// <summary>
     /// The loss of max stamina that the player accrues every interval while out of bounds.
@@ -146,13 +144,17 @@ public class PlayerStatus : MonoBehaviour
     private int maxBuffs = 2;
     private int buffCount = 0;
 
-    public float plotArmorAdditionalHeal = 4.0f;
+    public float plotArmorAdditionalHeal = 5.0f;
     public float redemptionArcDamageMultiplier = 2.0f;
     public float redemptionArcKnockbackMultiplier = 2.0f;
     public bool canDoubleJump = false;
     public bool isHeel = false;
     public const float heelFireCooldownMax = 10.0f;
     public float heelFireCooldown;
+
+    private float poisonTimeCurrent;
+    private float poisonTimeMax = 7;
+    private float poisonDamageAmountPerSecond = 5;
     // ******************************
 
     private bool iFrames;
@@ -225,6 +227,11 @@ public class PlayerStatus : MonoBehaviour
         }
     }
 
+    public bool IsOOB
+    {
+        get { return isOOB; }
+    }
+
     /// <summary>
     /// Gives you the current moveSpeed of the character (base move speed multiplied by the current state's move speed multiplier)
     /// </summary>
@@ -270,8 +277,8 @@ public class PlayerStatus : MonoBehaviour
 
         if (!eliminated && waitingToBeEliminated && !(currentPlayerState is Knockback || currentPlayerState is ImpactStun))
         {
-            eliminated = true;
             SetPlayerStateImmediately(new Eliminated());
+            eliminated = true;
         }
 
         if (isHeel)
@@ -315,14 +322,24 @@ public class PlayerStatus : MonoBehaviour
 
     public void SetPlayerStateImmediately(BasicState state)
     {
-        if (eliminated && !(state is Eliminated))
+        if (eliminated)
             return;
+
+        if (waitingToBeEliminated && !eliminated && !(state is Eliminated))
+        {
+            state = new Eliminated();
+            eliminated = true;
+        }
+
+
 
         currentPlayerState.OnExitThisState(state, this);
         state.OnEnterThisState(currentPlayerState, this);
 
         visuals.SetAnimationState(state.animationState);
         visuals.EnableVisual(state.visual);
+
+        // Debug.Log(currentPlayerState + ", " + state);
 
         currentPlayerState = state;
     }
@@ -399,7 +416,7 @@ public class PlayerStatus : MonoBehaviour
 
     public void GetHitByElbowDrop(Vector3 hitboxPos, Vector3 collisionPos, float damage, float knockback, float knockbackHeight, float timeInKnockback, PlayerStatus attackingPlayerStatus, bool unblockable)
     {
-        if (eliminated)
+        if (eliminated || waitingToBeEliminated)
             return;
 
         if (!unblockable && IsBlocking)
@@ -428,7 +445,7 @@ public class PlayerStatus : MonoBehaviour
 
     public void GetHitByExplosive(Vector3 hitboxPos, Vector3 collisionPos, float damage, float knockback, float knockbackHeight, float timeInKnockback, PlayerStatus attackingPlayerStatus)
     {
-        if (eliminated)
+        if (eliminated || waitingToBeEliminated)
             return;
 
         if (!currentPlayerState.isInvincibleToAttacks && !iFrames)
@@ -465,7 +482,7 @@ public class PlayerStatus : MonoBehaviour
             if (attackingPlayerStatus.buffs[(int)Buff.RedemptionArc] == true && attackingPlayerStatus.combat.weaponState.currentComboCount >= attackingPlayerStatus.combat.weaponState.maxComboCount)
             {
                 // Spawn explosion here
-                GameManager.game.SpawnExplosion(attackingPlayerStatus.combat.weaponState.hitbox.transform.position, attackingPlayerStatus);
+                GameManager.game.SpawnExplosion(attackingPlayerStatus.combat.weaponState.hitbox.transform.position, attackingPlayerStatus, false);
             }
 
             // Plays orchestra hits for combo.

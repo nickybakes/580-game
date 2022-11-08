@@ -45,7 +45,14 @@ public class Flexing : BasicState
         }
         else if (status.spotlight == 0)
         {
-            status.IncreaseStamina((DefaultRestStaminaRegen + (status.buffs[(int)Buff.PlotArmor] == true ? status.plotArmorAdditionalHeal : 0)) * Time.deltaTime);
+            if (status.IsOOB)
+            {
+                status.IncreaseStamina(Mathf.Min((DefaultRestStaminaRegen + (status.buffs[(int)Buff.PlotArmor] == true ? status.plotArmorAdditionalHeal : 0)), PlayerStatus.OOBStaminaDamage/2) * Time.deltaTime);
+            }
+            else
+            {
+                status.IncreaseStamina((DefaultRestStaminaRegen + (status.buffs[(int)Buff.PlotArmor] == true ? status.plotArmorAdditionalHeal : 0)) * Time.deltaTime);
+            }
         }
     }
 

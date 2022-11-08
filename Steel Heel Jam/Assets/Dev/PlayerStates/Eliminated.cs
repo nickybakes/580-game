@@ -16,4 +16,10 @@ public class Eliminated : BasicState
 
         animationState = AnimationState.Eliminated;
     }
+
+    public override void Update(PlayerStatus status)
+    {
+        base.Update(status);
+        status.visuals.SetAnimationState(AnimationState.Eliminated);
+    }
 }

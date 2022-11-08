@@ -14,8 +14,8 @@ public class Explosion : MonoBehaviour
     [SerializeField] private float knockbackHeight;
     [SerializeField] private float timeInKnockback;
 
-    public PlayerStatus playerStatus;
-    public int playerNumber;
+    private PlayerStatus ownerStatus;
+    private int playerNumber = -1;
 
     private void Awake()
     {
@@ -27,6 +27,17 @@ public class Explosion : MonoBehaviour
     {
         explosionDuration += Time.deltaTime;
         if (explosionDuration > explosionDurationMax) Destroy(gameObject);
+    }
+
+    public void Init(PlayerStatus _ownerStatus, bool damageOwnerToo)
+    {
+        ownerStatus = _ownerStatus;
+        //spawn the explosion particle (Nick)
+        if (!damageOwnerToo)
+        {
+            //set its color to a player specifically if its not gonna damage them (Nick)
+            playerNumber = _ownerStatus.playerNumber;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -44,7 +55,7 @@ public class Explosion : MonoBehaviour
                 knockback,
                 knockbackHeight,
                 timeInKnockback,
-                playerStatus
+                ownerStatus
                 );
 
             print("BOOM");

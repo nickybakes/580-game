@@ -264,19 +264,18 @@ public class GameManager : MonoBehaviour
         spotlightScript.DecideWanderDirection();
         spotlight.SetActive(true);
 
-        HUDManager.CreateSpotlightAlert(spotlight.transform);
+        HUDManager.CreateSpotlightAlert(spotlight.transform.GetChild(4));
 
         spotlightOffScreenIndicator = HUDManager.CreateSpotlightOffScreenIndicator(spotlight.transform.GetChild(4));
         // VO
         AudioManager.aud.Play("spotlight");
     }
 
-    public void SpawnExplosion(Vector3 position, PlayerStatus ownerStatus)
+    public void SpawnExplosion(Vector3 position, PlayerStatus ownerStatus, bool damagerOwnerToo)
     {
         GameObject explosionInstance = Instantiate(explosion, position, Quaternion.identity);
         Explosion explosionScript = explosionInstance.GetComponent<Explosion>();
-        explosionScript.playerStatus = ownerStatus;
-        explosionScript.playerNumber = ownerStatus.playerNumber;
+        explosionScript.Init(ownerStatus, damagerOwnerToo);
     }
 
     public void DespawnSpotlight()
