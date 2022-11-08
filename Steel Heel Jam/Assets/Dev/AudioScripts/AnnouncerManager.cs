@@ -2,20 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 0 is top priority.
+/// </summary>
+public enum Priority
+{
+    HeelFire,
+    Buff,
+    Elimination,
+    SpotlightSpawn,
+    Block,
+    ElbowDrop,
+    Damage
+}
+
+
 public class AnnouncerManager : MonoBehaviour
 {
-    /// <summary>
-    /// 0 is top priority.
-    /// </summary>
-    enum Priority
+
+    public static AnnouncerManager anm;
+
+    private void Start()
     {
-        HeelFire,
-        Buff,
-        Elimination,
-        SpotlightSpawn,
-        Block,
-        ElbowDrop,
-        Damage
+        anm = this;    
     }
 
     // Use to see if the line to play has priority.
@@ -26,5 +35,17 @@ public class AnnouncerManager : MonoBehaviour
     // If no previous clip, set to -1.
     private int previousClip = -1;
 
-    
+    public static void PlayLine(Priority p)
+    {
+        anm.Play(p);
+    }
+
+    private void Play(Priority p)
+    {
+        if (currentLine == null)
+        {
+
+        }
+    }
+
 }

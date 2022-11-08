@@ -406,6 +406,7 @@ public class PlayerStatus : MonoBehaviour
             attackBlocked = true;
 
             AudioManager.aud.Play("blockedPunch");
+            AnnouncerManager.PlayLine(Priority.Block);
             return;
         }
 
