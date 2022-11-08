@@ -326,7 +326,7 @@ public class PlayerStatus : MonoBehaviour
         visuals.SetAnimationState(state);
     }
 
-    private void GetHit(Vector3 hitDirection, float damage, float knockback, float knockbackHeight, float timeInKnockback, PlayerStatus attackingPlayerStatus, bool moveVictimWithAttacker, bool forceActivateIFrames, bool isPoisonous = false)
+    private void GetHit(Vector3 hitDirection, float damage, float knockback, float knockbackHeight, float timeInKnockback, PlayerStatus attackingPlayerStatus, bool moveVictimWithAttacker, bool forceActivateIFrames)
     {
         if (attackingPlayerStatus != null)
             playerLastHitBy = attackingPlayerStatus;
@@ -391,7 +391,7 @@ public class PlayerStatus : MonoBehaviour
 
     }
 
-    public void GetHitByElbowDrop(Vector3 hitboxPos, Vector3 collisionPos, float damage, float knockback, float knockbackHeight, float timeInKnockback, PlayerStatus attackingPlayerStatus, bool unblockable, bool isPoisonous = false)
+    public void GetHitByElbowDrop(Vector3 hitboxPos, Vector3 collisionPos, float damage, float knockback, float knockbackHeight, float timeInKnockback, PlayerStatus attackingPlayerStatus, bool unblockable)
     {
         if (eliminated)
             return;
@@ -413,14 +413,14 @@ public class PlayerStatus : MonoBehaviour
         {
             Vector3 direction = transform.position - attackingPlayerStatus.transform.position;
             direction.y = 0;
-            GetHit(direction.normalized, damage, knockback, knockbackHeight, timeInKnockback, attackingPlayerStatus, false, true, isPoisonous);
+            GetHit(direction.normalized, damage, knockback, knockbackHeight, timeInKnockback, attackingPlayerStatus, false, true);
 
             //play crunch sound
             AudioManager.aud.Play("punch", 0.8f, 1.2f);
         }
     }
 
-    public void GetHitByExplosive(Vector3 hitboxPos, Vector3 collisionPos, float damage, float knockback, float knockbackHeight, float timeInKnockback, PlayerStatus attackingPlayerStatus, bool isPoisonous = false)
+    public void GetHitByExplosive(Vector3 hitboxPos, Vector3 collisionPos, float damage, float knockback, float knockbackHeight, float timeInKnockback, PlayerStatus attackingPlayerStatus)
     {
         if (eliminated)
             return;
@@ -429,12 +429,12 @@ public class PlayerStatus : MonoBehaviour
         {
             Vector3 direction = transform.position - collisionPos;
             direction.y = 0;
-            GetHit(direction.normalized, damage, knockback, knockbackHeight, timeInKnockback, attackingPlayerStatus, false, true, isPoisonous);
+            GetHit(direction.normalized, damage, knockback, knockbackHeight, timeInKnockback, attackingPlayerStatus, false, true);
         }
     }
 
 
-    public void GetHitByMelee(Vector3 hitboxPos, Vector3 collisionPos, float damage, float knockback, float knockbackHeight, float timeInKnockback, PlayerStatus attackingPlayerStatus, bool isPoisonous = false)
+    public void GetHitByMelee(Vector3 hitboxPos, Vector3 collisionPos, float damage, float knockback, float knockbackHeight, float timeInKnockback, PlayerStatus attackingPlayerStatus)
     {
         if (eliminated || waitingToBeEliminated)
             return;
@@ -454,7 +454,13 @@ public class PlayerStatus : MonoBehaviour
 
         if (!currentPlayerState.isInvincibleToAttacks && !iFrames)
         {
-            GetHit(attackingPlayerStatus.transform.forward, damage, knockback, knockbackHeight, timeInKnockback, attackingPlayerStatus, true, false, isPoisonous);
+            GetHit(attackingPlayerStatus.transform.forward, damage, knockback, knockbackHeight, timeInKnockback, attackingPlayerStatus, true, false);
+
+            if (attackingPlayerStatus.buffs[(int)Buff.RedemptionArc] == true && attackingPlayerStatus.combat.weaponState.currentComboCount >= attackingPlayerStatus.combat.weaponState.maxComboCount)
+            {
+                // Spawn explosion here
+                GameManager.game.SpawnExplosion(attackingPlayerStatus.combat.weaponState.hitbox.transform.position, attackingPlayerStatus);
+            }
 
             // Plays orchestra hits for combo.
             int combo = attackingPlayerStatus.combat.weaponState.currentComboCount;

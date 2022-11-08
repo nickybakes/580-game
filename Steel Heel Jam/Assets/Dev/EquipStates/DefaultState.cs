@@ -298,8 +298,6 @@ public class DefaultState
     public virtual void ForceEndAttack()
     {
         hitbox.SetActive(false);
-        hitboxScript.isExplosive = false;
-        hitboxScript.isPoisonous = false;
     }
 
     /// <summary>
