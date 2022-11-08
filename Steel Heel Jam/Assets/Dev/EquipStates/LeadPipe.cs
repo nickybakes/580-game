@@ -45,5 +45,6 @@ public class LeadPipe : DefaultState
         currentAttack = combo[0];
 
         InitializeAirAttack();
+        airAttack.radiusMultiplier = 1;
     }
 }

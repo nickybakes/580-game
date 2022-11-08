@@ -53,9 +53,18 @@ MonoBehaviour:
     type: 3}
   hudManager: {fileID: 0}
   hudCountdown: {fileID: 0}
+  itemManager: {fileID: 0}
   cameraManager: {fileID: 0}
+  ringScript: {fileID: 0}
   allPlayerStatuses: []
   alivePlayerStatuses: []
   eliminatedPlayerStatuses: []
   countdownTime: 3
   gameTime: 0
+  maxGameTime: 154
+  gameWon: 0
+  explosion: {fileID: 9109797555793773181, guid: e0e66c15a1cf695419fb75af07f21dc2,
+    type: 3}
+  spotlight: {fileID: 0}
+  spotlightRespawnCooldownMax: 0
+  spotlightRespawnCooldown: 0

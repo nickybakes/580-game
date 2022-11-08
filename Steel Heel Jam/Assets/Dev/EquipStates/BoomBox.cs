@@ -47,5 +47,6 @@ public class BoomBox : DefaultState
         currentAttack = combo[0];
 
         InitializeAirAttack();
+        airAttack.radiusMultiplier = 2.5f;
     }
 }
