@@ -131,7 +131,7 @@ public class DefaultState
     public float staminaCost = 5f;
 
     [SerializeField] public GameObject hitbox;
-    private Hitbox hitboxScript;
+    public Hitbox hitboxScript;
     private CapsuleCollider hitboxCollider;
 
     /// <summary>
@@ -298,6 +298,8 @@ public class DefaultState
     public virtual void ForceEndAttack()
     {
         hitbox.SetActive(false);
+        hitboxScript.isExplosive = false;
+        hitboxScript.isPoisonous = false;
     }
 
     /// <summary>

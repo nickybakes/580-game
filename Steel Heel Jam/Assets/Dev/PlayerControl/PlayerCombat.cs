@@ -229,10 +229,17 @@ public class PlayerCombat : MonoBehaviour
 
         weaponState.currentAttack = weaponState.combo[weaponState.currentComboCount];
 
-        if (
-            weaponState.currentComboCount >= weaponState.maxComboCount
-            && _status.buffs[(int)Buff.TheStink]
-        ) { }
+        if (weaponState.currentComboCount >= weaponState.maxComboCount
+            && _status.buffs[(int)Buff.TheStink])
+        {
+            weaponState.hitboxScript.isPoisonous = true;
+        }
+
+        if (weaponState.currentComboCount >= weaponState.maxComboCount
+            && _status.buffs[(int)Buff.RedemptionArc])
+        {
+            weaponState.hitboxScript.isExplosive = true;
+        }
 
         attackState.animationState = DefaultState.GetAttackAnimation(
             weaponState.currentAttack.animation,

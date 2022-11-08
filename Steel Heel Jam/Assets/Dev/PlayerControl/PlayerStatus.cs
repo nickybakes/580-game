@@ -331,7 +331,7 @@ public class PlayerStatus : MonoBehaviour
         visuals.SetAnimationState(state);
     }
 
-    private void GetHit(Vector3 hitDirection, float damage, float knockback, float knockbackHeight, float timeInKnockback, PlayerStatus attackingPlayerStatus, bool moveVictimWithAttacker, bool forceActivateIFrames)
+    private void GetHit(Vector3 hitDirection, float damage, float knockback, float knockbackHeight, float timeInKnockback, PlayerStatus attackingPlayerStatus, bool moveVictimWithAttacker, bool forceActivateIFrames, bool isPoisonous = false)
     {
         if (attackingPlayerStatus != null)
             playerLastHitBy = attackingPlayerStatus;
@@ -418,7 +418,7 @@ public class PlayerStatus : MonoBehaviour
         {
             Vector3 direction = transform.position - attackingPlayerStatus.transform.position;
             direction.y = 0;
-            GetHit(direction.normalized, damage, knockback, knockbackHeight, timeInKnockback, attackingPlayerStatus, false, true);
+            GetHit(direction.normalized, damage, knockback, knockbackHeight, timeInKnockback, attackingPlayerStatus, false, true, isPoisonous);
 
             //play crunch sound
             AudioManager.aud.Play("punch", 0.8f, 1.2f);
@@ -434,7 +434,7 @@ public class PlayerStatus : MonoBehaviour
         {
             Vector3 direction = transform.position - collisionPos;
             direction.y = 0;
-            GetHit(direction.normalized, damage, knockback, knockbackHeight, timeInKnockback, attackingPlayerStatus, false, true);
+            GetHit(direction.normalized, damage, knockback, knockbackHeight, timeInKnockback, attackingPlayerStatus, false, true, isPoisonous);
         }
     }
 
@@ -459,7 +459,7 @@ public class PlayerStatus : MonoBehaviour
 
         if (!currentPlayerState.isInvincibleToAttacks && !iFrames)
         {
-            GetHit(attackingPlayerStatus.transform.forward, damage, knockback, knockbackHeight, timeInKnockback, attackingPlayerStatus, true, false);
+            GetHit(attackingPlayerStatus.transform.forward, damage, knockback, knockbackHeight, timeInKnockback, attackingPlayerStatus, true, false, isPoisonous);
 
             // Plays orchestra hits for combo.
             int combo = attackingPlayerStatus.combat.weaponState.currentComboCount;
