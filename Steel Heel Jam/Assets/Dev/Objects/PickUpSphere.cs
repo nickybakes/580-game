@@ -24,7 +24,7 @@ public class PickUpSphere : MonoBehaviour
     {
         for (int i = 0; i < itemsWithinBounds.Count; i++)
         {
-            if (!itemsWithinBounds[i].activeSelf)
+            if (itemsWithinBounds[i] == null || !itemsWithinBounds[i].activeSelf)
             {
                 itemsWithinBounds.RemoveAt(i);
                 if (itemsWithinBounds.Count == 0 && playerStatus.playerHeader)

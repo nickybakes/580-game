@@ -381,7 +381,7 @@ public class PlayerStatus : MonoBehaviour
             IFrames = true;
         }
 
-        if (totalDamageTaken > 100f && recentDamageTaken > 30f)
+        if (totalDamageTaken > 175f && recentDamageTaken > 40f)
         {
             combat.DropWeapon();
             ReduceMaxStamina(damage);
