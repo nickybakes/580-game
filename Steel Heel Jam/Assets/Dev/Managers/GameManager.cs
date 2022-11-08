@@ -44,6 +44,8 @@ public class GameManager : MonoBehaviour
     //public GameObject heelSpotlightPrefab;
     //public HeelSpotlight heelSpotlightScript;
 
+    [SerializeField] private GameObject explosion;
+
     public GameObject spotlight;
     private BuffSpotlight spotlightScript;
     private GameObject spotlightOffScreenIndicator;
@@ -267,6 +269,14 @@ public class GameManager : MonoBehaviour
         spotlightOffScreenIndicator = HUDManager.CreateSpotlightOffScreenIndicator(spotlight.transform.GetChild(4));
         // VO
         AudioManager.aud.Play("spotlight");
+    }
+
+    public void SpawnExplosion(Vector3 position, PlayerStatus ownerStatus)
+    {
+        GameObject explosionInstance = Instantiate(explosion, position, Quaternion.identity);
+        Explosion explosionScript = explosionInstance.GetComponent<Explosion>();
+        explosionScript.playerStatus = ownerStatus;
+        explosionScript.playerNumber = ownerStatus.playerNumber;
     }
 
     public void DespawnSpotlight()

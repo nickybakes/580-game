@@ -14,8 +14,6 @@ public class Hitbox : MonoBehaviour
     public float radius;
     public float height;
     public float duration;
-    public bool isExplosive;
-    public bool isPoisonous;
     public int playerNumber;
 
     public bool airAttack;
@@ -71,30 +69,15 @@ public class Hitbox : MonoBehaviour
             }
             else
             {
-                if (!isExplosive)
-                {
-                    player.GetHitByMelee(
-                        playerStatus.transform.position,
-                        player.transform.position,
-                        damage,
-                        knockback,
-                        knockbackHeight,
-                        timeInKnockback,
-                        playerStatus
-                        );
-                }
-                else
-                {
-                    player.GetHitByExplosive(
-                        playerStatus.transform.position,
-                        player.transform.position,
-                        damage,
-                        knockback,
-                        knockbackHeight,
-                        timeInKnockback,
-                        playerStatus
-                        );
-                }
+                player.GetHitByMelee(
+                    playerStatus.transform.position,
+                    player.transform.position,
+                    damage,
+                    knockback,
+                    knockbackHeight,
+                    timeInKnockback,
+                    playerStatus
+                    );
             }
         }
     }
