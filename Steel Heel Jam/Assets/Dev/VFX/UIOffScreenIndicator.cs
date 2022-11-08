@@ -18,8 +18,6 @@ public class UIOffScreenIndicator : MonoBehaviour
 
     private RectTransform canvasRect;
 
-    private float aspectRatio = 16f / 9f;
-
     void Start()
     {
         transform = gameObject.transform;
@@ -45,10 +43,6 @@ public class UIOffScreenIndicator : MonoBehaviour
                 directionToPoint *= 2;
 
                 Rect rect = canvasRect.rect;
-
-                aspectRatio = rect.width / rect.height;
-
-                directionToPoint.y *= aspectRatio;
 
                 directionToPoint.Normalize();
 

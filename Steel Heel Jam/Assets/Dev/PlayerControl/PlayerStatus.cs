@@ -572,7 +572,7 @@ public class PlayerStatus : MonoBehaviour
         if (playerHeader != null)
             playerHeader.UpdateStaminaMeter();
 
-        if ((!waitingToBeEliminated || !eliminated) && stamina == 0 && isOOB)
+        if (!(waitingToBeEliminated || eliminated) && stamina == 0 && isOOB)
         {
             GameManager.game.EliminatePlayer(this);
         }
