@@ -12,6 +12,7 @@ public enum VisualChild
     Recovery = 3,
     Flexing = 4,
     Attack = 5,
+    Knockback = 6,
 }
 
 public class PlayerVisuals
@@ -35,8 +36,10 @@ public class PlayerVisuals
     private GameObject dodgeRollSphere;
     private GameObject stunSphere;
     private GameObject recoverySphere;
-    private GameObject knockbackSphere;
+    private GameObject flexingSphere;
     private GameObject attackVisual;
+    private GameObject knockbackParticle;
+
     private AttackParticle currentAttackParticle = AttackParticle.LeftHook;
     private VisualChild currentVisual = VisualChild.Block;
 
@@ -59,10 +62,11 @@ public class PlayerVisuals
         dodgeRollSphere = tr.GetChild((int)PlayerChild.Visuals).GetChild((int)VisualChild.DodgeRoll).gameObject;
         stunSphere = tr.GetChild((int)PlayerChild.Visuals).GetChild((int)VisualChild.Stun).gameObject;
         recoverySphere = tr.GetChild((int)PlayerChild.Visuals).GetChild((int)VisualChild.Recovery).gameObject;
-        knockbackSphere = tr.GetChild((int)PlayerChild.Visuals).GetChild((int)VisualChild.Flexing).gameObject;
+        flexingSphere = tr.GetChild((int)PlayerChild.Visuals).GetChild((int)VisualChild.Flexing).gameObject;
         attackVisual = tr.GetChild((int)PlayerChild.Visuals).GetChild((int)VisualChild.Attack).gameObject;
+        knockbackParticle = tr.GetChild((int)PlayerChild.Visuals).GetChild((int)VisualChild.Knockback).gameObject;
 
-        visualChildren = new GameObject[] { blockSphere, dodgeRollSphere, stunSphere, recoverySphere, knockbackSphere, attackVisual };
+        visualChildren = new GameObject[] { blockSphere, dodgeRollSphere, stunSphere, recoverySphere, flexingSphere, attackVisual, knockbackParticle};
     }
 
     /// <summary>

@@ -255,9 +255,7 @@ public class GameManager : MonoBehaviour
 
         HUDManager.CreateSpotlightAlert(spotlight.transform);
 
-        spotlightOffScreenIndicator = HUDManager.CreateSpotlightOffScreenIndicator(spotlight.transform);
-
-        // spotlightOffScreenIndicator.
+        spotlightOffScreenIndicator = HUDManager.CreateSpotlightOffScreenIndicator(spotlight.transform.GetChild(4));
     }
 
     public void DespawnSpotlight()

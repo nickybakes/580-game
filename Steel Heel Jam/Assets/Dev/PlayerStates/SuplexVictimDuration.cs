@@ -16,6 +16,7 @@ public class SuplexVictimDuration : BasicState
         countAttackCooldown = false;
         isInvincibleToAttacks = true;
         isInvincibleToRing = true;
+        visual = VisualChild.Knockback;
 
         animationState = AnimationState.SuplexVictimDuration_01;
         stateToChangeTo = new Idle();
