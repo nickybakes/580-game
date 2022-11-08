@@ -9,7 +9,13 @@ public enum PlayerChild
     Visuals = 3,
     PickUpSphere = 4,
     GrabHitbox = 5,
-    RingDecal = 6
+    RingDecal = 6,
+    Particles = 7,
+}
+
+public enum ParticleChild
+{
+    PoisonTrail_01
 }
 
 public enum Buff
