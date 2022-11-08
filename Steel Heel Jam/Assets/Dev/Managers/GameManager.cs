@@ -198,9 +198,10 @@ public class GameManager : MonoBehaviour
             status.playerLastHitBy.totalEliminations++;
             status.playerLastHitBy.IncreaseSpotlightMeter(25.0f);
 
-            // Plays VO line. (only if hit out by another player... walk-out lines as a stretch goal)
-            AudioManager.aud.Play("eliminated");
         }
+
+        // Plays VO line. (only if hit out by another player... walk-out lines as a stretch goal)
+        AudioManager.aud.Play("eliminated");
 
         alivePlayerStatuses.Remove(status);
         eliminatedPlayerStatuses.Add(status);
