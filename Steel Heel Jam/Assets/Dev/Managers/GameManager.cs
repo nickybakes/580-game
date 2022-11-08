@@ -97,7 +97,12 @@ public class GameManager : MonoBehaviour
 
         // Player movement limited by PlayerStatus update().
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
+
+        // Play matchBegin announcer line.
+        AudioManager.aud.Play("matchBegin");
+
+        yield return new WaitForSeconds(0.5f);
 
         countdownDisplay.gameObject.SetActive(false);
     }
@@ -192,6 +197,9 @@ public class GameManager : MonoBehaviour
         {
             status.playerLastHitBy.totalEliminations++;
             status.playerLastHitBy.IncreaseSpotlightMeter(25.0f);
+
+            // Plays VO line. (only if hit out by another player... walk-out lines as a stretch goal)
+            AudioManager.aud.Play("eliminated");
         }
 
         alivePlayerStatuses.Remove(status);
@@ -256,6 +264,8 @@ public class GameManager : MonoBehaviour
         HUDManager.CreateSpotlightAlert(spotlight.transform);
 
         spotlightOffScreenIndicator = HUDManager.CreateSpotlightOffScreenIndicator(spotlight.transform.GetChild(4));
+        // VO
+        AudioManager.aud.Play("spotlight");
     }
 
     public void DespawnSpotlight()
@@ -271,12 +281,4 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    //public void SpawnHeelSpotlight()
-    //{
-    //    GameObject g = Instantiate(heelSpotlightPrefab);
-
-    //    heelSpotlightScript = g.GetComponent<HeelSpotlight>();
-
-
-    //}
 }

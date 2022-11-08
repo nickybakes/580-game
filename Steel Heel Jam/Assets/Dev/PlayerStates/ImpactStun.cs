@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ImpactStun : BasicState
@@ -37,6 +38,17 @@ public class ImpactStun : BasicState
     {
         base.OnEnterThisState(prevState, status);
         status.movement.velocity = Vector3.zero;
+
+        // If the attacking player has hit the ground with their elbow drop, play VO line.
+        if (attackingPlayer.CurrentPlayerState.animationState == AnimationState.AttackAirRecovery_01 ||
+            attackingPlayer.CurrentPlayerState.animationState == AnimationState.AttackAirDuration_01)
+        {
+            // If traveling fast enough downwards, plays VO line.
+            if (-attackingPlayer.movement.velocity.y > 53)
+            {
+                AudioManager.aud.Play("elbowDrop");
+            }
+        }
     }
 
     public override void Update(PlayerStatus status)

@@ -1,6 +1,8 @@
 using UnityEngine.Audio;
 using UnityEngine;
 using System;
+using UnityEditor.Rendering;
+using UnityEngine.Rendering;
 
 public class AudioManager : MonoBehaviour
 {
@@ -77,6 +79,11 @@ public class AudioManager : MonoBehaviour
             Debug.LogWarning("Sound: " + name + " not found!");
             return;
         }
+
+        // VO check for overlap.
+        if (s.audioType == Sound.AudioTypes.VoiceOver && IsPlaying(Sound.AudioTypes.VoiceOver))
+            return;
+
         //chooses from list before playing.
         s.source.clip = s.clips[UnityEngine.Random.Range(0, s.clips.Length)];
 
@@ -98,6 +105,11 @@ public class AudioManager : MonoBehaviour
             Debug.LogWarning("Sound: " + name + " not found!");
             return;
         }
+
+        // VO check for overlap.
+        if (s.audioType == Sound.AudioTypes.VoiceOver && IsPlaying(Sound.AudioTypes.VoiceOver))
+            return;
+
         //chooses from list before playing.
         s.source.clip = s.clips[UnityEngine.Random.Range(0, s.clips.Length)];
         s.source.volume = volume;
@@ -120,6 +132,11 @@ public class AudioManager : MonoBehaviour
             Debug.LogWarning("Sound: " + name + " not found!");
             return;
         }
+
+        // VO check for overlap.
+        if (s.audioType == Sound.AudioTypes.VoiceOver && IsPlaying(Sound.AudioTypes.VoiceOver))
+            return;
+
         //chooses from list before playing.
         s.source.clip = s.clips[UnityEngine.Random.Range(0, s.clips.Length)];
         s.source.pitch = UnityEngine.Random.Range(pitch1, pitch2);
@@ -142,6 +159,11 @@ public class AudioManager : MonoBehaviour
             Debug.LogWarning("Sound: " + name + " not found!");
             return;
         }
+
+        // VO check for overlap.
+        if (s.audioType == Sound.AudioTypes.VoiceOver && IsPlaying(Sound.AudioTypes.VoiceOver))
+            return;
+
         //chooses from list before playing.
         s.source.clip = s.clips[UnityEngine.Random.Range(0, s.clips.Length)];
         s.source.volume = volume;
@@ -201,6 +223,23 @@ public class AudioManager : MonoBehaviour
         {
             return false;
         }
+    }
+
+    /// <summary>
+    /// Finds if a specified audioType is currently playing.
+    /// </summary>
+    /// <returns>Returns true if anything from that type is playing, else false.</returns>
+    public bool IsPlaying(Sound.AudioTypes audioType)
+    {
+        Sound[] allSoundsOfType = Array.FindAll(sounds, sound => sound.audioType == audioType);
+        foreach (Sound s in allSoundsOfType)
+        {
+            if (s.source.isPlaying)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void UpdateMixerVolume()

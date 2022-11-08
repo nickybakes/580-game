@@ -45,8 +45,8 @@ public class AttackAirDuration : BasicState
         if (nextState is AttackAirRecovery)
         {
             ((AttackAirRecovery)nextState).velocityYAirAttack = -status.movement.velocity.y;
-            Debug.Log(-status.movement.velocity.y);
-            // If traveling fast enough downwards, creates a decal and shakes camera.
+
+            // If traveling fast enough downwards, shakes camera.
             if (-status.movement.velocity.y > 50)
             {
                 CameraManager.cam.ShakeCamera(Mathf.Clamp01((-status.movement.velocity.y - 41f) / 70f) * .6f);
@@ -63,13 +63,11 @@ public class AttackAirDuration : BasicState
             particle.transform.localScale = new Vector3(scale2, scale2, scale2);
 
             // Play ground sound. Louder when moving faster.
-            float vol = -status.movement.velocity.y / 75;
+            float vol = -status.movement.velocity.y / 100;
 
             AudioManager.aud.Play("crunch", vol / 3);
             AudioManager.aud.Play("punch", vol);
             AudioManager.aud.Play("landing", vol / 2);
         }
-
-
     }
 }

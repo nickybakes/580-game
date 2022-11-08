@@ -39,5 +39,8 @@ public class SuplexVictimDuration : BasicState
         status.transform.GetChild((int)PlayerChild.RingDecal).gameObject.SetActive(true);
 
         status.ReduceStamina(status.suplexStaminaDamage);
+
+        // Play VO line.
+        AudioManager.aud.Play("bigHitSuplex");
     }
 }

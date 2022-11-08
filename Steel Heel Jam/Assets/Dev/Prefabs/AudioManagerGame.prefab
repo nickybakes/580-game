@@ -85,16 +85,6 @@ MonoBehaviour:
     randStartPos: 0
     playOnAwake: 1
     source: {fileID: 0}
-  - audioType: 2
-    name: exhibition
-    clips:
-    - {fileID: 8300000, guid: 906f04367f4257f49be231309b4af50a, type: 3}
-    volume: 1
-    pitch: 1
-    loop: 0
-    randStartPos: 0
-    playOnAwake: 0
-    source: {fileID: 0}
   - audioType: 1
     name: hitByItem
     clips:
@@ -277,6 +267,215 @@ MonoBehaviour:
     clips:
     - {fileID: 8300000, guid: 0192a4c25c90fe041a44e5a9a8336196, type: 3}
     volume: 0.5
+    pitch: 1
+    loop: 0
+    randStartPos: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - audioType: 2
+    name: elbowDrop
+    clips:
+    - {fileID: 8300000, guid: b7b643ac69221a1469888056f1b6d554, type: 3}
+    - {fileID: 8300000, guid: f5abf02bb52287f408852a6a9cbea1a4, type: 3}
+    - {fileID: 8300000, guid: cffc457ce24c3e749b655afbca27a3b9, type: 3}
+    - {fileID: 8300000, guid: f5abcffa7a31bfc418e3cdb6651264c2, type: 3}
+    - {fileID: 8300000, guid: 15b690a9398a07944a5506e8f05a8143, type: 3}
+    - {fileID: 8300000, guid: 12aec09d3394b714598d37adbb368de8, type: 3}
+    - {fileID: 8300000, guid: 43cb8629be2560c4287ee75a25bf63dc, type: 3}
+    - {fileID: 8300000, guid: f7043dc57c13f2c4ab2ea4c9379ff6ff, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    randStartPos: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - audioType: 2
+    name: matchBegin
+    clips:
+    - {fileID: 8300000, guid: 0fb03fece98e07941aa951c6fa8f64a9, type: 3}
+    - {fileID: 8300000, guid: 30df02bc06bdbea43a73b4b4e1c297fe, type: 3}
+    - {fileID: 8300000, guid: 0b3c210ef5676dd479d86d1b8da85d05, type: 3}
+    - {fileID: 8300000, guid: 59e0f3169f1d8154ea9889298fbc2178, type: 3}
+    - {fileID: 8300000, guid: ba2b8694656350d4f9137c22c1edfe5e, type: 3}
+    - {fileID: 8300000, guid: fe47fbe4f0e1eab47b6e5836fec53c6d, type: 3}
+    - {fileID: 8300000, guid: 2fba9d418d131c94e8edfe36968253d9, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    randStartPos: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - audioType: 2
+    name: spotlight
+    clips:
+    - {fileID: 8300000, guid: 683b5bb49e8ee9b4ca17dae8187e52f7, type: 3}
+    - {fileID: 8300000, guid: ce293c37001289c4883301b205cca9ea, type: 3}
+    - {fileID: 8300000, guid: 5d4aba676755e7744b80904dd3aa0672, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    randStartPos: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - audioType: 2
+    name: PlotArmor
+    clips:
+    - {fileID: 8300000, guid: dc95037a0097d6c4fb249f12f224b194, type: 3}
+    - {fileID: 8300000, guid: 9e08cc865cb6b264eb67762be5700c19, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    randStartPos: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - audioType: 2
+    name: RedemptionArc
+    clips:
+    - {fileID: 8300000, guid: b5f535af489098947bacdf05d05e3cb1, type: 3}
+    - {fileID: 8300000, guid: 9d6e31aa4d6aad04fbf5eb386f89469f, type: 3}
+    - {fileID: 8300000, guid: 84c514f1183c6ec46a2f3bee4d76777f, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    randStartPos: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - audioType: 2
+    name: MachoBlock
+    clips:
+    - {fileID: 8300000, guid: 4f12587ed5595244281e7f327a3e8f74, type: 3}
+    - {fileID: 8300000, guid: 70eae415e03b1c449ba238ce440ae058, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    randStartPos: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - audioType: 2
+    name: SpeedySubversion
+    clips:
+    - {fileID: 8300000, guid: ea61d23da382d2942906bf5de514ff40, type: 3}
+    - {fileID: 8300000, guid: 2a3ce8a7c9c7fdc42a642aba8735eef1, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    randStartPos: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - audioType: 2
+    name: TopRopes
+    clips:
+    - {fileID: 8300000, guid: 20ecaf8cfd0b18f4bad9867d188530ca, type: 3}
+    - {fileID: 8300000, guid: 3a485ec46378f804e9add0aa8bfe8b67, type: 3}
+    - {fileID: 8300000, guid: 47d2173865b01ba429c77b7f49257c71, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    randStartPos: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - audioType: 2
+    name: TheStink
+    clips:
+    - {fileID: 8300000, guid: 340e1458f123c2d4bb982551e9813f8f, type: 3}
+    - {fileID: 8300000, guid: ca173af139209d741bbdd413f8c160e9, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    randStartPos: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - audioType: 2
+    name: heelFire
+    clips:
+    - {fileID: 8300000, guid: 8f92cd28a14144246b8f152b5efaa140, type: 3}
+    - {fileID: 8300000, guid: a395a1cd2e3035644a589b47038dc9dc, type: 3}
+    - {fileID: 8300000, guid: 33476ada8cb862440958a3a4d7ba1316, type: 3}
+    - {fileID: 8300000, guid: 5938ccacb83b7c544822d1664b10d602, type: 3}
+    - {fileID: 8300000, guid: 7e054de66d4f9324ab572e9ba91305fb, type: 3}
+    - {fileID: 8300000, guid: 1ee31c553b4edaa41abea4d39cbb904d, type: 3}
+    - {fileID: 8300000, guid: c197abbd507188e419708faa7ebea822, type: 3}
+    - {fileID: 8300000, guid: 825843f9415d3584688fdb887b32a245, type: 3}
+    - {fileID: 8300000, guid: a6ab953ece3cda24fbafede1c05a1eec, type: 3}
+    - {fileID: 8300000, guid: b6f814c45fbe6a144b3febdbaffe7207, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    randStartPos: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - audioType: 2
+    name: block
+    clips:
+    - {fileID: 8300000, guid: 67a2272fbbfaaf044a8173134e8e00f1, type: 3}
+    - {fileID: 8300000, guid: 3bdf5f9eb8b3e8545b156bdf3809de29, type: 3}
+    - {fileID: 8300000, guid: d34001f42097ebd48891ef24070ab8bb, type: 3}
+    - {fileID: 8300000, guid: 9231255c38ca42b4aa6ffe889df5cd6a, type: 3}
+    - {fileID: 8300000, guid: 3b904c4711ba5284aa3c9423c9774958, type: 3}
+    - {fileID: 8300000, guid: 3350a14271efd8048b6482cff173af12, type: 3}
+    - {fileID: 8300000, guid: efaceb6d7c7261b42b7a69d4d51d9572, type: 3}
+    - {fileID: 8300000, guid: 0994549009c62ab4c8fb05770263a1df, type: 3}
+    - {fileID: 8300000, guid: abfab071cdc727a40aff514c80aaf8df, type: 3}
+    - {fileID: 8300000, guid: fadf48d7d9348754fb815f48db1f66cf, type: 3}
+    - {fileID: 8300000, guid: 2c1905e236ef40d4dbcddd36e6a9a46d, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    randStartPos: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - audioType: 2
+    name: eliminated
+    clips:
+    - {fileID: 8300000, guid: 651105aa1f9d9f84ab43a07d3a0db7f8, type: 3}
+    - {fileID: 8300000, guid: eeba97d0953822a4482825383769e9c5, type: 3}
+    - {fileID: 8300000, guid: 0373062b9151d3a44907e9fa4d00ce96, type: 3}
+    - {fileID: 8300000, guid: c0729d4480894214687fde6a12a0f1f6, type: 3}
+    - {fileID: 8300000, guid: 05b6821cb8b475841806916c406c2b49, type: 3}
+    - {fileID: 8300000, guid: c7cfc2f40b73f1a47b6d0fa89a5499a6, type: 3}
+    - {fileID: 8300000, guid: 932d41baf5ad8a84f9d2d12e5d764573, type: 3}
+    - {fileID: 8300000, guid: d670e4a3af06e2e48a7a39d427534c1d, type: 3}
+    - {fileID: 8300000, guid: 712a193bb64495e4686bdedd8c423b90, type: 3}
+    - {fileID: 8300000, guid: 243c46c96de89ce4a8da6ce47fa4507d, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    randStartPos: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - audioType: 2
+    name: bigHitCombo
+    clips:
+    - {fileID: 8300000, guid: 3d39e4a983a060b46b3191634bee05b9, type: 3}
+    - {fileID: 8300000, guid: 1c4d074707f257d41be0da4209d74b46, type: 3}
+    - {fileID: 8300000, guid: 93cb96e358ff6c14d920b3ba7916066f, type: 3}
+    - {fileID: 8300000, guid: 17e264870be08204a82e02b5ade25d19, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    randStartPos: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - audioType: 2
+    name: bigHitDropWeapon
+    clips:
+    - {fileID: 8300000, guid: 3d39e4a983a060b46b3191634bee05b9, type: 3}
+    - {fileID: 8300000, guid: 1c4d074707f257d41be0da4209d74b46, type: 3}
+    - {fileID: 8300000, guid: 93cb96e358ff6c14d920b3ba7916066f, type: 3}
+    - {fileID: 8300000, guid: c5901895469e82741858675b38f04070, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    randStartPos: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - audioType: 2
+    name: bigHitSuplex
+    clips:
+    - {fileID: 8300000, guid: 83d0f21bd780dd1439af9cd90d9fbcc6, type: 3}
+    - {fileID: 8300000, guid: 93cb96e358ff6c14d920b3ba7916066f, type: 3}
+    - {fileID: 8300000, guid: ecf44701f76d9f545af55c2cd9cc2db1, type: 3}
+    volume: 1
     pitch: 1
     loop: 0
     randStartPos: 0

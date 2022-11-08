@@ -37,8 +37,8 @@ public class Hitbox : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    //void Update()
+    //{
         // if(duration >= 0)
         //     duration -= Time.deltaTime;
 
@@ -46,12 +46,11 @@ public class Hitbox : MonoBehaviour
         // {
         //     gameObject.SetActive(false);
         // }
-
-    }
+    //}
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == Tag.Player.ToString())
+        if (other.CompareTag(Tag.Player.ToString()))
         {
             PlayerStatus player = other.GetComponent<PlayerStatus>();
 
