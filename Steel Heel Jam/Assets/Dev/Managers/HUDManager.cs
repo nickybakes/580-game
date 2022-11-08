@@ -8,8 +8,11 @@ public class HUDManager : MonoBehaviour
     public static HUDManager hud;
 
     public GameObject headerPanel;
+    public GameObject alertsPanel;
+    public GameObject indicatorsPanel;
 
-    private Canvas canvas;
+    public Canvas canvas;
+    public RectTransform canvasRect;
 
     public GameObject headerPrefab;
 
@@ -17,12 +20,20 @@ public class HUDManager : MonoBehaviour
 
     public List<Sprite> buffIcons;
 
+    public GameObject spotlightAlert;
+    public GameObject spotlightOffScreenIndicator;
+
+    public GameObject eliminatedAlert;
+
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        hud = this;
+    }
 
     public void CreatePlayerHeader(PlayerStatus status)
     {
-        if (!canvas)
-            canvas = GetComponent<Canvas>();
-
         GameObject headerObject = Instantiate(headerPrefab, headerPanel.transform);
         PlayerHeader header = headerObject.GetComponent<PlayerHeader>();
         headers.Add(header);
@@ -52,10 +63,38 @@ public class HUDManager : MonoBehaviour
         return hud.buffIcons[(int)buff];
     }
 
-    // Start is called before the first frame update
-    void Start()
+
+
+    public static GameObject CreateSpotlightAlert(Transform spotlightTransform)
     {
-        canvas = GetComponent<Canvas>();
-        hud = this;
+        GameObject g = Instantiate(hud.spotlightAlert, hud.alertsPanel.transform);
+
+        UIAlert alert = g.GetComponent<UIAlert>();
+        alert.transformToTrackTo = spotlightTransform;
+
+        return g;
+    }
+
+    public static GameObject CreateSpotlightOffScreenIndicator(Transform spotlightTransform)
+    {
+        GameObject g = Instantiate(hud.spotlightOffScreenIndicator, hud.indicatorsPanel.transform);
+
+        UIOffScreenIndicator indicator = g.GetComponent<UIOffScreenIndicator>();
+        indicator.transformToTrackTo = spotlightTransform;
+
+        return g;
+    }
+
+    public static GameObject CreateEliminatedAlert(Transform playerTransform, int playerNumber)
+    {
+        GameObject g = Instantiate(hud.eliminatedAlert, hud.alertsPanel.transform);
+
+        UIAlert alert = g.GetComponent<UIAlert>();
+        alert.transformToTrackTo = playerTransform;
+
+        alert.textObjects[0].color = PlayerToken.colors[playerNumber - 1];
+        alert.textObjects[0].text = "Player " + playerNumber;
+
+        return g;
     }
 }

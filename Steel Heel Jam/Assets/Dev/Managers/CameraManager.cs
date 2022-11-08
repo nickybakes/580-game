@@ -59,7 +59,7 @@ public class CameraManager : MonoBehaviour
 
         foreach (PlayerStatus status in eliminatedPlayers)
         {
-            if (status.GetTransform != null && status.eliminated)
+            if (status.GetTransform != null && (status.eliminated || status.waitingToBeEliminated))
             {
                 float eliminationTimeAmount = GameManager.game.gameTime - status.timeOfEliminiation;
 

@@ -17,7 +17,6 @@ public enum VisualChild
 public class PlayerVisuals
 {
 
-    private static GameObject[] visualChildren;
 
     private PlayerStatus status;
 
@@ -41,6 +40,9 @@ public class PlayerVisuals
     private AttackParticle currentAttackParticle = AttackParticle.LeftHook;
     private VisualChild currentVisual = VisualChild.Block;
 
+    private GameObject[] visualChildren;
+
+
     public PlayerVisuals(PlayerStatus _status, Transform _tr)
     {
         tr = _tr;
@@ -60,8 +62,7 @@ public class PlayerVisuals
         knockbackSphere = tr.GetChild((int)PlayerChild.Visuals).GetChild((int)VisualChild.Flexing).gameObject;
         attackVisual = tr.GetChild((int)PlayerChild.Visuals).GetChild((int)VisualChild.Attack).gameObject;
 
-        if (visualChildren == null)
-            visualChildren = new GameObject[] { blockSphere, dodgeRollSphere, stunSphere, recoverySphere, knockbackSphere, attackVisual };
+        visualChildren = new GameObject[] { blockSphere, dodgeRollSphere, stunSphere, recoverySphere, knockbackSphere, attackVisual };
     }
 
     /// <summary>

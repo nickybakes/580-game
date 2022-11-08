@@ -46,6 +46,7 @@ public class GameManager : MonoBehaviour
 
     public GameObject spotlight;
     private BuffSpotlight spotlightScript;
+    private GameObject spotlightOffScreenIndicator;
 
     public float spotlightRespawnCooldownMax;
     public float spotlightRespawnCooldown;
@@ -204,6 +205,8 @@ public class GameManager : MonoBehaviour
 
         if (alivePlayerStatuses.Count == 1)
             gameWon = true;
+
+        HUDManager.CreateEliminatedAlert(status.transform, status.playerNumber);
     }
 
     private void ShuffleArray<T>(T[] array)
@@ -231,7 +234,7 @@ public class GameManager : MonoBehaviour
         ringScript.UpdateRingShaderProperties();
 
         // Resize ring to a diameter of 10 units in 2-ish minutes
-        ringScript.ResizeRing(10, 5);
+        ringScript.ResizeRing(10, maxGameTime);
     }
 
     public void SpawnSpotlight()
@@ -249,6 +252,12 @@ public class GameManager : MonoBehaviour
         spotlightScript.tr.position = new Vector3(randomXCoordinate, 0, randomZCoordinate);
         spotlightScript.DecideWanderDirection();
         spotlight.SetActive(true);
+
+        HUDManager.CreateSpotlightAlert(spotlight.transform);
+
+        spotlightOffScreenIndicator = HUDManager.CreateSpotlightOffScreenIndicator(spotlight.transform);
+
+        // spotlightOffScreenIndicator.
     }
 
     public void DespawnSpotlight()
@@ -256,6 +265,12 @@ public class GameManager : MonoBehaviour
         spotlightRespawnCooldown = 0;
         spotlightRespawnCooldownMax = Random.Range(13, 24);
         spotlight.SetActive(false);
+
+        if (spotlightOffScreenIndicator)
+        {
+            Destroy(spotlightOffScreenIndicator);
+            spotlightOffScreenIndicator = null;
+        }
     }
 
     //public void SpawnHeelSpotlight()
