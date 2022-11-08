@@ -393,7 +393,7 @@ public class PlayerStatus : MonoBehaviour
 
     }
 
-    public void GetHitByElbowDrop(Vector3 hitboxPos, Vector3 collisionPos, float damage, float knockback, float knockbackHeight, float timeInKnockback, PlayerStatus attackingPlayerStatus, bool unblockable)
+    public void GetHitByElbowDrop(Vector3 hitboxPos, Vector3 collisionPos, float damage, float knockback, float knockbackHeight, float timeInKnockback, PlayerStatus attackingPlayerStatus, bool unblockable, bool isPoisonous = false)
     {
         if (eliminated)
             return;
@@ -422,8 +422,21 @@ public class PlayerStatus : MonoBehaviour
         }
     }
 
+    public void GetHitByExplosive(Vector3 hitboxPos, Vector3 collisionPos, float damage, float knockback, float knockbackHeight, float timeInKnockback, PlayerStatus attackingPlayerStatus, bool isPoisonous = false)
+    {
+        if (eliminated)
+            return;
 
-    public void GetHitByMelee(Vector3 hitboxPos, Vector3 collisionPos, float damage, float knockback, float knockbackHeight, float timeInKnockback, PlayerStatus attackingPlayerStatus)
+        if (!currentPlayerState.isInvincibleToAttacks && !iFrames)
+        {
+            Vector3 direction = transform.position - collisionPos;
+            direction.y = 0;
+            GetHit(direction.normalized, damage, knockback, knockbackHeight, timeInKnockback, attackingPlayerStatus, false, true);
+        }
+    }
+
+
+    public void GetHitByMelee(Vector3 hitboxPos, Vector3 collisionPos, float damage, float knockback, float knockbackHeight, float timeInKnockback, PlayerStatus attackingPlayerStatus, bool isPoisonous = false)
     {
         if (eliminated || waitingToBeEliminated)
             return;
