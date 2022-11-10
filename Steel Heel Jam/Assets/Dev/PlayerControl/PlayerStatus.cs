@@ -492,8 +492,8 @@ public class PlayerStatus : MonoBehaviour
                 AudioManager.aud.Play("orchestraHitShort", combo, combo);
             if (combo == attackingPlayerStatus.combat.weaponState.maxComboCount)
             {
-                // If the full combo does a certain amount of knockback, plays VO line.
-                if (knockback > 7)
+                // If the full combo causes Iframes, plays VO line.
+                if (IFrames)
                     AudioManager.aud.Play("bigHitCombo");
 
                 AudioManager.aud.Play("orchestraHitLong");
