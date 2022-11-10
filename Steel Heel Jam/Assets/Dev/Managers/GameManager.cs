@@ -91,11 +91,22 @@ public class GameManager : MonoBehaviour
     {
         cameraManager.gameObject.SetActive(false);
         introSequenceManager.gameObject.SetActive(true);
-        // HUDManager.hud.headerPanel.SetActive(false);
-
+        hudManager.headerPanel.SetActive(false);
         AudioManager.aud.Play("intro");
 
-        yield return new WaitForSeconds(7f);
+        yield return new WaitForSeconds(1f);
+
+        HUDManager.CreateMapNameAlert(gameSceneSettings.mapNameAlert);
+
+        yield return new WaitForSeconds(1f);
+
+        HUDManager.CreateCurrentChampAlert();
+
+        yield return new WaitForSeconds(.5f);
+
+        HUDManager.CreateHostAlert();
+
+        yield return new WaitForSeconds(4.5f);
 
         EnableGameplayCameraAndCountdown();
     }
@@ -104,7 +115,7 @@ public class GameManager : MonoBehaviour
     {
         cameraManager.gameObject.SetActive(true);
         introSequenceManager.gameObject.SetActive(false);
-        // HUDManager.hud.headerPanel.SetActive(true);
+        hudManager.headerPanel.SetActive(true);
 
         HUDManager.hud.countdownText.gameObject.SetActive(true);
 
@@ -149,7 +160,7 @@ public class GameManager : MonoBehaviour
 
         if (dontUpdateGameplay)
         {
-            if(cameraManager.gameObject.activeSelf)
+            if (cameraManager.gameObject.activeSelf)
                 cameraManager.UpdateCamera(alivePlayerStatuses, eliminatedPlayerStatuses);
             return;
         }
@@ -268,7 +279,10 @@ public class GameManager : MonoBehaviour
         status.transform.GetChild((int)PlayerChild.RingDecal).gameObject.SetActive(false);
 
         if (alivePlayerStatuses.Count == 1)
+        {
             gameWon = true;
+            AppManager.app.currentChampion = alivePlayerStatuses[0].playerNumber;
+        }
 
         HUDManager.CreateEliminatedAlert(status.transform, status.playerNumber);
     }
