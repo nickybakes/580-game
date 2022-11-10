@@ -59,8 +59,6 @@ public class Explosion : MonoBehaviour
                 timeInKnockback,
                 ownerStatus
                 );
-
-            print("BOOM");
         }
     }
 }

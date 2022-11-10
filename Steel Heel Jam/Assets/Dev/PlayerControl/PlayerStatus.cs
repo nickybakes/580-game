@@ -152,9 +152,10 @@ public class PlayerStatus : MonoBehaviour
     public const float heelFireCooldownMax = 10.0f;
     public float heelFireCooldown;
 
+    private bool isPoisoned = false;
     private float poisonTimeCurrent;
-    private float poisonTimeMax = 7;
-    private float poisonDamageAmountPerSecond = 5;
+    private float poisonTimeMax = 4;
+    private float poisonDamageAmountPerSecond = 4;
     // ******************************
 
     private bool iFrames;
@@ -301,9 +302,22 @@ public class PlayerStatus : MonoBehaviour
 
         if (!IsFlexing)
         {
-            if (!combat.ActedRecently && !isOOB)
+            if (!combat.ActedRecently && !isOOB && !isPoisoned)
             {
                 IncreaseStamina(PassiveStaminaRegen * Time.deltaTime);
+            }
+        }
+
+        if (isPoisoned)
+        {
+            poisonTimeCurrent += Time.deltaTime;
+            
+            if (!currentPlayerState.isInvincibleToRing) ReduceStamina(poisonDamageAmountPerSecond * Time.deltaTime);
+
+            if (poisonTimeCurrent > poisonTimeMax)
+            {
+                isPoisoned = false;
+                poisonTimeCurrent = 0;
             }
         }
 
@@ -427,6 +441,10 @@ public class PlayerStatus : MonoBehaviour
             IncreaseSpotlightMeter(15);
             SetPlayerStateImmediately(new Idle());
             attackBlocked = true;
+            if (buffs[(int)Buff.MachoBlock])
+            {
+                GameManager.game.SpawnExplosion(transform.position, this, false);
+            }
 
             AudioManager.aud.Play("blockedPunch");
             return;
@@ -448,9 +466,9 @@ public class PlayerStatus : MonoBehaviour
         if (eliminated || waitingToBeEliminated)
             return;
 
-        if (!currentPlayerState.isInvincibleToAttacks && !iFrames)
+        if (!currentPlayerState.isInvincibleToAttacks)
         {
-            Vector3 direction = transform.position - collisionPos;
+            Vector3 direction = collisionPos - hitboxPos;
             direction.y = 0;
             GetHit(direction.normalized, damage, knockback, knockbackHeight, timeInKnockback, attackingPlayerStatus, false, true);
         }
@@ -470,6 +488,10 @@ public class PlayerStatus : MonoBehaviour
             IncreaseSpotlightMeter(20);
             SetPlayerStateImmediately(new Idle());
             attackBlocked = true;
+            if (buffs[(int)Buff.MachoBlock])
+            {
+                GameManager.game.SpawnExplosion(transform.position, this, false);
+            }
 
             AudioManager.aud.Play("blockedPunch");
             return;
@@ -479,10 +501,18 @@ public class PlayerStatus : MonoBehaviour
         {
             GetHit(attackingPlayerStatus.transform.forward, damage, knockback, knockbackHeight, timeInKnockback, attackingPlayerStatus, true, false);
 
-            if (attackingPlayerStatus.buffs[(int)Buff.RedemptionArc] == true && attackingPlayerStatus.combat.weaponState.currentComboCount >= attackingPlayerStatus.combat.weaponState.maxComboCount)
+            if (attackingPlayerStatus.combat.weaponState.currentComboCount >= attackingPlayerStatus.combat.weaponState.maxComboCount)
             {
-                // Spawn explosion here
-                GameManager.game.SpawnExplosion(attackingPlayerStatus.combat.weaponState.hitbox.transform.position, attackingPlayerStatus, false);
+                if (attackingPlayerStatus.buffs[(int)Buff.RedemptionArc] == true)
+                {
+                    // Spawn explosion here
+                    GameManager.game.SpawnExplosion(attackingPlayerStatus.combat.weaponState.hitbox.transform.position, attackingPlayerStatus, false);
+                }
+                if (attackingPlayerStatus.buffs[(int)Buff.TheStink] == true)
+                {
+                    // Poison player
+                    isPoisoned = true;
+                }
             }
 
             // Plays orchestra hits for combo.
@@ -516,6 +546,10 @@ public class PlayerStatus : MonoBehaviour
             IncreaseStamina(15);
             SetPlayerStateImmediately(new Idle());
             attackBlocked = true;
+            if (buffs[(int)Buff.MachoBlock])
+            {
+                GameManager.game.SpawnExplosion(transform.position, this, false);
+            }
 
             AudioManager.aud.Play("blockedPunch");
             return;
