@@ -272,6 +272,16 @@ MonoBehaviour:
     randStartPos: 0
     playOnAwake: 0
     source: {fileID: 0}
+  - audioType: 1
+    name: explosion
+    clips:
+    - {fileID: 8300000, guid: 46e0a89f7703ac04987f1f5f8b52a93d, type: 3}
+    volume: 0.5
+    pitch: 1
+    loop: 0
+    randStartPos: 0
+    playOnAwake: 0
+    source: {fileID: 0}
   - audioType: 2
     name: elbowDrop
     clips:
@@ -446,7 +456,6 @@ MonoBehaviour:
   - audioType: 2
     name: bigHitCombo
     clips:
-    - {fileID: 8300000, guid: 3d39e4a983a060b46b3191634bee05b9, type: 3}
     - {fileID: 8300000, guid: 1c4d074707f257d41be0da4209d74b46, type: 3}
     - {fileID: 8300000, guid: 93cb96e358ff6c14d920b3ba7916066f, type: 3}
     - {fileID: 8300000, guid: 17e264870be08204a82e02b5ade25d19, type: 3}
@@ -460,9 +469,8 @@ MonoBehaviour:
     name: bigHitDropWeapon
     clips:
     - {fileID: 8300000, guid: 3d39e4a983a060b46b3191634bee05b9, type: 3}
-    - {fileID: 8300000, guid: 1c4d074707f257d41be0da4209d74b46, type: 3}
-    - {fileID: 8300000, guid: 93cb96e358ff6c14d920b3ba7916066f, type: 3}
     - {fileID: 8300000, guid: c5901895469e82741858675b38f04070, type: 3}
+    - {fileID: 8300000, guid: 93cb96e358ff6c14d920b3ba7916066f, type: 3}
     volume: 1
     pitch: 1
     loop: 0

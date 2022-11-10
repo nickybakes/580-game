@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 9109797555793773181}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 6.9578996, y: 4.86, z: -7.95}
-  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_LocalScale: {x: 7, y: 7, z: 7}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -112,12 +112,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explosionDurationMax: 0.3
-  damage: 5
-  knockback: 500
-  knockbackHeight: 10
+  damage: 10
+  knockback: 10
+  knockbackHeight: 15
   timeInKnockback: 2
-  playerStatus: {fileID: 0}
-  playerNumber: 0
 --- !u!54 &428348104568198795
 Rigidbody:
   m_ObjectHideFlags: 0

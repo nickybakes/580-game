@@ -38,6 +38,8 @@ public class Explosion : MonoBehaviour
             //set its color to a player specifically if its not gonna damage them (Nick)
             playerNumber = _ownerStatus.playerNumber;
         }
+
+        AudioManager.aud.Play("explosion", 0.8f, 1.2f);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -57,8 +59,6 @@ public class Explosion : MonoBehaviour
                 timeInKnockback,
                 ownerStatus
                 );
-
-            print("BOOM");
         }
     }
 }
