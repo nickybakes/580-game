@@ -240,7 +240,7 @@ public class PlayerStatus : MonoBehaviour
     public float CurrentMoveSpeed { get { return movement.moveSpeed * currentPlayerState.moveSpeedMultiplier; } }
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         transform = gameObject.transform;
         currentPlayerState = new Idle();
@@ -264,7 +264,7 @@ public class PlayerStatus : MonoBehaviour
 #endif
 
         // Prevents player movement on game start countdown.
-        if (GameManager.game.countdownTime > 0)
+        if (GameManager.game.dontUpdateGameplay)
             return;
 
         movement.UpdateManual(currentPlayerState.updateMovement, currentPlayerState.canPlayerControlMove, currentPlayerState.canPlayerControlRotate, currentPlayerState.alternateFriction);
@@ -302,7 +302,6 @@ public class PlayerStatus : MonoBehaviour
 
         if (!IsFlexing)
         {
-            if (!combat.ActedRecently && !isOOB && !isPoisoned)
             {
                 IncreaseStamina(PassiveStaminaRegen * Time.deltaTime);
             }
@@ -326,7 +325,7 @@ public class PlayerStatus : MonoBehaviour
         {
             recentDamageTimeCurrent -= Time.deltaTime;
 
-            recentDamageTaken = Mathf.Max(0, Mathf.Lerp(0, recentDamageTakenMax, recentDamageTimeCurrent / 10f));
+            recentDamageTaken = Mathf.Max(0, Mathf.Lerp(0, recentDamageTakenMax, recentDamageTimeCurrent / 6f));
         }
 
         if (recentActivityTimeCurrent > 0)
@@ -409,9 +408,9 @@ public class PlayerStatus : MonoBehaviour
 
         recentDamageTaken += damage;
         recentDamageTakenMax = recentDamageTaken;
-        recentDamageTimeCurrent = 10f;
+        recentDamageTimeCurrent = 6f;
 
-        if (forceActivateIFrames || recentDamageTaken >= 40f)
+        if (forceActivateIFrames || recentDamageTaken >= 50f)
         {
             IFrames = true;
         }

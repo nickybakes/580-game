@@ -27,6 +27,9 @@ public class Ring : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GameManager.game.dontUpdateGameplay)
+            return;
+
         if (!finalRing && ringResizeTimeCurrent <= ringResizeTimeMax)
         {
             ringResizeTimeCurrent += Time.deltaTime;
@@ -47,7 +50,7 @@ public class Ring : MonoBehaviour
             {
                 Vector3 currentScale = tr.localScale;
                 float newScale = Mathf.Max(currentScale.x - (Time.deltaTime * .7f), 0);
-                
+
                 tr.localScale = new Vector3(newScale, currentScale.y, newScale);
 
                 UpdateRingShaderProperties();

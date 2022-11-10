@@ -1,11 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+
 
 public class HUDManager : MonoBehaviour
 {
 
     public static HUDManager hud;
+
+    public TextMeshProUGUI countdownText;
 
     public GameObject headerPanel;
     public GameObject alertsPanel;

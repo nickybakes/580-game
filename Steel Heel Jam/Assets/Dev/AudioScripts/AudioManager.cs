@@ -81,7 +81,7 @@ public class AudioManager : MonoBehaviour
         }
 
         // VO check for overlap.
-        if (s.audioType == Sound.AudioTypes.VoiceOver && IsPlaying(Sound.AudioTypes.VoiceOver))
+        if (s.audioType == Sound.AudioTypes.VoiceOver && IsPlaying(Sound.AudioTypes.VoiceOver) && name != "matchBegin")
             return;
 
         //chooses from list before playing.
