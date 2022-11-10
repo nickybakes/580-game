@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &5168474044336394186
+--- !u!1001 &7460870053827615141
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -10,7 +10,7 @@ PrefabInstance:
     - target: {fileID: 2394930215585639265, guid: a80620f51b7444f4da6040667adfed75,
         type: 3}
       propertyPath: m_Name
-      value: PS_Explosion_01_04
+      value: PS_Explosion_01_08
       objectReference: {fileID: 0}
     - target: {fileID: 2394930215585639267, guid: a80620f51b7444f4da6040667adfed75,
         type: 3}
@@ -70,17 +70,22 @@ PrefabInstance:
     - target: {fileID: 3365913794289663943, guid: a80620f51b7444f4da6040667adfed75,
         type: 3}
       propertyPath: ColorModule.gradient.maxGradient.key0.b
-      value: 0
+      value: 0.4433962
       objectReference: {fileID: 0}
     - target: {fileID: 3365913794289663943, guid: a80620f51b7444f4da6040667adfed75,
         type: 3}
       propertyPath: ColorModule.gradient.maxGradient.key0.g
-      value: 0.3962264
+      value: 0.32900998
       objectReference: {fileID: 0}
     - target: {fileID: 3365913794289663943, guid: a80620f51b7444f4da6040667adfed75,
         type: 3}
       propertyPath: ColorModule.gradient.maxGradient.key0.r
-      value: 0.009051426
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4469684067783923290, guid: a80620f51b7444f4da6040667adfed75,
+        type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.ctime1
+      value: 19853
       objectReference: {fileID: 0}
     - target: {fileID: 4469684067783923290, guid: a80620f51b7444f4da6040667adfed75,
         type: 3}
@@ -90,12 +95,12 @@ PrefabInstance:
     - target: {fileID: 4469684067783923290, guid: a80620f51b7444f4da6040667adfed75,
         type: 3}
       propertyPath: ColorModule.gradient.maxGradient.key1.b
-      value: 0.012142794
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4469684067783923290, guid: a80620f51b7444f4da6040667adfed75,
         type: 3}
       propertyPath: ColorModule.gradient.maxGradient.key1.g
-      value: 0.6132076
+      value: 0.9093275
       objectReference: {fileID: 0}
     - target: {fileID: 4469684067783923290, guid: a80620f51b7444f4da6040667adfed75,
         type: 3}
@@ -105,12 +110,12 @@ PrefabInstance:
     - target: {fileID: 4469684067783923290, guid: a80620f51b7444f4da6040667adfed75,
         type: 3}
       propertyPath: ColorModule.gradient.maxGradient.key2.b
-      value: 0.013722114
+      value: 0.6132076
       objectReference: {fileID: 0}
     - target: {fileID: 4469684067783923290, guid: a80620f51b7444f4da6040667adfed75,
         type: 3}
       propertyPath: ColorModule.gradient.maxGradient.key2.g
-      value: 0.3018868
+      value: 0.34320322
       objectReference: {fileID: 0}
     - target: {fileID: 4469684067783923290, guid: a80620f51b7444f4da6040667adfed75,
         type: 3}
@@ -124,28 +129,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9184191982665767575, guid: a80620f51b7444f4da6040667adfed75,
         type: 3}
-      propertyPath: ColorModule.gradient.maxGradient.atime1
-      value: 65535
-      objectReference: {fileID: 0}
-    - target: {fileID: 9184191982665767575, guid: a80620f51b7444f4da6040667adfed75,
-        type: 3}
-      propertyPath: ColorModule.gradient.maxGradient.ctime2
-      value: 41634
-      objectReference: {fileID: 0}
-    - target: {fileID: 9184191982665767575, guid: a80620f51b7444f4da6040667adfed75,
-        type: 3}
-      propertyPath: ColorModule.gradient.maxGradient.ctime3
-      value: 65535
-      objectReference: {fileID: 0}
-    - target: {fileID: 9184191982665767575, guid: a80620f51b7444f4da6040667adfed75,
-        type: 3}
       propertyPath: ColorModule.gradient.maxGradient.key1.b
-      value: 0.012142794
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9184191982665767575, guid: a80620f51b7444f4da6040667adfed75,
         type: 3}
       propertyPath: ColorModule.gradient.maxGradient.key1.g
-      value: 0.6132076
+      value: 0.8857479
       objectReference: {fileID: 0}
     - target: {fileID: 9184191982665767575, guid: a80620f51b7444f4da6040667adfed75,
         type: 3}
@@ -155,32 +145,17 @@ PrefabInstance:
     - target: {fileID: 9184191982665767575, guid: a80620f51b7444f4da6040667adfed75,
         type: 3}
       propertyPath: ColorModule.gradient.maxGradient.key2.b
-      value: 0
+      value: 0.7075472
       objectReference: {fileID: 0}
     - target: {fileID: 9184191982665767575, guid: a80620f51b7444f4da6040667adfed75,
         type: 3}
       propertyPath: ColorModule.gradient.maxGradient.key2.g
-      value: 0
+      value: 0.39266342
       objectReference: {fileID: 0}
     - target: {fileID: 9184191982665767575, guid: a80620f51b7444f4da6040667adfed75,
         type: 3}
       propertyPath: ColorModule.gradient.maxGradient.key2.r
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9184191982665767575, guid: a80620f51b7444f4da6040667adfed75,
-        type: 3}
-      propertyPath: ColorModule.gradient.maxGradient.key3.g
-      value: 0.11575435
-      objectReference: {fileID: 0}
-    - target: {fileID: 9184191982665767575, guid: a80620f51b7444f4da6040667adfed75,
-        type: 3}
-      propertyPath: ColorModule.gradient.maxGradient.key3.r
-      value: 0.9339623
-      objectReference: {fileID: 0}
-    - target: {fileID: 9184191982665767575, guid: a80620f51b7444f4da6040667adfed75,
-        type: 3}
-      propertyPath: ColorModule.gradient.maxGradient.m_NumColorKeys
-      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a80620f51b7444f4da6040667adfed75, type: 3}
