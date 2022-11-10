@@ -7,6 +7,7 @@ public class ExplosiveBarrel : DefaultState
     public ExplosiveBarrel(int _playerNumber, GameObject _hitbox) : base(_playerNumber, _hitbox)
     {
         animationModifier = AnimationModifier.CarryOverHead;
+        explodeOnHit = true;
     }
 
     public override void InitializeAttacks()
@@ -18,12 +19,12 @@ public class ExplosiveBarrel : DefaultState
                 1.0f, // Knockback Multiplier
                 1.0f, // Knockback Height Multiplier
                 2.0f, // Hitstun Multiplier
-                2.0f, // Radius Multiplier
-                1.0f, // Height Multiplier
+                2.5f, // Radius Multiplier
+                1.5f, // Height Multiplier
                 2.0f, // Startup Multiplier
                 3.0f, // Duration Multiplier
                 2.0f, // Recovery Multiplier
-                0.0f,  // Forward Speed Multiplier
+                0.7f,  // Forward Speed Multiplier
                 AttackAnimation.SmashHeavy_01
                 )
         };

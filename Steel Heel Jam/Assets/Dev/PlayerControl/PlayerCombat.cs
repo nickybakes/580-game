@@ -356,6 +356,16 @@ public class PlayerCombat : MonoBehaviour
         _status.visuals.ShowWeaponVisual(ItemType.Unarmed);
     }
 
+    public void BreakWeapon()
+    {
+        if (equippedItem != null)
+        {
+            GameObject weapon = equippedItem;
+            DropWeapon();
+            Destroy(weapon);
+        }
+    }
+
     /// <summary>
     /// Looks for players in an arc in front of current player.
     /// </summary>

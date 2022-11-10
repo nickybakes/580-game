@@ -32,12 +32,21 @@ public class Explosion : MonoBehaviour
     public void Init(PlayerStatus _ownerStatus, bool damageOwnerToo)
     {
         ownerStatus = _ownerStatus;
-        //spawn the explosion particle (Nick)
+        //spawn the explosion particle
         if (!damageOwnerToo)
         {
-            //set its color to a player specifically if its not gonna damage them (Nick)
+            //set its color to a player specifically if its not gonna damage them
             playerNumber = _ownerStatus.playerNumber;
+            VisualsManager.SpawnParticle(ParticleName.Explosion_01 + playerNumber, tr.position);
         }
+        else
+        {
+            VisualsManager.SpawnParticle(ParticleName.Explosion_01, tr.position);
+        }
+
+        VisualsManager.SpawnDecal(DecalName.Crack_01, tr.position);
+
+        CameraManager.cam.ShakeCamera(.5f);
 
         AudioManager.aud.Play("explosion", 0.8f, 1.2f);
     }
@@ -59,6 +68,21 @@ public class Explosion : MonoBehaviour
                 timeInKnockback,
                 ownerStatus
                 );
+        }
+        if (other.CompareTag(Tag.PickUp.ToString()))
+        {
+            GameObject pickupObject = other.gameObject;
+            // while (pickupObject.transform.parent != null)
+            // {
+            //     pickupObject = pickupObject.transform.parent.gameObject;
+            // }
+
+            Rigidbody rb = pickupObject.GetComponent<Rigidbody>();
+
+            if (rb != null)
+            {
+                rb.AddExplosionForce(1500, tr.position, 15, 30);
+            }
         }
     }
 }
