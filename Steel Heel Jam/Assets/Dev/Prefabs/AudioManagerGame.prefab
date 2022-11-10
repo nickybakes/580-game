@@ -276,7 +276,7 @@ MonoBehaviour:
     name: explosion
     clips:
     - {fileID: 8300000, guid: 46e0a89f7703ac04987f1f5f8b52a93d, type: 3}
-    volume: 0.5
+    volume: 0.8
     pitch: 1
     loop: 0
     randStartPos: 0
@@ -483,6 +483,22 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 83d0f21bd780dd1439af9cd90d9fbcc6, type: 3}
     - {fileID: 8300000, guid: 93cb96e358ff6c14d920b3ba7916066f, type: 3}
     - {fileID: 8300000, guid: ecf44701f76d9f545af55c2cd9cc2db1, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    randStartPos: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - audioType: 2
+    name: intro
+    clips:
+    - {fileID: 8300000, guid: 6b3e22ca7fc0b914bb9f53c15a8dbf65, type: 3}
+    - {fileID: 8300000, guid: 2ab9d64921073f845b97d886115ffff7, type: 3}
+    - {fileID: 8300000, guid: 1c6c355dc7253e44da3333e48b78fd4f, type: 3}
+    - {fileID: 8300000, guid: 2376bccab9790a2488c77c53ac60ef3f, type: 3}
+    - {fileID: 8300000, guid: 98a26a402e2c12b47b6d19e721d88a43, type: 3}
+    - {fileID: 8300000, guid: ae3e0a03631ce4641b3d4ab4f85eab5c, type: 3}
+    - {fileID: 8300000, guid: 4b2f2cd68f4369a47bc68f19c3d63b74, type: 3}
     volume: 1
     pitch: 1
     loop: 0

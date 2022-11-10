@@ -44,7 +44,7 @@ public class ImpactStun : BasicState
             attackingPlayer.CurrentPlayerState.animationState == AnimationState.AttackAirDuration_01)
         {
             // If traveling fast enough downwards, plays VO line.
-            if (-attackingPlayer.movement.velocity.y > 53)
+            if (-attackingPlayer.movement.velocity.y > 52)
             {
                 AudioManager.aud.Play("elbowDrop");
             }
