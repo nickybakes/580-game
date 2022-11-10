@@ -8,7 +8,7 @@ public enum PlayerChild
     PickUpSphere = 4,
     GrabHitbox = 5,
     RingDecal = 6,
-    Particles = 7,
+    Particles = 8,
 }
 
 public enum ParticleChild
@@ -240,7 +240,7 @@ public class PlayerStatus : MonoBehaviour
     public float CurrentMoveSpeed { get { return movement.moveSpeed * currentPlayerState.moveSpeedMultiplier; } }
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         transform = gameObject.transform;
         currentPlayerState = new Idle();
@@ -264,7 +264,7 @@ public class PlayerStatus : MonoBehaviour
 #endif
 
         // Prevents player movement on game start countdown.
-        if (GameManager.game.countdownTime > 0)
+        if (GameManager.game.dontUpdateGameplay)
             return;
 
         movement.UpdateManual(currentPlayerState.updateMovement, currentPlayerState.canPlayerControlMove, currentPlayerState.canPlayerControlRotate, currentPlayerState.alternateFriction);
@@ -302,7 +302,6 @@ public class PlayerStatus : MonoBehaviour
 
         if (!IsFlexing)
         {
-            if (!combat.ActedRecently && !isOOB && !isPoisoned)
             {
                 IncreaseStamina(PassiveStaminaRegen * Time.deltaTime);
             }
@@ -311,13 +310,14 @@ public class PlayerStatus : MonoBehaviour
         if (isPoisoned)
         {
             poisonTimeCurrent += Time.deltaTime;
-            
+
             if (!currentPlayerState.isInvincibleToRing) ReduceStamina(poisonDamageAmountPerSecond * Time.deltaTime);
 
             if (poisonTimeCurrent > poisonTimeMax)
             {
                 isPoisoned = false;
                 poisonTimeCurrent = 0;
+                transform.GetChild((int)PlayerChild.Particles).GetChild((int)ParticleChild.PoisonTrail_01).gameObject.SetActive(false);
             }
         }
 
@@ -325,7 +325,7 @@ public class PlayerStatus : MonoBehaviour
         {
             recentDamageTimeCurrent -= Time.deltaTime;
 
-            recentDamageTaken = Mathf.Max(0, Mathf.Lerp(0, recentDamageTakenMax, recentDamageTimeCurrent / 10f));
+            recentDamageTaken = Mathf.Max(0, Mathf.Lerp(0, recentDamageTakenMax, recentDamageTimeCurrent / 6f));
         }
 
         if (recentActivityTimeCurrent > 0)
@@ -365,10 +365,12 @@ public class PlayerStatus : MonoBehaviour
 
     private void GetHit(Vector3 hitDirection, float damage, float knockback, float knockbackHeight, float timeInKnockback, PlayerStatus attackingPlayerStatus, bool moveVictimWithAttacker, bool forceActivateIFrames)
     {
-        if (attackingPlayerStatus != null)
+        if (attackingPlayerStatus != null && attackingPlayerStatus.playerNumber != playerNumber)
             playerLastHitBy = attackingPlayerStatus;
 
         Vector3 knockbackDir = hitDirection;
+        if(knockbackDir.x == 0)
+            knockbackDir.x = .01f;
         transform.forward = new Vector3(knockbackDir.x * -1, 0, knockbackDir.z * -1);
         knockback = knockback * (2 + stamina / defaultMaxStamina);
 
@@ -406,9 +408,9 @@ public class PlayerStatus : MonoBehaviour
 
         recentDamageTaken += damage;
         recentDamageTakenMax = recentDamageTaken;
-        recentDamageTimeCurrent = 10f;
+        recentDamageTimeCurrent = 6f;
 
-        if (forceActivateIFrames || recentDamageTaken >= 40f)
+        if (forceActivateIFrames || recentDamageTaken >= 50f)
         {
             IFrames = true;
         }
@@ -432,6 +434,14 @@ public class PlayerStatus : MonoBehaviour
     {
         if (eliminated || waitingToBeEliminated)
             return;
+
+        if (attackingPlayerStatus.combat.weaponState.explodeOnHit)
+        {
+            GameManager.game.SpawnExplosion(attackingPlayerStatus.combat.weaponState.hitbox.transform.position, attackingPlayerStatus, true);
+            attackingPlayerStatus.combat.BreakWeapon();
+            AudioManager.aud.Play("punch", 0.8f, 1.2f);
+            return;
+        }
 
         if (!unblockable && IsBlocking)
         {
@@ -480,6 +490,14 @@ public class PlayerStatus : MonoBehaviour
         if (eliminated || waitingToBeEliminated)
             return;
 
+        if (attackingPlayerStatus.combat.weaponState.explodeOnHit)
+        {
+            GameManager.game.SpawnExplosion(attackingPlayerStatus.combat.weaponState.hitbox.transform.position, attackingPlayerStatus, true);
+            attackingPlayerStatus.combat.BreakWeapon();
+            AudioManager.aud.Play("punch", 0.8f, 1.2f);
+            return;
+        }
+
         if (IsBlocking)
         {
             attackingPlayerStatus.SetPlayerStateImmediately(new BlockedStun());
@@ -512,6 +530,7 @@ public class PlayerStatus : MonoBehaviour
                 {
                     // Poison player
                     isPoisoned = true;
+                    transform.GetChild((int)PlayerChild.Particles).GetChild((int)ParticleChild.PoisonTrail_01).gameObject.SetActive(true);
                 }
             }
 
@@ -534,11 +553,17 @@ public class PlayerStatus : MonoBehaviour
         }
     }
 
-    public void GetHitByThrowable(Vector3 hitboxPos, Vector3 collisionPos, float damage, float knockback, float knockbackHeight, PlayerStatus attackingPlayerStatus)
+    public bool GetHitByThrowable(Vector3 hitboxPos, Vector3 collisionPos, float damage, float knockback, float knockbackHeight, PlayerStatus attackingPlayerStatus, bool explosionOnHit)
     {
         // If eliminated/blocking/dodgerolling, nothing happens.
         if (eliminated || currentPlayerState.isInvincibleToAttacks || waitingToBeEliminated || iFrames)
-            return;
+            return false;
+
+        if (explosionOnHit)
+        {
+            GameManager.game.SpawnExplosion(hitboxPos, attackingPlayerStatus, true);
+            return true;
+        }
 
         if (IsBlocking)
         {
@@ -552,12 +577,13 @@ public class PlayerStatus : MonoBehaviour
             }
 
             AudioManager.aud.Play("blockedPunch");
-            return;
+            return false;
         }
 
         GetHit((collisionPos - hitboxPos).normalized, damage, knockback, knockbackHeight, .3f, attackingPlayerStatus, false, false);
 
         AudioManager.aud.Play("hitByItem", 0.8f, 1.2f);
+        return true;
     }
 
     public void SetHeel()

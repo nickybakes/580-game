@@ -21,6 +21,11 @@ public class GameSceneSettings : MonoBehaviour
     public Vector3 minItemSpawnBoundaries = new Vector3(-100, 0, -100);
     public Vector3 maxItemSpawnBoundaries = new Vector3(100, 100, 100);
 
+    /// <summary>
+    /// Used for the intro sequence to show the map's name
+    /// </summary>
+    public GameObject mapNameAlert;
+
     // Start is called before the first frame update
     void Start()
     {

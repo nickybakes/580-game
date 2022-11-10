@@ -148,6 +148,8 @@ public class DefaultState
     /// </summary>
     public bool gotAHit;
 
+    public bool explodeOnHit;
+
     public bool CanCombo
     {
         get

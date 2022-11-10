@@ -11,6 +11,15 @@ public enum ParticleName
 {
     SpotlightBuffGet_01,
     AirAttackLand_01,
+    Explosion_01,
+    Explosion_01_01,
+    Explosion_01_02,
+    Explosion_01_03,
+    Explosion_01_04,
+    Explosion_01_05,
+    Explosion_01_06,
+    Explosion_01_07,
+    Explosion_01_08
 }
 
 public class VisualsManager : MonoBehaviour

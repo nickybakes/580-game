@@ -9,6 +9,11 @@ public class UIAlert : MonoBehaviour
     [HideInInspector]
     public Transform transformToTrackTo;
 
+    /// <summary>
+    /// How long the message should stay still before moving towards its target
+    /// and getting destroyed.
+    /// Make it 0 to make the alert pop up and stay up forever
+    /// </summary>
     public float timeToStayStillMax = 1;
     private float timeToStayStillCurrent;
 
@@ -40,45 +45,47 @@ public class UIAlert : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (timeToStayStillCurrent < timeToStayStillMax)
+        if (timeToStayStillMax != 0)
         {
-            timeToStayStillCurrent += Time.deltaTime;
-        }
-        else
-        {
-            if (timeToMoveCurrent == 0)
+            if (timeToStayStillCurrent < timeToStayStillMax)
             {
+                timeToStayStillCurrent += Time.deltaTime;
+            }
+            else
+            {
+                if (timeToMoveCurrent == 0)
+                {
+                    if (transformToTrackTo)
+                    {
+                        Vector2 trackingSceenPoint = Camera.main.WorldToViewportPoint(transformToTrackTo.position);
+
+                        Vector2 thisScreenPoint = Camera.main.ScreenToViewportPoint(rectTransform.position);
+
+                        float distance = Vector2.Distance(trackingSceenPoint, thisScreenPoint);
+
+                        timeToMoveMax = Mathf.Max(distance / moveSpeed, .4f);
+                    }
+                    else
+                    {
+                        timeToMoveMax = .4f;
+                    }
+                }
+
+                timeToMoveCurrent += Time.deltaTime;
+
                 if (transformToTrackTo)
                 {
-                    Vector2 trackingSceenPoint = Camera.main.WorldToViewportPoint(transformToTrackTo.position);
-
-                    Vector2 thisScreenPoint = Camera.main.ScreenToViewportPoint(rectTransform.position);
-
-                    float distance = Vector2.Distance(trackingSceenPoint, thisScreenPoint);
-
-                    timeToMoveMax = distance / moveSpeed;
+                    transform.position = Vector2.Lerp(startingPositionOnScreen, Camera.main.WorldToScreenPoint(transformToTrackTo.position), timeToMoveCurrent / timeToMoveMax);
                 }
-                else
+
+                float scale = (timeToMoveMax - timeToMoveCurrent) / timeToMoveMax;
+                rectTransform.localScale = new Vector3(scale, scale, scale);
+
+                if (timeToMoveCurrent > timeToMoveMax)
                 {
-                    timeToMoveMax = .5f;
+                    Destroy(gameObject);
                 }
-            }
-
-            timeToMoveCurrent += Time.deltaTime;
-
-            if (transformToTrackTo)
-            {
-                transform.position = Vector2.Lerp(startingPositionOnScreen, Camera.main.WorldToScreenPoint(transformToTrackTo.position), timeToMoveCurrent / timeToMoveMax);
-            }
-
-            float scale = (timeToMoveMax - timeToMoveCurrent) / timeToMoveMax;
-            rectTransform.localScale = new Vector3(scale, scale, scale);
-
-            if (timeToMoveCurrent > timeToMoveMax)
-            {
-                Destroy(gameObject);
             }
         }
-
     }
 }

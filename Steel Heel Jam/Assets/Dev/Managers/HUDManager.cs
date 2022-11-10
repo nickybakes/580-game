@@ -1,11 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+
 
 public class HUDManager : MonoBehaviour
 {
 
     public static HUDManager hud;
+
+    public TextMeshProUGUI countdownText;
 
     public GameObject headerPanel;
     public GameObject alertsPanel;
@@ -24,6 +28,9 @@ public class HUDManager : MonoBehaviour
     public GameObject spotlightOffScreenIndicator;
 
     public GameObject eliminatedAlert;
+
+    public GameObject introCurrentChampAlert;
+    public GameObject introHostAlert;
 
 
     // Start is called before the first frame update
@@ -96,5 +103,29 @@ public class HUDManager : MonoBehaviour
         alert.textObjects[0].text = "Player " + playerNumber;
 
         return g;
+    }
+
+    public static GameObject CreateMapNameAlert(GameObject alert)
+    {
+        return Instantiate(alert, hud.alertsPanel.transform);
+    }
+
+    public static GameObject CreateCurrentChampAlert()
+    {
+        GameObject g = Instantiate(hud.introCurrentChampAlert, hud.alertsPanel.transform);
+
+        UIAlert alert = g.GetComponent<UIAlert>();
+        if (AppManager.app.currentChampion != -1)
+        {
+            alert.textObjects[1].color = PlayerToken.colors[AppManager.app.currentChampion - 1];
+            alert.textObjects[1].text = "Player " + AppManager.app.currentChampion;
+        }
+
+        return g;
+    }
+
+    public static GameObject CreateHostAlert()
+    {
+        return Instantiate(hud.introHostAlert, hud.alertsPanel.transform);
     }
 }
