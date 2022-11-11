@@ -23,6 +23,13 @@ public class SuplexStartup : BasicState
         victim = _victim;
     }
 
+    public override void OnEnterThisState(BasicState prevState, PlayerStatus status)
+    {
+        base.OnEnterThisState(prevState, status);
+
+        victim.movement.velocity = status.movement.velocity;
+    }
+
     public override void OnExitThisState(BasicState nextState, PlayerStatus status)
     {
         base.OnExitThisState(nextState, status);
