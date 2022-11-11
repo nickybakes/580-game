@@ -8,7 +8,7 @@ public class PlayerToken : MonoBehaviour
 {
 
     public static Color32[] colors = {new Color32(255, 40, 40, 255), new Color32(17, 61, 255, 255), new Color32(255, 246, 9, 255), new Color32(0, 188, 37, 255),
-            new Color32(255, 119, 0, 255), new Color32(135, 19, 193, 255), new Color32(255, 0, 238, 255), new Color32(2, 214, 221, 255), new Color32(87,87,87, 255)};
+            new Color32(250, 96, 0, 255), new Color32(101, 14, 158, 255), new Color32(255, 0, 179, 255), new Color32(2, 214, 221, 255), new Color32(87,87,87, 255)};
 
     public int playerNumber;
 
