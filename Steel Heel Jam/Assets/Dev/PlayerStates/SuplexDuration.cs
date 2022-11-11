@@ -32,6 +32,7 @@ public class SuplexDuration : BasicState
         base.Update(status);
 
         victim.movement.velocity = status.movement.velocity;
+        victim.GetTransform.position = status.GetTransform.position;
 
         status.visuals.RotateModelFlyingThroughAir();
 

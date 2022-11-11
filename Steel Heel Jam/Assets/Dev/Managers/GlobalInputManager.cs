@@ -46,6 +46,8 @@ public class GlobalInputManager : MonoBehaviour
         if (DoesThisInputAlreadyExist(input))
             return;
 
+        Debug.Log(input.currentControlScheme);
+
         PlayerToken token = input.GetComponent<PlayerToken>();
         token.input = input;
         int playerNumber = getLowestPlayerNumber();
