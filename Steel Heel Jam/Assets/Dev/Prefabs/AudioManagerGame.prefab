@@ -89,6 +89,17 @@ MonoBehaviour:
     randStartPos: 0
     playOnAwake: 1
     source: {fileID: 0}
+  - audioType: 3
+    name: cheer
+    previousClip: -1
+    clips:
+    - {fileID: 8300000, guid: f0438b122dbc58643acdc7da257993a4, type: 3}
+    volume: 0
+    pitch: 1
+    loop: 1
+    randStartPos: 1
+    playOnAwake: 1
+    source: {fileID: 0}
   - audioType: 1
     name: hitByItem
     previousClip: -1
@@ -295,6 +306,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - audioType: 1
     name: explosion
+    previousClip: -1
     clips:
     - {fileID: 8300000, guid: 46e0a89f7703ac04987f1f5f8b52a93d, type: 3}
     volume: 0.8
@@ -527,6 +539,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - audioType: 2
     name: intro
+    previousClip: -1
     clips:
     - {fileID: 8300000, guid: 6b3e22ca7fc0b914bb9f53c15a8dbf65, type: 3}
     - {fileID: 8300000, guid: 2ab9d64921073f845b97d886115ffff7, type: 3}
