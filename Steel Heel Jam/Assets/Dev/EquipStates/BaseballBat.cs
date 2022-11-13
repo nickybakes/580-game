@@ -33,5 +33,6 @@ public class BaseballBat : DefaultState
         currentAttack = combo[0];
 
         InitializeAirAttack();
+        airAttack.radiusMultiplier = 1.5f;
     }
 }

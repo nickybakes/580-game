@@ -229,18 +229,6 @@ public class PlayerCombat : MonoBehaviour
 
         weaponState.currentAttack = weaponState.combo[weaponState.currentComboCount];
 
-        if (weaponState.currentComboCount >= weaponState.maxComboCount
-            && _status.buffs[(int)Buff.TheStink])
-        {
-            weaponState.hitboxScript.isPoisonous = true;
-        }
-
-        if (weaponState.currentComboCount >= weaponState.maxComboCount
-            && _status.buffs[(int)Buff.RedemptionArc])
-        {
-            weaponState.hitboxScript.isExplosive = true;
-        }
-
         attackState.animationState = DefaultState.GetAttackAnimation(
             weaponState.currentAttack.animation,
             0
@@ -366,6 +354,16 @@ public class PlayerCombat : MonoBehaviour
 
         _status.visuals.SetAnimationModifier(AnimationModifier.None);
         _status.visuals.ShowWeaponVisual(ItemType.Unarmed);
+    }
+
+    public void BreakWeapon()
+    {
+        if (equippedItem != null)
+        {
+            GameObject weapon = equippedItem;
+            DropWeapon();
+            Destroy(weapon);
+        }
     }
 
     /// <summary>

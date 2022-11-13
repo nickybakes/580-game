@@ -26,6 +26,8 @@ public class ItemTrajectory : MonoBehaviour
     public PlayerStatus thrower;
     public GameObject throwerObject;
 
+    public bool explodeOnHit;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -52,24 +54,24 @@ public class ItemTrajectory : MonoBehaviour
             UpdateTargetedThrow();
         }
 
-        if(despawnTimer <= 5)
+        if (despawnTimer <= 5)
         {
             // Start blink effect
             blinkTimer += Time.deltaTime;
-            if(blinkTimer > 0.2f)
+            if (blinkTimer > 0.2f)
             {
                 blinkTimer = 0;
                 transform.GetChild(0).gameObject.SetActive(!transform.GetChild(0).gameObject.activeSelf);
             }
 
-            if(despawnTimer <= 0)
+            if (despawnTimer <= 0)
             {
                 // Despawn Item
                 Destroy(this.gameObject);
             }
         }
 
-        if(despawnTimerActive) despawnTimer -= Time.deltaTime;
+        if (despawnTimerActive) despawnTimer -= Time.deltaTime;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -84,7 +86,14 @@ public class ItemTrajectory : MonoBehaviour
             if (isMidAir && collision.gameObject.CompareTag(Tag.Player.ToString()))
             {
                 PlayerStatus hitPlayerStatus = collision.gameObject.GetComponent<PlayerStatus>();
-                hitPlayerStatus.GetHitByThrowable(transform.position, collision.transform.position, 10, 12 * chargeAmount + 3, 13 * chargeAmount + 7, thrower);
+
+                bool hitPlayer = hitPlayerStatus.GetHitByThrowable(transform.position, collision.transform.position, 10, 12 * chargeAmount + 3, 13 * chargeAmount + 7, thrower, explodeOnHit);
+
+                if (explodeOnHit && hitPlayer)
+                {
+                    Destroy(this.gameObject);
+                    return;
+                }
             }
 
             isMidAir = false;

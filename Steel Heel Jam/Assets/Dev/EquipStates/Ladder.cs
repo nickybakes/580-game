@@ -47,5 +47,6 @@ public class Ladder : DefaultState
         currentAttack = combo[0];
 
         InitializeAirAttack();
+        airAttack.radiusMultiplier = 2.2f;
     }
 }

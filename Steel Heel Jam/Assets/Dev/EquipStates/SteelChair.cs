@@ -49,5 +49,6 @@ public class SteelChair : DefaultState
         currentAttack = combo[0];
 
         InitializeAirAttack();
+        airAttack.radiusMultiplier = 1.8f;
     }
 }

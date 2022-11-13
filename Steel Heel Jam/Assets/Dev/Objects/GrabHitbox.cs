@@ -30,11 +30,9 @@ public class GrabHitbox : MonoBehaviour
 
         PlayerStatus victim = playersWithinBounds[0].GetComponent<PlayerStatus>();
 
-        if (victim.CurrentPlayerState.isInvincibleToAttacks || victim.eliminated || playerStatus.eliminated)
+        if (victim.CurrentPlayerState.isInvincibleToAttacks || victim.eliminated || victim.waitingToBeEliminated || playerStatus.eliminated || playerStatus.waitingToBeEliminated)
             return;
 
-        // Make player grabbed unable to move and a child of the grabber.
-        victim.transform.SetParent(playerStatus.transform);
         // Grabbed player's position is overlapping grabber's position, will be fixed in animation.
         victim.transform.position = playerStatus.transform.position;
 
@@ -42,11 +40,11 @@ public class GrabHitbox : MonoBehaviour
 
         victim.transform.forward = new Vector3(forward.x, 0, forward.z);
 
+        // Removes victim from grabHitbox.  
+        playersWithinBounds.Remove(victim.gameObject);
+
         victim.SetPlayerStateImmediately(new SuplexVictimStartup());
         playerStatus.SetPlayerStateImmediately(new SuplexStartup(victim));
-
-        // Removes victim from grabHitbox.
-        playersWithinBounds.Remove(victim.gameObject);
     }
 
     private void OnTriggerEnter(Collider other)

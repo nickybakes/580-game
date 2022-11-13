@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -16,42 +15,54 @@ public class GameManager : MonoBehaviour
 
     public GameObject ringPrefab;
 
+    public GameObject spotlightPrefab;
+
     public HUDManager hudManager;
-    public GameObject hudCountdown;
 
     public ItemManager itemManager;
 
     public CameraManager cameraManager;
 
-    public Ring ringScript;
+    public GameObject introSequenceManager;
 
+    [HideInInspector]
+    public Ring ringScript;
+    [HideInInspector]
     public List<PlayerStatus> allPlayerStatuses;
+    [HideInInspector]
     public List<PlayerStatus> alivePlayerStatuses;
+    [HideInInspector]
     public List<PlayerStatus> eliminatedPlayerStatuses;
 
     public int countdownTime;
-    private TextMeshProUGUI countdownDisplay;
 
+    [HideInInspector]
     /// <summary>
     /// Starts counting up after the game starts
     /// </summary>
     public float gameTime;
 
-    public float maxGameTime = 154;
+    public float maxGameTime = 150;
 
     public bool gameWon;
 
     //public GameObject heelSpotlightPrefab;
     //public HeelSpotlight heelSpotlightScript;
 
+    [SerializeField] private GameObject explosion;
+
+    [HideInInspector]
     public GameObject spotlight;
     private BuffSpotlight spotlightScript;
     private GameObject spotlightOffScreenIndicator;
-
+    [HideInInspector]
     public float spotlightRespawnCooldownMax;
+    [HideInInspector]
     public float spotlightRespawnCooldown;
 
-    private bool heelSpotlightSpawned;
+    [HideInInspector]
+    //start as true for our intro sequence
+    public bool dontUpdateGameplay = true;
 
 
     // Start is called before the first frame update
@@ -63,18 +74,51 @@ public class GameManager : MonoBehaviour
         alivePlayerStatuses = new List<PlayerStatus>();
         eliminatedPlayerStatuses = new List<PlayerStatus>();
 
-        //temporary
-        itemManager = FindObjectOfType<ItemManager>();
-
 
         SpawnPlayerPrefabs();
+        MoveAllPlayersToGround();
         SpawnRing();
 
-        spotlightScript = spotlight.GetComponent<BuffSpotlight>();
-        DespawnSpotlight();
+        InitializeSpotlight();
 
-        //Grabs the countdown text from GameHUD and starts a countdown.
-        countdownDisplay = hudCountdown.GetComponent<TextMeshProUGUI>();
+        StartCoroutine(IntroSequence());
+    }
+
+    /// <summary>
+    /// Plays the intro sequence
+    /// </summary>
+    IEnumerator IntroSequence()
+    {
+        cameraManager.gameObject.SetActive(false);
+        introSequenceManager.gameObject.SetActive(true);
+        hudManager.headerPanel.SetActive(false);
+        AudioManager.aud.Play("intro");
+
+        yield return new WaitForSeconds(1f);
+
+        HUDManager.CreateMapNameAlert(gameSceneSettings.mapNameAlert);
+
+        yield return new WaitForSeconds(1f);
+
+        HUDManager.CreateCurrentChampAlert();
+
+        yield return new WaitForSeconds(.5f);
+
+        HUDManager.CreateHostAlert();
+
+        yield return new WaitForSeconds(4.5f);
+
+        EnableGameplayCameraAndCountdown();
+    }
+
+    public void EnableGameplayCameraAndCountdown()
+    {
+        cameraManager.gameObject.SetActive(true);
+        introSequenceManager.gameObject.SetActive(false);
+        hudManager.headerPanel.SetActive(true);
+
+        HUDManager.hud.countdownText.gameObject.SetActive(true);
+
         StartCoroutine(CountdownToStart());
     }
 
@@ -85,15 +129,18 @@ public class GameManager : MonoBehaviour
     {
         while (countdownTime > 0)
         {
-            countdownDisplay.text = countdownTime.ToString();
+            HUDManager.hud.countdownText.text = countdownTime.ToString();
 
             yield return new WaitForSeconds(1f);
 
             countdownTime--;
         }
 
-        countdownDisplay.text = "BRAWL!";
+        HUDManager.hud.countdownText.text = "BRAWL!";
         audioManager.Play("bellStart");
+        dontUpdateGameplay = false;
+
+        StartMovingRing();
 
         // Player movement limited by PlayerStatus update().
 
@@ -104,12 +151,20 @@ public class GameManager : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);
 
-        countdownDisplay.gameObject.SetActive(false);
+        HUDManager.hud.countdownText.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
+
+        if (dontUpdateGameplay)
+        {
+            if (cameraManager.gameObject.activeSelf)
+                cameraManager.UpdateCamera(alivePlayerStatuses, eliminatedPlayerStatuses);
+            return;
+        }
+
         gameTime += Time.deltaTime;
         cameraManager.UpdateCamera(alivePlayerStatuses, eliminatedPlayerStatuses);
 
@@ -164,6 +219,17 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void MoveAllPlayersToGround()
+    {
+        foreach (PlayerStatus s in allPlayerStatuses)
+        {
+            for (int i = 0; i < 100; i++)
+            {
+                s.movement.UpdateManual(true, false, false, false);
+            }
+        }
+    }
+
     public float GetTotalActivityTime()
     {
         float score = 0;
@@ -213,7 +279,10 @@ public class GameManager : MonoBehaviour
         status.transform.GetChild((int)PlayerChild.RingDecal).gameObject.SetActive(false);
 
         if (alivePlayerStatuses.Count == 1)
+        {
             gameWon = true;
+            AppManager.app.currentChampion = alivePlayerStatuses[0].playerNumber;
+        }
 
         HUDManager.CreateEliminatedAlert(status.transform, status.playerNumber);
     }
@@ -237,13 +306,24 @@ public class GameManager : MonoBehaviour
         GameObject g = Instantiate(ringPrefab);
         ringScript = g.GetComponent<Ring>();
 
-        g.transform.localScale = new Vector3(65, 7, 65);
+        g.transform.localScale = new Vector3(72, 7, 72);
         g.transform.position = new Vector3(ringCenter.position.x, g.transform.position.y, ringCenter.position.z);
 
         ringScript.UpdateRingShaderProperties();
+    }
 
+    private void StartMovingRing()
+    {
         // Resize ring to a diameter of 10 units in 2-ish minutes
         ringScript.ResizeRing(10, maxGameTime);
+    }
+
+    public void InitializeSpotlight()
+    {
+        spotlight = Instantiate(spotlightPrefab);
+        spotlight.transform.position = gameSceneSettings.transform.GetChild(8).position;
+        spotlightScript = spotlight.gameObject.GetComponent<BuffSpotlight>();
+        DespawnSpotlight();
     }
 
     public void SpawnSpotlight()
@@ -262,11 +342,18 @@ public class GameManager : MonoBehaviour
         spotlightScript.DecideWanderDirection();
         spotlight.SetActive(true);
 
-        HUDManager.CreateSpotlightAlert(spotlight.transform);
+        HUDManager.CreateSpotlightAlert(spotlight.transform.GetChild(4));
 
         spotlightOffScreenIndicator = HUDManager.CreateSpotlightOffScreenIndicator(spotlight.transform.GetChild(4));
         // VO
         AnnouncerManager.PlayLine("spotlight", Priority.SpotlightSpawn);
+    }
+
+    public void SpawnExplosion(Vector3 position, PlayerStatus ownerStatus, bool damagerOwnerToo)
+    {
+        GameObject explosionInstance = Instantiate(explosion, position, Quaternion.identity);
+        Explosion explosionScript = explosionInstance.GetComponent<Explosion>();
+        explosionScript.Init(ownerStatus, damagerOwnerToo);
     }
 
     public void DespawnSpotlight()

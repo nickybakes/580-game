@@ -34,8 +34,6 @@ public class SuplexVictimStartup : BasicState
 
         if (!(nextState is SuplexVictimDuration))
         {
-            status.gameObject.transform.parent = null;
-
             status.transform.GetChild((int)PlayerChild.RingDecal).gameObject.SetActive(true);
         }
     }

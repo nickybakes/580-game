@@ -20,6 +20,12 @@ public class AppManager : MonoBehaviour
     private Scenes currentScene;
     private Scenes previousScene;
 
+    [HideInInspector]
+    /// <summary>
+    /// Player number of the current champion. -1 if no champion yet!
+    /// </summary>
+    public int currentChampion = -1;
+
     public Scenes CurrentScene
     {
         get { return currentScene; }

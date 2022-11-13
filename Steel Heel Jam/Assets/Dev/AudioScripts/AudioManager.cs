@@ -170,27 +170,6 @@ public class AudioManager : MonoBehaviour
 
         s.source.Play();
     }
-
-    /// <summary>
-    /// Plays VO clip.
-    /// </summary>
-    public void PlayAnnouncer(string name, int clipNum)
-    {
-        Sound s = Array.Find(sounds, sound => sound.name == name);
-        if (s == null)
-        {
-            Debug.LogWarning("Sound: " + name + " not found!");
-            return;
-        }
-
-        // If there was no previous clip, chooses at random.
-        if (clipNum == -1)
-            s.source.clip = s.clips[UnityEngine.Random.Range(0, s.clips.Length)];
-        else
-            s.source.clip = s.clips[clipNum];
-
-        s.source.Play();
-    }
     #endregion
 
     /// <summary>

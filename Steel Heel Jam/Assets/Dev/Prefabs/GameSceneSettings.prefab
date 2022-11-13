@@ -82,7 +82,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1386097461890480440}
   m_Layer: 0
-  m_Name: Heel Spotlight Start
+  m_Name: Spotlight Start
   m_TagString: Untagged
   m_Icon: {fileID: 7250588514170254948, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -1330,6 +1330,8 @@ MonoBehaviour:
   playerSpawnsFor8: {fileID: 7297483729975054687}
   ringCenters: {fileID: 1290301523699382850}
   heelSpotlightStart: {fileID: 1386097461890480440}
+  minItemSpawnBoundaries: {x: -100, y: 0, z: -100}
+  maxItemSpawnBoundaries: {x: 100, y: 100, z: 100}
 --- !u!1 &7297483729975054686
 GameObject:
   m_ObjectHideFlags: 0

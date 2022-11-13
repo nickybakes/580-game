@@ -26,7 +26,7 @@ public class ItemManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GameManager.game.gameWon)
+        if (GameManager.game.gameWon || GameManager.game.dontUpdateGameplay)
             return;
 
         spawnTimer += Time.deltaTime;

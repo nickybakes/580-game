@@ -22,7 +22,7 @@ public class SuplexDuration : BasicState
 
         extraFallGravityMultiplier = 2f;
         animationState = AnimationState.SuplexDuration_01;
-        stateToChangeTo = new Idle();
+        stateToChangeTo = new SuplexRecovery();
 
         victim = _victim;
     }
@@ -32,6 +32,7 @@ public class SuplexDuration : BasicState
         base.Update(status);
 
         victim.movement.velocity = status.movement.velocity;
+        victim.GetTransform.position = status.GetTransform.position;
 
         status.visuals.RotateModelFlyingThroughAir();
 
@@ -40,22 +41,6 @@ public class SuplexDuration : BasicState
         {
             // Set to AttackAirRecovery.
             status.SetPlayerStateImmediately(new SuplexRecovery());
-
-            Vector3 launchDir = status.transform.forward;
-
-            launchDir.x *= -1;
-            launchDir.z *= -1;
-
-            float staminaMultiplier = (100 - victim.stamina) * 0.2f;
-            float launchTopDownSpeed = 20 + staminaMultiplier;
-            float launchHeight = 50 + staminaMultiplier;
-
-            // Set suplexed state to knockback.
-            Knockback knockback = new Knockback(new Vector3(launchDir.x * launchTopDownSpeed, launchHeight, launchDir.z * launchTopDownSpeed));
-            knockback.timeToChangeState = 1.0f;
-            victim.SetPlayerStateImmediately(knockback);
-
-            CameraManager.cam.ShakeCamera(.7f);
         }
     }
 
@@ -82,6 +67,22 @@ public class SuplexDuration : BasicState
 
         float scale2 = Mathf.Clamp((-status.movement.velocity.y - 39f) / 53f, .5f, 2f);
         particle.transform.localScale = new Vector3(scale2, scale2, scale2);
+
+        Vector3 launchDir = status.transform.forward;
+
+        launchDir.x *= -1;
+        launchDir.z *= -1;
+
+        float staminaMultiplier = (100 - victim.stamina) * 0.2f;
+        float launchTopDownSpeed = 20 + staminaMultiplier;
+        float launchHeight = 50 + staminaMultiplier;
+
+        // Set suplexed state to knockback.
+        Knockback knockback = new Knockback(new Vector3(launchDir.x * launchTopDownSpeed, launchHeight, launchDir.z * launchTopDownSpeed));
+        knockback.timeToChangeState = 1.0f;
+        victim.SetPlayerStateImmediately(knockback);
+
+        CameraManager.cam.ShakeCamera(.7f);
     }
 
     // Give initial arc direction.

@@ -51,11 +51,23 @@ MonoBehaviour:
     type: 3}
   ringPrefab: {fileID: 5454069359185126400, guid: ffa75000cf828834c8dbe66e30049f93,
     type: 3}
+  spotlightPrefab: {fileID: 7616529729895618283, guid: f6a262e7b3ec7284f838627dbee7aa6b,
+    type: 3}
   hudManager: {fileID: 0}
-  hudCountdown: {fileID: 0}
+  itemManager: {fileID: 0}
   cameraManager: {fileID: 0}
+  introSequenceManager: {fileID: 0}
+  ringScript: {fileID: 0}
   allPlayerStatuses: []
   alivePlayerStatuses: []
   eliminatedPlayerStatuses: []
   countdownTime: 3
   gameTime: 0
+  maxGameTime: 150
+  gameWon: 0
+  explosion: {fileID: 9109797555793773181, guid: e0e66c15a1cf695419fb75af07f21dc2,
+    type: 3}
+  spotlight: {fileID: 0}
+  spotlightRespawnCooldownMax: 0
+  spotlightRespawnCooldown: 0
+  dontUpdateGameplay: 1

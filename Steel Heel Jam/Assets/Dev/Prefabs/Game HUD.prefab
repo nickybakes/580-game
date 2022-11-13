@@ -363,6 +363,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d161e7d9dae81684d959af45708ce065, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  countdownText: {fileID: 1154679099495620570}
   headerPanel: {fileID: 7924586174244263753}
   alertsPanel: {fileID: 4625753851773478926}
   indicatorsPanel: {fileID: 829085922418357202}
@@ -383,6 +384,10 @@ MonoBehaviour:
   spotlightOffScreenIndicator: {fileID: 3377689147029183213, guid: c5cc6ccea19d5ef448da09a36ca41025,
     type: 3}
   eliminatedAlert: {fileID: 3377689147029183213, guid: b879747474733394e8006a7045face2d,
+    type: 3}
+  introCurrentChampAlert: {fileID: 3377689147029183213, guid: a1e2bd7c219ab974099c2e165a831f7d,
+    type: 3}
+  introHostAlert: {fileID: 3377689147029183213, guid: 77f47a12cb1577e4eaa8210691732bf9,
     type: 3}
 --- !u!1 &7924586174244263753
 GameObject:

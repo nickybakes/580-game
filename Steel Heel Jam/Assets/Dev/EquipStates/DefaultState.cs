@@ -148,6 +148,8 @@ public class DefaultState
     /// </summary>
     public bool gotAHit;
 
+    public bool explodeOnHit;
+
     public bool CanCombo
     {
         get
@@ -298,8 +300,6 @@ public class DefaultState
     public virtual void ForceEndAttack()
     {
         hitbox.SetActive(false);
-        hitboxScript.isExplosive = false;
-        hitboxScript.isPoisonous = false;
     }
 
     /// <summary>

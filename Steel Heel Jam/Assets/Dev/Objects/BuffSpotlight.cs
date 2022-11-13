@@ -25,7 +25,7 @@ public class BuffSpotlight : MonoBehaviour
     private bool playerTargeted = false;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         tr = GetComponent<Transform>();
     }
