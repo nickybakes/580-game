@@ -46,7 +46,7 @@ public class ImpactStun : BasicState
             // If traveling fast enough downwards, plays VO line.
             if (-attackingPlayer.movement.velocity.y > 53)
             {
-                AudioManager.aud.Play("elbowDrop");
+                AnnouncerManager.PlayLine("elbowDrop", Priority.ElbowDrop);
             }
         }
     }
