@@ -100,6 +100,17 @@ MonoBehaviour:
     randStartPos: 1
     playOnAwake: 1
     source: {fileID: 0}
+  - audioType: 3
+    name: crowd
+    previousClip: -1
+    clips:
+    - {fileID: 8300000, guid: 0c42e30d8dfa2364082a49dd958a683c, type: 3}
+    volume: 0.1
+    pitch: 1
+    loop: 1
+    randStartPos: 1
+    playOnAwake: 1
+    source: {fileID: 0}
   - audioType: 1
     name: hitByItem
     previousClip: -1
