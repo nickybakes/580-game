@@ -28,7 +28,8 @@ public class BlockedStun : BasicState
     {
         base.OnEnterThisState(prevState, status);
 
-        // Play VO line for player who blocked.
-        AudioManager.aud.Play("block");
+        // Play sfx and VO line for player who blocked.
+        AudioManager.aud.Play("blockedPunch");
+        AnnouncerManager.PlayLine("block", Priority.Block);
     }
 }

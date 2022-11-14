@@ -18,7 +18,7 @@ public class AudioManager : MonoBehaviour
     public static AudioManager aud;
 
     // Start is called before the first frame update
-    void Awake()
+    private void Awake()
     {
         aud = this;
 
@@ -69,6 +69,7 @@ public class AudioManager : MonoBehaviour
     #region Parameter variations for Play()
     /// <summary>
     /// Plays audioclip. Chooses randomly from clips. Sets volume, pitch.
+    /// Only one to use s.previousClip, useful for VO lines.
     /// </summary>
     /// <param name="name">Name of audioclip</param>
     public void Play(string name)
@@ -80,12 +81,19 @@ public class AudioManager : MonoBehaviour
             return;
         }
 
-        // VO check for overlap.
-        if (s.audioType == Sound.AudioTypes.VoiceOver && IsPlaying(Sound.AudioTypes.VoiceOver) && name != "matchBegin")
-            return;
-
         //chooses from list before playing.
-        s.source.clip = s.clips[UnityEngine.Random.Range(0, s.clips.Length)];
+        int randClip = UnityEngine.Random.Range(0, s.clips.Length);
+
+        if (s.clips.Length > 1)
+        {
+            while (randClip == s.previousClip)
+            {
+                randClip = UnityEngine.Random.Range(0, s.clips.Length);
+            }
+        }
+
+        s.source.clip = s.clips[randClip];
+        s.previousClip = randClip;
 
         if (s.randStartPos)
             s.source.time = UnityEngine.Random.Range(0, s.source.clip.length);
@@ -105,10 +113,6 @@ public class AudioManager : MonoBehaviour
             Debug.LogWarning("Sound: " + name + " not found!");
             return;
         }
-
-        // VO check for overlap.
-        if (s.audioType == Sound.AudioTypes.VoiceOver && IsPlaying(Sound.AudioTypes.VoiceOver))
-            return;
 
         //chooses from list before playing.
         s.source.clip = s.clips[UnityEngine.Random.Range(0, s.clips.Length)];
@@ -133,10 +137,6 @@ public class AudioManager : MonoBehaviour
             return;
         }
 
-        // VO check for overlap.
-        if (s.audioType == Sound.AudioTypes.VoiceOver && IsPlaying(Sound.AudioTypes.VoiceOver))
-            return;
-
         //chooses from list before playing.
         s.source.clip = s.clips[UnityEngine.Random.Range(0, s.clips.Length)];
         s.source.pitch = UnityEngine.Random.Range(pitch1, pitch2);
@@ -159,10 +159,6 @@ public class AudioManager : MonoBehaviour
             Debug.LogWarning("Sound: " + name + " not found!");
             return;
         }
-
-        // VO check for overlap.
-        if (s.audioType == Sound.AudioTypes.VoiceOver && IsPlaying(Sound.AudioTypes.VoiceOver))
-            return;
 
         //chooses from list before playing.
         s.source.clip = s.clips[UnityEngine.Random.Range(0, s.clips.Length)];
@@ -212,34 +208,15 @@ public class AudioManager : MonoBehaviour
     /// Finds if a specified clip is currently playing.
     /// </summary>
     /// <returns>Returns true if the clip is playing, else false.</returns>
-    public bool IsPlaying(string name)
+    public bool IsPlaying(Sound s)
     {
-        Sound s = Array.Find(sounds, sound => sound.name == name);
-        if (s.source.isPlaying)
-        {
-            return true;
-        }
-        else
-        {
+        if (s == null)
             return false;
-        }
-    }
 
-    /// <summary>
-    /// Finds if a specified audioType is currently playing.
-    /// </summary>
-    /// <returns>Returns true if anything from that type is playing, else false.</returns>
-    public bool IsPlaying(Sound.AudioTypes audioType)
-    {
-        Sound[] allSoundsOfType = Array.FindAll(sounds, sound => sound.audioType == audioType);
-        foreach (Sound s in allSoundsOfType)
-        {
-            if (s.source.isPlaying)
-            {
-                return true;
-            }
-        }
-        return false;
+        if (s.source.isPlaying)
+            return true;
+        else
+            return false;
     }
 
     public void UpdateMixerVolume()

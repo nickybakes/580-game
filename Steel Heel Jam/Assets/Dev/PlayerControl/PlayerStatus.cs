@@ -420,8 +420,8 @@ public class PlayerStatus : MonoBehaviour
             combat.DropWeapon();
             ReduceMaxStamina(damage);
 
-            // For now, bigHit sounds will coincide with dropping a weapon (as an audio queue)
-            AudioManager.aud.Play("bigHitDropWeapon");
+            // For now, VO bigHit sounds will coincide with dropping a weapon (as an audio queue)
+            AnnouncerManager.PlayLine("bigHitDropWeapon", Priority.Damage);
         }
 
         combat.ActedRecently = true;
@@ -456,7 +456,9 @@ public class PlayerStatus : MonoBehaviour
                 GameManager.game.SpawnExplosion(transform.position, this, false);
             }
 
+            // Play sfx and VO.
             AudioManager.aud.Play("blockedPunch");
+            AnnouncerManager.PlayLine("block", Priority.Block);
             return;
         }
 
@@ -610,7 +612,7 @@ public class PlayerStatus : MonoBehaviour
             //buffs[(int)Buff.HeelFire] = true;
 
             // VO
-            AudioManager.aud.Play("heelFire");
+            AnnouncerManager.PlayLine("heelFire", Priority.HeelFire);
         }
         else
         {
@@ -626,7 +628,7 @@ public class PlayerStatus : MonoBehaviour
             playerHeader.ShowBuff(buffToGive);
 
             // VO
-            AudioManager.aud.Play(buffToGive.ToString());
+            AnnouncerManager.PlayLine(buffToGive.ToString(), Priority.Buff);
         }
         CameraManager.cam.ShakeCamera(.5f);
     }

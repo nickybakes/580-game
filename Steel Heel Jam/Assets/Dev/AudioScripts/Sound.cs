@@ -14,6 +14,11 @@ public class Sound
 
     public string name;
 
+    // Use to prevent the same clip from inside a sound to play twice in a row.
+    // If no previous clip, set to -1.
+    [HideInInspector]
+    public int previousClip = -1;
+
     public AudioClip[] clips;
 
     [Range(0f, 1f)]

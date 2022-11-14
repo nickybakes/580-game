@@ -267,7 +267,7 @@ public class GameManager : MonoBehaviour
         }
 
         // Plays VO line. (only if hit out by another player... walk-out lines as a stretch goal)
-        AudioManager.aud.Play("eliminated");
+        AnnouncerManager.PlayLine("eliminated", Priority.Elimination);
 
         alivePlayerStatuses.Remove(status);
         eliminatedPlayerStatuses.Add(status);
@@ -346,7 +346,7 @@ public class GameManager : MonoBehaviour
 
         spotlightOffScreenIndicator = HUDManager.CreateSpotlightOffScreenIndicator(spotlight.transform.GetChild(4));
         // VO
-        AudioManager.aud.Play("spotlight");
+        AnnouncerManager.PlayLine("spotlight", Priority.SpotlightSpawn);
     }
 
     public void SpawnExplosion(Vector3 position, PlayerStatus ownerStatus, bool damagerOwnerToo)

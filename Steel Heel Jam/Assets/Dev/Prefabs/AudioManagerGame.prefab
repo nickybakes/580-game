@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1285489703509536206}
   - component: {fileID: 2728357844220918305}
   - component: {fileID: 8454066521746509047}
+  - component: {fileID: 1273856676494883815}
   m_Layer: 0
   m_Name: AudioManagerGame
   m_TagString: Untagged
@@ -57,6 +58,7 @@ MonoBehaviour:
   sounds:
   - audioType: 0
     name: musicLoop
+    previousClip: -1
     clips:
     - {fileID: 8300000, guid: 1273ba5f279eabc43962128ed5a8706e, type: 3}
     volume: 0.175
@@ -67,6 +69,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - audioType: 0
     name: drumLoop
+    previousClip: -1
     clips:
     - {fileID: 8300000, guid: f1fed9267e0cdc34c84a1c55bfa046e2, type: 3}
     volume: 1
@@ -77,6 +80,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - audioType: 3
     name: market
+    previousClip: -1
     clips:
     - {fileID: 8300000, guid: 65ed942379f6b6340a3528852f44ff1a, type: 3}
     volume: 0.1
@@ -87,6 +91,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - audioType: 1
     name: hitByItem
+    previousClip: -1
     clips:
     - {fileID: 8300000, guid: a3046481ba3e4044b9c0a43b1b295938, type: 3}
     volume: 1
@@ -97,6 +102,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - audioType: 1
     name: orchestraHitShort
+    previousClip: -1
     clips:
     - {fileID: 8300000, guid: db24964515fffd842baa2eac04250a79, type: 3}
     volume: 0.1
@@ -107,6 +113,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - audioType: 1
     name: orchestraHitLong
+    previousClip: -1
     clips:
     - {fileID: 8300000, guid: 6f4a2267fda6f3748b085b6f337d719f, type: 3}
     volume: 0.2
@@ -117,6 +124,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - audioType: 1
     name: swing
+    previousClip: -1
     clips:
     - {fileID: 8300000, guid: 9fc67e1ab49b99541b2cf1d1099e314a, type: 3}
     - {fileID: 8300000, guid: ac081add02c44be488e8c9ce671bdaf8, type: 3}
@@ -130,6 +138,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - audioType: 1
     name: throw
+    previousClip: -1
     clips:
     - {fileID: 8300000, guid: 264d58a36f05c1040b17a383f3ce9e85, type: 3}
     - {fileID: 8300000, guid: 70139b382a6b5514d97d9d1eaa34eae8, type: 3}
@@ -141,6 +150,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - audioType: 1
     name: punch
+    previousClip: -1
     clips:
     - {fileID: 8300000, guid: a5c9215836d3bcb449f34af312ac5ecf, type: 3}
     volume: 1
@@ -151,6 +161,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - audioType: 1
     name: bellStart
+    previousClip: -1
     clips:
     - {fileID: 8300000, guid: 803461bf9c99de244b390b9eae313466, type: 3}
     volume: 0.5
@@ -161,6 +172,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - audioType: 1
     name: flexing
+    previousClip: -1
     clips:
     - {fileID: 8300000, guid: a5327124c308dde4b92038d64ff100c1, type: 3}
     volume: 0.8
@@ -171,6 +183,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - audioType: 1
     name: blockedPunch
+    previousClip: -1
     clips:
     - {fileID: 8300000, guid: ec90eb796a903f64292a817364d2461b, type: 3}
     volume: 1
@@ -181,6 +194,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - audioType: 1
     name: crunch
+    previousClip: -1
     clips:
     - {fileID: 8300000, guid: 939d4411ee5344a48b1ee8ddfe346d0a, type: 3}
     - {fileID: 8300000, guid: 31a653d72c45a5d4da184cc7f9e85eac, type: 3}
@@ -193,6 +207,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - audioType: 1
     name: landing
+    previousClip: -1
     clips:
     - {fileID: 8300000, guid: 5f379ab2b00830b4a9697cbbe2b03fdf, type: 3}
     - {fileID: 8300000, guid: 2a4b80154fb11514d9e5de95709dc4f2, type: 3}
@@ -204,6 +219,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - audioType: 1
     name: roll
+    previousClip: -1
     clips:
     - {fileID: 8300000, guid: 80e9df1c8c8bb8649afec5cf0d255531, type: 3}
     - {fileID: 8300000, guid: dc5c431c7aed38347b827495aec73238, type: 3}
@@ -217,6 +233,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - audioType: 1
     name: grab
+    previousClip: -1
     clips:
     - {fileID: 8300000, guid: b01f8f4181f7c7c4b8860f5b0d57acee, type: 3}
     volume: 0.8
@@ -227,6 +244,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - audioType: 1
     name: footstep
+    previousClip: -1
     clips:
     - {fileID: 8300000, guid: 631d8d7e336097c48b769f1ac18dcade, type: 3}
     - {fileID: 8300000, guid: e9da0d50a446a4644b974581f12c5860, type: 3}
@@ -242,6 +260,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - audioType: 1
     name: jump
+    previousClip: -1
     clips:
     - {fileID: 8300000, guid: d3e85648af8bfc3418a28a5470238032, type: 3}
     - {fileID: 8300000, guid: a7169c89519de3e4fb1af4c29e7be185, type: 3}
@@ -253,6 +272,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - audioType: 1
     name: land
+    previousClip: -1
     clips:
     - {fileID: 8300000, guid: 9d542c3d95089d5469a28fb4a07fb6b3, type: 3}
     - {fileID: 8300000, guid: ef4dcb80877cf734aa810774218402c8, type: 3}
@@ -264,6 +284,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - audioType: 1
     name: pickup
+    previousClip: -1
     clips:
     - {fileID: 8300000, guid: 0192a4c25c90fe041a44e5a9a8336196, type: 3}
     volume: 0.5
@@ -276,7 +297,7 @@ MonoBehaviour:
     name: explosion
     clips:
     - {fileID: 8300000, guid: 46e0a89f7703ac04987f1f5f8b52a93d, type: 3}
-    volume: 0.5
+    volume: 0.8
     pitch: 1
     loop: 0
     randStartPos: 0
@@ -284,6 +305,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - audioType: 2
     name: elbowDrop
+    previousClip: -1
     clips:
     - {fileID: 8300000, guid: b7b643ac69221a1469888056f1b6d554, type: 3}
     - {fileID: 8300000, guid: f5abf02bb52287f408852a6a9cbea1a4, type: 3}
@@ -301,6 +323,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - audioType: 2
     name: matchBegin
+    previousClip: -1
     clips:
     - {fileID: 8300000, guid: 0fb03fece98e07941aa951c6fa8f64a9, type: 3}
     - {fileID: 8300000, guid: 30df02bc06bdbea43a73b4b4e1c297fe, type: 3}
@@ -317,6 +340,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - audioType: 2
     name: spotlight
+    previousClip: -1
     clips:
     - {fileID: 8300000, guid: 683b5bb49e8ee9b4ca17dae8187e52f7, type: 3}
     - {fileID: 8300000, guid: ce293c37001289c4883301b205cca9ea, type: 3}
@@ -329,6 +353,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - audioType: 2
     name: PlotArmor
+    previousClip: -1
     clips:
     - {fileID: 8300000, guid: dc95037a0097d6c4fb249f12f224b194, type: 3}
     - {fileID: 8300000, guid: 9e08cc865cb6b264eb67762be5700c19, type: 3}
@@ -340,6 +365,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - audioType: 2
     name: RedemptionArc
+    previousClip: -1
     clips:
     - {fileID: 8300000, guid: b5f535af489098947bacdf05d05e3cb1, type: 3}
     - {fileID: 8300000, guid: 9d6e31aa4d6aad04fbf5eb386f89469f, type: 3}
@@ -352,6 +378,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - audioType: 2
     name: MachoBlock
+    previousClip: -1
     clips:
     - {fileID: 8300000, guid: 4f12587ed5595244281e7f327a3e8f74, type: 3}
     - {fileID: 8300000, guid: 70eae415e03b1c449ba238ce440ae058, type: 3}
@@ -363,6 +390,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - audioType: 2
     name: SpeedySubversion
+    previousClip: -1
     clips:
     - {fileID: 8300000, guid: ea61d23da382d2942906bf5de514ff40, type: 3}
     - {fileID: 8300000, guid: 2a3ce8a7c9c7fdc42a642aba8735eef1, type: 3}
@@ -374,6 +402,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - audioType: 2
     name: TopRopes
+    previousClip: -1
     clips:
     - {fileID: 8300000, guid: 20ecaf8cfd0b18f4bad9867d188530ca, type: 3}
     - {fileID: 8300000, guid: 3a485ec46378f804e9add0aa8bfe8b67, type: 3}
@@ -386,6 +415,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - audioType: 2
     name: TheStink
+    previousClip: -1
     clips:
     - {fileID: 8300000, guid: 340e1458f123c2d4bb982551e9813f8f, type: 3}
     - {fileID: 8300000, guid: ca173af139209d741bbdd413f8c160e9, type: 3}
@@ -397,6 +427,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - audioType: 2
     name: heelFire
+    previousClip: -1
     clips:
     - {fileID: 8300000, guid: 8f92cd28a14144246b8f152b5efaa140, type: 3}
     - {fileID: 8300000, guid: a395a1cd2e3035644a589b47038dc9dc, type: 3}
@@ -416,6 +447,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - audioType: 2
     name: block
+    previousClip: -1
     clips:
     - {fileID: 8300000, guid: 67a2272fbbfaaf044a8173134e8e00f1, type: 3}
     - {fileID: 8300000, guid: 3bdf5f9eb8b3e8545b156bdf3809de29, type: 3}
@@ -436,6 +468,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - audioType: 2
     name: eliminated
+    previousClip: -1
     clips:
     - {fileID: 8300000, guid: 651105aa1f9d9f84ab43a07d3a0db7f8, type: 3}
     - {fileID: 8300000, guid: eeba97d0953822a4482825383769e9c5, type: 3}
@@ -455,6 +488,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - audioType: 2
     name: bigHitCombo
+    previousClip: -1
     clips:
     - {fileID: 8300000, guid: 1c4d074707f257d41be0da4209d74b46, type: 3}
     - {fileID: 8300000, guid: 93cb96e358ff6c14d920b3ba7916066f, type: 3}
@@ -467,6 +501,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - audioType: 2
     name: bigHitDropWeapon
+    previousClip: -1
     clips:
     - {fileID: 8300000, guid: 3d39e4a983a060b46b3191634bee05b9, type: 3}
     - {fileID: 8300000, guid: c5901895469e82741858675b38f04070, type: 3}
@@ -479,6 +514,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - audioType: 2
     name: bigHitSuplex
+    previousClip: -1
     clips:
     - {fileID: 8300000, guid: 83d0f21bd780dd1439af9cd90d9fbcc6, type: 3}
     - {fileID: 8300000, guid: 93cb96e358ff6c14d920b3ba7916066f, type: 3}
@@ -522,3 +558,15 @@ MonoBehaviour:
   soundEffectSliderText: {fileID: 0}
   voiceOverSliderText: {fileID: 0}
   ambientSliderText: {fileID: 0}
+--- !u!114 &1273856676494883815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8705892428411434741}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23739e10e9e5a834286a7fde65d60726, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
