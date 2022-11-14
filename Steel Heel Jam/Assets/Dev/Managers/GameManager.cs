@@ -7,8 +7,6 @@ public class GameManager : MonoBehaviour
 
     public static GameManager game;
 
-    public AudioManager audioManager;
-
     public GameSceneSettings gameSceneSettings;
 
     public GameObject playerPrefab;
@@ -69,7 +67,6 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         GameManager.game = this;
-        audioManager = FindObjectOfType<AudioManager>();
         allPlayerStatuses = new List<PlayerStatus>();
         alivePlayerStatuses = new List<PlayerStatus>();
         eliminatedPlayerStatuses = new List<PlayerStatus>();
@@ -137,7 +134,7 @@ public class GameManager : MonoBehaviour
         }
 
         HUDManager.hud.countdownText.text = "BRAWL!";
-        audioManager.Play("bellStart");
+        AudioManager.aud.Play("bellStart");
         dontUpdateGameplay = false;
 
         StartMovingRing();
@@ -183,6 +180,9 @@ public class GameManager : MonoBehaviour
         //     heelSpotlightSpawned = true;
         //     SpawnHeelSpotlight();
         // }
+
+        // Lower audience volume to min.
+        AudioManager.aud.Fade("cheer", -0.8f, 0.0f);
     }
 
     public void SpawnPlayerPrefabs()

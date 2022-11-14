@@ -3,6 +3,7 @@ using UnityEngine;
 using System;
 using UnityEditor.Rendering;
 using UnityEngine.Rendering;
+using System.Collections;
 
 public class AudioManager : MonoBehaviour
 {
@@ -217,6 +218,21 @@ public class AudioManager : MonoBehaviour
             return true;
         else
             return false;
+    }
+
+    /// <summary>
+    /// Fade in or out audio, based on whether speed is + or -.
+    /// </summary>
+    /// <param name="name">Name of sound clip.</param>
+    /// <param name="speed">Speed to fade at. </param>
+    /// <param name="maxMinVol">Either the max or min volume, depending on if you're fading in or out. (between 0 and 1)</param>
+    public void Fade(string name, float speed, float maxMinVol)
+    {
+        Sound s = Find(name);
+
+        // For fadeIn OR fadeOut
+        if ((speed > 0 && s.source.volume < maxMinVol) || (speed < 0 && s.source.volume > maxMinVol))
+            s.source.volume += speed * Time.deltaTime;
     }
 
     public void UpdateMixerVolume()

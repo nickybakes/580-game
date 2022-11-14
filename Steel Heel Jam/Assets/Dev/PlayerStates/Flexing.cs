@@ -54,6 +54,9 @@ public class Flexing : BasicState
                 status.IncreaseStamina((DefaultRestStaminaRegen + (status.buffs[(int)Buff.PlotArmor] == true ? status.plotArmorAdditionalHeal : 0)) * Time.deltaTime);
             }
         }
+
+        // Fade in audience
+        AudioManager.aud.Fade("cheer", 1.5f, 0.5f);
     }
 
     public override void OnEnterThisState(BasicState prevState, PlayerStatus status)
