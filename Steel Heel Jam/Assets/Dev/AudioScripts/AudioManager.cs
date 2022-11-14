@@ -85,7 +85,8 @@ public class AudioManager : MonoBehaviour
         //chooses from list before playing.
         int randClip = UnityEngine.Random.Range(0, s.clips.Length);
 
-        if (s.clips.Length > 1)
+        // If VO content, checks if same line as previousClip, if so, re-randomizes.
+        if (s.audioType == Sound.AudioTypes.VoiceOver && s.clips.Length > 1)
         {
             while (randClip == s.previousClip)
             {
