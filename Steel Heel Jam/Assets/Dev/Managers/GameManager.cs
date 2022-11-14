@@ -176,7 +176,7 @@ public class GameManager : MonoBehaviour
         }
 
         // Lower audience volume to min.
-        AudioManager.aud.Fade("cheer", -0.5f, 0.0f);
+        AudioManager.aud.UpdateFade("cheer", -0.1f, 0.0f);
     }
 
     public void SpawnPlayerPrefabs()

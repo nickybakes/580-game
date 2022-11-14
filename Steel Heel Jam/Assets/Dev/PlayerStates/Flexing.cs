@@ -44,7 +44,7 @@ public class Flexing : BasicState
             status.IncreaseSpotlightMeter(spotlightFillRate * Time.deltaTime);
 
             // In spotlight cheering is louder.
-            AudioManager.aud.Fade("cheer", 1.2f, 0.5f);
+            AudioManager.aud.UpdateFade("cheer", 1.2f, 0.5f);
         }
         else if (status.spotlight == 0)
         {
@@ -59,7 +59,7 @@ public class Flexing : BasicState
         }
 
         // Fade in audience
-        AudioManager.aud.Fade("cheer", 0.8f, 0.2f);
+        AudioManager.aud.UpdateFade("cheer", 0.8f, 0.2f);
     }
 
     public override void OnEnterThisState(BasicState prevState, PlayerStatus status)
