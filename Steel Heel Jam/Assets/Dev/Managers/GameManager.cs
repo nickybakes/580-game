@@ -175,14 +175,8 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        // if (gameTime > 13 && !heelSpotlightSpawned)
-        // {
-        //     heelSpotlightSpawned = true;
-        //     SpawnHeelSpotlight();
-        // }
-
         // Lower audience volume to min.
-        AudioManager.aud.Fade("cheer", -0.8f, 0.0f);
+        AudioManager.aud.Fade("cheer", -0.5f, 0.0f);
     }
 
     public void SpawnPlayerPrefabs()
@@ -263,7 +257,6 @@ public class GameManager : MonoBehaviour
         {
             status.playerLastHitBy.totalEliminations++;
             status.playerLastHitBy.IncreaseSpotlightMeter(25.0f);
-
         }
 
         // Plays VO line. (only if hit out by another player... walk-out lines as a stretch goal)
