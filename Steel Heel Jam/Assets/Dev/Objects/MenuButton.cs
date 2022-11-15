@@ -10,6 +10,8 @@ public class MenuButton : MonoBehaviour
     [HideInInspector]
     private List<PlayerCursor> cursorsHoveringThisButton;
 
+    [HideInInspector] public Vector3 position;
+
     public UnityEvent submitAction;
 
     public MenuButton upSelect;
@@ -20,13 +22,20 @@ public class MenuButton : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        position = transform.position;
         cursorsHoveringThisButton = new List<PlayerCursor>();
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        foreach (PlayerCursor cursor in cursorsHoveringThisButton)
+        {
+            if (cursor._input.accept)
+            {
+                submitAction.Invoke();
+            }
+        }
     }
 
     void OnTriggerEnter2D(Collider2D other)

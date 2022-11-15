@@ -4,6 +4,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+public enum SnapDirection
+{
+    Up,
+    Down,
+    Left,
+    Right
+}
 public class PlayerCursor : MonoBehaviour
 {
     public TextMeshProUGUI playerNumberText;
@@ -16,7 +23,7 @@ public class PlayerCursor : MonoBehaviour
 
     private float aspectRatio = 16f / 9f;
 
-    private CursorInputs _input;
+    [HideInInspector] public CursorInputs _input;
 
     private Vector2 inputDirection;
 
@@ -43,6 +50,11 @@ public class PlayerCursor : MonoBehaviour
         if (_input.back)
         {
             AppManager.app.RemovePlayerToken(playerNumber);
+        }
+
+        if (_input.snapState.isSnapping)
+        {
+            // Logic for snapping to direction here
         }
 
         inputDirection = _input.move.normalized;
