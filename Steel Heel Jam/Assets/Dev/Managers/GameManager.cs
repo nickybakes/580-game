@@ -261,6 +261,7 @@ public class GameManager : MonoBehaviour
 
         // Plays VO line. (only if hit out by another player... walk-out lines as a stretch goal)
         AnnouncerManager.PlayLine("eliminated", Priority.Elimination);
+        AudioManager.aud.StartFade("cheer", 1.0f, 0.3f);
 
         alivePlayerStatuses.Remove(status);
         eliminatedPlayerStatuses.Add(status);

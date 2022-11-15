@@ -613,6 +613,7 @@ public class PlayerStatus : MonoBehaviour
 
             // VO
             AnnouncerManager.PlayLine("heelFire", Priority.HeelFire);
+            AudioManager.aud.StartFade("cheer", 1.5f, 0.6f);
         }
         else
         {
@@ -629,6 +630,7 @@ public class PlayerStatus : MonoBehaviour
 
             // VO
             AnnouncerManager.PlayLine(buffToGive.ToString(), Priority.Buff);
+            AudioManager.aud.StartFade("cheer", 1.0f, 0.4f);
         }
         CameraManager.cam.ShakeCamera(.5f);
     }

@@ -251,7 +251,7 @@ public class AudioManager : MonoBehaviour
     /// <param name="duration">Duration of the fade.</param>
     /// <param name="targetVolume">Target volume.</param>
     /// <returns></returns>
-    public IEnumerator StartFadeEnumerator(string name, float duration, float targetVolume)
+    private IEnumerator StartFadeEnumerator(string name, float duration, float targetVolume)
     {
         Sound s = Find(name);
         float currentTime = 0;
