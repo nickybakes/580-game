@@ -1,23 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public enum MenuButtonType
-{
-    StartMatch,
-
-}
+using UnityEngine.Events;
 
 public class MenuButton : MonoBehaviour
 {
-
-    public MenuButtonType buttonType;
-
     public GameObject buttonHoverObject;
 
     [HideInInspector]
     private List<PlayerCursor> cursorsHoveringThisButton;
 
+    public UnityEvent submitAction;
+
+    public MenuButton upSelect;
+    public MenuButton downSelect;
+    public MenuButton leftSelect;
+    public MenuButton rightSelect;
 
     // Start is called before the first frame update
     void Start()
