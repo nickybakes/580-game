@@ -46,5 +46,6 @@ public class LeadPipe : DefaultState
 
         InitializeAirAttack();
         airAttack.radiusMultiplier = 1.4f;
+        airAttack.damageMultiplier = 1.5f;
     }
 }
