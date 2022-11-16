@@ -337,6 +337,24 @@ MonoBehaviour:
     randStartPos: 1
     playOnAwake: 0
     source: {fileID: 0}
+  - audioType: 1
+    name: BoomBox
+    previousClip: -1
+    clips:
+    - {fileID: 8300000, guid: d28ebc72c0bd10b46bf38ab881999cb7, type: 3}
+    - {fileID: 8300000, guid: 93ae97b859c366d4b8632f8632154422, type: 3}
+    - {fileID: 8300000, guid: eaafba4d56356e040bd022da1cd24a3a, type: 3}
+    - {fileID: 8300000, guid: 2f5fb29d5a563314fbdadbd011c3e549, type: 3}
+    - {fileID: 8300000, guid: d78a11ac9ea77bf44ad666b67da2e41f, type: 3}
+    - {fileID: 8300000, guid: 1bb59c5d0e0bc164d929919c5770db97, type: 3}
+    - {fileID: 8300000, guid: 4533bf90029f8b940bc11444aa0efb46, type: 3}
+    - {fileID: 8300000, guid: 54a2c92898086d34fb02e9885ac5d58d, type: 3}
+    volume: 0.5
+    pitch: 1
+    loop: 0
+    randStartPos: 0
+    playOnAwake: 0
+    source: {fileID: 0}
   - audioType: 2
     name: elbowDrop
     previousClip: -1

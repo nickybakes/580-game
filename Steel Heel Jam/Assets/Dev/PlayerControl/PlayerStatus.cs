@@ -503,7 +503,6 @@ public class PlayerStatus : MonoBehaviour
         {
             GameManager.game.SpawnExplosion(attackingPlayerStatus.combat.weaponState.hitbox.transform.position, attackingPlayerStatus, true);
             attackingPlayerStatus.combat.BreakWeapon();
-            AudioManager.aud.Play("punch", 0.8f, 1.2f);
             return;
         }
 
@@ -552,13 +551,22 @@ public class PlayerStatus : MonoBehaviour
             {
                 // If the full combo causes Iframes, plays VO line.
                 if (IFrames)
-                    AudioManager.aud.Play("bigHitCombo");
+                    AnnouncerManager.PlayLine("bigHitCombo", Priority.Damage);
 
                 AudioManager.aud.Play("orchestraHitLong");
                 CameraManager.cam.ShakeCamera(.2f);
             }
 
+            // Always plays default punch. If a weapon is equipped, also plays that specific sound.
             AudioManager.aud.Play("punch", 0.8f, 1.2f);
+
+            if (attackingPlayerStatus.combat.equippedItem != null)
+            {
+                string soundToPlay = attackingPlayerStatus.combat.equippedItem.name;
+                // Remove '(clone)' from end of string. (Sounds in AudioManager named same as weapons)
+                soundToPlay = soundToPlay.Remove(soundToPlay.Length - 7);
+                AudioManager.aud.Play(soundToPlay, 0.8f, 1.2f);
+            }
         }
     }
 
