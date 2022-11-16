@@ -50,5 +50,6 @@ public class SteelChair : DefaultState
 
         InitializeAirAttack();
         airAttack.radiusMultiplier = 1.8f;
+        airAttack.damageMultiplier = 2.4f;
     }
 }

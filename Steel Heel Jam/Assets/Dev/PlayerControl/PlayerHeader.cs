@@ -41,6 +41,7 @@ public class PlayerHeader : MonoBehaviour
     private RectTransform staminaBarBackgroundRect;
 
     public TextMeshProUGUI weaponText;
+    public GameObject outOfRingText;
 
     public Image spotlightMeterFill;
 
@@ -63,10 +64,14 @@ public class PlayerHeader : MonoBehaviour
 
     private bool blinkDangerText;
     private bool blinkHeelText;
+    private bool blinkRingText;
+
     private float dangerBlinkTime;
     private const float dangerBlinkTimeMax = .15f;
     private float heelBlinkTime;
     private const float heelBlinkTimeMax = .075f;
+    private float ringBlinkTime;
+    private const float ringBlinkTimeMax = .2f;
     private const float staminaDangerThreshold = .12f;
 
     public PlayerStatus Status
@@ -158,6 +163,12 @@ public class PlayerHeader : MonoBehaviour
         blinkHeelText = enabled;
     }
 
+    public void SetOutOfRing(bool enabled)
+    {
+        outOfRingText.SetActive(enabled);
+        blinkRingText = enabled;
+    }
+
     public void SetPickup(bool enabled)
     {
         pickupIndicator.SetActive(enabled);
@@ -189,10 +200,28 @@ public class PlayerHeader : MonoBehaviour
                 heelText.SetActive(!heelText.activeSelf);
             }
         }
+
+        if (blinkRingText)
+        {
+            ringBlinkTime += Time.deltaTime;
+            if (ringBlinkTime > ringBlinkTimeMax)
+            {
+                ringBlinkTime = 0;
+                outOfRingText.SetActive(!outOfRingText.activeSelf);
+            }
+        }
     }
 
     public void SetWeaponText(string weaponName)
     {
-        weaponText.text = weaponName;
+        if(weaponName == "")
+        {
+            weaponText.gameObject.SetActive(false);
+        }
+        else
+        {
+            weaponText.text = weaponName;
+            weaponText.gameObject.SetActive(true);
+        }
     }
 }

@@ -82,6 +82,8 @@ public class SuplexDuration : BasicState
         knockback.timeToChangeState = 1.0f;
         victim.SetPlayerStateImmediately(knockback);
 
+        status.IncreaseSpotlightMeter(20);
+
         CameraManager.cam.ShakeCamera(.7f);
     }
 

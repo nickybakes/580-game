@@ -343,11 +343,11 @@ public class GameManager : MonoBehaviour
         AnnouncerManager.PlayLine("spotlight", Priority.SpotlightSpawn);
     }
 
-    public void SpawnExplosion(Vector3 position, PlayerStatus ownerStatus, bool damagerOwnerToo)
+    public void SpawnExplosion(Vector3 position, PlayerStatus ownerStatus, bool damagerOwnerToo, float knockbackScale = 1, float transformScale = 1)
     {
         GameObject explosionInstance = Instantiate(explosion, position, Quaternion.identity);
         Explosion explosionScript = explosionInstance.GetComponent<Explosion>();
-        explosionScript.Init(ownerStatus, damagerOwnerToo);
+        explosionScript.Init(ownerStatus, damagerOwnerToo, knockbackScale, transformScale);
     }
 
     public void DespawnSpotlight()
