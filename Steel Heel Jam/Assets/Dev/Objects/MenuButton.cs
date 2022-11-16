@@ -14,6 +14,7 @@ public class MenuButton : MonoBehaviour
 
     public UnityEvent submitAction;
 
+    public MenuButton[] buttonSelects;
     public MenuButton upSelect;
     public MenuButton downSelect;
     public MenuButton leftSelect;
@@ -24,6 +25,14 @@ public class MenuButton : MonoBehaviour
     {
         position = transform.position;
         cursorsHoveringThisButton = new List<PlayerCursor>();
+
+        buttonSelects = new MenuButton[4]
+        {
+            upSelect,
+            downSelect,
+            leftSelect,
+            rightSelect
+        };
     }
 
     // Update is called once per frame
@@ -45,6 +54,7 @@ public class MenuButton : MonoBehaviour
         if (other.CompareTag(Tag.UICursor.ToString()))
         {
             PlayerCursor cursor = other.gameObject.GetComponent<PlayerCursor>();
+            cursor.highlightedButton = this;
             cursorsHoveringThisButton.Add(cursor);
         }
 
@@ -55,6 +65,7 @@ public class MenuButton : MonoBehaviour
         if (other.CompareTag(Tag.UICursor.ToString()))
         {
             PlayerCursor cursor = other.gameObject.GetComponent<PlayerCursor>();
+            cursor.highlightedButton = null;
             cursorsHoveringThisButton.Remove(cursor);
 
             if (cursorsHoveringThisButton.Count == 0)

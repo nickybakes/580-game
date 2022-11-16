@@ -35,6 +35,8 @@ public class PlayerCursor : MonoBehaviour
 
     private RectTransform canvasRect;
 
+    [HideInInspector] public MenuButton highlightedButton;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -55,6 +57,10 @@ public class PlayerCursor : MonoBehaviour
         if (_input.snapState.isSnapping)
         {
             // Logic for snapping to direction here
+            if (highlightedButton != null)
+            {
+                normalizedPosition = highlightedButton.buttonSelects[(int)_input.snapState.snapDirection].position;
+            }
         }
 
         inputDirection = _input.move.normalized;
