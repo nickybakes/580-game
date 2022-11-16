@@ -566,7 +566,7 @@ public class PlayerStatus : MonoBehaviour
                 string soundToPlay = attackingPlayerStatus.combat.equippedItem.name;
                 // Remove '(clone)' from end of string. (Sounds in AudioManager named same as weapons)
                 soundToPlay = soundToPlay.Remove(soundToPlay.Length - 7);
-                AudioManager.aud.Play(soundToPlay, 0.8f, 1.2f);
+                AudioManager.aud.Play(soundToPlay);
             }
         }
     }
