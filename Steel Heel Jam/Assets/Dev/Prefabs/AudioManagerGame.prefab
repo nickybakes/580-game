@@ -326,6 +326,17 @@ MonoBehaviour:
     randStartPos: 0
     playOnAwake: 0
     source: {fileID: 0}
+  - audioType: 1
+    name: heelFire
+    previousClip: -1
+    clips:
+    - {fileID: 8300000, guid: d6aaab2779c26504d8e0415abbf966f6, type: 3}
+    volume: 0
+    pitch: 1
+    loop: 1
+    randStartPos: 1
+    playOnAwake: 0
+    source: {fileID: 0}
   - audioType: 2
     name: elbowDrop
     previousClip: -1
@@ -449,7 +460,7 @@ MonoBehaviour:
     playOnAwake: 0
     source: {fileID: 0}
   - audioType: 2
-    name: heelFire
+    name: TheHeel
     previousClip: -1
     clips:
     - {fileID: 8300000, guid: 8f92cd28a14144246b8f152b5efaa140, type: 3}

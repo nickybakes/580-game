@@ -291,6 +291,13 @@ public class PlayerStatus : MonoBehaviour
                 heelFireHitbox.SetActive(false);
                 isHeel = false;
                 playerHeader.SetHeel(false);
+
+                AudioManager.aud.Stop("heelFire");
+            }
+            // If close to finishing, start to fade sfx.
+            if (heelFireCooldown > heelFireCooldownMax - 1)
+            {
+                AudioManager.aud.StartFade("heelFire", 1.0f, 0.0f);
             }
         }
 
@@ -596,6 +603,10 @@ public class PlayerStatus : MonoBehaviour
             heelFireCooldown = 0;
             heelFireHitbox.SetActive(true);
             isHeel = true;
+
+            // HeelFire sfx Fade in.
+            AudioManager.aud.Play("heelFire");
+            AudioManager.aud.StartFade("heelFire", 1.0f, 0.5f);
         }
     }
 
@@ -612,7 +623,7 @@ public class PlayerStatus : MonoBehaviour
             //buffs[(int)Buff.HeelFire] = true;
 
             // VO
-            AnnouncerManager.PlayLine("heelFire", Priority.HeelFire);
+            AnnouncerManager.PlayLine("TheHeel", Priority.HeelFire);
             AudioManager.aud.StartFade("cheer", heelFireCooldownMax, 0.7f);
         }
         else
