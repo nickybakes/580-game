@@ -613,7 +613,7 @@ public class PlayerStatus : MonoBehaviour
 
             // VO
             AnnouncerManager.PlayLine("heelFire", Priority.HeelFire);
-            AudioManager.aud.StartFade("cheer", 1.5f, 0.6f);
+            AudioManager.aud.StartFade("cheer", heelFireCooldownMax, 0.7f);
         }
         else
         {
