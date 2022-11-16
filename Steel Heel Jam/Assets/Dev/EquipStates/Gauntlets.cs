@@ -34,5 +34,6 @@ public class Gauntlets : DefaultState
 
         InitializeAirAttack();
         airAttack.radiusMultiplier = 1.3f;
+        airAttack.damageMultiplier = 1.5f;
     }
 }

@@ -48,5 +48,8 @@ public class Ladder : DefaultState
 
         InitializeAirAttack();
         airAttack.radiusMultiplier = 2.2f;
+        airAttack.damageMultiplier = 2.6f;
+        airAttack.knockbackMultiplier = 1.3f;
+        airAttack.knockbackHeightMultiplier = 1.5f;
     }
 }
