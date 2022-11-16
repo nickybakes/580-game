@@ -144,7 +144,7 @@ public class PlayerStatus : MonoBehaviour
     private int maxBuffs = 2;
     private int buffCount = 0;
 
-    public float plotArmorAdditionalHeal = 5.0f;
+    public float plotArmorAdditionalHeal = 8.0f;
     public float redemptionArcDamageMultiplier = 2.0f;
     public float redemptionArcKnockbackMultiplier = 2.0f;
     public bool canDoubleJump = false;
@@ -526,7 +526,7 @@ public class PlayerStatus : MonoBehaviour
                 if (attackingPlayerStatus.buffs[(int)Buff.RedemptionArc] == true)
                 {
                     // Spawn explosion here
-                    GameManager.game.SpawnExplosion(attackingPlayerStatus.combat.weaponState.hitbox.transform.position, attackingPlayerStatus, false);
+                    GameManager.game.SpawnExplosion(attackingPlayerStatus.combat.weaponState.hitbox.transform.position, attackingPlayerStatus, false, .5f, .65f);
                 }
                 if (attackingPlayerStatus.buffs[(int)Buff.TheStink] == true)
                 {
@@ -713,6 +713,10 @@ public class PlayerStatus : MonoBehaviour
         if (other.tag == "Ring")
         {
             isOOB = false;
+            if(playerHeader != null)
+            {
+                playerHeader.SetOutOfRing(false);
+            }
         }
     }
 
@@ -721,6 +725,10 @@ public class PlayerStatus : MonoBehaviour
         if (other.tag == "Ring")
         {
             isOOB = true;
+            if(playerHeader != null)
+            {
+                playerHeader.SetOutOfRing(true);
+            }
         }
     }
 }

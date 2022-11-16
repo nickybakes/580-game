@@ -27,6 +27,8 @@ public class SuplexStartup : BasicState
     {
         base.OnEnterThisState(prevState, status);
 
+        victim.playerLastHitBy = status;
+
         victim.movement.velocity = status.movement.velocity;
     }
 

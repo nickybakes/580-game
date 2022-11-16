@@ -29,7 +29,7 @@ public class Explosion : MonoBehaviour
         if (explosionDuration > explosionDurationMax) Destroy(gameObject);
     }
 
-    public void Init(PlayerStatus _ownerStatus, bool damageOwnerToo)
+    public void Init(PlayerStatus _ownerStatus, bool damageOwnerToo, float knockbackScale = 1, float transformScale = 1)
     {
         ownerStatus = _ownerStatus;
         //spawn the explosion particle
@@ -37,12 +37,22 @@ public class Explosion : MonoBehaviour
         {
             //set its color to a player specifically if its not gonna damage them
             playerNumber = _ownerStatus.playerNumber;
-            VisualsManager.SpawnParticle(ParticleName.Explosion_01 + playerNumber, tr.position);
+            GameObject g = VisualsManager.SpawnParticle(ParticleName.Explosion_01 + playerNumber, tr.position);
+            g.transform.localScale = g.transform.localScale * transformScale;
         }
         else
         {
-            VisualsManager.SpawnParticle(ParticleName.Explosion_01, tr.position);
+            GameObject g = VisualsManager.SpawnParticle(ParticleName.Explosion_01, tr.position);
+            g.transform.localScale = g.transform.localScale * transformScale;
         }
+
+        transform.localScale = transform.localScale * transformScale;
+
+        knockback = knockback * knockbackScale;
+        knockbackHeight = knockbackHeight * knockbackScale;
+        damage = damage * knockbackScale;
+        timeInKnockback = timeInKnockback * knockbackScale;
+        
 
         VisualsManager.SpawnDecal(DecalName.Crack_01, tr.position);
 
