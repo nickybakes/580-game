@@ -503,6 +503,7 @@ public class PlayerStatus : MonoBehaviour
         {
             GameManager.game.SpawnExplosion(attackingPlayerStatus.combat.weaponState.hitbox.transform.position, attackingPlayerStatus, true);
             attackingPlayerStatus.combat.BreakWeapon();
+            AudioManager.aud.Play("punch", 0.8f, 1.2f);
             return;
         }
 

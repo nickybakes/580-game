@@ -171,17 +171,6 @@ MonoBehaviour:
     playOnAwake: 0
     source: {fileID: 0}
   - audioType: 1
-    name: punch
-    previousClip: -1
-    clips:
-    - {fileID: 8300000, guid: a5c9215836d3bcb449f34af312ac5ecf, type: 3}
-    volume: 1
-    pitch: 1
-    loop: 0
-    randStartPos: 0
-    playOnAwake: 0
-    source: {fileID: 0}
-  - audioType: 1
     name: bellStart
     previousClip: -1
     clips:
@@ -338,6 +327,17 @@ MonoBehaviour:
     playOnAwake: 0
     source: {fileID: 0}
   - audioType: 1
+    name: punch
+    previousClip: -1
+    clips:
+    - {fileID: 8300000, guid: a5c9215836d3bcb449f34af312ac5ecf, type: 3}
+    volume: 0.7
+    pitch: 1
+    loop: 0
+    randStartPos: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - audioType: 1
     name: BoomBox
     previousClip: -1
     clips:
@@ -349,6 +349,74 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 1bb59c5d0e0bc164d929919c5770db97, type: 3}
     - {fileID: 8300000, guid: 4533bf90029f8b940bc11444aa0efb46, type: 3}
     - {fileID: 8300000, guid: 54a2c92898086d34fb02e9885ac5d58d, type: 3}
+    volume: 0.5
+    pitch: 1
+    loop: 0
+    randStartPos: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - audioType: 1
+    name: SteelChair
+    previousClip: -1
+    clips:
+    - {fileID: 8300000, guid: 793d66b6fab129b41bec4e107322d5d9, type: 3}
+    volume: 0.2
+    pitch: 1
+    loop: 0
+    randStartPos: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - audioType: 1
+    name: Gauntlet
+    previousClip: -1
+    clips:
+    - {fileID: 8300000, guid: a5c9215836d3bcb449f34af312ac5ecf, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    randStartPos: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - audioType: 1
+    name: Sabre
+    previousClip: -1
+    clips:
+    - {fileID: 8300000, guid: 4563bfeed08193a4e969524e8ec09edb, type: 3}
+    - {fileID: 8300000, guid: 4f50375bf71c0a642b9bfe618be7f377, type: 3}
+    - {fileID: 8300000, guid: 1b1e673001ac8b7479f6deab7c273120, type: 3}
+    volume: 0.5
+    pitch: 1
+    loop: 0
+    randStartPos: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - audioType: 1
+    name: Ladder
+    previousClip: -1
+    clips:
+    - {fileID: 8300000, guid: a5c9215836d3bcb449f34af312ac5ecf, type: 3}
+    volume: 0.5
+    pitch: 1
+    loop: 0
+    randStartPos: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - audioType: 1
+    name: LeadPipe
+    previousClip: -1
+    clips:
+    - {fileID: 8300000, guid: a5c9215836d3bcb449f34af312ac5ecf, type: 3}
+    volume: 0.5
+    pitch: 1
+    loop: 0
+    randStartPos: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - audioType: 1
+    name: BaseballBat
+    previousClip: -1
+    clips:
+    - {fileID: 8300000, guid: a5c9215836d3bcb449f34af312ac5ecf, type: 3}
     volume: 0.5
     pitch: 1
     loop: 0
