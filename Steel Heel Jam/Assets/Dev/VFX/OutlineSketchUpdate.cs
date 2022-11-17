@@ -35,7 +35,9 @@ public class OutlineSketchUpdate : MonoBehaviour
 
     public void SetTint(int playerNumber)
     {
-        innerOutlineMesh.material.SetColor("_Tint", PlayerToken.colors[playerNumber - 1]);
+        // innerOutlineMesh.material.SetColor("_Tint", PlayerToken.colors[playerNumber - 1]);
+        innerOutlineMesh.material.SetFloat("_Player_Index", playerNumber - 1);
+        innerOutlineMesh.material.SetFloat("_Skin_Tone", Random.Range(0, 16));
         // outerOutlineMesh.material.SetColor("_BaseColor", PlayerToken.colors[playerNumber - 1]);
     }
 
@@ -44,8 +46,8 @@ public class OutlineSketchUpdate : MonoBehaviour
         if (!innerOutlineMesh || !outerOutlineMesh)
             return;
 
-        innerOutlineMesh.material.SetFloat("_PanX", Random.value);
-        innerOutlineMesh.material.SetFloat("_PanY", Random.value);
+        // innerOutlineMesh.material.SetFloat("_PanX", Random.value);
+        // innerOutlineMesh.material.SetFloat("_PanY", Random.value);
 
         outerOutlineMesh.material.SetFloat("_PanX", Random.value);
         outerOutlineMesh.material.SetFloat("_PanY", Random.value);

@@ -21,7 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: M_Luchador_01
-  m_Shader: {fileID: -6465566751694194690, guid: a1e0f7eba5ec5894d8cc4f7ef6931d9f,
+  m_Shader: {fileID: -6465566751694194690, guid: 40fcfd2229a0aba4f80e9bf79784fa15,
     type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
@@ -188,8 +188,8 @@ Material:
     - _I_Frames_Blink: 0
     - _Light_Angle: 45
     - _Metallic: 0
-    - _Metalness: 0
-    - _Metalness_Contrast: 2.58
+    - _Metalness: 0.56
+    - _Metalness_Contrast: 3.78
     - _OcclusionStrength: 1
     - _Outline_Cutoff: 0.89
     - _Outline_Depth_Threshold: 0.92
@@ -204,7 +204,7 @@ Material:
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _Roughness: 1
-    - _Skin_Tone: 3
+    - _Skin_Tone: 4
     - _Smoothness: 0.25
     - _SmoothnessTextureChannel: 0
     - _Smoothness_Contrast: 3
@@ -220,7 +220,7 @@ Material:
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _Eye_Offset_L: {r: 0.57, g: 0.5, b: 0, a: 0}
     - _Eye_Offset_R: {r: 0.57, g: 0.5, b: 0, a: 0}
-    - _Mouth_Offset: {r: 0, g: 0.24, b: 0, a: 0}
+    - _Mouth_Offset: {r: 0, g: -0.01, b: 0, a: 0}
     - _Outline_Color: {r: 0, g: 0, b: 0, a: 0}
     - _Pupil_Offset_L: {r: 0.11, g: 0.68, b: 0, a: 0}
     - _Pupil_Offset_R: {r: 0.11, g: 0.68, b: 0, a: 0}
