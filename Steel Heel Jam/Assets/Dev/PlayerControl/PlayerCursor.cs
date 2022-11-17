@@ -35,7 +35,17 @@ public class PlayerCursor : MonoBehaviour
 
     private RectTransform canvasRect;
 
-    [HideInInspector] public MenuButton highlightedButton;
+     public MenuButton highlightedButton;
+
+    public float lerpToButtonTimeMax;
+
+    public float lerpToButtonTimeCurrent;
+
+    private Vector2 buttonLerpToPosition;
+
+    private Vector2 buttonLerpStartPosition;
+
+    private float lerpToSpeed = 50f;
 
     // Start is called before the first frame update
     void Start()
@@ -54,10 +64,23 @@ public class PlayerCursor : MonoBehaviour
             AppManager.app.RemovePlayerToken(playerNumber);
         }
 
-        inputDirection = _input.move.normalized;
-        aspectRatio = canvasRect.rect.width / canvasRect.rect.height;
-        inputDirection = new Vector2(inputDirection.x, inputDirection.y * aspectRatio);
-        velocity = inputDirection * moveSpeed;
+        if(lerpToButtonTimeCurrent > 0)
+        {
+            velocity = Vector2.zero;
+
+            normalizedPosition = Vector2.Lerp(buttonLerpToPosition, buttonLerpStartPosition, lerpToButtonTimeCurrent/lerpToButtonTimeMax);
+
+            lerpToButtonTimeCurrent -= Time.deltaTime;
+
+        }
+        else
+        {
+            inputDirection = _input.move.normalized;
+            aspectRatio = canvasRect.rect.width / canvasRect.rect.height;
+            inputDirection = new Vector2(inputDirection.x, inputDirection.y * aspectRatio);
+            velocity = inputDirection * moveSpeed;
+        }
+
         Move();
 
         if (_input.snapState.isSnapping)
@@ -65,7 +88,12 @@ public class PlayerCursor : MonoBehaviour
             // Logic for snapping to direction here
             if (highlightedButton != null)
             {
-                //rect.anchoredPosition = highlightedButton.buttonSelects[(int)_input.snapState.snapDirection].rect.anchoredPosition;
+                MenuButton b = highlightedButton.buttonSelects[(int)_input.snapState.snapDirection];
+
+                if(b != null)
+                {
+                    LerpToButton(b);
+                }
             }
         }
 
@@ -95,6 +123,18 @@ public class PlayerCursor : MonoBehaviour
             MenuManager.menu.characterDisplays[playerNumber - 1].SetSkinToneIndex(skinToneIndex);
             _input.customizeRight = false;
         }
+    }
+
+    private void LerpToButton(MenuButton b)
+    {
+        Vector2 buttonNormalizedPosition = new Vector2(b.rect.anchoredPosition.x / canvasRect.rect.width + .5f, b.rect.anchoredPosition.y / canvasRect.rect.height + .5f);
+        buttonLerpToPosition = buttonNormalizedPosition;
+        buttonLerpStartPosition = normalizedPosition;
+
+        float distance = Vector2.Distance(buttonLerpToPosition, normalizedPosition);
+
+        lerpToButtonTimeMax = Mathf.Max(distance / lerpToSpeed, .05f);
+        lerpToButtonTimeCurrent = lerpToButtonTimeMax;
     }
 
     public void ReturnToDefaultLocation()
