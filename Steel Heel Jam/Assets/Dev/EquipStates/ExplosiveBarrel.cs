@@ -33,7 +33,5 @@ public class ExplosiveBarrel : DefaultState
         currentAttack = combo[0];
 
         InitializeAirAttack();
-        airAttack.radiusMultiplier = 2.0f;
-        airAttack.damageMultiplier = 2.5f;
     }
 }
