@@ -6,7 +6,7 @@ public struct CharacterVisualPrefs
 {
     public int skinToneIndex;
 
-    public CharacterVisualPrefs(int _skinToneIndex)
+    public CharacterVisualPrefs(int _skinToneIndex = -1)
     {
         skinToneIndex = _skinToneIndex;
     }
@@ -50,10 +50,11 @@ public class MenuCharacterDisplay : MonoBehaviour
         UpdateAllMeshes();
     }
 
-    public void UpdateAllMeshes(){
+    public void UpdateAllMeshes()
+    {
         disabledPlayerMaterial.SetFloat("_Skin_Tone", currentVisualPrefs.skinToneIndex);
         enabledPlayerMaterial.SetFloat("_Skin_Tone", currentVisualPrefs.skinToneIndex);
-        
+
     }
 
     public void HologramDisplay()

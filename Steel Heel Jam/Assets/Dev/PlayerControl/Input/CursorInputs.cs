@@ -15,6 +15,11 @@ public class CursorInputs : MonoBehaviour
 
     public bool accept;
     public bool back;
+
+    public bool customizeLeft;
+    public bool wasCustomizeLeft;
+    public bool customizeRight;
+    public bool wasCustomizeRight;
     public bool wasAccepting;
 
     public SnapState snapState;
@@ -42,6 +47,16 @@ public class CursorInputs : MonoBehaviour
     public void OnBack(InputValue value)
     {
         BackInput(value.isPressed);
+    }
+
+    public void OnCustomizeLeft(InputValue value)
+    {
+        CustomizeLeft(value.isPressed);
+    }
+
+    public void OnCustomizeRight(InputValue value)
+    {
+        CustomizeRight(value.isPressed);
     }
 
     public void MoveInput(Vector2 newMoveDirection)
@@ -81,5 +96,17 @@ public class CursorInputs : MonoBehaviour
     public void BackInput(bool pressed)
     {
         back = pressed;
+    }
+
+    public void CustomizeLeft(bool pressed)
+    {
+        wasCustomizeLeft = customizeLeft;
+        customizeLeft = pressed;
+    }
+
+    public void CustomizeRight(bool pressed)
+    {
+        wasCustomizeRight = customizeRight;
+        customizeRight = pressed;
     }
 }

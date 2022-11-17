@@ -679,6 +679,24 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "CustomizeLeft",
+                    "type": "Button",
+                    "id": "8ad133fb-d71c-425d-b4a8-4d505d123037",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "CustomizeRight",
+                    "type": "Button",
+                    "id": "045a3e59-640d-46ea-8dd1-be85d41a88a2",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "CursorSnap",
                     "type": "Value",
                     "id": "dadbcbc6-f3cf-4a50-96a9-cea95b595415",
@@ -1007,6 +1025,72 @@
                     "action": "CursorSnap",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "e4b5c0ed-635a-4202-957a-ab59344b94f1",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMouse",
+                    "action": "CustomizeLeft",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "39abf1c9-9076-4834-aff5-756330e8623e",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "CustomizeLeft",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0464ef23-a889-4a08-8850-18236b7e2b44",
+                    "path": "<HID::Logitech Logitech Dual Action>/trigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Joystick",
+                    "action": "CustomizeLeft",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "159e2349-0651-4004-af6d-fed0938a96d6",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMouse",
+                    "action": "CustomizeRight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "72c46894-eedf-47f9-9f62-c53c109b58d8",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "CustomizeRight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "27f781e9-9af7-4777-9d87-cc9761976b16",
+                    "path": "<HID::Logitech Logitech Dual Action>/button4",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Joystick",
+                    "action": "CustomizeRight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

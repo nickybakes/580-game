@@ -55,7 +55,7 @@ public class PlayerCursor : MonoBehaviour
         }
 
         inputDirection = _input.move.normalized;
-        aspectRatio = canvasRect.rect.width/canvasRect.rect.height;
+        aspectRatio = canvasRect.rect.width / canvasRect.rect.height;
         inputDirection = new Vector2(inputDirection.x, inputDirection.y * aspectRatio);
         velocity = inputDirection * moveSpeed;
         Move();
@@ -67,6 +67,33 @@ public class PlayerCursor : MonoBehaviour
             {
                 //rect.anchoredPosition = highlightedButton.buttonSelects[(int)_input.snapState.snapDirection].rect.anchoredPosition;
             }
+        }
+
+        if (_input.customizeLeft && !_input.wasCustomizeLeft)
+        {
+            int skinToneIndex = AppManager.app.playerTokens[playerNumber - 1].visualPrefs.skinToneIndex;
+            if (skinToneIndex == 0)
+                skinToneIndex = 15;
+            else
+                skinToneIndex--;
+
+            AppManager.app.playerTokens[playerNumber - 1].visualPrefs.skinToneIndex = skinToneIndex;
+
+            MenuManager.menu.characterDisplays[playerNumber - 1].SetSkinToneIndex(skinToneIndex);
+            _input.customizeLeft = false;
+        }
+        if (_input.customizeRight && !_input.wasCustomizeRight)
+        {
+            int skinToneIndex = AppManager.app.playerTokens[playerNumber - 1].visualPrefs.skinToneIndex;
+            if (skinToneIndex == 15)
+                skinToneIndex = 0;
+            else
+                skinToneIndex++;
+
+            AppManager.app.playerTokens[playerNumber - 1].visualPrefs.skinToneIndex = skinToneIndex;
+
+            MenuManager.menu.characterDisplays[playerNumber - 1].SetSkinToneIndex(skinToneIndex);
+            _input.customizeRight = false;
         }
     }
 

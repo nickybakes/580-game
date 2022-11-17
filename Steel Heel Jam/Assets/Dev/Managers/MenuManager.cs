@@ -12,6 +12,8 @@ public class MenuManager : MonoBehaviour
 
     public MenuCharacterDisplay[] characterDisplays;
 
+    private bool characterDisplaysInitialized;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,7 +25,18 @@ public class MenuManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (!characterDisplaysInitialized)
+        {
+            characterDisplaysInitialized = true;
+            for (int i = 0; i < AppManager.app.playerTokens.Length; i++)
+            {
+                if (AppManager.app.playerTokens[i] != null)
+                {
+                    characterDisplays[i].currentVisualPrefs = AppManager.app.playerTokens[i].visualPrefs;
+                    characterDisplays[i].SolidDisplay();
+                }
+            }
+        }
     }
 
     public void SolidifyCharacterDisplay(int playerNumber)

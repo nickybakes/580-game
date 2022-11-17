@@ -33,12 +33,16 @@ public class OutlineSketchUpdate : MonoBehaviour
         }
     }
 
-    public void SetTint(int playerNumber)
+    public void SetPlayerNumberIndex(int playerNumber)
     {
         // innerOutlineMesh.material.SetColor("_Tint", PlayerToken.colors[playerNumber - 1]);
         innerOutlineMesh.material.SetFloat("_Player_Index", playerNumber - 1);
-        innerOutlineMesh.material.SetFloat("_Skin_Tone", Random.Range(0, 16));
         // outerOutlineMesh.material.SetColor("_BaseColor", PlayerToken.colors[playerNumber - 1]);
+    }
+
+    public void SetSkinTone(int skinTone)
+    {
+        innerOutlineMesh.material.SetFloat("_Skin_Tone", skinTone);
     }
 
     void UpdateOutline()
