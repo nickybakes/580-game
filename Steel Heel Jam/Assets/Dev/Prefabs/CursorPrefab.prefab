@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 1909445891957437853}
   - component: {fileID: 1909445891957437842}
   - component: {fileID: 5133855186493725272}
-  m_Layer: 5
+  - component: {fileID: 7949499342907915380}
+  m_Layer: 10
   m_Name: CursorPrefab
-  m_TagString: Untagged
+  m_TagString: UICursor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -81,6 +82,22 @@ MonoBehaviour:
   accept: 0
   back: 0
   wasAccepting: 0
+--- !u!58 &7949499342907915380
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1909445891957437855}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -7.09, y: 4.12}
+  serializedVersion: 2
+  m_Radius: 3.3025076
 --- !u!1 &1909445892520770568
 GameObject:
   m_ObjectHideFlags: 0
@@ -92,7 +109,7 @@ GameObject:
   - component: {fileID: 1909445892520770569}
   - component: {fileID: 1909445892520770575}
   - component: {fileID: 1909445892520770574}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Pointer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -168,7 +185,7 @@ GameObject:
   - component: {fileID: 1909445893838570191}
   - component: {fileID: 1909445893838570189}
   - component: {fileID: 1909445893838570188}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: PlayerNumber
   m_TagString: Untagged
   m_Icon: {fileID: 0}

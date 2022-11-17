@@ -29,7 +29,8 @@ public enum Buff
 public enum Tag
 {
     Player,
-    PickUp
+    PickUp,
+    UICursor,
 }
 
 

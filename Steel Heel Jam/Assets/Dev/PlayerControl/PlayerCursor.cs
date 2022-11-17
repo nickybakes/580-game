@@ -4,6 +4,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+public enum SnapDirection
+{
+    Up,
+    Down,
+    Left,
+    Right
+}
 public class PlayerCursor : MonoBehaviour
 {
     public TextMeshProUGUI playerNumberText;
@@ -16,7 +23,7 @@ public class PlayerCursor : MonoBehaviour
 
     private float aspectRatio = 16f / 9f;
 
-    private CursorInputs _input;
+    [HideInInspector] public CursorInputs _input;
 
     private Vector2 inputDirection;
 
@@ -27,6 +34,8 @@ public class PlayerCursor : MonoBehaviour
     public Vector2 normalizedPosition;
 
     private RectTransform canvasRect;
+
+    [HideInInspector] public MenuButton highlightedButton;
 
     // Start is called before the first frame update
     void Start()
@@ -50,6 +59,15 @@ public class PlayerCursor : MonoBehaviour
         inputDirection = new Vector2(inputDirection.x, inputDirection.y * aspectRatio);
         velocity = inputDirection * moveSpeed;
         Move();
+
+        if (_input.snapState.isSnapping)
+        {
+            // Logic for snapping to direction here
+            if (highlightedButton != null)
+            {
+                //rect.anchoredPosition = highlightedButton.buttonSelects[(int)_input.snapState.snapDirection].rect.anchoredPosition;
+            }
+        }
     }
 
     public void ReturnToDefaultLocation()
