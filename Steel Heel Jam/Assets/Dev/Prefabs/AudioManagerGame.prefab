@@ -101,6 +101,17 @@ MonoBehaviour:
     playOnAwake: 1
     source: {fileID: 0}
   - audioType: 3
+    name: heelCheer
+    previousClip: -1
+    clips:
+    - {fileID: 8300000, guid: cef382b8732de704893291282c48c505, type: 3}
+    volume: 0.5
+    pitch: 1
+    loop: 0
+    randStartPos: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - audioType: 3
     name: crowd
     previousClip: -1
     clips:
