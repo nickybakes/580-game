@@ -38,12 +38,20 @@ public class MenuButton : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        bool invokeSubmit = false;
         foreach (PlayerCursor cursor in cursorsHoveringThisButton)
         {
-            if (cursor._input.accept)
+            if (cursor._input.accept && !cursor._input.wasAccepting)
             {
-                submitAction.Invoke();
+                cursor._input.accept = false;
+                invokeSubmit = true;
+                break;
             }
+        }
+
+        if(invokeSubmit){
+            cursorsHoveringThisButton.Clear();
+            submitAction.Invoke();
         }
     }
 

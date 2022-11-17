@@ -18,6 +18,8 @@ public class PlayerToken : MonoBehaviour
 
     public PlayerInput input;
 
+    public CharacterVisualPrefs visualPrefs;
+
     void Start()
     {
         DontDestroyOnLoad(gameObject);
@@ -28,6 +30,7 @@ public class PlayerToken : MonoBehaviour
         Debug.Log("Player Token " + playerNumber + " destroyed.");
         if (cursorPrefabInputsComp != null)
         {
+            MenuManager.menu.HologramCharacterDisplay(playerNumber);
             Destroy(cursorPrefabInputsComp.gameObject);
         }
 
@@ -47,6 +50,18 @@ public class PlayerToken : MonoBehaviour
         cursorScript.playerNumber = playerNumber;
 
         cursorScript.ReturnToDefaultLocation();
+
+        if (MenuManager.menu)
+        {
+            if (visualPrefs.skinToneIndex == -1)
+            {
+                visualPrefs = MenuManager.menu.characterDisplays[playerNumber - 1].currentVisualPrefs;
+            }
+            else
+            {
+                MenuManager.menu.characterDisplays[playerNumber - 1].SetSkinToneIndex(visualPrefs.skinToneIndex);
+            }
+        }
     }
 
     public PlayerStatus SetUpPlayerPrefab(GameObject player)
@@ -55,7 +70,8 @@ public class PlayerToken : MonoBehaviour
         PlayerStatus status = player.GetComponent<PlayerStatus>();
 
 
-        player.GetComponentInChildren<OutlineSketchUpdate>().SetTint(playerNumber);
+        player.GetComponentInChildren<OutlineSketchUpdate>().SetPlayerNumberIndex(playerNumber);
+        player.GetComponentInChildren<OutlineSketchUpdate>().SetSkinTone(visualPrefs.skinToneIndex);
         player.GetComponentInChildren<PlayerRingDecal>().SetTint(playerNumber);
 
         // player.transform.GetChild((int)PlayerChild.Model).GetChild(0).GetComponent<MeshRenderer>().material.SetColor("_BaseColor", colors[playerNumber - 1]);
@@ -107,6 +123,16 @@ public class PlayerToken : MonoBehaviour
     public void OnCursorBack(InputValue value)
     {
         cursorPrefabInputsComp.OnBack(value);
+    }
+
+    public void OnCustomizeLeft(InputValue value)
+    {
+        cursorPrefabInputsComp.OnCustomizeLeft(value);
+    }
+
+    public void OnCustomizeRight(InputValue value)
+    {
+        cursorPrefabInputsComp.OnCustomizeRight(value);
     }
 
     public void OnJump(InputValue value)

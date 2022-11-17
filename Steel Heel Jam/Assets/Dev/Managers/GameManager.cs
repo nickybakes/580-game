@@ -87,7 +87,7 @@ public class GameManager : MonoBehaviour
     IEnumerator IntroSequence()
     {
         cameraManager.gameObject.SetActive(false);
-        introSequenceManager.gameObject.SetActive(true);
+        introSequenceManager.SetActive(true);
         hudManager.headerPanel.SetActive(false);
         AudioManager.aud.Play("intro");
 
@@ -261,7 +261,7 @@ public class GameManager : MonoBehaviour
 
         // Plays VO line. (only if hit out by another player... walk-out lines as a stretch goal)
         AnnouncerManager.PlayLine("eliminated", Priority.Elimination);
-        AudioManager.aud.StartFade("cheer", 1.0f, 0.3f);
+        AudioManager.aud.StartFade("cheer", 1.5f, 0.5f);
 
         alivePlayerStatuses.Remove(status);
         eliminatedPlayerStatuses.Add(status);

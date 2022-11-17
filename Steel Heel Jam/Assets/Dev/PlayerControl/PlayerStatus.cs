@@ -448,6 +448,7 @@ public class PlayerStatus : MonoBehaviour
             GameManager.game.SpawnExplosion(attackingPlayerStatus.combat.weaponState.hitbox.transform.position, attackingPlayerStatus, true);
             attackingPlayerStatus.combat.BreakWeapon();
             AudioManager.aud.Play("punch", 0.8f, 1.2f);
+            AudioManager.aud.StartFade("cheer", 0.5f, 0.4f);
             return;
         }
 
@@ -467,6 +468,7 @@ public class PlayerStatus : MonoBehaviour
             // Play sfx and VO.
             AudioManager.aud.Play("blockedPunch");
             AnnouncerManager.PlayLine("block", Priority.Block);
+            AudioManager.aud.StartFade("cheer", 1.0f, 0.3f);
             return;
         }
 
@@ -478,6 +480,7 @@ public class PlayerStatus : MonoBehaviour
 
             //play crunch sound
             AudioManager.aud.Play("punch", 0.8f, 1.2f);
+            AudioManager.aud.StartFade("cheer", 1.5f, knockback / 20); // Based on knockback (NOT distance sent).
         }
     }
 
@@ -505,6 +508,7 @@ public class PlayerStatus : MonoBehaviour
             GameManager.game.SpawnExplosion(attackingPlayerStatus.combat.weaponState.hitbox.transform.position, attackingPlayerStatus, true);
             attackingPlayerStatus.combat.BreakWeapon();
             AudioManager.aud.Play("punch", 0.8f, 1.2f);
+            AudioManager.aud.StartFade("cheer", 0.5f, 0.4f);
             return;
         }
 
@@ -522,6 +526,7 @@ public class PlayerStatus : MonoBehaviour
             }
 
             AudioManager.aud.Play("blockedPunch");
+            AudioManager.aud.StartFade("cheer", 0.5f, 0.3f);
             return;
         }
 
@@ -569,6 +574,8 @@ public class PlayerStatus : MonoBehaviour
                 soundToPlay = soundToPlay.Remove(soundToPlay.Length - 7);
                 AudioManager.aud.Play(soundToPlay);
             }
+
+            AudioManager.aud.StartFade("cheer", 1.0f, knockback / 20); // Based on knockback (NOT distance sent).
         }
     }
 
@@ -581,6 +588,7 @@ public class PlayerStatus : MonoBehaviour
         if (explosionOnHit)
         {
             GameManager.game.SpawnExplosion(hitboxPos, attackingPlayerStatus, true);
+            AudioManager.aud.StartFade("cheer", 0.5f, 0.4f);
             return true;
         }
 
@@ -596,12 +604,14 @@ public class PlayerStatus : MonoBehaviour
             }
 
             AudioManager.aud.Play("blockedPunch");
+            AudioManager.aud.StartFade("cheer", 1.0f, 0.3f);
             return false;
         }
 
         GetHit((collisionPos - hitboxPos).normalized, damage, knockback, knockbackHeight, .3f, attackingPlayerStatus, false, false);
 
         AudioManager.aud.Play("hitByItem", 0.8f, 1.2f);
+        AudioManager.aud.StartFade("cheer", 1.0f, 0.2f);
         return true;
     }
 
@@ -616,7 +626,7 @@ public class PlayerStatus : MonoBehaviour
 
             // HeelFire sfx Fade in.
             AudioManager.aud.Play("heelFire");
-            AudioManager.aud.StartFade("heelFire", 1.0f, 0.5f);
+            AudioManager.aud.StartFade("heelFire", 1.0f, 0.1f);
         }
     }
 
@@ -634,7 +644,8 @@ public class PlayerStatus : MonoBehaviour
 
             // VO
             AnnouncerManager.PlayLine("TheHeel", Priority.HeelFire);
-            AudioManager.aud.StartFade("cheer", heelFireCooldownMax, 0.7f);
+            AudioManager.aud.StartFade("cheer", heelFireCooldownMax, 0.3f);
+            AudioManager.aud.Play("heelCheer"); // Most cheered moment.
         }
         else
         {
