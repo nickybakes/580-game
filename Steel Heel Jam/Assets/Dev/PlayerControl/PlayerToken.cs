@@ -28,6 +28,7 @@ public class PlayerToken : MonoBehaviour
         Debug.Log("Player Token " + playerNumber + " destroyed.");
         if (cursorPrefabInputsComp != null)
         {
+            MenuManager.menu.HologramCharacterDisplay(playerNumber);
             Destroy(cursorPrefabInputsComp.gameObject);
         }
 
