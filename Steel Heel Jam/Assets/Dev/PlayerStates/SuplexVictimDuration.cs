@@ -40,6 +40,7 @@ public class SuplexVictimDuration : BasicState
         status.ReduceStamina(status.suplexStaminaDamage);
 
         // Play VO line.
+        AudioManager.aud.StartFade("cheer", 1.5f, 0.5f);
         AnnouncerManager.PlayLine("bigHitSuplex", Priority.Damage);
     }
 }

@@ -62,5 +62,8 @@ public class Saber : DefaultState
 
         InitializeAirAttack();
         airAttack.radiusMultiplier = 1.6f;
+        airAttack.damageMultiplier = 1.4f;
+        airAttack.knockbackMultiplier = 1.1f;
+        airAttack.knockbackHeightMultiplier = 1.4f;
     }
 }

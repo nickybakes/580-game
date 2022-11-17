@@ -57,6 +57,7 @@ MonoBehaviour:
   sounds:
   - audioType: 2
     name: VO_Exhibition
+    previousClip: -1
     clips:
     - {fileID: 8300000, guid: 906f04367f4257f49be231309b4af50a, type: 3}
     volume: 1
@@ -67,8 +68,9 @@ MonoBehaviour:
     source: {fileID: 0}
   - audioType: 3
     name: market
+    previousClip: -1
     clips:
-    - {fileID: 8300000, guid: 65ed942379f6b6340a3528852f44ff1a, type: 3}
+    - {fileID: 8300000, guid: fe8e3ed3e16d4564e904e39e125a7452, type: 3}
     volume: 0.5
     pitch: 1
     loop: 1
@@ -77,6 +79,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - audioType: 1
     name: controllerOn
+    previousClip: -1
     clips:
     - {fileID: 8300000, guid: d79d794faa2950f4890cd7475560c416, type: 3}
     volume: 1
@@ -87,6 +90,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - audioType: 1
     name: controllerOff
+    previousClip: -1
     clips:
     - {fileID: 8300000, guid: c1aa1f5c6f4838946b73859bcf5fbb70, type: 3}
     volume: 1

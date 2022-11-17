@@ -7,8 +7,6 @@ public class GameManager : MonoBehaviour
 
     public static GameManager game;
 
-    public AudioManager audioManager;
-
     public GameSceneSettings gameSceneSettings;
 
     public GameObject playerPrefab;
@@ -69,7 +67,6 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         GameManager.game = this;
-        audioManager = FindObjectOfType<AudioManager>();
         allPlayerStatuses = new List<PlayerStatus>();
         alivePlayerStatuses = new List<PlayerStatus>();
         eliminatedPlayerStatuses = new List<PlayerStatus>();
@@ -137,7 +134,7 @@ public class GameManager : MonoBehaviour
         }
 
         HUDManager.hud.countdownText.text = "BRAWL!";
-        audioManager.Play("bellStart");
+        AudioManager.aud.Play("bellStart");
         dontUpdateGameplay = false;
 
         StartMovingRing();
@@ -178,11 +175,8 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        // if (gameTime > 13 && !heelSpotlightSpawned)
-        // {
-        //     heelSpotlightSpawned = true;
-        //     SpawnHeelSpotlight();
-        // }
+        // Lower audience volume to min.
+        AudioManager.aud.UpdateFade("cheer", -0.1f, 0.0f);
     }
 
     public void SpawnPlayerPrefabs()
@@ -263,11 +257,11 @@ public class GameManager : MonoBehaviour
         {
             status.playerLastHitBy.totalEliminations++;
             status.playerLastHitBy.IncreaseSpotlightMeter(25.0f);
-
         }
 
         // Plays VO line. (only if hit out by another player... walk-out lines as a stretch goal)
         AnnouncerManager.PlayLine("eliminated", Priority.Elimination);
+        AudioManager.aud.StartFade("cheer", 1.0f, 0.3f);
 
         alivePlayerStatuses.Remove(status);
         eliminatedPlayerStatuses.Add(status);
@@ -349,11 +343,11 @@ public class GameManager : MonoBehaviour
         AnnouncerManager.PlayLine("spotlight", Priority.SpotlightSpawn);
     }
 
-    public void SpawnExplosion(Vector3 position, PlayerStatus ownerStatus, bool damagerOwnerToo)
+    public void SpawnExplosion(Vector3 position, PlayerStatus ownerStatus, bool damagerOwnerToo, float knockbackScale = 1, float transformScale = 1)
     {
         GameObject explosionInstance = Instantiate(explosion, position, Quaternion.identity);
         Explosion explosionScript = explosionInstance.GetComponent<Explosion>();
-        explosionScript.Init(ownerStatus, damagerOwnerToo);
+        explosionScript.Init(ownerStatus, damagerOwnerToo, knockbackScale, transformScale);
     }
 
     public void DespawnSpotlight()

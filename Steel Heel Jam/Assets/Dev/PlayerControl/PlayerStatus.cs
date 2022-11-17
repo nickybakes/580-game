@@ -145,7 +145,7 @@ public class PlayerStatus : MonoBehaviour
     private int maxBuffs = 2;
     private int buffCount = 0;
 
-    public float plotArmorAdditionalHeal = 5.0f;
+    public float plotArmorAdditionalHeal = 8.0f;
     public float redemptionArcDamageMultiplier = 2.0f;
     public float redemptionArcKnockbackMultiplier = 2.0f;
     public bool canDoubleJump = false;
@@ -292,6 +292,13 @@ public class PlayerStatus : MonoBehaviour
                 heelFireHitbox.SetActive(false);
                 isHeel = false;
                 playerHeader.SetHeel(false);
+
+                AudioManager.aud.Stop("heelFire");
+            }
+            // If close to finishing, start to fade sfx.
+            if (heelFireCooldown > heelFireCooldownMax - 1)
+            {
+                AudioManager.aud.StartFade("heelFire", 1.0f, 0.0f);
             }
         }
 
@@ -527,7 +534,7 @@ public class PlayerStatus : MonoBehaviour
                 if (attackingPlayerStatus.buffs[(int)Buff.RedemptionArc] == true)
                 {
                     // Spawn explosion here
-                    GameManager.game.SpawnExplosion(attackingPlayerStatus.combat.weaponState.hitbox.transform.position, attackingPlayerStatus, false);
+                    GameManager.game.SpawnExplosion(attackingPlayerStatus.combat.weaponState.hitbox.transform.position, attackingPlayerStatus, false, .5f, .65f);
                 }
                 if (attackingPlayerStatus.buffs[(int)Buff.TheStink] == true)
                 {
@@ -546,13 +553,22 @@ public class PlayerStatus : MonoBehaviour
             {
                 // If the full combo causes Iframes, plays VO line.
                 if (IFrames)
-                    AudioManager.aud.Play("bigHitCombo");
+                    AnnouncerManager.PlayLine("bigHitCombo", Priority.Damage);
 
                 AudioManager.aud.Play("orchestraHitLong");
                 CameraManager.cam.ShakeCamera(.2f);
             }
 
+            // Always plays default punch. If a weapon is equipped, also plays that specific sound.
             AudioManager.aud.Play("punch", 0.8f, 1.2f);
+
+            if (attackingPlayerStatus.combat.equippedItem != null)
+            {
+                string soundToPlay = attackingPlayerStatus.combat.equippedItem.name;
+                // Remove '(clone)' from end of string. (Sounds in AudioManager named same as weapons)
+                soundToPlay = soundToPlay.Remove(soundToPlay.Length - 7);
+                AudioManager.aud.Play(soundToPlay);
+            }
         }
     }
 
@@ -597,6 +613,10 @@ public class PlayerStatus : MonoBehaviour
             heelFireCooldown = 0;
             heelFireHitbox.SetActive(true);
             isHeel = true;
+
+            // HeelFire sfx Fade in.
+            AudioManager.aud.Play("heelFire");
+            AudioManager.aud.StartFade("heelFire", 1.0f, 0.5f);
         }
     }
 
@@ -613,7 +633,8 @@ public class PlayerStatus : MonoBehaviour
             //buffs[(int)Buff.HeelFire] = true;
 
             // VO
-            AnnouncerManager.PlayLine("heelFire", Priority.HeelFire);
+            AnnouncerManager.PlayLine("TheHeel", Priority.HeelFire);
+            AudioManager.aud.StartFade("cheer", heelFireCooldownMax, 0.7f);
         }
         else
         {
@@ -630,6 +651,7 @@ public class PlayerStatus : MonoBehaviour
 
             // VO
             AnnouncerManager.PlayLine(buffToGive.ToString(), Priority.Buff);
+            AudioManager.aud.StartFade("cheer", 1.0f, 0.4f);
         }
         CameraManager.cam.ShakeCamera(.5f);
     }
@@ -714,6 +736,10 @@ public class PlayerStatus : MonoBehaviour
         if (other.tag == "Ring")
         {
             isOOB = false;
+            if(playerHeader != null)
+            {
+                playerHeader.SetOutOfRing(false);
+            }
         }
     }
 
@@ -722,6 +748,10 @@ public class PlayerStatus : MonoBehaviour
         if (other.tag == "Ring")
         {
             isOOB = true;
+            if(playerHeader != null)
+            {
+                playerHeader.SetOutOfRing(true);
+            }
         }
     }
 }

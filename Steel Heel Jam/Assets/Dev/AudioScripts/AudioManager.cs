@@ -3,6 +3,7 @@ using UnityEngine;
 using System;
 using UnityEditor.Rendering;
 using UnityEngine.Rendering;
+using System.Collections;
 
 public class AudioManager : MonoBehaviour
 {
@@ -84,7 +85,8 @@ public class AudioManager : MonoBehaviour
         //chooses from list before playing.
         int randClip = UnityEngine.Random.Range(0, s.clips.Length);
 
-        if (s.clips.Length > 1)
+        // If VO content, checks if same line as previousClip, if so, re-randomizes.
+        if (s.audioType == Sound.AudioTypes.VoiceOver && s.clips.Length > 1)
         {
             while (randClip == s.previousClip)
             {
@@ -217,6 +219,50 @@ public class AudioManager : MonoBehaviour
             return true;
         else
             return false;
+    }
+
+    /// <summary>
+    /// Fade in or out audio, based on whether speed is + or -.
+    /// Useful for Flexing, where the user controls the audience volume.
+    /// </summary>
+    /// <param name="name">Name of sound clip.</param>
+    /// <param name="speed">Speed to fade at. </param>
+    /// <param name="maxMinVol">Either the max or min volume, depending on if you're fading in or out. (between 0 and 1)</param>
+    public void UpdateFade(string name, float speed, float maxMinVol)
+    {
+        Sound s = Find(name);
+
+        // For fadeIn OR fadeOut
+        if ((speed > 0 && s.source.volume < maxMinVol) || (speed < 0 && s.source.volume > maxMinVol))
+            s.source.volume += speed * Time.deltaTime;
+    }
+
+
+    /// The method used to call the StartFadeEnumerator.
+    public void StartFade(string name, float duration, float targetVolume)
+    {
+        StartCoroutine(StartFadeEnumerator(name, duration, targetVolume));
+    }
+    /// <summary>
+    /// Fade audio to a targetVolume over a set amount of time.
+    /// Useful in things without Updates().
+    /// </summary>
+    /// <param name="name">The name of the sound.</param>
+    /// <param name="duration">Duration of the fade.</param>
+    /// <param name="targetVolume">Target volume.</param>
+    /// <returns></returns>
+    private IEnumerator StartFadeEnumerator(string name, float duration, float targetVolume)
+    {
+        Sound s = Find(name);
+        float currentTime = 0;
+        float start = s.source.volume;
+        while (currentTime < duration)
+        {
+            currentTime += Time.deltaTime;
+            s.source.volume = Mathf.Lerp(start, targetVolume, currentTime / duration);
+            yield return null;
+        }
+        yield break;
     }
 
     public void UpdateMixerVolume()
