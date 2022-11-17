@@ -94,6 +94,16 @@ public class PlayerToken : MonoBehaviour
         cursorPrefabInputsComp.OnMove(value);
     }
 
+    public void OnCursorSnap(InputValue value)
+    {
+        cursorPrefabInputsComp.OnSnap(value);
+    }
+
+    public void OnAccept(InputValue value)
+    {
+        cursorPrefabInputsComp.OnAccept(value);
+    }
+
     public void OnCursorBack(InputValue value)
     {
         cursorPrefabInputsComp.OnBack(value);
