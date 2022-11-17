@@ -681,7 +681,7 @@
                 {
                     "name": "CursorSnap",
                     "type": "Value",
-                    "id": "4be517a9-5af7-4252-a2df-eafa70621d78",
+                    "id": "dadbcbc6-f3cf-4a50-96a9-cea95b595415",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
@@ -740,61 +740,6 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "KeyboardMouse",
-                    "action": "CursorMove",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "D-pad",
-                    "id": "5f6945f0-6ac4-4ea6-ab24-9e281ad7c2f9",
-                    "path": "2DVector(mode=1)",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "CursorMove",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "up",
-                    "id": "1a46fe0e-1c3b-42a8-a994-49c68fe5b730",
-                    "path": "<Gamepad>/dpad/up",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "CursorMove",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "down",
-                    "id": "dbbde376-8342-4574-8df3-cfcfc634f56c",
-                    "path": "<Gamepad>/dpad/down",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "CursorMove",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "left",
-                    "id": "4a53a3c8-8312-4ddf-9c26-dbc5f882c1a2",
-                    "path": "<Gamepad>/dpad/left",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "CursorMove",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "right",
-                    "id": "791e9d42-c588-4f2d-8a63-5f21a7a2ec8a",
-                    "path": "<Gamepad>/dpad/right",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
                     "action": "CursorMove",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -910,61 +855,6 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "D-pad",
-                    "id": "0ac826a7-1767-4bba-adc5-702dabbfcf0d",
-                    "path": "2DVector",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Joystick",
-                    "action": "CursorMove",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "up",
-                    "id": "9d5015c6-d892-4213-b9f0-45b0570f59ae",
-                    "path": "<HID::Logitech Logitech Dual Action>/hat/up",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Joystick",
-                    "action": "CursorMove",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "down",
-                    "id": "ea77a25a-d471-495c-afae-ed591358ba0d",
-                    "path": "<HID::Logitech Logitech Dual Action>/hat/down",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Joystick",
-                    "action": "CursorMove",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "left",
-                    "id": "c8bb1528-f8fe-42c0-a961-29f0ac2002cb",
-                    "path": "<HID::Logitech Logitech Dual Action>/hat/left",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Joystick",
-                    "action": "CursorMove",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "right",
-                    "id": "c86ab072-f4eb-491d-ad88-e8131990a38d",
-                    "path": "<HID::Logitech Logitech Dual Action>/hat/right",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Joystick",
-                    "action": "CursorMove",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
                     "name": "",
                     "id": "bd20ced2-d818-496c-b9ce-52cdb5b658cf",
                     "path": "<HID::Logitech Logitech Dual Action>/button2",
@@ -1009,48 +899,114 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "",
-                    "id": "515c3c96-11b5-4d32-a35e-3489bfb67d7e",
+                    "name": "GamePad",
+                    "id": "c12db024-b8a0-4731-a470-a5727cb6f76c",
+                    "path": "2DVector(mode=1)",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CursorSnap",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "ed56dc87-ac2e-4145-94c6-e5dfc4902e87",
                     "path": "<Gamepad>/dpad/up",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "CursorSnap",
                     "isComposite": false,
-                    "isPartOfComposite": false
+                    "isPartOfComposite": true
                 },
                 {
-                    "name": "",
-                    "id": "9ce0c038-34c7-4ddb-a72c-d88890584408",
+                    "name": "down",
+                    "id": "e3972a4e-d097-42c5-9275-5c8f46a1e9c8",
                     "path": "<Gamepad>/dpad/down",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "CursorSnap",
                     "isComposite": false,
-                    "isPartOfComposite": false
+                    "isPartOfComposite": true
                 },
                 {
-                    "name": "",
-                    "id": "c9cf1400-1dfd-4807-94f1-4e52db161c85",
+                    "name": "left",
+                    "id": "63cc4585-c91c-4915-b0c3-45c10852cc24",
                     "path": "<Gamepad>/dpad/left",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "CursorSnap",
                     "isComposite": false,
-                    "isPartOfComposite": false
+                    "isPartOfComposite": true
                 },
                 {
-                    "name": "",
-                    "id": "5939ca6b-e2ce-4313-bf1e-63580b313deb",
+                    "name": "right",
+                    "id": "f892a2a5-5f0f-42a6-9a5f-48951a5e82c3",
                     "path": "<Gamepad>/dpad/right",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "CursorSnap",
                     "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Joystick",
+                    "id": "94ad97f2-0ef6-4603-8c85-b75d66d3d50c",
+                    "path": "2DVector(mode=1)",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CursorSnap",
+                    "isComposite": true,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "7a30f003-ec6f-4456-bffc-9f860852531a",
+                    "path": "<Gamepad>/dpad/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Joystick",
+                    "action": "CursorSnap",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "54f4f863-7279-4152-a7db-b7d454c1e0c0",
+                    "path": "<Gamepad>/dpad/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Joystick",
+                    "action": "CursorSnap",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "697610d6-2d02-4af5-8fdb-cc1517dec134",
+                    "path": "<Gamepad>/dpad/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Joystick",
+                    "action": "CursorSnap",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "f86e2ba4-1529-4119-889e-bdb77cd99bc6",
+                    "path": "<Gamepad>/dpad/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Joystick",
+                    "action": "CursorSnap",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 }
             ]
         }

@@ -10,7 +10,7 @@ public class MenuButton : MonoBehaviour
     [HideInInspector]
     private List<PlayerCursor> cursorsHoveringThisButton;
 
-    [HideInInspector] public Vector3 position;
+    [HideInInspector] public RectTransform rect;
 
     public UnityEvent submitAction;
 
@@ -23,7 +23,7 @@ public class MenuButton : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        position = transform.position;
+        rect = GetComponent<RectTransform>();
         cursorsHoveringThisButton = new List<PlayerCursor>();
 
         buttonSelects = new MenuButton[4]

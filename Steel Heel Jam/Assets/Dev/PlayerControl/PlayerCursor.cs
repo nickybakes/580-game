@@ -54,20 +54,20 @@ public class PlayerCursor : MonoBehaviour
             AppManager.app.RemovePlayerToken(playerNumber);
         }
 
-        if (_input.snapState.isSnapping)
-        {
-            // Logic for snapping to direction here
-            if (highlightedButton != null)
-            {
-                normalizedPosition = highlightedButton.buttonSelects[(int)_input.snapState.snapDirection].position;
-            }
-        }
-
         inputDirection = _input.move.normalized;
         aspectRatio = canvasRect.rect.width/canvasRect.rect.height;
         inputDirection = new Vector2(inputDirection.x, inputDirection.y * aspectRatio);
         velocity = inputDirection * moveSpeed;
         Move();
+
+        if (_input.snapState.isSnapping)
+        {
+            // Logic for snapping to direction here
+            if (highlightedButton != null)
+            {
+                //rect.anchoredPosition = highlightedButton.buttonSelects[(int)_input.snapState.snapDirection].rect.anchoredPosition;
+            }
+        }
     }
 
     public void ReturnToDefaultLocation()

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Controls;
 
 public struct SnapState
 {
@@ -53,19 +54,19 @@ public class CursorInputs : MonoBehaviour
         snapState.isSnapping = true;
 
         // This is terrible and should be changed if I can figure out how to translate D-PAD to integer
-        if (snapDirection == Vector2.up)
+        if (snapDirection.y == 1)
         {
             snapState.snapDirection = SnapDirection.Up;
         }
-        else if (snapDirection == Vector2.down)
+        else if (snapDirection.y == -1)
         {
             snapState.snapDirection = SnapDirection.Down;
         }
-        else if (snapDirection == Vector2.left)
+        else if (snapDirection.x == -1)
         {
             snapState.snapDirection = SnapDirection.Left;
         }
-        else if (snapDirection == Vector2.right)
+        else if (snapDirection.x == 1)
         {
             snapState.snapDirection = SnapDirection.Right;
         }
