@@ -625,7 +625,7 @@ public class PlayerStatus : MonoBehaviour
 
             // HeelFire sfx Fade in.
             AudioManager.aud.Play("heelFire");
-            AudioManager.aud.StartFade("heelFire", 1.0f, 0.3f);
+            AudioManager.aud.StartFade("heelFire", 1.0f, 0.1f);
         }
     }
 
@@ -661,7 +661,7 @@ public class PlayerStatus : MonoBehaviour
 
             // VO
             AnnouncerManager.PlayLine(buffToGive.ToString(), Priority.Buff);
-            AudioManager.aud.StartFade("cheer", 1.0f, 0.5f);
+            AudioManager.aud.StartFade("cheer", 1.0f, 0.4f);
         }
         CameraManager.cam.ShakeCamera(.5f);
     }
