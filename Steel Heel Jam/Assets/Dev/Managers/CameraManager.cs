@@ -144,7 +144,7 @@ public class CameraManager : MonoBehaviour
         currentShakeOffsetCos = Random.value * 3f;
         currentShakeOffsetSin = Random.value * 3f;
 
-        float newShakeTimeMax = .125f + magnitudePercentage * .5f;
+        float newShakeTimeMax = Mathf.Min(.1f + magnitudePercentage * .3f, .75f);
         currentShakeTime += newShakeTimeMax;
         currentShakeTimeMax = currentShakeTime;
     }
