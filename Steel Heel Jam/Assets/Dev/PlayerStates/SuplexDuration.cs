@@ -8,7 +8,7 @@ public class SuplexDuration : BasicState
     private PlayerStatus victim;
     public SuplexDuration(PlayerStatus _victim)
     {
-        timeToChangeState = 0; // Until grounded.
+        timeToChangeState = 7.5f; // Until grounded.
         moveSpeedMultiplier = 5f;
         canPlayerControlMove = false;
         canPlayerControlRotate = false;

@@ -258,11 +258,6 @@ public class PlayerStatus : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //fixes the null ref exception when recompiling in the Editor
-#if UNITY_EDITOR
-        if (currentPlayerState == null)
-            currentPlayerState = new Idle();
-#endif
 
         // Prevents player movement on game start countdown.
         if (GameManager.game.dontUpdateGameplay)
@@ -440,7 +435,7 @@ public class PlayerStatus : MonoBehaviour
 
     public void GetHitByElbowDrop(Vector3 hitboxPos, Vector3 collisionPos, float damage, float knockback, float knockbackHeight, float timeInKnockback, PlayerStatus attackingPlayerStatus, bool unblockable)
     {
-        if (eliminated || waitingToBeEliminated)
+        if (eliminated || waitingToBeEliminated || currentPlayerState.isInvincibleToAttacks)
             return;
 
         if (attackingPlayerStatus.combat.weaponState.explodeOnHit)
@@ -472,7 +467,7 @@ public class PlayerStatus : MonoBehaviour
             return;
         }
 
-        if (!currentPlayerState.isInvincibleToAttacks && !iFrames)
+        if (!iFrames)
         {
             Vector3 direction = transform.position - attackingPlayerStatus.transform.position;
             direction.y = 0;
@@ -500,7 +495,7 @@ public class PlayerStatus : MonoBehaviour
 
     public void GetHitByMelee(Vector3 hitboxPos, Vector3 collisionPos, float damage, float knockback, float knockbackHeight, float timeInKnockback, PlayerStatus attackingPlayerStatus)
     {
-        if (eliminated || waitingToBeEliminated)
+        if (eliminated || waitingToBeEliminated || currentPlayerState.isInvincibleToAttacks)
             return;
 
         if (attackingPlayerStatus.combat.weaponState.explodeOnHit)
@@ -530,7 +525,7 @@ public class PlayerStatus : MonoBehaviour
             return;
         }
 
-        if (!currentPlayerState.isInvincibleToAttacks && !iFrames)
+        if (!iFrames)
         {
             GetHit(attackingPlayerStatus.transform.forward, damage, knockback, knockbackHeight, timeInKnockback, attackingPlayerStatus, true, false);
 

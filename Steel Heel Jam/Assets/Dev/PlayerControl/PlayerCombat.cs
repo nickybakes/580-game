@@ -103,13 +103,6 @@ public class PlayerCombat : MonoBehaviour
         bool canThrow
     )
     {
-        //fixes the null ref exception when recompiling in the Editor
-#if UNITY_EDITOR
-        if (weaponState == null)
-        {
-            weaponState = new DefaultState(_status.playerNumber, _hitbox);
-        }
-#endif
 
         if (_status.CurrentPlayerState.countAttackCooldown && attackCooldown < attackCooldownMax)
             attackCooldown += Time.deltaTime;
