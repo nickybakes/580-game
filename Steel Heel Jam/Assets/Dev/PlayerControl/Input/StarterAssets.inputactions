@@ -679,7 +679,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "CustomizeLeft",
+                    "name": "Customize",
                     "type": "Button",
                     "id": "8ad133fb-d71c-425d-b4a8-4d505d123037",
                     "expectedControlType": "Button",
@@ -688,7 +688,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "CustomizeRight",
+                    "name": "Randomize",
                     "type": "Button",
                     "id": "045a3e59-640d-46ea-8dd1-be85d41a88a2",
                     "expectedControlType": "Button",
@@ -985,7 +985,7 @@
                 {
                     "name": "up",
                     "id": "7a30f003-ec6f-4456-bffc-9f860852531a",
-                    "path": "<Gamepad>/dpad/up",
+                    "path": "<HID::Logitech Logitech Dual Action>/hat/up",
                     "interactions": "",
                     "processors": "",
                     "groups": "Joystick",
@@ -996,7 +996,7 @@
                 {
                     "name": "down",
                     "id": "54f4f863-7279-4152-a7db-b7d454c1e0c0",
-                    "path": "<Gamepad>/dpad/down",
+                    "path": "<HID::Logitech Logitech Dual Action>/hat/down",
                     "interactions": "",
                     "processors": "",
                     "groups": "Joystick",
@@ -1007,7 +1007,7 @@
                 {
                     "name": "left",
                     "id": "697610d6-2d02-4af5-8fdb-cc1517dec134",
-                    "path": "<Gamepad>/dpad/left",
+                    "path": "<HID::Logitech Logitech Dual Action>/hat/left",
                     "interactions": "",
                     "processors": "",
                     "groups": "Joystick",
@@ -1018,7 +1018,7 @@
                 {
                     "name": "right",
                     "id": "f86e2ba4-1529-4119-889e-bdb77cd99bc6",
-                    "path": "<Gamepad>/dpad/right",
+                    "path": "<HID::Logitech Logitech Dual Action>/hat/right",
                     "interactions": "",
                     "processors": "",
                     "groups": "Joystick",
@@ -1033,7 +1033,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "KeyboardMouse",
-                    "action": "CustomizeLeft",
+                    "action": "Customize",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -1044,7 +1044,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "CustomizeLeft",
+                    "action": "Customize",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -1055,7 +1055,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Joystick",
-                    "action": "CustomizeLeft",
+                    "action": "Customize",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -1066,7 +1066,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "KeyboardMouse",
-                    "action": "CustomizeRight",
+                    "action": "Randomize",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -1077,7 +1077,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "CustomizeRight",
+                    "action": "Randomize",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -1088,9 +1088,64 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Joystick",
-                    "action": "CustomizeRight",
+                    "action": "Randomize",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "Arrow Keys",
+                    "id": "79a4240d-e94c-42bc-9506-2dfe6571336e",
+                    "path": "2DVector(mode=1)",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CursorSnap",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "bd4f6968-a943-40dc-9449-91e2856679d4",
+                    "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMouse",
+                    "action": "CursorSnap",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "9f128f3b-b2bd-45d4-aa78-65e71aa4d3a2",
+                    "path": "<Keyboard>/downArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMouse",
+                    "action": "CursorSnap",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "e3c84dfd-9ace-4b9f-a7ee-7cc7fd67d06f",
+                    "path": "<Keyboard>/leftArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMouse",
+                    "action": "CursorSnap",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "93edb4a0-9d5d-42b1-a99d-a15bedbbc489",
+                    "path": "<Keyboard>/rightArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMouse",
+                    "action": "CursorSnap",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 }
             ]
         }

@@ -35,17 +35,19 @@ public class PlayerCursor : MonoBehaviour
 
     private RectTransform canvasRect;
 
-     public MenuButton highlightedButton;
+    public MenuButton highlightedButton;
 
-    public float lerpToButtonTimeMax;
+    public float lerpToPositionTimeMax;
 
-    public float lerpToButtonTimeCurrent;
+    public float lerpToPositionTimeCurrent;
 
-    private Vector2 buttonLerpToPosition;
+    private Vector2 lerpToPosition;
 
-    private Vector2 buttonLerpStartPosition;
+    private Vector2 lerpStartPosition;
 
     private float lerpToSpeed = 50f;
+
+    public bool isCustomizing;
 
     // Start is called before the first frame update
     void Start()
@@ -59,82 +61,88 @@ public class PlayerCursor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_input.back)
+        if (isCustomizing)
         {
-            AppManager.app.RemovePlayerToken(playerNumber);
-        }
-
-        if(lerpToButtonTimeCurrent > 0)
-        {
-            velocity = Vector2.zero;
-
-            normalizedPosition = Vector2.Lerp(buttonLerpToPosition, buttonLerpStartPosition, lerpToButtonTimeCurrent/lerpToButtonTimeMax);
-
-            lerpToButtonTimeCurrent -= Time.deltaTime;
-
+            if (_input.back)
+            {
+                isCustomizing = false;
+            }
         }
         else
         {
-            inputDirection = _input.move.normalized;
-            aspectRatio = canvasRect.rect.width / canvasRect.rect.height;
-            inputDirection = new Vector2(inputDirection.x, inputDirection.y * aspectRatio);
-            velocity = inputDirection * moveSpeed;
-        }
-
-        Move();
-
-        if (_input.snapState.isSnapping)
-        {
-            // Logic for snapping to direction here
-            if (highlightedButton != null)
+            if (_input.back)
             {
-                MenuButton b = highlightedButton.buttonSelects[(int)_input.snapState.snapDirection];
+                AppManager.app.RemovePlayerToken(playerNumber);
+            }
 
-                if(b != null)
+            if (lerpToPositionTimeCurrent > 0)
+            {
+                velocity = Vector2.zero;
+
+                normalizedPosition = Vector2.Lerp(lerpToPosition, lerpStartPosition, lerpToPositionTimeCurrent / lerpToPositionTimeMax);
+
+                lerpToPositionTimeCurrent -= Time.deltaTime;
+
+            }
+            else
+            {
+                inputDirection = _input.move.normalized;
+                aspectRatio = canvasRect.rect.width / canvasRect.rect.height;
+                inputDirection = new Vector2(inputDirection.x, inputDirection.y * aspectRatio);
+                velocity = inputDirection * moveSpeed;
+            }
+
+            Move();
+
+            if (_input.snapState.isSnapping)
+            {
+                // Logic for snapping to direction here
+                if (highlightedButton != null)
                 {
-                    LerpToButton(b);
+                    MenuButton b = highlightedButton.buttonSelects[(int)_input.snapState.snapDirection];
+
+                    if (b != null)
+                    {
+                        LerpToButton(b);
+                    }
                 }
             }
-        }
 
-        if (_input.customizeLeft && !_input.wasCustomizeLeft)
-        {
-            int skinToneIndex = AppManager.app.playerTokens[playerNumber - 1].visualPrefs.skinToneIndex;
-            if (skinToneIndex == 0)
-                skinToneIndex = 15;
-            else
-                skinToneIndex--;
+            if (_input.customize && !_input.wasCustomize)
+            {
+                isCustomizing = true;
+            }
+            if (_input.randomize && !_input.wasRandomize)
+            {
+                int skinToneIndex = AppManager.app.playerTokens[playerNumber - 1].visualPrefs.skinToneIndex;
+                if (skinToneIndex == 15)
+                    skinToneIndex = 0;
+                else
+                    skinToneIndex++;
 
-            AppManager.app.playerTokens[playerNumber - 1].visualPrefs.skinToneIndex = skinToneIndex;
+                AppManager.app.playerTokens[playerNumber - 1].visualPrefs.skinToneIndex = skinToneIndex;
 
-            MenuManager.menu.characterDisplays[playerNumber - 1].SetSkinToneIndex(skinToneIndex);
-            _input.customizeLeft = false;
-        }
-        if (_input.customizeRight && !_input.wasCustomizeRight)
-        {
-            int skinToneIndex = AppManager.app.playerTokens[playerNumber - 1].visualPrefs.skinToneIndex;
-            if (skinToneIndex == 15)
-                skinToneIndex = 0;
-            else
-                skinToneIndex++;
-
-            AppManager.app.playerTokens[playerNumber - 1].visualPrefs.skinToneIndex = skinToneIndex;
-
-            MenuManager.menu.characterDisplays[playerNumber - 1].SetSkinToneIndex(skinToneIndex);
-            _input.customizeRight = false;
+                MenuManager.menu.characterDisplays[playerNumber - 1].SetSkinToneIndex(skinToneIndex);
+                _input.randomize = false;
+            }
         }
     }
 
     private void LerpToButton(MenuButton b)
     {
         Vector2 buttonNormalizedPosition = new Vector2(b.rect.anchoredPosition.x / canvasRect.rect.width + .5f, b.rect.anchoredPosition.y / canvasRect.rect.height + .5f);
-        buttonLerpToPosition = buttonNormalizedPosition;
-        buttonLerpStartPosition = normalizedPosition;
+        lerpToPosition = buttonNormalizedPosition;
+        lerpStartPosition = normalizedPosition;
 
-        float distance = Vector2.Distance(buttonLerpToPosition, normalizedPosition);
+        CalculateLerpTime(lerpToPosition);
+    }
 
-        lerpToButtonTimeMax = Mathf.Max(distance / lerpToSpeed, .05f);
-        lerpToButtonTimeCurrent = lerpToButtonTimeMax;
+    private void CalculateLerpTime(Vector2 position)
+    {
+        float distance = Vector2.Distance(position, normalizedPosition);
+
+        lerpToPositionTimeMax = Mathf.Max(distance / lerpToSpeed, .05f);
+        lerpToPositionTimeCurrent = lerpToPositionTimeMax;
     }
 
     public void ReturnToDefaultLocation()
