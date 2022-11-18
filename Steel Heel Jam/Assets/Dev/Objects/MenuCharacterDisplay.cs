@@ -34,7 +34,7 @@ public class MenuCharacterDisplay : MonoBehaviour
         enabledPlayerMaterial = new Material(enabledPlayerMaterial);
         disabledPlayerMaterial = new Material(disabledPlayerMaterial);
 
-        disabledPlayerMaterial.SetColor("_Tint", PlayerToken.colors[playerNumber - 1]);
+        // disabledPlayerMaterial.SetColor("_Tint", PlayerToken.colors[playerNumber - 1]);
         enabledPlayerMaterial.SetFloat("_Player_Index", playerNumber - 1);
         disabledPlayerMaterial.SetFloat("_Player_Index", playerNumber - 1);
 
