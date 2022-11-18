@@ -45,8 +45,6 @@ public class AppManager : MonoBehaviour
             {
                 if (playerTokens[i])
                     amount++;
-                else
-                    return amount;
             }
             return amount;
         }

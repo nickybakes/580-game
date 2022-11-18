@@ -52,6 +52,7 @@ public class GlobalInputManager : MonoBehaviour
 
         PlayerToken token = input.GetComponent<PlayerToken>();
         token.input = input;
+        token.visualPrefs = new CharacterVisualPrefs(-1);
         int playerNumber = getLowestPlayerNumber();
         if (playerNumber != -1)
         {
