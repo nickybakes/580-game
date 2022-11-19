@@ -125,14 +125,14 @@ public class PlayerToken : MonoBehaviour
         cursorPrefabInputsComp.OnBack(value);
     }
 
-    public void OnCustomizeLeft(InputValue value)
+    public void OnCustomize(InputValue value)
     {
-        cursorPrefabInputsComp.OnCustomizeLeft(value);
+        cursorPrefabInputsComp.OnCustomize(value);
     }
 
-    public void OnCustomizeRight(InputValue value)
+    public void OnRandomize(InputValue value)
     {
-        cursorPrefabInputsComp.OnCustomizeRight(value);
+        cursorPrefabInputsComp.OnRandomize(value);
     }
 
     public void OnJump(InputValue value)

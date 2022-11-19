@@ -5,10 +5,14 @@ using UnityEngine;
 public struct CharacterVisualPrefs
 {
     public int skinToneIndex;
+    public int hairStyleIndex;
+    public int hairColorIndex;
 
-    public CharacterVisualPrefs(int _skinToneIndex = -1)
+    public CharacterVisualPrefs(int _skinToneIndex = -1, int _hairStyleIndex = 0, int _hairColorIndex = 0)
     {
         skinToneIndex = _skinToneIndex;
+        hairStyleIndex = _hairStyleIndex;
+        hairColorIndex = _hairColorIndex;
     }
 }
 
@@ -43,6 +47,12 @@ public class MenuCharacterDisplay : MonoBehaviour
         HologramDisplay();
     }
 
+    public void SetVisualPrefs(CharacterVisualPrefs prefs)
+    {
+        currentVisualPrefs = prefs;
+        UpdateAllMeshes();
+    }
+
     public void SetSkinToneIndex(int skinToneIndex)
     {
         currentVisualPrefs.skinToneIndex = skinToneIndex;
@@ -59,6 +69,8 @@ public class MenuCharacterDisplay : MonoBehaviour
 
     public void HologramDisplay()
     {
+        if (characterMesh == null)
+            return;
         disabledPlayerMaterial.SetFloat("_Skin_Tone", currentVisualPrefs.skinToneIndex);
         characterMesh.material = disabledPlayerMaterial;
         outlineMesh.gameObject.SetActive(false);

@@ -47,7 +47,33 @@ public class PlayerCursor : MonoBehaviour
 
     private float lerpToSpeed = 50f;
 
-    public bool isCustomizing;
+    private MenuCustomizationPanel customizationPanel;
+
+    private bool customizationMovementInput;
+
+    public bool IsCustomizing
+    {
+        get
+        {
+            return customizationPanel != null;
+        }
+        set
+        {
+            if (value)
+            {
+                velocity = Vector2.zero;
+                customizationPanel = MenuManager.menu.customizationPanels[playerNumber - 1];
+                customizationPanel.OpenPanel();
+                LerpToCustomizationPanel();
+            }
+            else
+            {
+                rect.localScale = Vector3.one;
+                customizationPanel.ClosePanel();
+                customizationPanel = null;
+            }
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -61,11 +87,76 @@ public class PlayerCursor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isCustomizing)
+        if (IsCustomizing)
         {
-            if (_input.back)
+            if (lerpToPositionTimeCurrent > 0)
             {
-                isCustomizing = false;
+                velocity = Vector2.zero;
+
+                float percentage = Mathf.Max(lerpToPositionTimeCurrent / lerpToPositionTimeMax, 0);
+
+                normalizedPosition = Vector2.Lerp(lerpToPosition, lerpStartPosition, percentage);
+
+                transform.localScale = new Vector3(percentage, percentage, percentage);
+
+                lerpToPositionTimeCurrent -= Time.deltaTime;
+
+                if (lerpToPositionTimeCurrent <= 0)
+                    transform.localScale = Vector3.zero;
+            }
+            else
+            {
+                if (_input.customize)
+                {
+                    _input.customize = false;
+                }
+
+                if (_input.back && !_input.wasBacking)
+                {
+                    _input.back = false;
+                    customizationPanel.DiscardChanges();
+                    IsCustomizing = false;
+                }
+
+                if (_input.accept && !_input.wasAccepting)
+                {
+                    _input.accept = false;
+                    customizationPanel.SaveChanges();
+                    IsCustomizing = false;
+                }
+
+                if (!customizationMovementInput)
+                {
+                    if (_input.customizeMove.x < -.7f)
+                    {
+                        customizationPanel.ChangeValue(true);
+                        customizationMovementInput = true;
+                    }
+                    else if (_input.customizeMove.x > .7f)
+                    {
+                        customizationPanel.ChangeValue(false);
+                        customizationMovementInput = true;
+                    }
+
+                    if (_input.customizeMove.y < -.7f)
+                    {
+                        customizationPanel.SwitchCategory(false);
+                        customizationMovementInput = true;
+                    }
+                    else if (_input.customizeMove.y > .7f)
+                    {
+                        customizationPanel.SwitchCategory(true);
+                        customizationMovementInput = true;
+                    }
+
+                }
+                else
+                {
+                    if (_input.customizeMove.magnitude < .5f)
+                    {
+                        customizationMovementInput = false;
+                    }
+                }
             }
         }
         else
@@ -83,6 +174,10 @@ public class PlayerCursor : MonoBehaviour
 
                 lerpToPositionTimeCurrent -= Time.deltaTime;
 
+                if(lerpToPositionTimeCurrent <= 0){
+                    normalizedPosition = lerpToPosition;
+                }
+
             }
             else
             {
@@ -91,8 +186,6 @@ public class PlayerCursor : MonoBehaviour
                 inputDirection = new Vector2(inputDirection.x, inputDirection.y * aspectRatio);
                 velocity = inputDirection * moveSpeed;
             }
-
-            Move();
 
             if (_input.snapState.isSnapping)
             {
@@ -110,7 +203,8 @@ public class PlayerCursor : MonoBehaviour
 
             if (_input.customize && !_input.wasCustomize)
             {
-                isCustomizing = true;
+                _input.customize = false;
+                IsCustomizing = true;
             }
             if (_input.randomize && !_input.wasRandomize)
             {
@@ -126,22 +220,38 @@ public class PlayerCursor : MonoBehaviour
                 _input.randomize = false;
             }
         }
+
+        Move();
+    }
+
+    private Vector2 NormalizePosition(Vector2 position)
+    {
+        return new Vector2(position.x / canvasRect.rect.width + .5f, position.y / canvasRect.rect.height + .5f);
     }
 
     private void LerpToButton(MenuButton b)
     {
-        Vector2 buttonNormalizedPosition = new Vector2(b.rect.anchoredPosition.x / canvasRect.rect.width + .5f, b.rect.anchoredPosition.y / canvasRect.rect.height + .5f);
+        Vector2 buttonNormalizedPosition = NormalizePosition(b.rect.anchoredPosition);
         lerpToPosition = buttonNormalizedPosition;
         lerpStartPosition = normalizedPosition;
 
-        CalculateLerpTime(lerpToPosition);
+        CalculateLerpTime(lerpToPosition, 50, .05f);
     }
 
-    private void CalculateLerpTime(Vector2 position)
+    private void LerpToCustomizationPanel()
+    {
+        Vector2 panelNormalizedPosition = NormalizePosition(customizationPanel.rect.anchoredPosition);
+        lerpToPosition = panelNormalizedPosition;
+        lerpStartPosition = normalizedPosition;
+
+        CalculateLerpTime(lerpToPosition, 10, .2f);
+    }
+
+    private void CalculateLerpTime(Vector2 position, float lerpToSpeed, float minTime)
     {
         float distance = Vector2.Distance(position, normalizedPosition);
 
-        lerpToPositionTimeMax = Mathf.Max(distance / lerpToSpeed, .05f);
+        lerpToPositionTimeMax = Mathf.Max(distance / lerpToSpeed, minTime);
         lerpToPositionTimeCurrent = lerpToPositionTimeMax;
     }
 

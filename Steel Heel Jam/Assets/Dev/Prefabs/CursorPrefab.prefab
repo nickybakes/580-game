@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1909445891957437842}
   - component: {fileID: 5133855186493725272}
   - component: {fileID: 7949499342907915380}
+  - component: {fileID: 831134426268061076}
   m_Layer: 10
   m_Name: CursorPrefab
   m_TagString: UICursor
@@ -65,7 +66,11 @@ MonoBehaviour:
   playerNumberText: {fileID: 1909445893838570188}
   cursorSprite: {fileID: 1909445892520770574}
   playerNumber: 0
+  _input: {fileID: 0}
   normalizedPosition: {x: 0, y: 0}
+  highlightedButton: {fileID: 0}
+  lerpToPositionTimeMax: 0
+  lerpToPositionTimeCurrent: 0
 --- !u!114 &5133855186493725272
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -79,9 +84,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   move: {x: 0, y: 0}
+  customizeMove: {x: 0, y: 0}
   accept: 0
   back: 0
+  customize: 0
+  wasCustomize: 0
+  randomize: 0
+  wasRandomize: 0
   wasAccepting: 0
+  wasBacking: 0
 --- !u!58 &7949499342907915380
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -95,9 +106,30 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -7.09, y: 4.12}
+  m_Offset: {x: -6.03, y: 1.63}
   serializedVersion: 2
-  m_Radius: 3.3025076
+  m_Radius: 12.94
+--- !u!50 &831134426268061076
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1909445891957437855}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 1
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 1
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 0
 --- !u!1 &1909445892520770568
 GameObject:
   m_ObjectHideFlags: 0

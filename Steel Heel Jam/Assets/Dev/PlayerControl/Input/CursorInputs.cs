@@ -12,6 +12,7 @@ public class CursorInputs : MonoBehaviour
 {
     [Header("Cursor Input Values")]
     public Vector2 move;
+    public Vector2 customizeMove;
 
     public bool accept;
     public bool back;
@@ -21,6 +22,8 @@ public class CursorInputs : MonoBehaviour
     public bool randomize;
     public bool wasRandomize;
     public bool wasAccepting;
+    public bool wasBacking;
+
 
     public SnapState snapState;
 
@@ -49,23 +52,25 @@ public class CursorInputs : MonoBehaviour
         BackInput(value.isPressed);
     }
 
-    public void OnCustomizeLeft(InputValue value)
+    public void OnCustomize(InputValue value)
     {
-        Customize(value.isPressed);
+        CustomizeInput(value.isPressed);
     }
 
-    public void OnCustomizeRight(InputValue value)
+    public void OnRandomize(InputValue value)
     {
-        Randomize(value.isPressed);
+        RandomizeInput(value.isPressed);
     }
 
     public void MoveInput(Vector2 newMoveDirection)
     {
         move = newMoveDirection;
+        customizeMove = newMoveDirection;
     }
 
     public void SnapInput(Vector2 snapDirection)
     {
+        customizeMove = snapDirection;
         snapState.isSnapping = true;
 
         // This is terrible and should be changed if I can figure out how to translate D-PAD to integer
@@ -95,16 +100,17 @@ public class CursorInputs : MonoBehaviour
 
     public void BackInput(bool pressed)
     {
+        wasBacking = back;
         back = pressed;
     }
 
-    public void Customize(bool pressed)
+    public void CustomizeInput(bool pressed)
     {
         wasCustomize = customize;
         customize = pressed;
     }
 
-    public void Randomize(bool pressed)
+    public void RandomizeInput(bool pressed)
     {
         wasRandomize = randomize;
         randomize = pressed;
