@@ -8,7 +8,7 @@ public class PlayerHeader : MonoBehaviour
 {
     public static string[] BuffTitles = { "Plot Armor", "Redemption Arc", "Speedy Subversion", "Macho Block", "Top Ropes", "The Stink" };
     public static string[] BuffDescriptions = {
-        "Heal more while flexing!",
+        "Recover more while flexing!",
         "Full combos are explosive!",
         "Dodge rolls are better!",
         "Successful blocks are explosive!",
