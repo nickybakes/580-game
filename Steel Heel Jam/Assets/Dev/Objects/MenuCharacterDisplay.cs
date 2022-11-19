@@ -42,7 +42,7 @@ public class MenuCharacterDisplay : MonoBehaviour
         enabledPlayerMaterial.SetFloat("_Player_Index", playerNumber - 1);
         disabledPlayerMaterial.SetFloat("_Player_Index", playerNumber - 1);
 
-        currentVisualPrefs = new CharacterVisualPrefs(Random.Range(0, 16));
+        currentVisualPrefs = new CharacterVisualPrefs(Random.Range(0, 10));
 
         HologramDisplay();
     }
