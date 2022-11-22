@@ -55,6 +55,17 @@ MonoBehaviour:
   ambientMixerGroup: {fileID: -1552417759374218702, guid: 1ca6bd5d073053a4faf5da10fc88482c,
     type: 2}
   sounds:
+  - audioType: 0
+    name: sizingUp
+    previousClip: -1
+    clips:
+    - {fileID: 8300000, guid: 5b8848c5dc20348448c1cd6697a7982f, type: 3}
+    volume: 0.3
+    pitch: 1
+    loop: 1
+    randStartPos: 0
+    playOnAwake: 1
+    source: {fileID: 0}
   - audioType: 2
     name: VO_Exhibition
     previousClip: -1

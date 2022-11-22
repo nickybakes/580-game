@@ -276,6 +276,9 @@ public class GameManager : MonoBehaviour
         {
             gameWon = true;
             AppManager.app.currentChampion = alivePlayerStatuses[0].playerNumber;
+
+            // Plays MatchEnd VO.
+            AnnouncerManager.PlayLine("MatchEnd", Priority.MatchEnd);
         }
 
         HUDManager.CreateEliminatedAlert(status.transform, status.playerNumber);
