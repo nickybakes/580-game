@@ -32,19 +32,66 @@ public class MenuCharacterDisplay : MonoBehaviour
 
     public CharacterVisualPrefs currentVisualPrefs;
 
+    public Material[] hairMaterialsSolid;
+    public Material[] hairMaterialsHologram;
+
+    public int[] hairMaterialIndices;
+
+    public GameObject[] hairObjectParents;
+    public MeshRenderer[] hairMeshes;
+    public MeshRenderer[] hairOutlineMeshes;
+
     // Start is called before the first frame update
     void Start()
     {
         enabledPlayerMaterial = new Material(enabledPlayerMaterial);
         disabledPlayerMaterial = new Material(disabledPlayerMaterial);
 
+        for (int i = 0; i < hairMaterialsSolid.Length; i++)
+        {
+            hairMaterialsSolid[i] = new Material(hairMaterialsSolid[i]);
+            hairMaterialsHologram[i] = new Material(hairMaterialsHologram[i]);
+        }
+
         // disabledPlayerMaterial.SetColor("_Tint", PlayerToken.colors[playerNumber - 1]);
         enabledPlayerMaterial.SetFloat("_Player_Index", playerNumber - 1);
         disabledPlayerMaterial.SetFloat("_Player_Index", playerNumber - 1);
+        for (int i = 0; i < hairMaterialsSolid.Length; i++)
+        {
+            hairMaterialsSolid[i].SetFloat("_Player_Index", playerNumber - 1);
+            hairMaterialsHologram[i].SetFloat("_Player_Index", playerNumber - 1);
+        }
 
-        currentVisualPrefs = new CharacterVisualPrefs(Random.Range(0, 10));
+        RandomizePrefs(10);
+
+        UpdateAllMeshes();
 
         HologramDisplay();
+    }
+
+    private float outlineTime;
+
+    void Update()
+    {
+        outlineTime += Time.deltaTime;
+
+        if (outlineTime >= .2)
+        {
+            outlineTime = 0;
+            for (int i = 0; i < hairOutlineMeshes.Length; i++)
+            {
+                hairOutlineMeshes[i].material.SetFloat("_PanX", Random.value);
+                hairOutlineMeshes[i].material.SetFloat("_PanY", Random.value);
+            }
+            outlineMesh.material.SetFloat("_PanX", Random.value);
+            outlineMesh.material.SetFloat("_PanY", Random.value);
+        }
+
+    }
+
+    public void RandomizePrefs(int skinToneLimit)
+    {
+        currentVisualPrefs = new CharacterVisualPrefs(Random.Range(0, skinToneLimit), Random.Range(0, 4), Random.Range(0, 16));
     }
 
     public void SetVisualPrefs(CharacterVisualPrefs prefs)
@@ -53,39 +100,49 @@ public class MenuCharacterDisplay : MonoBehaviour
         UpdateAllMeshes();
     }
 
-    public void SetSkinToneIndex(int skinToneIndex)
-    {
-        currentVisualPrefs.skinToneIndex = skinToneIndex;
-
-        UpdateAllMeshes();
-    }
-
     public void UpdateAllMeshes()
     {
         disabledPlayerMaterial.SetFloat("_Skin_Tone", currentVisualPrefs.skinToneIndex);
         enabledPlayerMaterial.SetFloat("_Skin_Tone", currentVisualPrefs.skinToneIndex);
 
+        for (int i = 0; i < hairMaterialsSolid.Length; i++)
+        {
+            hairMaterialsSolid[i].SetFloat("_Hair_Color", currentVisualPrefs.hairColorIndex);
+            hairMaterialsHologram[i].SetFloat("_Hair_Color", currentVisualPrefs.hairColorIndex);
+        }
+
+        for (int i = 0; i < hairObjectParents.Length; i++)
+        {
+            hairObjectParents[i].SetActive(false);
+        }
+
+        hairObjectParents[currentVisualPrefs.hairStyleIndex].SetActive(true);
     }
 
     public void HologramDisplay()
     {
         if (characterMesh == null)
             return;
-        disabledPlayerMaterial.SetFloat("_Skin_Tone", currentVisualPrefs.skinToneIndex);
+
         characterMesh.material = disabledPlayerMaterial;
         outlineMesh.gameObject.SetActive(false);
+
+        for (int i = 0; i < hairMeshes.Length; i++)
+        {
+            hairMeshes[i].material = hairMaterialsHologram[hairMaterialIndices[i]];
+            hairOutlineMeshes[i].gameObject.SetActive(false);
+        }
     }
 
     public void SolidDisplay()
     {
-        enabledPlayerMaterial.SetFloat("_Skin_Tone", currentVisualPrefs.skinToneIndex);
         characterMesh.material = enabledPlayerMaterial;
         outlineMesh.gameObject.SetActive(true);
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-
+        for (int i = 0; i < hairMeshes.Length; i++)
+        {
+            hairMeshes[i].material = hairMaterialsSolid[hairMaterialIndices[i]];
+            hairOutlineMeshes[i].gameObject.SetActive(true);
+        }
     }
 }

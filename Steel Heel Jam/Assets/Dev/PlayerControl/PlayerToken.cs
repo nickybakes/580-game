@@ -59,7 +59,7 @@ public class PlayerToken : MonoBehaviour
             }
             else
             {
-                MenuManager.menu.characterDisplays[playerNumber - 1].SetSkinToneIndex(visualPrefs.skinToneIndex);
+                MenuManager.menu.characterDisplays[playerNumber - 1].SetVisualPrefs(visualPrefs);
             }
         }
     }
@@ -69,9 +69,14 @@ public class PlayerToken : MonoBehaviour
         playerPrefabInputsComp = player.GetComponent<StarterAssetsInputs>();
         PlayerStatus status = player.GetComponent<PlayerStatus>();
 
+        OutlineSketchUpdate outline = player.GetComponentInChildren<OutlineSketchUpdate>();
 
-        player.GetComponentInChildren<OutlineSketchUpdate>().SetPlayerNumberIndex(playerNumber);
-        player.GetComponentInChildren<OutlineSketchUpdate>().SetSkinTone(visualPrefs.skinToneIndex);
+        outline.SetPlayerNumberIndex(playerNumber);
+        outline.SetSkinTone(visualPrefs.skinToneIndex);
+
+        PlayerHairController hairController = player.GetComponentInChildren<PlayerHairController>();
+        hairController.SetHairPrefs(visualPrefs.hairStyleIndex, visualPrefs.hairColorIndex, playerNumber);
+
         player.GetComponentInChildren<PlayerRingDecal>().SetTint(playerNumber);
 
         // player.transform.GetChild((int)PlayerChild.Model).GetChild(0).GetComponent<MeshRenderer>().material.SetColor("_BaseColor", colors[playerNumber - 1]);

@@ -125,6 +125,12 @@ public class PlayerCursor : MonoBehaviour
                     IsCustomizing = false;
                 }
 
+                if (_input.randomize && !_input.wasRandomize)
+                {
+                    customizationPanel.RandomizeNotSavedImmediately();
+                    _input.randomize = false;
+                }
+
                 if (!customizationMovementInput)
                 {
                     if (_input.customizeMove.x < -.7f)
@@ -174,7 +180,8 @@ public class PlayerCursor : MonoBehaviour
 
                 lerpToPositionTimeCurrent -= Time.deltaTime;
 
-                if(lerpToPositionTimeCurrent <= 0){
+                if (lerpToPositionTimeCurrent <= 0)
+                {
                     normalizedPosition = lerpToPosition;
                 }
 
@@ -206,20 +213,14 @@ public class PlayerCursor : MonoBehaviour
                 _input.customize = false;
                 IsCustomizing = true;
             }
+
             if (_input.randomize && !_input.wasRandomize)
             {
-                int skinToneIndex = AppManager.app.playerTokens[playerNumber - 1].visualPrefs.skinToneIndex;
-                if (skinToneIndex == 15)
-                    skinToneIndex = 0;
-                else
-                    skinToneIndex++;
-
-                AppManager.app.playerTokens[playerNumber - 1].visualPrefs.skinToneIndex = skinToneIndex;
-
-                MenuManager.menu.characterDisplays[playerNumber - 1].SetSkinToneIndex(skinToneIndex);
+                MenuManager.menu.customizationPanels[playerNumber - 1].RandomizeNotSavedImmediately();
                 _input.randomize = false;
             }
         }
+
 
         Move();
     }

@@ -134,6 +134,21 @@ public class MenuCustomizationPanel : MonoBehaviour
         UpdateDisplayNumberToPrefs();
     }
 
+    public void RandomizeNotSavedImmediately()
+    {
+        visualPrefs = new CharacterVisualPrefs(Random.Range(0, 16), Random.Range(0, 4), Random.Range(0, 16));
+
+        MenuManager.menu.characterDisplays[playerNumber - 1].SetVisualPrefs(visualPrefs);
+
+        UpdateDisplayNumberToPrefs();
+    }
+
+    public void RandomizeSaveImmediately()
+    {
+        RandomizeNotSavedImmediately();
+        SaveChanges();
+    }
+
     public void SaveChanges()
     {
         MenuManager.menu.characterDisplays[playerNumber - 1].SetVisualPrefs(visualPrefs);
