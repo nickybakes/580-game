@@ -35,7 +35,45 @@ public class PlayerCursor : MonoBehaviour
 
     private RectTransform canvasRect;
 
-    [HideInInspector] public MenuButton highlightedButton;
+    public MenuButton highlightedButton;
+
+    public float lerpToPositionTimeMax;
+
+    public float lerpToPositionTimeCurrent;
+
+    private Vector2 lerpToPosition;
+
+    private Vector2 lerpStartPosition;
+
+    private float lerpToSpeed = 50f;
+
+    private MenuCustomizationPanel customizationPanel;
+
+    private bool customizationMovementInput;
+
+    public bool IsCustomizing
+    {
+        get
+        {
+            return customizationPanel != null;
+        }
+        set
+        {
+            if (value)
+            {
+                velocity = Vector2.zero;
+                customizationPanel = MenuManager.menu.customizationPanels[playerNumber - 1];
+                customizationPanel.OpenPanel();
+                LerpToCustomizationPanel();
+            }
+            else
+            {
+                rect.localScale = Vector3.one;
+                customizationPanel.ClosePanel();
+                customizationPanel = null;
+            }
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -49,52 +87,172 @@ public class PlayerCursor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_input.back)
+        if (IsCustomizing)
         {
-            AppManager.app.RemovePlayerToken(playerNumber);
-        }
-
-        inputDirection = _input.move.normalized;
-        aspectRatio = canvasRect.rect.width / canvasRect.rect.height;
-        inputDirection = new Vector2(inputDirection.x, inputDirection.y * aspectRatio);
-        velocity = inputDirection * moveSpeed;
-        Move();
-
-        if (_input.snapState.isSnapping)
-        {
-            // Logic for snapping to direction here
-            if (highlightedButton != null)
+            if (lerpToPositionTimeCurrent > 0)
             {
-                //rect.anchoredPosition = highlightedButton.buttonSelects[(int)_input.snapState.snapDirection].rect.anchoredPosition;
+                velocity = Vector2.zero;
+
+                float percentage = Mathf.Max(lerpToPositionTimeCurrent / lerpToPositionTimeMax, 0);
+
+                normalizedPosition = Vector2.Lerp(lerpToPosition, lerpStartPosition, percentage);
+
+                transform.localScale = new Vector3(percentage, percentage, percentage);
+
+                lerpToPositionTimeCurrent -= Time.deltaTime;
+
+                if (lerpToPositionTimeCurrent <= 0)
+                    transform.localScale = Vector3.zero;
+            }
+            else
+            {
+                if (_input.customize)
+                {
+                    _input.customize = false;
+                }
+
+                if (_input.back && !_input.wasBacking)
+                {
+                    _input.back = false;
+                    customizationPanel.DiscardChanges();
+                    IsCustomizing = false;
+                }
+
+                if (_input.accept && !_input.wasAccepting)
+                {
+                    _input.accept = false;
+                    customizationPanel.SaveChanges();
+                    IsCustomizing = false;
+                }
+
+                if (!customizationMovementInput)
+                {
+                    if (_input.customizeMove.x < -.7f)
+                    {
+                        customizationPanel.ChangeValue(true);
+                        customizationMovementInput = true;
+                    }
+                    else if (_input.customizeMove.x > .7f)
+                    {
+                        customizationPanel.ChangeValue(false);
+                        customizationMovementInput = true;
+                    }
+
+                    if (_input.customizeMove.y < -.7f)
+                    {
+                        customizationPanel.SwitchCategory(false);
+                        customizationMovementInput = true;
+                    }
+                    else if (_input.customizeMove.y > .7f)
+                    {
+                        customizationPanel.SwitchCategory(true);
+                        customizationMovementInput = true;
+                    }
+
+                }
+                else
+                {
+                    if (_input.customizeMove.magnitude < .5f)
+                    {
+                        customizationMovementInput = false;
+                    }
+                }
+            }
+        }
+        else
+        {
+            if (_input.back)
+            {
+                AppManager.app.RemovePlayerToken(playerNumber);
+            }
+
+            if (lerpToPositionTimeCurrent > 0)
+            {
+                velocity = Vector2.zero;
+
+                normalizedPosition = Vector2.Lerp(lerpToPosition, lerpStartPosition, lerpToPositionTimeCurrent / lerpToPositionTimeMax);
+
+                lerpToPositionTimeCurrent -= Time.deltaTime;
+
+                if(lerpToPositionTimeCurrent <= 0){
+                    normalizedPosition = lerpToPosition;
+                }
+
+            }
+            else
+            {
+                inputDirection = _input.move.normalized;
+                aspectRatio = canvasRect.rect.width / canvasRect.rect.height;
+                inputDirection = new Vector2(inputDirection.x, inputDirection.y * aspectRatio);
+                velocity = inputDirection * moveSpeed;
+            }
+
+            if (_input.snapState.isSnapping)
+            {
+                // Logic for snapping to direction here
+                if (highlightedButton != null)
+                {
+                    MenuButton b = highlightedButton.buttonSelects[(int)_input.snapState.snapDirection];
+
+                    if (b != null)
+                    {
+                        LerpToButton(b);
+                    }
+                }
+            }
+
+            if (_input.customize && !_input.wasCustomize)
+            {
+                _input.customize = false;
+                IsCustomizing = true;
+            }
+            if (_input.randomize && !_input.wasRandomize)
+            {
+                int skinToneIndex = AppManager.app.playerTokens[playerNumber - 1].visualPrefs.skinToneIndex;
+                if (skinToneIndex == 15)
+                    skinToneIndex = 0;
+                else
+                    skinToneIndex++;
+
+                AppManager.app.playerTokens[playerNumber - 1].visualPrefs.skinToneIndex = skinToneIndex;
+
+                MenuManager.menu.characterDisplays[playerNumber - 1].SetSkinToneIndex(skinToneIndex);
+                _input.randomize = false;
             }
         }
 
-        if (_input.customizeLeft && !_input.wasCustomizeLeft)
-        {
-            int skinToneIndex = AppManager.app.playerTokens[playerNumber - 1].visualPrefs.skinToneIndex;
-            if (skinToneIndex == 0)
-                skinToneIndex = 15;
-            else
-                skinToneIndex--;
+        Move();
+    }
 
-            AppManager.app.playerTokens[playerNumber - 1].visualPrefs.skinToneIndex = skinToneIndex;
+    private Vector2 NormalizePosition(Vector2 position)
+    {
+        return new Vector2(position.x / canvasRect.rect.width + .5f, position.y / canvasRect.rect.height + .5f);
+    }
 
-            MenuManager.menu.characterDisplays[playerNumber - 1].SetSkinToneIndex(skinToneIndex);
-            _input.customizeLeft = false;
-        }
-        if (_input.customizeRight && !_input.wasCustomizeRight)
-        {
-            int skinToneIndex = AppManager.app.playerTokens[playerNumber - 1].visualPrefs.skinToneIndex;
-            if (skinToneIndex == 15)
-                skinToneIndex = 0;
-            else
-                skinToneIndex++;
+    private void LerpToButton(MenuButton b)
+    {
+        Vector2 buttonNormalizedPosition = NormalizePosition(b.rect.anchoredPosition);
+        lerpToPosition = buttonNormalizedPosition;
+        lerpStartPosition = normalizedPosition;
 
-            AppManager.app.playerTokens[playerNumber - 1].visualPrefs.skinToneIndex = skinToneIndex;
+        CalculateLerpTime(lerpToPosition, 50, .05f);
+    }
 
-            MenuManager.menu.characterDisplays[playerNumber - 1].SetSkinToneIndex(skinToneIndex);
-            _input.customizeRight = false;
-        }
+    private void LerpToCustomizationPanel()
+    {
+        Vector2 panelNormalizedPosition = NormalizePosition(customizationPanel.rect.anchoredPosition);
+        lerpToPosition = panelNormalizedPosition;
+        lerpStartPosition = normalizedPosition;
+
+        CalculateLerpTime(lerpToPosition, 10, .2f);
+    }
+
+    private void CalculateLerpTime(Vector2 position, float lerpToSpeed, float minTime)
+    {
+        float distance = Vector2.Distance(position, normalizedPosition);
+
+        lerpToPositionTimeMax = Mathf.Max(distance / lerpToSpeed, minTime);
+        lerpToPositionTimeCurrent = lerpToPositionTimeMax;
     }
 
     public void ReturnToDefaultLocation()

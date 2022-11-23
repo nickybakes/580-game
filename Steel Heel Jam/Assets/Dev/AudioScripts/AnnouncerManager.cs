@@ -7,6 +7,7 @@ using UnityEngine;
 /// </summary>
 public enum Priority
 {
+    MatchEnd,
     HeelFire,
     Buff,
     Elimination,

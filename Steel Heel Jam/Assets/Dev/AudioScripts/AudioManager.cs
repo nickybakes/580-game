@@ -75,23 +75,20 @@ public class AudioManager : MonoBehaviour
     /// <param name="name">Name of audioclip</param>
     public void Play(string name)
     {
-        Sound s = Array.Find(sounds, sound => sound.name == name);
-        if (s == null)
-        {
-            Debug.LogWarning("Sound: " + name + " not found!");
-            return;
-        }
+        Sound s = Find(name);
 
         //chooses from list before playing.
         int randClip = UnityEngine.Random.Range(0, s.clips.Length);
 
-        // If VO content, checks if same line as previousClip, if so, re-randomizes.
-        if (s.audioType == Sound.AudioTypes.VoiceOver && s.clips.Length > 1)
+        // If VO content, checks if length is greater than 1, then checks if same line as previousClip, if so, chooses above/below clip.
+        if (s.audioType == Sound.AudioTypes.VoiceOver && s.clips.Length > 1 && s.previousClip == randClip)
         {
-            while (randClip == s.previousClip)
-            {
-                randClip = UnityEngine.Random.Range(0, s.clips.Length);
-            }
+            if (randClip + 1 < s.clips.Length)
+                randClip++;
+            else if (randClip - 1 >= 0)
+                randClip--;
+            else
+                randClip = 0;
         }
 
         s.source.clip = s.clips[randClip];
@@ -109,12 +106,7 @@ public class AudioManager : MonoBehaviour
     /// <param name="name">Name of audioclip</param>
     public void Play(string name, float volume)
     {
-        Sound s = Array.Find(sounds, sound => sound.name == name);
-        if (s == null)
-        {
-            Debug.LogWarning("Sound: " + name + " not found!");
-            return;
-        }
+        Sound s = Find(name);
 
         //chooses from list before playing.
         s.source.clip = s.clips[UnityEngine.Random.Range(0, s.clips.Length)];
@@ -132,12 +124,7 @@ public class AudioManager : MonoBehaviour
     /// <param name="name">Name of audioclip</param>
     public void Play(string name, float pitch1 = 1, float pitch2 = 1)
     {
-        Sound s = Array.Find(sounds, sound => sound.name == name);
-        if (s == null)
-        {
-            Debug.LogWarning("Sound: " + name + " not found!");
-            return;
-        }
+        Sound s = Find(name);
 
         //chooses from list before playing.
         s.source.clip = s.clips[UnityEngine.Random.Range(0, s.clips.Length)];
@@ -155,12 +142,7 @@ public class AudioManager : MonoBehaviour
     /// <param name="name">Name of audioclip</param>
     public void Play(string name, float volume, float pitch1 = 1, float pitch2 = 1)
     {
-        Sound s = Array.Find(sounds, sound => sound.name == name);
-        if (s == null)
-        {
-            Debug.LogWarning("Sound: " + name + " not found!");
-            return;
-        }
+        Sound s = Find(name);
 
         //chooses from list before playing.
         s.source.clip = s.clips[UnityEngine.Random.Range(0, s.clips.Length)];

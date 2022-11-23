@@ -8,7 +8,7 @@ public class MenuButton : MonoBehaviour
     public GameObject buttonHoverObject;
 
     [HideInInspector]
-    private List<PlayerCursor> cursorsHoveringThisButton;
+    public List<PlayerCursor> cursorsHoveringThisButton;
 
     [HideInInspector] public RectTransform rect;
 
@@ -57,13 +57,11 @@ public class MenuButton : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        buttonHoverObject.SetActive(true);
 
         if (other.CompareTag(Tag.UICursor.ToString()))
         {
             PlayerCursor cursor = other.gameObject.GetComponent<PlayerCursor>();
-            cursor.highlightedButton = this;
-            cursorsHoveringThisButton.Add(cursor);
+            AddCursor(cursor);
         }
 
     }
@@ -73,13 +71,26 @@ public class MenuButton : MonoBehaviour
         if (other.CompareTag(Tag.UICursor.ToString()))
         {
             PlayerCursor cursor = other.gameObject.GetComponent<PlayerCursor>();
-            cursor.highlightedButton = null;
-            cursorsHoveringThisButton.Remove(cursor);
-
-            if (cursorsHoveringThisButton.Count == 0)
-            {
-                buttonHoverObject.SetActive(false);
-            }
+            RemoveCursor(cursor);
         }
+    }
+
+    public void AddCursor(PlayerCursor cursor)
+    {
+        buttonHoverObject.SetActive(true);
+        cursor.highlightedButton = this;
+        cursorsHoveringThisButton.Add(cursor);
+    }
+
+    public void RemoveCursor(PlayerCursor cursor)
+    {
+        cursor.highlightedButton = null;
+        cursorsHoveringThisButton.Remove(cursor);
+
+        if (cursorsHoveringThisButton.Count == 0)
+        {
+            buttonHoverObject.SetActive(false);
+        }
+
     }
 }

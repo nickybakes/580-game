@@ -12,15 +12,18 @@ public class CursorInputs : MonoBehaviour
 {
     [Header("Cursor Input Values")]
     public Vector2 move;
+    public Vector2 customizeMove;
 
     public bool accept;
     public bool back;
 
-    public bool customizeLeft;
-    public bool wasCustomizeLeft;
-    public bool customizeRight;
-    public bool wasCustomizeRight;
+    public bool customize;
+    public bool wasCustomize;
+    public bool randomize;
+    public bool wasRandomize;
     public bool wasAccepting;
+    public bool wasBacking;
+
 
     public SnapState snapState;
 
@@ -49,23 +52,25 @@ public class CursorInputs : MonoBehaviour
         BackInput(value.isPressed);
     }
 
-    public void OnCustomizeLeft(InputValue value)
+    public void OnCustomize(InputValue value)
     {
-        CustomizeLeft(value.isPressed);
+        CustomizeInput(value.isPressed);
     }
 
-    public void OnCustomizeRight(InputValue value)
+    public void OnRandomize(InputValue value)
     {
-        CustomizeRight(value.isPressed);
+        RandomizeInput(value.isPressed);
     }
 
     public void MoveInput(Vector2 newMoveDirection)
     {
         move = newMoveDirection;
+        customizeMove = newMoveDirection;
     }
 
     public void SnapInput(Vector2 snapDirection)
     {
+        customizeMove = snapDirection;
         snapState.isSnapping = true;
 
         // This is terrible and should be changed if I can figure out how to translate D-PAD to integer
@@ -95,18 +100,19 @@ public class CursorInputs : MonoBehaviour
 
     public void BackInput(bool pressed)
     {
+        wasBacking = back;
         back = pressed;
     }
 
-    public void CustomizeLeft(bool pressed)
+    public void CustomizeInput(bool pressed)
     {
-        wasCustomizeLeft = customizeLeft;
-        customizeLeft = pressed;
+        wasCustomize = customize;
+        customize = pressed;
     }
 
-    public void CustomizeRight(bool pressed)
+    public void RandomizeInput(bool pressed)
     {
-        wasCustomizeRight = customizeRight;
-        customizeRight = pressed;
+        wasRandomize = randomize;
+        randomize = pressed;
     }
 }

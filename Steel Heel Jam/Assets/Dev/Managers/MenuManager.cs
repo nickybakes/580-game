@@ -12,6 +12,8 @@ public class MenuManager : MonoBehaviour
 
     public MenuCharacterDisplay[] characterDisplays;
 
+    public MenuCustomizationPanel[] customizationPanels;
+
     private bool characterDisplaysInitialized;
 
     // Start is called before the first frame update
