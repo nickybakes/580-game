@@ -8,7 +8,7 @@ public struct CharacterVisualPrefs
     public int hairStyleIndex;
     public int hairColorIndex;
 
-    public CharacterVisualPrefs(int _skinToneIndex = -1, int _hairStyleIndex = 0, int _hairColorIndex = 0)
+    public CharacterVisualPrefs(int _skinToneIndex = 0, int _hairStyleIndex = 0, int _hairColorIndex = 0)
     {
         skinToneIndex = _skinToneIndex;
         hairStyleIndex = _hairStyleIndex;
@@ -47,6 +47,10 @@ public class MenuCharacterDisplay : MonoBehaviour
         enabledPlayerMaterial = new Material(enabledPlayerMaterial);
         disabledPlayerMaterial = new Material(disabledPlayerMaterial);
 
+        FacePoser facePoser = GetComponentInChildren<FacePoser>();
+        facePoser.materials = new[] { enabledPlayerMaterial, disabledPlayerMaterial };
+        facePoser.ForceUpdateMaterial();
+
         for (int i = 0; i < hairMaterialsSolid.Length; i++)
         {
             hairMaterialsSolid[i] = new Material(hairMaterialsSolid[i]);
@@ -62,11 +66,21 @@ public class MenuCharacterDisplay : MonoBehaviour
             hairMaterialsHologram[i].SetFloat("_Player_Index", playerNumber - 1);
         }
 
-        RandomizePrefs(10);
+        if (AppManager.app.playerTokens[playerNumber - 1] && AppManager.app.playerTokens[playerNumber - 1].playerPrefsSet)
+        {
+            SetVisualPrefs(AppManager.app.playerTokens[playerNumber - 1].visualPrefs);
 
-        UpdateAllMeshes();
+            SolidDisplay();
+        }
+        else
+        {
+            RandomizePrefs(10);
 
-        HologramDisplay();
+            UpdateAllMeshes();
+
+            HologramDisplay();
+        }
+
     }
 
     private float outlineTime;

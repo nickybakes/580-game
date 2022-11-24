@@ -20,6 +20,8 @@ public class PlayerToken : MonoBehaviour
 
     public CharacterVisualPrefs visualPrefs;
 
+    public bool playerPrefsSet;
+
     void Start()
     {
         DontDestroyOnLoad(gameObject);
@@ -53,9 +55,10 @@ public class PlayerToken : MonoBehaviour
 
         if (MenuManager.menu)
         {
-            if (visualPrefs.skinToneIndex == -1)
+            if (!playerPrefsSet)
             {
                 visualPrefs = MenuManager.menu.characterDisplays[playerNumber - 1].currentVisualPrefs;
+                playerPrefsSet = true;
             }
             else
             {

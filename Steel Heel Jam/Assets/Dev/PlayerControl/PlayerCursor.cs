@@ -216,7 +216,7 @@ public class PlayerCursor : MonoBehaviour
 
             if (_input.randomize && !_input.wasRandomize)
             {
-                MenuManager.menu.customizationPanels[playerNumber - 1].RandomizeNotSavedImmediately();
+                MenuManager.menu.customizationPanels[playerNumber - 1].RandomizeSaveImmediately();
                 _input.randomize = false;
             }
         }
