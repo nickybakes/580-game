@@ -136,7 +136,7 @@ public class MenuCustomizationPanel : MonoBehaviour
 
     public void RandomizeNotSavedImmediately()
     {
-        visualPrefs = new CharacterVisualPrefs(Random.Range(0, 16), Random.Range(0, 4), Random.Range(0, 16));
+        visualPrefs = new CharacterVisualPrefs(Random.Range(0, 16), Random.Range(0, 6), Random.Range(0, 16));
 
         MenuManager.menu.characterDisplays[playerNumber - 1].SetVisualPrefs(visualPrefs);
 
