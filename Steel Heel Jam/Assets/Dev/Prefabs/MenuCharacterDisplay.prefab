@@ -60,13 +60,14 @@ MonoBehaviour:
   hairMaterialsHologram:
   - {fileID: 2100000, guid: 47d2f34885ec66142a23d98710ce3367, type: 2}
   - {fileID: 2100000, guid: 32b23195c11c91740b733debfdc4f72f, type: 2}
-  hairMaterialIndices: 000000000000000001000000010000000100000001000000
+  hairMaterialIndices: 00000000000000000100000001000000010000000000000001000000
   hairObjectParents:
   - {fileID: 5328058568814808575}
   - {fileID: 2540352352449168923}
   - {fileID: 2659659278054695820}
   - {fileID: 9093542253232695267}
   - {fileID: 8354421625634716684}
+  - {fileID: 8834192085086856127}
   - {fileID: 7738777618001356451}
   hairMeshes:
   - {fileID: 2757731313361243342}
@@ -74,6 +75,7 @@ MonoBehaviour:
   - {fileID: 9016197310349923825}
   - {fileID: 8449939745195989475}
   - {fileID: 8811626248381252879}
+  - {fileID: 3669424211341827707}
   - {fileID: 9065215174924081973}
   hairOutlineMeshes:
   - {fileID: 8226997662986935833}
@@ -81,6 +83,7 @@ MonoBehaviour:
   - {fileID: 8140519195367195946}
   - {fileID: 8204075614409067464}
   - {fileID: 6439222943206946934}
+  - {fileID: 6102522493535223305}
   - {fileID: 2799796603749864621}
 --- !u!1 &995894844003075546
 GameObject:
@@ -1137,6 +1140,12 @@ MeshRenderer:
     type: 3}
   m_PrefabInstance: {fileID: 8831732074337784313}
   m_PrefabAsset: {fileID: 0}
+--- !u!23 &3669424211341827707 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 5223318393300225922, guid: ababe4a6db021ac49adbaff1739b9e73,
+    type: 3}
+  m_PrefabInstance: {fileID: 8831732074337784313}
+  m_PrefabAsset: {fileID: 0}
 --- !u!23 &4581715889015888011 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 4973411960996350322, guid: ababe4a6db021ac49adbaff1739b9e73,
@@ -1146,6 +1155,12 @@ MeshRenderer:
 --- !u!1 &5328058568814808575 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3702394907822726150, guid: ababe4a6db021ac49adbaff1739b9e73,
+    type: 3}
+  m_PrefabInstance: {fileID: 8831732074337784313}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &6102522493535223305 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 3323689954452484080, guid: ababe4a6db021ac49adbaff1739b9e73,
     type: 3}
   m_PrefabInstance: {fileID: 8831732074337784313}
   m_PrefabAsset: {fileID: 0}
@@ -1194,6 +1209,12 @@ MeshRenderer:
 --- !u!23 &8811626248381252879 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 61276764383876342, guid: ababe4a6db021ac49adbaff1739b9e73,
+    type: 3}
+  m_PrefabInstance: {fileID: 8831732074337784313}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8834192085086856127 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2752499173339718, guid: ababe4a6db021ac49adbaff1739b9e73,
     type: 3}
   m_PrefabInstance: {fileID: 8831732074337784313}
   m_PrefabAsset: {fileID: 0}

@@ -105,7 +105,7 @@ public class MenuCharacterDisplay : MonoBehaviour
 
     public void RandomizePrefs(int skinToneLimit)
     {
-        currentVisualPrefs = new CharacterVisualPrefs(Random.Range(0, skinToneLimit), Random.Range(0, 6), Random.Range(0, 16));
+        currentVisualPrefs = new CharacterVisualPrefs(Random.Range(0, skinToneLimit), Random.Range(0, 7), Random.Range(0, 16));
     }
 
     public void SetVisualPrefs(CharacterVisualPrefs prefs)

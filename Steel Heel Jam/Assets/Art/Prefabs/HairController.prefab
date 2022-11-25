@@ -48,13 +48,14 @@ MonoBehaviour:
   hairMaterials:
   - {fileID: 2100000, guid: 1da3bb3ccc8590c4d8127317a6864226, type: 2}
   - {fileID: 2100000, guid: 4052e504ca2d27e46bfb5a7bb1529086, type: 2}
-  hairMaterialIndices: 000000000000000001000000010000000100000001000000
+  hairMaterialIndices: 00000000000000000100000001000000010000000000000001000000
   hairObjectParents:
   - {fileID: 3159826709208001658}
   - {fileID: 4713511437526575006}
   - {fileID: 5098609867062051337}
   - {fileID: 2024971472782231142}
   - {fileID: 1285842122305494409}
+  - {fileID: 1779412552282260026}
   - {fileID: 670277206562981670}
   hairMeshes:
   - {fileID: 4930749622211767627}
@@ -62,6 +63,7 @@ MonoBehaviour:
   - {fileID: 2249287445163144308}
   - {fileID: 1687956787301464166}
   - {fileID: 1756909421831218314}
+  - {fileID: 5819931978135502846}
   - {fileID: 2298798990173944496}
   hairOutlineMeshes:
   - {fileID: 1154274340867587996}
@@ -69,6 +71,7 @@ MonoBehaviour:
   - {fileID: 1355596404509172911}
   - {fileID: 1437316652831124045}
   - {fileID: 4284141001832503795}
+  - {fileID: 3934007853281697676}
   - {fileID: 4968038294586111272}
 --- !u!1001 &1781306882390978684
 PrefabInstance:
@@ -77,7 +80,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8009612217773599253}
     m_Modifications:
+    - target: {fileID: 2752499173339718, guid: ababe4a6db021ac49adbaff1739b9e73, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 333932644723291674, guid: ababe4a6db021ac49adbaff1739b9e73,
+        type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 675614380211023349, guid: ababe4a6db021ac49adbaff1739b9e73,
         type: 3}
       propertyPath: m_Layer
       value: 3
@@ -92,12 +104,27 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 1293998443939051354, guid: ababe4a6db021ac49adbaff1739b9e73,
+        type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 1422094313926585909, guid: ababe4a6db021ac49adbaff1739b9e73,
         type: 3}
       propertyPath: m_Layer
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1500919799291636175, guid: ababe4a6db021ac49adbaff1739b9e73,
+        type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2006721507752523043, guid: ababe4a6db021ac49adbaff1739b9e73,
+        type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2044208562206993177, guid: ababe4a6db021ac49adbaff1739b9e73,
         type: 3}
       propertyPath: m_Layer
       value: 3
@@ -112,12 +139,27 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 3828308273019424293, guid: ababe4a6db021ac49adbaff1739b9e73,
+        type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4092882355509348442, guid: ababe4a6db021ac49adbaff1739b9e73,
+        type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4257212859762430705, guid: ababe4a6db021ac49adbaff1739b9e73,
         type: 3}
       propertyPath: m_Name
       value: HairPlacements
       objectReference: {fileID: 0}
     - target: {fileID: 4257212859762430705, guid: ababe4a6db021ac49adbaff1739b9e73,
+        type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5137061098761446529, guid: ababe4a6db021ac49adbaff1739b9e73,
         type: 3}
       propertyPath: m_Layer
       value: 3
@@ -181,6 +223,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6015692100153323095, guid: ababe4a6db021ac49adbaff1739b9e73,
+        type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6472157025816827874, guid: ababe4a6db021ac49adbaff1739b9e73,
         type: 3}
@@ -246,6 +293,12 @@ MeshRenderer:
     type: 3}
   m_PrefabInstance: {fileID: 1781306882390978684}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1779412552282260026 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2752499173339718, guid: ababe4a6db021ac49adbaff1739b9e73,
+    type: 3}
+  m_PrefabInstance: {fileID: 1781306882390978684}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2024971472782231142 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 333932644723291674, guid: ababe4a6db021ac49adbaff1739b9e73,
@@ -267,6 +320,12 @@ MeshRenderer:
 --- !u!1 &3159826709208001658 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3702394907822726150, guid: ababe4a6db021ac49adbaff1739b9e73,
+    type: 3}
+  m_PrefabInstance: {fileID: 1781306882390978684}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &3934007853281697676 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 3323689954452484080, guid: ababe4a6db021ac49adbaff1739b9e73,
     type: 3}
   m_PrefabInstance: {fileID: 1781306882390978684}
   m_PrefabAsset: {fileID: 0}
@@ -303,6 +362,12 @@ GameObject:
 --- !u!4 &5290017017564353784 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5895655397052556420, guid: ababe4a6db021ac49adbaff1739b9e73,
+    type: 3}
+  m_PrefabInstance: {fileID: 1781306882390978684}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &5819931978135502846 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 5223318393300225922, guid: ababe4a6db021ac49adbaff1739b9e73,
     type: 3}
   m_PrefabInstance: {fileID: 1781306882390978684}
   m_PrefabAsset: {fileID: 0}
