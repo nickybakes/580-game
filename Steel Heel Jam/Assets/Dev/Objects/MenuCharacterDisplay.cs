@@ -41,6 +41,8 @@ public class MenuCharacterDisplay : MonoBehaviour
     public MeshRenderer[] hairMeshes;
     public MeshRenderer[] hairOutlineMeshes;
 
+    private Animator animator;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -80,6 +82,9 @@ public class MenuCharacterDisplay : MonoBehaviour
 
             HologramDisplay();
         }
+
+        animator = GetComponentInChildren<Animator>();
+        animator.SetInteger("PlayerNumber", playerNumber);
 
     }
 

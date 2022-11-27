@@ -8,6 +8,9 @@ public class FacePoser : MonoBehaviour
     private static float[] eyePositionsX = { .37f, .57f, .8f };
     private static float[] eyePositionsY = { 0.75f, .5f };
 
+    private static float[] mouthPositionsX = { 0, .33f, .67f };
+    private static float[] mouthPositionsY = { -.01f, .26f };
+
     public SkinnedMeshRenderer meshRenderer;
     public Material[] materials;
     public bool useMaterialList;
@@ -81,6 +84,10 @@ public class FacePoser : MonoBehaviour
         SetEyeL(currentEyeL);
     }
 
+    public void SetMouth(int mouthIndex)
+    {
+        SetPropMouth(mouthPositionsX[mouthIndex % 3], mouthPositionsY[mouthIndex / 3]);
+    }
 
     public void SetEyeR(int eyeIndex)
     {
@@ -104,12 +111,31 @@ public class FacePoser : MonoBehaviour
         SetPropEyeL(eyePositionsX[eyeIndex % 3], eyePositionsY[eyeIndex / 3]);
     }
 
+    public void LookAtX(float direction)
+    {
+        Vector2 rVector = GetMaterialProperty("_Pupil_Offset_R");
+        Vector2 lVector = GetMaterialProperty("_Pupil_Offset_L");
+
+        SetPropPupilR(Mathf.Lerp(.03f, .16f, (direction + 1) / 2f), rVector.y);
+        SetPropPupilL(Mathf.Lerp(.16f, .03f, (direction + 1) / 2f), lVector.y);
+    }
+
+    public void LookAtY(float direction)
+    {
+        Vector2 rVector = GetMaterialProperty("_Pupil_Offset_R");
+        Vector2 lVector = GetMaterialProperty("_Pupil_Offset_L");
+        
+        float amount = Mathf.Lerp(.74f, .64f, (direction + 1) / 2f);
+        SetPropPupilR(rVector.x, amount);
+        SetPropPupilL(lVector.x, amount);
+    }
+
     private void SetPropMouth(float x, float y)
     {
         SetMaterialProperty("_Mouth_Offset", x, y);
     }
 
-    private void SetropPupilR(float x, float y)
+    private void SetPropPupilR(float x, float y)
     {
         SetMaterialProperty("_Pupil_Offset_R", x, y);
     }
@@ -127,6 +153,19 @@ public class FacePoser : MonoBehaviour
     private void SetPropEyeL(float x, float y)
     {
         SetMaterialProperty("_Eye_Offset_L", x, y);
+    }
+
+    private Vector2 GetMaterialProperty(string property)
+    {
+        if (useMaterialList && materials.Length > 0)
+        {
+            return materials[0].GetVector(property);
+        }
+        else if (meshRenderer)
+        {
+            return meshRenderer.material.GetVector(property);
+        }
+        return Vector2.zero;
     }
 
     private void SetMaterialProperty(string property, float x, float y)
