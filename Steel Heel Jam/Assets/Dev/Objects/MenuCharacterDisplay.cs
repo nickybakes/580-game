@@ -80,7 +80,7 @@ public class MenuCharacterDisplay : MonoBehaviour
 
             UpdateAllMeshes();
 
-            HologramDisplay();
+            SolidDisplay();
         }
 
         animator = GetComponentInChildren<Animator>();

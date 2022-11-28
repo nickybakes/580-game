@@ -103025,6 +103025,27 @@ AnimationClip:
     floatParameter: 0
     intParameter: 3
     messageOptions: 0
+  - time: 1.875
+    functionName: SetEyes
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 1.875
+    functionName: ForceBlink
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0.2
+    intParameter: 0
+    messageOptions: 0
+  - time: 1.875
+    functionName: LookAtY
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 1
+    intParameter: 0
+    messageOptions: 0
   - time: 3.3333333
     functionName: ForceBlink
     data: 
@@ -103039,18 +103060,32 @@ AnimationClip:
     floatParameter: 0.6
     intParameter: 0
     messageOptions: 0
-  - time: 3.3333333
-    functionName: LookAtY
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 1
-    intParameter: 0
-    messageOptions: 0
-  - time: 4.5
+  - time: 4.375
     functionName: SetMouth
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 4.375
+    functionName: SetEyes
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0.3
+    intParameter: 1
+    messageOptions: 0
+  - time: 4.375
+    functionName: ForceBlink
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0.3
+    intParameter: 0
+    messageOptions: 0
+  - time: 4.375
+    functionName: LookAtY
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0.2
     intParameter: 0
     messageOptions: 0
   - time: 5.5416665
@@ -103067,10 +103102,17 @@ AnimationClip:
     floatParameter: -0.5
     intParameter: 0
     messageOptions: 0
-  - time: 5.5416665
-    functionName: LookAtY
+  - time: 8.083333
+    functionName: ForceBlink
     data: 
     objectReferenceParameter: {fileID: 0}
-    floatParameter: 1
+    floatParameter: 0.2
     intParameter: 0
+    messageOptions: 0
+  - time: 8.083333
+    functionName: SetEyes
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 4
     messageOptions: 0
