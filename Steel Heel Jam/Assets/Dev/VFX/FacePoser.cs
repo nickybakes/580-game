@@ -59,9 +59,17 @@ public class FacePoser : MonoBehaviour
 
 
 
-    public void ForceBlink()
+    public void ForceBlink(float requestedBlinkHoldTime = 0)
     {
-        blinkHoldTimeMax = Random.Range(.2f, .6f);
+        if (requestedBlinkHoldTime == 0)
+        {
+            blinkHoldTimeMax = Random.Range(.2f, .6f);
+        }
+        else
+        {
+            blinkHoldTimeMax = requestedBlinkHoldTime;
+        }
+        
         blinkHoldTime = blinkHoldTimeMax;
         blinkTimeMax = Random.Range(.5f, 6);
         blinkTime = blinkTimeMax;
@@ -124,7 +132,7 @@ public class FacePoser : MonoBehaviour
     {
         Vector2 rVector = GetMaterialProperty("_Pupil_Offset_R");
         Vector2 lVector = GetMaterialProperty("_Pupil_Offset_L");
-        
+
         float amount = Mathf.Lerp(.74f, .64f, (direction + 1) / 2f);
         SetPropPupilR(rVector.x, amount);
         SetPropPupilL(lVector.x, amount);
