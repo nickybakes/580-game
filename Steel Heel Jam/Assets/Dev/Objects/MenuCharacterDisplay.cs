@@ -23,6 +23,8 @@ public class MenuCharacterDisplay : MonoBehaviour
 
     public bool usedForMatchResults;
 
+    public float[] rotationOffsets;
+
     [Range(1, 8)]
     public int playerNumber = 1;
 
@@ -96,6 +98,11 @@ public class MenuCharacterDisplay : MonoBehaviour
 
         animator = GetComponentInChildren<Animator>();
         animator.SetInteger("PlayerNumber", playerNumber);
+
+        if (usedForMatchResults)
+        {
+            animator.transform.localRotation = Quaternion.Euler(0, rotationOffsets[playerNumber - 1], 0);
+        }
     }
 
     private float outlineTime;
