@@ -22,7 +22,7 @@ public class UIMatchResults : MonoBehaviour
 
         PlayerStatus winningStatus = GameManager.game.alivePlayerStatuses[0];
 
-        stats1.Init(1, winningPlayerNumber, (int)winningStatus.totalDamagerDealt, winningStatus.totalEliminations, (int)winningStatus.totalDamageTaken);
+        stats1.Init(1, winningPlayerNumber, (int)winningStatus.totalDamageDealt, winningStatus.totalEliminations, (int)winningStatus.totalDamageTaken);
 
         GameManager.game.eliminatedPlayerStatuses.Reverse();
 
@@ -31,7 +31,7 @@ public class UIMatchResults : MonoBehaviour
         {
             GameObject g = Instantiate(playerStatsPrefab, playerStatsList);
             UIPlayerStats stats = g.GetComponent<UIPlayerStats>();
-            stats.Init(currentRank, status.playerNumber, (int)status.totalDamagerDealt, status.totalEliminations, (int)status.totalDamageTaken);
+            stats.Init(currentRank, status.playerNumber, (int)status.totalDamageDealt, status.totalEliminations, (int)status.totalDamageTaken);
             currentRank++;
         }
     }

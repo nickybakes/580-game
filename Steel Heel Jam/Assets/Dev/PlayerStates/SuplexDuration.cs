@@ -83,7 +83,8 @@ public class SuplexDuration : BasicState
         victim.playerLastHitBy = status;
         victim.SetPlayerStateImmediately(knockback);
 
-        status.totalDamagerDealt += status.suplexStaminaDamage;
+        status.totalDamageDealt += status.suplexStaminaDamage;
+        victim.totalDamageTaken += status.suplexStaminaDamage;
         status.IncreaseSpotlightMeter(20);
 
         CameraManager.cam.ShakeCamera(.7f);

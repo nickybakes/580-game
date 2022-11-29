@@ -36,6 +36,8 @@ public class StarterAssetsInputs : MonoBehaviour
     [Header("Movement Settings")]
     public bool analogMovement;
 
+    public bool pause;
+
     // [Header("Mouse Cursor Settings")]
     // public bool cursorLocked = true;
     // public bool cursorInputForLook = true;
@@ -89,6 +91,12 @@ public class StarterAssetsInputs : MonoBehaviour
             timeSinceAttackWasPressed += Time.deltaTime;
     }
 
+
+    public void OnPause(InputValue value)
+    {
+        PauseInput(value.isPressed);
+    }
+
     public void OnMove(InputValue value)
     {
         MoveInput(value.Get<Vector2>());
@@ -117,6 +125,14 @@ public class StarterAssetsInputs : MonoBehaviour
     public void OnBlock(InputValue value)
     {
         BlockInput(value.isPressed);
+    }
+
+    public void PauseInput(bool newPauseState)
+    {
+        if (newPauseState)
+        {
+            GameManager.PauseGame();
+        }
     }
 
     public void BlockInput(bool newBlockState)

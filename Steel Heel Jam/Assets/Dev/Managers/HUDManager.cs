@@ -16,6 +16,8 @@ public class HUDManager : MonoBehaviour
     public GameObject indicatorsPanel;
 
     public UIMatchResults matchResultsPanel;
+    public GameObject pausePanel;
+    public GameObject cursorPanel;
 
     public Canvas canvas;
     public RectTransform canvasRect;

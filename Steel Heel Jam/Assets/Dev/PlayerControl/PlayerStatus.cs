@@ -114,7 +114,7 @@ public class PlayerStatus : MonoBehaviour
 
     public float recentDamageTaken;
 
-    public float totalDamagerDealt;
+    public float totalDamageDealt;
 
     public int totalEliminations;
 
@@ -165,7 +165,7 @@ public class PlayerStatus : MonoBehaviour
     {
         get
         {
-            return recentDamageTaken + totalDamagerDealt + (totalEliminations * 25);
+            return recentDamageTaken + totalDamageDealt + (totalEliminations * 25);
         }
     }
 
@@ -398,7 +398,7 @@ public class PlayerStatus : MonoBehaviour
 
         if (attackingPlayerStatus != null)
         {
-            attackingPlayerStatus.totalDamagerDealt += damage;
+            attackingPlayerStatus.totalDamageDealt += damage;
             attackingPlayerStatus.IncreaseSpotlightMeter(damage / 3);
             attackingPlayerStatus.combat.weaponState.gotAHit = true;
             attackingPlayerStatus.recentActivityTimeCurrent = recentActivityTimeMax;

@@ -167,7 +167,7 @@ public class PlayerCursor : MonoBehaviour
         }
         else
         {
-            if (_input.back)
+            if (_input.back && MenuManager.menu)
             {
                 AppManager.app.RemovePlayerToken(playerNumber);
             }
@@ -208,13 +208,13 @@ public class PlayerCursor : MonoBehaviour
                 }
             }
 
-            if (_input.customize && !_input.wasCustomize)
+            if (_input.customize && !_input.wasCustomize && MenuManager.menu)
             {
                 _input.customize = false;
                 IsCustomizing = true;
             }
 
-            if (_input.randomize && !_input.wasRandomize)
+            if (_input.randomize && !_input.wasRandomize && MenuManager.menu)
             {
                 MenuManager.menu.customizationPanels[playerNumber - 1].RandomizeSaveImmediately();
                 _input.randomize = false;
@@ -256,12 +256,28 @@ public class PlayerCursor : MonoBehaviour
         lerpToPositionTimeCurrent = lerpToPositionTimeMax;
     }
 
-    public void ReturnToDefaultLocation()
+    public void ReturnToDefaultLocation(int defaultLocation)
     {
         if (!rect)
             rect = GetComponent<RectTransform>();
 
-        normalizedPosition = new Vector2(.1f, 1 - (.2f + (.075f * (playerNumber - 1))));
+        switch (defaultLocation)
+        {
+            case (0):
+                normalizedPosition = new Vector2(.1f, 1 - (.2f + (.075f * (playerNumber - 1))));
+                break;
+
+            case (1):
+                normalizedPosition = new Vector2(.2f + (.075f * (playerNumber - 1)), .7f);
+                break;
+            case (2):
+                normalizedPosition = new Vector2(.2f + (.075f * (playerNumber - 1)), .25f);
+                break;
+
+            case (3):
+                normalizedPosition = new Vector2(.2f + (.075f * (playerNumber - 1)), .12f);
+                break;
+        }
     }
 
     private void Move()

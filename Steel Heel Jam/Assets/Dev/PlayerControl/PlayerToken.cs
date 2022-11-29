@@ -51,7 +51,7 @@ public class PlayerToken : MonoBehaviour
         cursorScript.cursorSprite.color = colors[playerNumber - 1];
         cursorScript.playerNumber = playerNumber;
 
-        cursorScript.ReturnToDefaultLocation();
+        cursorScript.ReturnToDefaultLocation(3);
 
         if (MenuManager.menu)
         {
@@ -92,6 +92,8 @@ public class PlayerToken : MonoBehaviour
 
     public void OnDebugRestartGame(InputValue value)
     {
+        // playerPrefabInputsComp.OnPause(value);
+
         if (value.isPressed)
         {
             Debug.Log("Restart Game");
@@ -101,6 +103,7 @@ public class PlayerToken : MonoBehaviour
 
     public void OnDebugStartGame1(InputValue value)
     {
+        // playerPrefabInputsComp.OnPause(value);
         if (value.isPressed)
         {
             Debug.Log("Start Game 1");

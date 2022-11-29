@@ -310,6 +310,28 @@ public class GameManager : MonoBehaviour
         AnnouncerManager.PlayLine("MatchEnd", Priority.MatchEnd);
     }
 
+    public static void PauseGame()
+    {
+        game.dontUpdateGameplay = true;
+        Physics.autoSimulation = false;
+    }
+
+    public static void UpPauseGame()
+    {
+        game.dontUpdateGameplay = false;
+        Physics.autoSimulation = true;
+    }
+
+    public static void RestartGame()
+    {
+
+    }
+
+    public static void ExitToMenu()
+    {
+        
+    }
+
     private void ShuffleArray<T>(T[] array)
     {
         int n = array.Length;
