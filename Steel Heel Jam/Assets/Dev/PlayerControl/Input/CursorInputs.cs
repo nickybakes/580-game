@@ -27,9 +27,21 @@ public class CursorInputs : MonoBehaviour
 
     public SnapState snapState;
 
-    private void Update()
+    private int framesAccepting;
+
+    void Update()
     {
         snapState.isSnapping = false;
+        if (accept)
+        {
+            framesAccepting += 1;
+            if(framesAccepting >= 2)
+                accept = false;
+        }
+        else
+        {
+            framesAccepting = 0;
+        }
     }
 
     public void OnMove(InputValue value)

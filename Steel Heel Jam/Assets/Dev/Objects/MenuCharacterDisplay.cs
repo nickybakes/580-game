@@ -20,6 +20,9 @@ public class MenuCharacterDisplay : MonoBehaviour
 {
 
 
+
+    public bool usedForMatchResults;
+
     [Range(1, 8)]
     public int playerNumber = 1;
 
@@ -45,6 +48,14 @@ public class MenuCharacterDisplay : MonoBehaviour
 
     // Start is called before the first frame update
     void Start()
+    {
+        if (!usedForMatchResults)
+        {
+            Init();
+        }
+    }
+
+    public void Init()
     {
         enabledPlayerMaterial = new Material(enabledPlayerMaterial);
         disabledPlayerMaterial = new Material(disabledPlayerMaterial);
@@ -85,7 +96,6 @@ public class MenuCharacterDisplay : MonoBehaviour
 
         animator = GetComponentInChildren<Animator>();
         animator.SetInteger("PlayerNumber", playerNumber);
-
     }
 
     private float outlineTime;

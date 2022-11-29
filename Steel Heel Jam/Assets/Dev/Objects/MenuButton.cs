@@ -43,7 +43,6 @@ public class MenuButton : MonoBehaviour
         {
             if (cursor._input.accept && !cursor._input.wasAccepting)
             {
-                cursor._input.accept = false;
                 invokeSubmit = true;
                 break;
             }

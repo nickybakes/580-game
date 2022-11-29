@@ -15,6 +15,8 @@ public class HUDManager : MonoBehaviour
     public GameObject alertsPanel;
     public GameObject indicatorsPanel;
 
+    public UIMatchResults matchResultsPanel;
+
     public Canvas canvas;
     public RectTransform canvasRect;
 
@@ -31,6 +33,7 @@ public class HUDManager : MonoBehaviour
 
     public GameObject introCurrentChampAlert;
     public GameObject introHostAlert;
+
 
 
     // Start is called before the first frame update

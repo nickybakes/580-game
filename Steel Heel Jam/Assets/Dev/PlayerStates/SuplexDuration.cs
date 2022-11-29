@@ -80,8 +80,10 @@ public class SuplexDuration : BasicState
         // Set suplexed state to knockback.
         Knockback knockback = new Knockback(new Vector3(launchDir.x * launchTopDownSpeed, launchHeight, launchDir.z * launchTopDownSpeed));
         knockback.timeToChangeState = 1.0f;
+        victim.playerLastHitBy = status;
         victim.SetPlayerStateImmediately(knockback);
 
+        status.totalDamagerDealt += status.suplexStaminaDamage;
         status.IncreaseSpotlightMeter(20);
 
         CameraManager.cam.ShakeCamera(.7f);

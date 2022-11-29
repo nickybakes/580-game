@@ -23,6 +23,8 @@ public class GameManager : MonoBehaviour
 
     public GameObject introSequenceManager;
 
+    public GameObject matchResultsView;
+
     [HideInInspector]
     public Ring ringScript;
     [HideInInspector]
@@ -42,6 +44,7 @@ public class GameManager : MonoBehaviour
 
     public float maxGameTime = 150;
 
+    [HideInInspector]
     public bool gameWon;
 
     //public GameObject heelSpotlightPrefab;
@@ -154,6 +157,8 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (gameWon)
+            return;
 
         if (dontUpdateGameplay)
         {
@@ -274,14 +279,35 @@ public class GameManager : MonoBehaviour
 
         if (alivePlayerStatuses.Count == 1)
         {
-            gameWon = true;
-            AppManager.app.currentChampion = alivePlayerStatuses[0].playerNumber;
-
-            // Plays MatchEnd VO.
-            AnnouncerManager.PlayLine("MatchEnd", Priority.MatchEnd);
+            EndGame();
         }
 
         HUDManager.CreateEliminatedAlert(status.transform, status.playerNumber);
+    }
+
+    public void EndGame()
+    {
+        gameWon = true;
+        AppManager.app.currentChampion = alivePlayerStatuses[0].playerNumber;
+
+        alivePlayerStatuses[0].gameObject.SetActive(false);
+
+        cameraManager.gameObject.SetActive(false);
+        matchResultsView.gameObject.SetActive(true);
+        hudManager.headerPanel.SetActive(false);
+        hudManager.matchResultsPanel.gameObject.SetActive(true);
+        spotlight.SetActive(false);
+        ringScript.gameObject.SetActive(false);
+        Shader.SetGlobalFloat("ringRadius", 500);
+
+        hudManager.matchResultsPanel.Init(alivePlayerStatuses[0].playerNumber);
+
+        MenuCharacterDisplay characterDisplay = matchResultsView.GetComponentInChildren<MenuCharacterDisplay>();
+        characterDisplay.playerNumber = alivePlayerStatuses[0].playerNumber;
+        characterDisplay.Init();
+
+        // Plays MatchEnd VO.
+        AnnouncerManager.PlayLine("MatchEnd", Priority.MatchEnd);
     }
 
     private void ShuffleArray<T>(T[] array)
