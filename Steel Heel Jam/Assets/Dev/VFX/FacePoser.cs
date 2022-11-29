@@ -25,7 +25,6 @@ public class FacePoser : MonoBehaviour
     private int currentEyeR = 4;
     private int currentMouth = 3;
 
-
     // Start is called before the first frame update
     void Start()
     {
@@ -54,9 +53,6 @@ public class FacePoser : MonoBehaviour
             }
         }
     }
-
-
-
 
 
     public void ForceBlink(float requestedBlinkHoldTime = 0)
