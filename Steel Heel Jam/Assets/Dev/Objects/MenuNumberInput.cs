@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.Events;
 
 public class MenuNumberInput : MonoBehaviour
 {
@@ -18,16 +19,13 @@ public class MenuNumberInput : MonoBehaviour
 
     public TextMeshProUGUI valueText;
 
+    public UnityEvent onValueChange;
+
+
     // Start is called before the first frame update
     void Start()
     {
         UpdateValueText();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     public void UpdateValueText()
@@ -53,6 +51,7 @@ public class MenuNumberInput : MonoBehaviour
             }
         }
         UpdateValueText();
+        onValueChange.Invoke();
     }
 
     public void DecrementValue()
@@ -73,5 +72,6 @@ public class MenuNumberInput : MonoBehaviour
             }
         }
         UpdateValueText();
+        onValueChange.Invoke();
     }
 }
