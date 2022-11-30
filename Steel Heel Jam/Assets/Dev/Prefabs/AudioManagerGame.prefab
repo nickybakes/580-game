@@ -60,12 +60,23 @@ MonoBehaviour:
     name: musicLoop
     previousClip: -1
     clips:
-    - {fileID: 8300000, guid: 1273ba5f279eabc43962128ed5a8706e, type: 3}
+    - {fileID: 8300000, guid: 5b239daf8f04c1c4ca2f01ecdbfa9dc2, type: 3}
     volume: 0.175
     pitch: 1
     loop: 1
     randStartPos: 0
     playOnAwake: 1
+    source: {fileID: 0}
+  - audioType: 0
+    name: musicIntro
+    previousClip: -1
+    clips:
+    - {fileID: 8300000, guid: 1f2f2a80f17f62c4dbeef8b66680b06a, type: 3}
+    volume: 0.175
+    pitch: 1
+    loop: 0
+    randStartPos: 0
+    playOnAwake: 0
     source: {fileID: 0}
   - audioType: 0
     name: drumLoop
