@@ -443,7 +443,7 @@ public class GameManager : MonoBehaviour
     private void StartMovingRing()
     {
         // Resize ring to a diameter of 10 units in 2-ish minutes
-        ringScript.ResizeRing(10, 5);
+        ringScript.ResizeRing(10, maxGameTime);
     }
 
     public void InitializeSpotlight()
