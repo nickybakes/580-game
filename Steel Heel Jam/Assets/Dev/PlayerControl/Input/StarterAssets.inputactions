@@ -78,7 +78,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "DebugStartGame1",
+                    "name": "Pause",
                     "type": "Button",
                     "id": "8967ad7b-8e79-4ec9-a8de-510d08397003",
                     "expectedControlType": "Button",
@@ -586,11 +586,11 @@
                 {
                     "name": "",
                     "id": "d8204731-bce4-412f-8acc-ec0b12190aa2",
-                    "path": "<Keyboard>/1",
+                    "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",
                     "groups": "KeyboardMouse",
-                    "action": "DebugStartGame1",
+                    "action": "Pause",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -601,7 +601,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "DebugStartGame1",
+                    "action": "Pause",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -612,7 +612,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Joystick",
-                    "action": "DebugStartGame1",
+                    "action": "Pause",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -646,15 +646,6 @@
                     "name": "DebugRestartGame",
                     "type": "Button",
                     "id": "a326c4fc-a169-40f9-9cf0-4f9c57702ead",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "DebugStartGame1",
-                    "type": "Button",
-                    "id": "b2ad6dc7-3462-4769-9b89-1a5dbde91c1e",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -797,30 +788,8 @@
                 },
                 {
                     "name": "",
-                    "id": "72b78552-96ff-4425-873d-e2183874cc08",
-                    "path": "<Keyboard>/1",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "KeyboardMouse",
-                    "action": "DebugStartGame1",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "10ccbcc7-3282-4fea-8c88-8eb337037c5a",
-                    "path": "<Gamepad>/start",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "DebugStartGame1",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "96bcdb02-b5ab-4134-9748-20b235ad9779",
-                    "path": "<Keyboard>/escape",
+                    "path": "<Keyboard>/2",
                     "interactions": "",
                     "processors": "",
                     "groups": "KeyboardMouse",
@@ -843,6 +812,17 @@
                     "name": "",
                     "id": "62240220-0087-46a7-ab07-6252880612c7",
                     "path": "<Keyboard>/backspace",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMouse",
+                    "action": "CursorBack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8f318ba1-66de-4661-b682-01a9e0e6c233",
+                    "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",
                     "groups": "KeyboardMouse",
@@ -891,17 +871,6 @@
                     "processors": "",
                     "groups": "Joystick",
                     "action": "CursorBack",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "7ce57c93-f857-4728-a7e0-4ed46134acf3",
-                    "path": "<HID::Logitech Logitech Dual Action>/button10",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Joystick",
-                    "action": "DebugStartGame1",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

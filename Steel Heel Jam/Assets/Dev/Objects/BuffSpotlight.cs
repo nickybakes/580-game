@@ -33,6 +33,8 @@ public class BuffSpotlight : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GameManager.game.dontUpdateGameplay)
+            return;
         // If a player flexes in the spotlight, begin following them
         // NOTE: This prioritizes players in the order they entered the spotlight
         CheckFlexers();

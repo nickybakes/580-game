@@ -65,14 +65,25 @@ public class GameManager : MonoBehaviour
     //start as true for our intro sequence
     public bool dontUpdateGameplay = true;
 
+    [HideInInspector]
+    public bool playersInvincible;
+
 
     // Start is called before the first frame update
     void Start()
     {
         GameManager.game = this;
+        Physics.autoSimulation = true;
+
         allPlayerStatuses = new List<PlayerStatus>();
         alivePlayerStatuses = new List<PlayerStatus>();
         eliminatedPlayerStatuses = new List<PlayerStatus>();
+
+        InitializeCursors();
+        hudManager.cursorPanel.gameObject.SetActive(false);
+
+        if (AppManager.app.TokenAmount == 1)
+            playersInvincible = true;
 
 
         SpawnPlayerPrefabs();
@@ -279,14 +290,19 @@ public class GameManager : MonoBehaviour
 
         if (alivePlayerStatuses.Count == 1)
         {
-            EndGame();
+            StartCoroutine(EndGame());
         }
 
         HUDManager.CreateEliminatedAlert(status.transform, status.playerNumber);
     }
 
-    public void EndGame()
+    IEnumerator EndGame()
     {
+        AudioManager.aud.Play("bellStart");
+        playersInvincible = true;
+
+        yield return new WaitForSeconds(3f);
+
         gameWon = true;
         AppManager.app.currentChampion = alivePlayerStatuses[0].playerNumber;
 
@@ -296,7 +312,15 @@ public class GameManager : MonoBehaviour
         matchResultsView.gameObject.SetActive(true);
         hudManager.headerPanel.SetActive(false);
         hudManager.matchResultsPanel.gameObject.SetActive(true);
-        spotlight.SetActive(false);
+
+        game.SetCursorControlMap(2);
+
+        foreach (PlayerStatus status in eliminatedPlayerStatuses)
+        {
+            status.SetAnimationState(AnimationState.Eliminated);
+        }
+
+        DespawnSpotlight();
         ringScript.gameObject.SetActive(false);
         Shader.SetGlobalFloat("ringRadius", 500);
 
@@ -308,28 +332,87 @@ public class GameManager : MonoBehaviour
 
         // Plays MatchEnd VO.
         AnnouncerManager.PlayLine("MatchEnd", Priority.MatchEnd);
+        AudioManager.aud.Play("punch", 0.8f, 1.2f);
+        AudioManager.aud.Play("orchestraHitLong");
+    }
+
+    public void InitializeCursors()
+    {
+        hudManager.cursors = new List<PlayerCursor>();
+
+        for (int i = 0; i < AppManager.app.playerTokens.Length; i++)
+        {
+            if (AppManager.app.playerTokens[i] != null)
+            {
+                PlayerToken token = AppManager.app.playerTokens[i];
+
+                GameObject cursor = Instantiate(hudManager.cursorPrefab, hudManager.cursorPanel.transform);
+                PlayerCursor cursorScript = token.SetUpCursorPrefab(cursor);
+                hudManager.cursors.Add(cursorScript);
+            }
+        }
+    }
+
+    public void SetCursorControlMap(int spawnCursorPosition)
+    {
+        foreach (PlayerToken token in AppManager.app.playerTokens)
+        {
+            if (token != null)
+            {
+                token.input.SwitchCurrentActionMap("Cursor");
+            }
+        }
+        if (spawnCursorPosition != -1)
+        {
+            foreach (PlayerCursor cursor in hudManager.cursors)
+            {
+                cursor.ReturnToDefaultLocation(spawnCursorPosition);
+            }
+        }
+        HUDManager.hud.cursorPanel.SetActive(true);
+    }
+
+    public void SetPlayerControlMap()
+    {
+        foreach (PlayerToken token in AppManager.app.playerTokens)
+        {
+            if (token != null)
+            {
+                token.input.SwitchCurrentActionMap("Player");
+                token.playerPrefabInputsComp.Jump = false;
+                token.playerPrefabInputsComp.jumpFrameDisable = 0;
+            }
+        }
+        HUDManager.hud.cursorPanel.SetActive(false);
     }
 
     public static void PauseGame()
     {
+        if (game.dontUpdateGameplay || game.gameWon)
+            return;
+
         game.dontUpdateGameplay = true;
         Physics.autoSimulation = false;
+        HUDManager.hud.pausePanel.gameObject.SetActive(true);
+        game.SetCursorControlMap(1);
     }
 
-    public static void UpPauseGame()
+    public static void UnpauseGame()
     {
         game.dontUpdateGameplay = false;
         Physics.autoSimulation = true;
+        HUDManager.hud.pausePanel.gameObject.SetActive(false);
+        game.SetPlayerControlMap();
     }
 
     public static void RestartGame()
     {
-
+        AppManager.app.SwitchToScene(Scenes.MAP_Demo_01);
     }
 
     public static void ExitToMenu()
     {
-        
+        AppManager.app.SwitchToScene(Scenes.MENU_TempJoinScreen);
     }
 
     private void ShuffleArray<T>(T[] array)

@@ -19,6 +19,11 @@ public class HUDManager : MonoBehaviour
     public GameObject pausePanel;
     public GameObject cursorPanel;
 
+    public GameObject cursorPrefab;
+
+    [HideInInspector]
+    public List<PlayerCursor> cursors;
+
     public Canvas canvas;
     public RectTransform canvasRect;
 

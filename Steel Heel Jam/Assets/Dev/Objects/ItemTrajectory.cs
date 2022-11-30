@@ -40,6 +40,9 @@ public class ItemTrajectory : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GameManager.game.dontUpdateGameplay)
+            return;
+
 
         if (isFirstFrameOfThrow)
         {

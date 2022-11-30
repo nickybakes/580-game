@@ -263,6 +263,8 @@ public class PlayerStatus : MonoBehaviour
         if (GameManager.game.dontUpdateGameplay)
             return;
 
+        
+
         movement.UpdateManual(currentPlayerState.updateMovement, currentPlayerState.canPlayerControlMove, currentPlayerState.canPlayerControlRotate, currentPlayerState.alternateFriction);
 
         combat.UpdateManual(currentPlayerState.canAttack, currentPlayerState.canDodgeRoll, currentPlayerState.canBlock, currentPlayerState.canPickUp, currentPlayerState.canThrow);
@@ -682,7 +684,7 @@ public class PlayerStatus : MonoBehaviour
     /// <param name="value">The value to decrease the stamina value by.</param>
     public void ReduceStamina(float value)
     {
-        if (GameManager.game.gameWon)
+        if (GameManager.game.playersInvincible)
             return;
 
         stamina -= value;

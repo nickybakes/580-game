@@ -51,6 +51,23 @@ public class MenuManager : MonoBehaviour
         characterDisplays[playerNumber - 1].HologramDisplay();
     }
 
+    public void StartGame()
+    {
+        AppManager.app.SwitchToScene(Scenes.MAP_Demo_01);
+    }
+
+    //closes application window or ends Unity editor playing
+    public void QuitGame()
+    {
+#if UNITY_EDITOR
+        // Application.Quit() does not work in the editor so
+        // UnityEditor.EditorApplication.isPlaying need to be set to false to end the game
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+         Application.Quit();
+#endif
+    }
+
     //these are temporary functions
     public void ShowHowToPlay()
     {

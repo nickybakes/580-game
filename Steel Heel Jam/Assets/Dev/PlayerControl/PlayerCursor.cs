@@ -206,6 +206,7 @@ public class PlayerCursor : MonoBehaviour
                         LerpToButton(b);
                     }
                 }
+                _input.snapState.isSnapping = false;
             }
 
             if (_input.customize && !_input.wasCustomize && MenuManager.menu)
@@ -268,10 +269,10 @@ public class PlayerCursor : MonoBehaviour
                 break;
 
             case (1):
-                normalizedPosition = new Vector2(.2f + (.075f * (playerNumber - 1)), .7f);
+                normalizedPosition = new Vector2(.2f + (.075f * (playerNumber - 1)), .665f);
                 break;
             case (2):
-                normalizedPosition = new Vector2(.2f + (.075f * (playerNumber - 1)), .25f);
+                normalizedPosition = new Vector2(.5f + (.045f * (playerNumber - 1)), .35f);
                 break;
 
             case (3):

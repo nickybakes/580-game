@@ -42,7 +42,7 @@ public class PlayerToken : MonoBehaviour
         }
     }
 
-    public void SetUpCursorPrefab(GameObject cursor)
+    public PlayerCursor SetUpCursorPrefab(GameObject cursor)
     {
         cursorPrefabInputsComp = cursor.GetComponent<CursorInputs>();
         PlayerCursor cursorScript = cursor.GetComponent<PlayerCursor>();
@@ -65,6 +65,8 @@ public class PlayerToken : MonoBehaviour
                 MenuManager.menu.characterDisplays[playerNumber - 1].SetVisualPrefs(visualPrefs);
             }
         }
+
+        return cursorScript;
     }
 
     public PlayerStatus SetUpPlayerPrefab(GameObject player)
@@ -90,25 +92,30 @@ public class PlayerToken : MonoBehaviour
         return status;
     }
 
+    public void OnPause(InputValue value)
+    {
+        playerPrefabInputsComp.OnPause(value);
+    }
+
     public void OnDebugRestartGame(InputValue value)
     {
         // playerPrefabInputsComp.OnPause(value);
 
-        if (value.isPressed)
-        {
-            Debug.Log("Restart Game");
-            AppManager.app.SwitchToScene(Scenes.MENU_TempJoinScreen);
-        }
+        // if (value.isPressed)
+        // {
+        //     Debug.Log("Restart Game");
+        //     AppManager.app.SwitchToScene(Scenes.MENU_TempJoinScreen);
+        // }
     }
 
     public void OnDebugStartGame1(InputValue value)
     {
         // playerPrefabInputsComp.OnPause(value);
-        if (value.isPressed)
-        {
-            Debug.Log("Start Game 1");
-            AppManager.app.SwitchToScene(Scenes.MAP_Demo_01);
-        }
+        // if (value.isPressed)
+        // {
+        //     Debug.Log("Start Game 1");
+        //     AppManager.app.SwitchToScene(Scenes.MAP_Demo_01);
+        // }
     }
 
     public void OnMove(InputValue value)

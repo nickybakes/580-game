@@ -35,7 +35,7 @@ public class CursorInputs : MonoBehaviour
         if (accept)
         {
             framesAccepting += 1;
-            if(framesAccepting >= 2)
+            if (framesAccepting >= 2)
                 accept = false;
         }
         else
@@ -82,6 +82,12 @@ public class CursorInputs : MonoBehaviour
 
     public void SnapInput(Vector2 snapDirection)
     {
+        if (snapDirection == Vector2.zero)
+        {
+            snapState.isSnapping = false;
+            return;
+        }
+
         customizeMove = snapDirection;
         snapState.isSnapping = true;
 

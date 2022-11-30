@@ -62,6 +62,8 @@ public class StarterAssetsInputs : MonoBehaviour
         }
     }
 
+    public int jumpFrameDisable = 2;
+
     public bool Attack
     {
         get
@@ -84,6 +86,9 @@ public class StarterAssetsInputs : MonoBehaviour
 
     private void Update()
     {
+        if (jumpFrameDisable < 2)
+            jumpFrameDisable++;
+
         if (timeSinceJumpWasPressed <= timeSinceJumpWasPressedMax)
             timeSinceJumpWasPressed += Time.deltaTime;
 
@@ -181,7 +186,7 @@ public class StarterAssetsInputs : MonoBehaviour
     {
         // wasJumping = jump;
         // jump = newJumpState;
-        if (newJumpState)
+        if (newJumpState && jumpFrameDisable >= 2)
             Jump = true;
     }
 

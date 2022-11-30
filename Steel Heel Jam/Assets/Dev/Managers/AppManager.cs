@@ -11,11 +11,23 @@ public enum Scenes
     MAP_Demo_01 = 2
 }
 
+public struct GameSettings
+{
+    public int cameraShake;
+
+    public GameSettings(int cameraShake)
+    {
+        this.cameraShake = cameraShake;
+    }
+}
+
 
 public class AppManager : MonoBehaviour
 {
 
     public static AppManager app;
+
+    public GameSettings gameSettings;
 
     private Scenes currentScene;
     private Scenes previousScene;
@@ -61,8 +73,10 @@ public class AppManager : MonoBehaviour
 
         playerTokens = new PlayerToken[8];
 
+        gameSettings = new GameSettings(5);
 
-        if(SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex((int) Scenes.MENU_InitApp))
+
+        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex((int)Scenes.MENU_InitApp))
             SwitchToScene(Scenes.MENU_TempJoinScreen);
     }
 

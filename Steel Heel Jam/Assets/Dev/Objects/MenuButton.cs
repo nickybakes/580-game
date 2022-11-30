@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 public class MenuButton : MonoBehaviour
 {
-    public GameObject buttonHoverObject;
+    public GameObject[] buttonHoverObjects;
 
     [HideInInspector]
     public List<PlayerCursor> cursorsHoveringThisButton;
@@ -48,7 +48,8 @@ public class MenuButton : MonoBehaviour
             }
         }
 
-        if(invokeSubmit){
+        if (invokeSubmit)
+        {
             cursorsHoveringThisButton.Clear();
             submitAction.Invoke();
         }
@@ -76,7 +77,10 @@ public class MenuButton : MonoBehaviour
 
     public void AddCursor(PlayerCursor cursor)
     {
-        buttonHoverObject.SetActive(true);
+        foreach (GameObject g in buttonHoverObjects)
+        {
+            g.SetActive(true);
+        }
         cursor.highlightedButton = this;
         cursorsHoveringThisButton.Add(cursor);
     }
@@ -88,7 +92,10 @@ public class MenuButton : MonoBehaviour
 
         if (cursorsHoveringThisButton.Count == 0)
         {
-            buttonHoverObject.SetActive(false);
+            foreach (GameObject g in buttonHoverObjects)
+            {
+                g.SetActive(false);
+            }
         }
 
     }
