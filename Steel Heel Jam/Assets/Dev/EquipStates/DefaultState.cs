@@ -363,9 +363,9 @@ public class DefaultState
         hitboxScript.knockback = Mathf.Clamp(hitboxScript.knockback, 0, 15f);
         hitboxScript.knockbackHeight = Mathf.Clamp(hitboxScript.knockbackHeight, 0, 60f);
         hitboxScript.radius = Mathf.Clamp(hitboxScript.radius, 0, 2.2f);
-        Debug.Log("AA Knockback: " + hitboxScript.knockback);
-        Debug.Log("AA KnockbackHeight: " + hitboxScript.knockbackHeight);
-        Debug.Log("AA Radius: " + hitboxScript.radius);
+        //Debug.Log("AA Knockback: " + hitboxScript.knockback);
+        //Debug.Log("AA KnockbackHeight: " + hitboxScript.knockbackHeight);
+        //Debug.Log("AA Radius: " + hitboxScript.radius);
 
         return hitboxScript;
     }
