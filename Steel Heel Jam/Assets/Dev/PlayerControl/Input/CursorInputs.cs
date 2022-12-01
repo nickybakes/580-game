@@ -31,7 +31,7 @@ public class CursorInputs : MonoBehaviour
 
     void Update()
     {
-        //snapState.isSnapping = false;
+        snapState.isSnapping = false;
         if (accept)
         {
             framesAccepting += 1;

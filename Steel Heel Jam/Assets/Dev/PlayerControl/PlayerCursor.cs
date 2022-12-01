@@ -236,21 +236,20 @@ public class PlayerCursor : MonoBehaviour
                 MenuManager.menu.customizationPanels[playerNumber - 1].RandomizeSaveImmediately();
                 _input.randomize = false;
             }
-        }
 
-        if (buttonToSnapTo != null)
-        {
-            foreach (PolygonCollider2D collider in snapColliders)
+            if (buttonToSnapTo != null)
             {
-                collider.enabled = false;
+                foreach (PolygonCollider2D collider in snapColliders)
+                {
+                    collider.enabled = false;
+                }
+
+                LerpToButton(buttonToSnapTo);
+                snappingWithCollider = false;
+                distanceToClosestButton = 5000;
+                buttonToSnapTo = null;
             }
-
-            LerpToButton(buttonToSnapTo);
-            snappingWithCollider = false;
-            buttonToSnapTo = null;
-        }
-        
-
+        }      
         Move();
     }
 
