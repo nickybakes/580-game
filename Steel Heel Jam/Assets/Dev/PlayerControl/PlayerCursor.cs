@@ -57,6 +57,8 @@ public class PlayerCursor : MonoBehaviour
 
     private bool snappingWithCollider;
 
+    private int framesSpentTryingToSnap;
+
     MenuButton buttonToSnapTo = null;
 
     public bool IsCustomizing
@@ -198,58 +200,70 @@ public class PlayerCursor : MonoBehaviour
             }
             else
             {
-                inputDirection = _input.move.normalized;
-                aspectRatio = canvasRect.rect.width / canvasRect.rect.height;
-                inputDirection = new Vector2(inputDirection.x, inputDirection.y * aspectRatio);
-                velocity = inputDirection * moveSpeed;
-            }
-
-            if (_input.snapState.isSnapping)
-            {
-                // Logic for snapping to direction here
-                if (highlightedButton != null)
+                if (snappingWithCollider)
                 {
-                    MenuButton b = highlightedButton.buttonSelects[(int)_input.snapState.snapDirection];
+                    framesSpentTryingToSnap++;
 
-                    if (b != null)
+                    if (framesSpentTryingToSnap >= 8)
                     {
-                        LerpToButton(b);
+                        foreach (PolygonCollider2D collider in snapColliders)
+                        {
+                            collider.enabled = false;
+                        }
+                        snappingWithCollider = false;
+                        distanceToClosestButton = float.MaxValue;
+
+                        if (buttonToSnapTo != null)
+                        {
+                            LerpToButton(buttonToSnapTo);
+                        }
+
+                        buttonToSnapTo = null;
+                        framesSpentTryingToSnap = 0;
                     }
                 }
                 else
                 {
-                    snapColliders[(int)_input.snapState.snapDirection].enabled = true;
-                    snappingWithCollider = true;
+                    inputDirection = _input.move.normalized;
+                    aspectRatio = canvasRect.rect.width / canvasRect.rect.height;
+                    inputDirection = new Vector2(inputDirection.x, inputDirection.y * aspectRatio);
+                    velocity = inputDirection * moveSpeed;
+
+                    if (_input.snapState.isSnapping)
+                    {
+                        // Logic for snapping to direction here
+                        if (highlightedButton != null)
+                        {
+                            MenuButton b = highlightedButton.buttonSelects[(int)_input.snapState.snapDirection];
+
+                            if (b != null)
+                            {
+                                LerpToButton(b);
+                            }
+                        }
+                        else
+                        {
+                            snappingWithCollider = true;
+                            snapColliders[(int)_input.snapState.snapDirection].enabled = true;
+                        }
+
+                        _input.snapState.isSnapping = false;
+                    }
+
+                    if (_input.customize && !_input.wasCustomize && MenuManager.menu && MenuManager.menu.OnJoinScreen())
+                    {
+                        _input.customize = false;
+                        IsCustomizing = true;
+                    }
+
+                    if (_input.randomize && !_input.wasRandomize && MenuManager.menu)
+                    {
+                        MenuManager.menu.customizationPanels[playerNumber - 1].RandomizeSaveImmediately();
+                        _input.randomize = false;
+                    }
                 }
-
-                _input.snapState.isSnapping = false;
             }
-
-            if (_input.customize && !_input.wasCustomize && MenuManager.menu && MenuManager.menu.OnJoinScreen())
-            {
-                _input.customize = false;
-                IsCustomizing = true;
-            }
-
-            if (_input.randomize && !_input.wasRandomize && MenuManager.menu)
-            {
-                MenuManager.menu.customizationPanels[playerNumber - 1].RandomizeSaveImmediately();
-                _input.randomize = false;
-            }
-
-            if (buttonToSnapTo != null)
-            {
-                foreach (PolygonCollider2D collider in snapColliders)
-                {
-                    collider.enabled = false;
-                }
-
-                LerpToButton(buttonToSnapTo);
-                snappingWithCollider = false;
-                distanceToClosestButton = 5000;
-                buttonToSnapTo = null;
-            }
-        }      
+        }
         Move();
     }
 
@@ -260,7 +274,7 @@ public class PlayerCursor : MonoBehaviour
 
     private void LerpToButton(MenuButton b)
     {
-        Vector2 buttonNormalizedPosition = NormalizePosition(b.rect.anchoredPosition);
+        Vector2 buttonNormalizedPosition = NormalizePosition(b.LocalPosition);
         lerpToPosition = buttonNormalizedPosition;
         lerpStartPosition = normalizedPosition;
 
@@ -324,16 +338,19 @@ public class PlayerCursor : MonoBehaviour
         if (other.CompareTag("MenuButton"))
         {
             MenuButton button = other.gameObject.GetComponent<MenuButton>();
-            float distanceToButton = Vector2.Distance(button.rect.anchoredPosition, rect.anchoredPosition);
 
             if (!snappingWithCollider)
             {
                 button.AddCursor(this);
             }
-            else if (distanceToButton < distanceToClosestButton)
+            else
             {
-                buttonToSnapTo = button;
-                distanceToClosestButton = distanceToButton;
+                float distanceToButton = Vector2.Distance(button.LocalPosition, rect.anchoredPosition);
+                if (distanceToButton < distanceToClosestButton)
+                {
+                    buttonToSnapTo = button;
+                    distanceToClosestButton = distanceToButton;
+                }
             }
         }
     }

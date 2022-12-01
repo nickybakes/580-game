@@ -21,10 +21,30 @@ public class MenuButton : MonoBehaviour
     public MenuButton leftSelect;
     public MenuButton rightSelect;
 
+    [HideInInspector]
+    public new BoxCollider2D collider;
+
+    public Vector2 LocalPosition
+    {
+        get
+        {
+            Transform currentTransform = transform;
+            Vector2 currentPosition = transform.localPosition;
+            while (!currentTransform.parent.gameObject.CompareTag("Canvas"))
+            {
+                currentTransform = currentTransform.parent;
+                currentPosition += (Vector2)currentTransform.localPosition;
+            }
+
+            return currentPosition;
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         rect = GetComponent<RectTransform>();
+        collider = GetComponent<BoxCollider2D>();
         cursorsHoveringThisButton = new List<PlayerCursor>();
 
         buttonSelects = new MenuButton[4]

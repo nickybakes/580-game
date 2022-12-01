@@ -5,6 +5,7 @@ using UnityEngine.InputSystem.Controls;
 public struct SnapState
 {
     public bool isSnapping;
+    public bool wasSnapping;
     public SnapDirection snapDirection;
 }
 
@@ -31,7 +32,6 @@ public class CursorInputs : MonoBehaviour
 
     void Update()
     {
-        snapState.isSnapping = false;
         if (accept)
         {
             framesAccepting += 1;
@@ -85,12 +85,17 @@ public class CursorInputs : MonoBehaviour
         if (snapDirection == Vector2.zero)
         {
             snapState.isSnapping = false;
+            snapState.wasSnapping = false;
             customizeMove = Vector2.zero;
             return;
         }
 
+        if (snapState.wasSnapping)
+            return;
+
         customizeMove = snapDirection;
         snapState.isSnapping = true;
+        snapState.wasSnapping = true;
 
         // This is terrible and should be changed if I can figure out how to translate D-PAD to integer
         if (snapDirection.y == 1)
