@@ -245,7 +245,6 @@ public class PlayerCursor : MonoBehaviour
                 collider.enabled = false;
             }
 
-            buttonToSnapTo.AddCursor(this);
             LerpToButton(buttonToSnapTo);
             snappingWithCollider = false;
             buttonToSnapTo = null;
