@@ -209,7 +209,7 @@ public class PlayerCursor : MonoBehaviour
                 _input.snapState.isSnapping = false;
             }
 
-            if (_input.customize && !_input.wasCustomize && MenuManager.menu)
+            if (_input.customize && !_input.wasCustomize && MenuManager.menu && MenuManager.menu.OnJoinScreen())
             {
                 _input.customize = false;
                 IsCustomizing = true;

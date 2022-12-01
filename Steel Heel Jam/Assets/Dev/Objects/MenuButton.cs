@@ -14,6 +14,7 @@ public class MenuButton : MonoBehaviour
 
     public UnityEvent submitAction;
 
+    [HideInInspector]
     public MenuButton[] buttonSelects;
     public MenuButton upSelect;
     public MenuButton downSelect;
@@ -44,13 +45,13 @@ public class MenuButton : MonoBehaviour
             if (cursor._input.accept && !cursor._input.wasAccepting)
             {
                 invokeSubmit = true;
+                cursor._input.accept = false;
                 break;
             }
         }
 
         if (invokeSubmit)
         {
-            cursorsHoveringThisButton.Clear();
             submitAction.Invoke();
         }
     }

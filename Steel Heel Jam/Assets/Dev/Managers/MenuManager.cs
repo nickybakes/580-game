@@ -10,9 +10,16 @@ public class MenuManager : MonoBehaviour
     public GameObject HowToPlayMenu;
     public GameObject JoinMenu;
 
+    public GameObject[] menuPanels;
+
+    private Stack<GameObject> menuStack;
+
     public MenuCharacterDisplay[] characterDisplays;
 
     public MenuCustomizationPanel[] customizationPanels;
+
+    [HideInInspector]
+    public PlayerCursor[] cursors;
 
     private bool characterDisplaysInitialized;
 
@@ -22,6 +29,15 @@ public class MenuManager : MonoBehaviour
         Shader.SetGlobalFloat("ringRadius", 3000);
 
         MenuManager.menu = this;
+
+        foreach (GameObject g in menuPanels)
+        {
+            g.SetActive(false);
+        }
+
+        menuStack = new Stack<GameObject>();
+        menuStack.Push(menuPanels[1]);
+        menuStack.Peek().SetActive(true);
     }
 
     // Update is called once per frame
@@ -68,24 +84,52 @@ public class MenuManager : MonoBehaviour
 #endif
     }
 
-    //these are temporary functions
-    public void ShowHowToPlay()
+    public static void GoBack()
     {
-        HowToPlayMenu.SetActive(true);
+        menu.menuStack.Pop().SetActive(false);
+        menu.menuStack.Peek().SetActive(true);
     }
 
-    public void ShowJoinScreen()
+    /*
+    0. title
+    1. join
+    2. how to play
+    3. settings
+    */
+    public static void GoToMenu(int menuIndex)
     {
-        JoinMenu.SetActive(true);
+        menu.menuStack.Peek().SetActive(false);
+        menu.menuStack.Push(menu.menuPanels[menuIndex]);
+        menu.menuStack.Peek().SetActive(true);
     }
 
-    public void HideHowToPlay()
+    public bool OnJoinScreen()
     {
-        HowToPlayMenu.SetActive(false);
+        return menuStack.Peek() == menuPanels[1];
     }
 
-    public void HideJoinScreen()
+    public void SaveAllCustomizePanels()
     {
-        JoinMenu.SetActive(false);
+        for (int i = 0; i < AppManager.app.playerTokens.Length; i++)
+        {
+            if (AppManager.app.playerTokens[i] && cursors[i].IsCustomizing)
+            {
+                customizationPanels[i].SaveChanges();
+                customizationPanels[i].ClosePanel();
+                cursors[i].IsCustomizing = false;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Switches the current menu with a different one
+    /// Useful for toggling between different pages of the same general menu
+    /// like the how to play that switches between Gamepad and Keyboard controls
+    /// </summary>
+    /// <param name="menuIndex"></param>
+    public static void SwitchMenu(int menuIndex)
+    {
+        GoBack();
+        GoToMenu(menuIndex);
     }
 }
