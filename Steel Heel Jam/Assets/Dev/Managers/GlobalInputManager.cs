@@ -21,6 +21,7 @@ public class GlobalInputManager : MonoBehaviour
     {
         audioManger = FindObjectOfType<AudioManager>();
         MenuManager.menu = FindObjectOfType<MenuManager>();
+        MenuManager.menu.cursors = new PlayerCursor[8];
 
         ReInitializeCursors();
     }
@@ -35,7 +36,7 @@ public class GlobalInputManager : MonoBehaviour
                 token.input.SwitchCurrentActionMap("Cursor");
 
                 GameObject cursor = Instantiate(cursorPrefab, cursorPanel.transform);
-                token.SetUpCursorPrefab(cursor);
+                MenuManager.menu.cursors[i] = token.SetUpCursorPrefab(cursor);
 
                 MenuManager.menu.SolidifyCharacterDisplay(token.playerNumber);
             }
@@ -63,7 +64,7 @@ public class GlobalInputManager : MonoBehaviour
                 AppManager.app.playerTokens[playerNumber - 1] = token;
 
                 GameObject cursor = Instantiate(cursorPrefab, cursorPanel.transform);
-                token.SetUpCursorPrefab(cursor);
+                MenuManager.menu.cursors[playerNumber - 1] = token.SetUpCursorPrefab(cursor);
 
                 audioManger.Play("controllerOn", 0.6f, 1.4f);
 
