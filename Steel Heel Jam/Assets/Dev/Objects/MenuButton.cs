@@ -30,9 +30,9 @@ public class MenuButton : MonoBehaviour
         buttonSelects = new MenuButton[4]
         {
             upSelect,
+            rightSelect,
             downSelect,
             leftSelect,
-            rightSelect
         };
     }
 
@@ -53,26 +53,6 @@ public class MenuButton : MonoBehaviour
         if (invokeSubmit)
         {
             submitAction.Invoke();
-        }
-    }
-
-    void OnTriggerEnter2D(Collider2D other)
-    {
-
-        if (other.CompareTag(Tag.UICursor.ToString()))
-        {
-            PlayerCursor cursor = other.gameObject.GetComponent<PlayerCursor>();
-            AddCursor(cursor);
-        }
-
-    }
-
-    void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.CompareTag(Tag.UICursor.ToString()))
-        {
-            PlayerCursor cursor = other.gameObject.GetComponent<PlayerCursor>();
-            RemoveCursor(cursor);
         }
     }
 

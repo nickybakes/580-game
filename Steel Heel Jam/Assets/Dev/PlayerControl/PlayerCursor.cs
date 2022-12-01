@@ -7,9 +7,9 @@ using TMPro;
 public enum SnapDirection
 {
     Up,
+    Right,
     Down,
     Left,
-    Right
 }
 public class PlayerCursor : MonoBehaviour
 {
@@ -51,6 +51,14 @@ public class PlayerCursor : MonoBehaviour
 
     private bool customizationMovementInput;
 
+    private PolygonCollider2D[] snapColliders;
+
+    private float distanceToClosestButton = 5000;
+
+    private bool snappingWithCollider;
+
+    MenuButton buttonToSnapTo = null;
+
     public bool IsCustomizing
     {
         get
@@ -82,6 +90,8 @@ public class PlayerCursor : MonoBehaviour
         rect = GetComponent<RectTransform>();
         canvasRect = FindObjectOfType<Canvas>().GetComponent<RectTransform>();
         velocity = new Vector2();
+
+        snapColliders = GetComponents<PolygonCollider2D>();
     }
 
     // Update is called once per frame
@@ -206,6 +216,12 @@ public class PlayerCursor : MonoBehaviour
                         LerpToButton(b);
                     }
                 }
+                else
+                {
+                    snapColliders[(int)_input.snapState.snapDirection].enabled = true;
+                    snappingWithCollider = true;
+                }
+
                 _input.snapState.isSnapping = false;
             }
 
@@ -222,6 +238,19 @@ public class PlayerCursor : MonoBehaviour
             }
         }
 
+        if (buttonToSnapTo != null)
+        {
+            foreach (PolygonCollider2D collider in snapColliders)
+            {
+                collider.enabled = false;
+            }
+
+            buttonToSnapTo.AddCursor(this);
+            LerpToButton(buttonToSnapTo);
+            snappingWithCollider = false;
+            buttonToSnapTo = null;
+        }
+        
 
         Move();
     }
@@ -290,5 +319,33 @@ public class PlayerCursor : MonoBehaviour
             (normalizedPosition.x - .5f) * canvasRect.rect.width,
             (normalizedPosition.y - .5f) * canvasRect.rect.height
         );
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("MenuButton"))
+        {
+            MenuButton button = other.gameObject.GetComponent<MenuButton>();
+            float distanceToButton = Vector2.Distance(button.rect.anchoredPosition, rect.anchoredPosition);
+
+            if (!snappingWithCollider)
+            {
+                button.AddCursor(this);
+            }
+            else if (distanceToButton < distanceToClosestButton)
+            {
+                buttonToSnapTo = button;
+                distanceToClosestButton = distanceToButton;
+            }
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("MenuButton"))
+        {
+            MenuButton button = other.gameObject.GetComponent<MenuButton>();
+            button.RemoveCursor(this);
+        }
     }
 }
