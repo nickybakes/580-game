@@ -318,7 +318,17 @@ public class GameManager : MonoBehaviour
         foreach (PlayerStatus status in eliminatedPlayerStatuses)
         {
             status.SetAnimationState(AnimationState.Eliminated);
+            status.visuals.SetModelLayer(0);
         }
+
+        ItemTrajectory[] allItemsOnGround = FindObjectsOfType<ItemTrajectory>();
+
+        foreach (ItemTrajectory item in allItemsOnGround)
+        {
+            item.transform.GetChild(0).GetChild(0).gameObject.layer = 0;
+            item.transform.GetChild(0).GetChild(1).gameObject.layer = 0;
+        }
+
 
         DespawnSpotlight();
         ringScript.gameObject.SetActive(false);

@@ -360,8 +360,8 @@ public class DefaultState
         hitboxScript.airAttack = true;
 
         // Set maximum for air attack knockback and radius
-        hitboxScript.knockback = Mathf.Clamp(hitboxScript.knockback, 0, 15f);
-        hitboxScript.knockbackHeight = Mathf.Clamp(hitboxScript.knockbackHeight, 0, 60f);
+        hitboxScript.knockback = Mathf.Clamp(hitboxScript.knockback, 0, 12f);
+        hitboxScript.knockbackHeight = Mathf.Clamp(hitboxScript.knockbackHeight, 0, 30f);
         hitboxScript.radius = Mathf.Clamp(hitboxScript.radius, 0, 2.2f);
         //Debug.Log("AA Knockback: " + hitboxScript.knockback);
         //Debug.Log("AA KnockbackHeight: " + hitboxScript.knockbackHeight);
