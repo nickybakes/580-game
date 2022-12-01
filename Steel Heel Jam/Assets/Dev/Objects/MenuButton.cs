@@ -98,6 +98,35 @@ public class MenuButton : MonoBehaviour
                 g.SetActive(false);
             }
         }
+    }
 
+    /*
+public enum SnapDirection
+{
+    Up,
+    Right,
+    Down,
+    Left,
+}
+    */
+
+    // public MenuButton GetProperNextSelect(SnapDirection direction)
+    // {
+    //     SnapDirection[][] orders = new SnapDirection[4][];
+    //     orders[direction.]
+    // }
+
+    private MenuButton GetNextSelect(SnapDirection direction)
+    {
+        MenuButton nextSelect = buttonSelects[(int)direction];
+        if (nextSelect != null && !nextSelect.gameObject.activeInHierarchy)
+        {
+            return nextSelect.GetNextSelect(direction);
+        }
+        else if (nextSelect != null && nextSelect.gameObject.activeInHierarchy)
+        {
+            return nextSelect;
+        }
+        return null;
     }
 }

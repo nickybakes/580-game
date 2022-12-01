@@ -7,9 +7,6 @@ public class MenuManager : MonoBehaviour
 
     public static MenuManager menu;
 
-    public GameObject HowToPlayMenu;
-    public GameObject JoinMenu;
-
     public GameObject[] menuPanels;
 
     private Stack<GameObject> menuStack;
@@ -137,50 +134,62 @@ public class MenuManager : MonoBehaviour
     public void LoadCameraShake(MenuNumberInput setting)
     {
         setting.value = AppManager.app.gameSettings.cameraShake;
+        setting.UpdateValueText();
     }
     public void LoadSpotlight(MenuToggle setting)
     {
         setting.value = AppManager.app.gameSettings.spotlight;
+        setting.UpdateImage();
     }
     public void LoadBuffsBeforeHeelFire(MenuNumberInput setting)
     {
         setting.value = AppManager.app.gameSettings.buffsBeforeHeelFire;
+        setting.UpdateValueText();
     }
     public void LoadFastRing(MenuToggle setting)
     {
         setting.value = AppManager.app.gameSettings.fastRing;
+        setting.UpdateImage();
     }
     public void LoadBaseballBat(MenuToggle setting)
     {
         setting.value = AppManager.app.gameSettings.baseballBat;
+        setting.UpdateImage();
     }
     public void LoadBoombox(MenuToggle setting)
     {
         setting.value = AppManager.app.gameSettings.boombox;
+        setting.UpdateImage();
     }
     public void LoadBoxingGlove(MenuToggle setting)
     {
         setting.value = AppManager.app.gameSettings.boxingGlove;
+        setting.UpdateImage();
     }
     public void LoadExplosiveBarrel(MenuToggle setting)
     {
         setting.value = AppManager.app.gameSettings.explosiveBarrel;
+        setting.UpdateImage();
     }
     public void LoadLadder(MenuToggle setting)
     {
         setting.value = AppManager.app.gameSettings.ladder;
+        setting.UpdateImage();
     }
     public void LoadLeadPipe(MenuToggle setting)
     {
         setting.value = AppManager.app.gameSettings.leadPipe;
+        setting.UpdateImage();
     }
     public void LoadSabre(MenuToggle setting)
     {
         setting.value = AppManager.app.gameSettings.sabre;
+        setting.UpdateImage();
     }
     public void LoadSteelChair(MenuToggle setting)
     {
         setting.value = AppManager.app.gameSettings.steelChair;
+        setting.UpdateImage();
     }
     public void ChangeCameraShake(int value)
     {
