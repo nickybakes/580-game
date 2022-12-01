@@ -66,7 +66,15 @@ public class PlayerVisuals
         attackVisual = tr.GetChild((int)PlayerChild.Visuals).GetChild((int)VisualChild.Attack).gameObject;
         knockbackParticle = tr.GetChild((int)PlayerChild.Visuals).GetChild((int)VisualChild.Knockback).gameObject;
 
-        visualChildren = new GameObject[] { blockSphere, dodgeRollSphere, stunSphere, recoverySphere, flexingSphere, attackVisual, knockbackParticle};
+        visualChildren = new GameObject[] { blockSphere, dodgeRollSphere, stunSphere, recoverySphere, flexingSphere, attackVisual, knockbackParticle };
+    }
+
+    public void SetModelLayer(int layer)
+    {
+        modelMeshRenderer.gameObject.layer = layer;
+        modelTransform.GetChild(0).GetChild(2).gameObject.layer = layer;
+        PlayerHairController hairController = modelTransform.gameObject.GetComponentInChildren<PlayerHairController>();
+        hairController.SetHairLayer(layer);
     }
 
     /// <summary>

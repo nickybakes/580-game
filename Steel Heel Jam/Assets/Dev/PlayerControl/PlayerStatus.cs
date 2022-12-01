@@ -263,7 +263,7 @@ public class PlayerStatus : MonoBehaviour
         if (GameManager.game.dontUpdateGameplay)
             return;
 
-        
+
 
         movement.UpdateManual(currentPlayerState.updateMovement, currentPlayerState.canPlayerControlMove, currentPlayerState.canPlayerControlRotate, currentPlayerState.alternateFriction);
 
@@ -374,7 +374,7 @@ public class PlayerStatus : MonoBehaviour
             playerLastHitBy = attackingPlayerStatus;
 
         Vector3 knockbackDir = hitDirection;
-        if(knockbackDir.x == 0)
+        if (knockbackDir.x == 0)
             knockbackDir.x = .01f;
         transform.forward = new Vector3(knockbackDir.x * -1, 0, knockbackDir.z * -1);
         knockback = knockback * (2 + stamina / defaultMaxStamina);
@@ -433,6 +433,43 @@ public class PlayerStatus : MonoBehaviour
 
         recentActivityTimeCurrent = recentActivityTimeMax;
 
+    }
+
+    public void GetHitByElbowDropInAir(PlayerStatus attackingPlayerStatus, bool unblockable)
+    {
+        if (eliminated || waitingToBeEliminated || currentPlayerState.isInvincibleToAttacks)
+            return;
+
+        if (!unblockable && IsBlocking)
+        {
+            attackingPlayerStatus.SetPlayerStateImmediately(new BlockedStun());
+            attackingPlayerStatus.movement.velocity = attackingPlayerStatus.transform.position - transform.position;
+            attackingPlayerStatus.combat.weaponState.currentComboCount = 0;
+            IncreaseSpotlightMeter(15);
+            SetPlayerStateImmediately(new Idle());
+            attackBlocked = true;
+            if (buffs[(int)Buff.MachoBlock])
+            {
+                GameManager.game.SpawnExplosion(transform.position, this, false);
+            }
+
+            // Play sfx and VO.
+            AudioManager.aud.Play("blockedPunch");
+            AnnouncerManager.PlayLine("block", Priority.Block);
+            AudioManager.aud.StartFade("cheer", 1.0f, 0.3f);
+            return;
+        }
+
+        if (!iFrames)
+        {
+            SetPlayerStateImmediately(new ImpactStun(attackingPlayerStatus, Vector3.zero, true));
+            currentPlayerState.timeToChangeState = .7f;
+
+            currentPlayerState.stateToChangeTo = new Idle();
+
+            //play crunch sound
+            AudioManager.aud.Play("punch", 0.8f, 1.2f);
+        }
     }
 
     public void GetHitByElbowDrop(Vector3 hitboxPos, Vector3 collisionPos, float damage, float knockback, float knockbackHeight, float timeInKnockback, PlayerStatus attackingPlayerStatus, bool unblockable)
@@ -623,7 +660,7 @@ public class PlayerStatus : MonoBehaviour
 
             // HeelFire sfx Fade in.
             AudioManager.aud.Play("heelFire");
-            AudioManager.aud.StartFade("heelFire", 1.0f, 0.1f);
+            AudioManager.aud.StartFade("heelFire", 1.0f, 0.2f);
         }
     }
 
@@ -744,7 +781,7 @@ public class PlayerStatus : MonoBehaviour
         if (other.tag == "Ring")
         {
             isOOB = false;
-            if(playerHeader != null)
+            if (playerHeader != null)
             {
                 playerHeader.SetOutOfRing(false);
             }
@@ -756,7 +793,7 @@ public class PlayerStatus : MonoBehaviour
         if (other.tag == "Ring")
         {
             isOOB = true;
-            if(playerHeader != null)
+            if (playerHeader != null)
             {
                 playerHeader.SetOutOfRing(true);
             }

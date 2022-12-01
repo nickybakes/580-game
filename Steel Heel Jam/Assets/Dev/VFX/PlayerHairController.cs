@@ -15,6 +15,8 @@ public class PlayerHairController : MonoBehaviour
 
     private Material outlineMaterial;
 
+    private int hairStyleIndex;
+
 
     // Start is called before the first frame update
     void Start()
@@ -41,8 +43,15 @@ public class PlayerHairController : MonoBehaviour
 
     }
 
+    public void SetHairLayer(int layer)
+    {
+        hairMeshes[hairStyleIndex].gameObject.layer = layer;
+        hairOutlineMeshes[hairStyleIndex].gameObject.layer = layer;
+    }
+
     public void SetHairPrefs(int hairStyle, int hairColor, int playerNumber)
     {
+        hairStyleIndex = hairStyle;
         Material hairMaterial = new(hairMaterials[hairMaterialIndices[hairStyle]]);
         hairMaterial.SetFloat("_Player_Index", playerNumber - 1);
         hairMaterial.SetFloat("_Hair_Color", hairColor);

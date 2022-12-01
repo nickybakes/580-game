@@ -16,7 +16,12 @@ public class Hitbox : MonoBehaviour
     public float duration;
     public int playerNumber;
 
-    public bool airAttack;
+    /*
+    0 = ground attack
+    1 = air attack
+    2 = air attack land
+    */
+    public int attackType;
 
     public PlayerStatus playerStatus;
 
@@ -37,13 +42,13 @@ public class Hitbox : MonoBehaviour
     // Update is called once per frame
     //void Update()
     //{
-        // if(duration >= 0)
-        //     duration -= Time.deltaTime;
+    // if(duration >= 0)
+    //     duration -= Time.deltaTime;
 
-        // if (duration <= 0)
-        // {
-        //     gameObject.SetActive(false);
-        // }
+    // if (duration <= 0)
+    // {
+    //     gameObject.SetActive(false);
+    // }
     //}
 
     private void OnTriggerEnter(Collider other)
@@ -54,30 +59,36 @@ public class Hitbox : MonoBehaviour
 
             if (playerNumber == player.PlayerNumber) return;
 
-            if (airAttack)
+
+            switch (attackType)
             {
-                player.GetHitByElbowDrop(
-                    playerStatus.transform.position,
-                    player.transform.position,
-                    damage,
-                    knockback,
-                    knockbackHeight,
-                    timeInKnockback,
-                    playerStatus,
-                    false
-                    );
-            }
-            else
-            {
-                player.GetHitByMelee(
-                    playerStatus.transform.position,
-                    player.transform.position,
-                    damage,
-                    knockback,
-                    knockbackHeight,
-                    timeInKnockback,
-                    playerStatus
-                    );
+                case (0):
+                    player.GetHitByMelee(
+                        playerStatus.transform.position,
+                        player.transform.position,
+                        damage,
+                        knockback,
+                        knockbackHeight,
+                        timeInKnockback,
+                        playerStatus
+                        );
+                    break;
+                case (1):
+                    player.GetHitByElbowDropInAir(playerStatus, false);
+                    break;
+                case (2):
+                    player.GetHitByElbowDrop(
+                        playerStatus.transform.position,
+                        player.transform.position,
+                        damage,
+                        knockback,
+                        knockbackHeight,
+                        timeInKnockback,
+                        playerStatus,
+                        false
+                        );
+                    break;
+
             }
         }
     }
