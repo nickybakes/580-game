@@ -660,7 +660,7 @@ public class PlayerStatus : MonoBehaviour
 
             // HeelFire sfx Fade in.
             AudioManager.aud.Play("heelFire");
-            AudioManager.aud.StartFade("heelFire", 1.0f, 0.1f);
+            AudioManager.aud.StartFade("heelFire", 1.0f, 0.2f);
         }
     }
 
