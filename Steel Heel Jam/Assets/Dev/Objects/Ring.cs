@@ -46,7 +46,7 @@ public class Ring : MonoBehaviour
         if (finalRing && GameManager.game.GetTotalActivityTime() <= 0)
         {
             timeIdleInFinalRing += Time.deltaTime;
-            if (timeIdleInFinalRing > 7)
+            if (timeIdleInFinalRing > 12)
             {
                 Vector3 currentScale = tr.localScale;
                 float newScale = Mathf.Max(currentScale.x - (Time.deltaTime * .7f), 0);

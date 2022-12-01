@@ -73,6 +73,8 @@ public class PlayerVisuals
     {
         modelMeshRenderer.gameObject.layer = layer;
         modelTransform.GetChild(0).GetChild(2).gameObject.layer = layer;
+        PlayerHairController hairController = modelTransform.gameObject.GetComponentInChildren<PlayerHairController>();
+        hairController.SetHairLayer(layer);
     }
 
     /// <summary>
