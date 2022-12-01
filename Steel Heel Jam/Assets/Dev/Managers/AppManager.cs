@@ -112,7 +112,7 @@ public class AppManager : MonoBehaviour
 
         playerTokens = new PlayerToken[8];
 
-        gameSettings = new GameSettings(5, true, 2, true, true, true, true, true, true, true, true, true);
+        gameSettings = new GameSettings(5, true, 2, false, true, true, true, true, true, true, true, true);
 
 
         if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex((int)Scenes.MENU_InitApp))

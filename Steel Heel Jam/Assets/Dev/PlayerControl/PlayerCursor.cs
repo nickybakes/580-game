@@ -234,7 +234,7 @@ public class PlayerCursor : MonoBehaviour
                         // Logic for snapping to direction here
                         if (highlightedButton != null)
                         {
-                            MenuButton b = highlightedButton.buttonSelects[(int)_input.snapState.snapDirection];
+                            MenuButton b = highlightedButton.GetProperNextSelect(_input.snapState.snapDirection);
 
                             if (b != null)
                             {

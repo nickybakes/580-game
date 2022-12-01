@@ -37,7 +37,6 @@ public class CameraManager : MonoBehaviour
     private float currentShakeOffsetCos;
     private float currentShakeOffsetSin;
 
-
     public void UpdateCamera(List<PlayerStatus> alivePlayers, List<PlayerStatus> eliminatedPlayers)
     {
         if (alivePlayers == null)
@@ -156,11 +155,6 @@ public class CameraManager : MonoBehaviour
         transform = gameObject.transform;
         childTransform = transform.GetComponentInChildren<Camera>().transform;
         previousPosition = new Vector3(highestPosition.x, highestPosition.y, highestPosition.z);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        globalShakeMagnitude *= (float)AppManager.app.gameSettings.cameraShake / 5f;
     }
 }

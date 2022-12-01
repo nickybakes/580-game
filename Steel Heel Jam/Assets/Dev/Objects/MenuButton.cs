@@ -110,11 +110,54 @@ public enum SnapDirection
 }
     */
 
-    // public MenuButton GetProperNextSelect(SnapDirection direction)
-    // {
-    //     SnapDirection[][] orders = new SnapDirection[4][];
-    //     orders[direction.]
-    // }
+    public MenuButton GetProperNextSelect(SnapDirection direction)
+    {
+        SnapDirection[][] orders = new SnapDirection[4][];
+        orders[(int)SnapDirection.Up] = new[] { SnapDirection.Right, SnapDirection.Left };
+        orders[(int)SnapDirection.Right] = new[] { SnapDirection.Up, SnapDirection.Down };
+        orders[(int)SnapDirection.Down] = new[] { SnapDirection.Right, SnapDirection.Left };
+        orders[(int)SnapDirection.Left] = new[] { SnapDirection.Up, SnapDirection.Down };
+
+        MenuButton nextSelect = buttonSelects[(int)direction];
+
+        if (nextSelect != null && !nextSelect.gameObject.activeInHierarchy)
+        {
+            nextSelect = nextSelect.GetNextSelect(direction);
+        }
+        else
+        {
+            return nextSelect;
+        }
+
+        //if we cant find any in that direction
+        //look for an alternate button close by
+        if (nextSelect == null)
+        {
+            MenuButton requestedNextSelect = buttonSelects[(int)direction];
+
+            if (requestedNextSelect != null)
+            {
+                return requestedNextSelect.GetClosestButton(requestedNextSelect.GetNextSelect(orders[(int)direction][0]), requestedNextSelect.GetNextSelect(orders[(int)direction][1]));
+            }
+        }
+
+        return nextSelect;
+    }
+
+    private MenuButton GetClosestButton(MenuButton a, MenuButton b)
+    {
+        if (a == null && b != null)
+            return b;
+        else if (a != null && b == null)
+            return a;
+        else if (a == null && b == null)
+            return null;
+
+        if (Vector2.Distance(LocalPosition, a.LocalPosition) <= Vector2.Distance(LocalPosition, b.LocalPosition))
+            return a;
+
+        return b;
+    }
 
     private MenuButton GetNextSelect(SnapDirection direction)
     {
