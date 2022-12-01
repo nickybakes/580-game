@@ -85,6 +85,7 @@ public class CursorInputs : MonoBehaviour
         if (snapDirection == Vector2.zero)
         {
             snapState.isSnapping = false;
+            customizeMove = Vector2.zero;
             return;
         }
 
