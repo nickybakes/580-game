@@ -181,15 +181,19 @@ public class GameManager : MonoBehaviour
         gameTime += Time.deltaTime;
         cameraManager.UpdateCamera(alivePlayerStatuses, eliminatedPlayerStatuses);
 
-        if (spotlightRespawnCooldown < spotlightRespawnCooldownMax)
+        if (AppManager.app.gameSettings.spotlight)
         {
-            spotlightRespawnCooldown += Time.deltaTime;
-
-            if (spotlightRespawnCooldown > spotlightRespawnCooldownMax)
+            if (spotlightRespawnCooldown < spotlightRespawnCooldownMax)
             {
-                SpawnSpotlight();
+                spotlightRespawnCooldown += Time.deltaTime;
+
+                if (spotlightRespawnCooldown > spotlightRespawnCooldownMax)
+                {
+                    SpawnSpotlight();
+                }
             }
         }
+        
 
         // Lower audience volume to min.
         AudioManager.aud.UpdateFade("cheer", -0.1f, 0.0f);
@@ -453,7 +457,7 @@ public class GameManager : MonoBehaviour
     private void StartMovingRing()
     {
         // Resize ring to a diameter of 10 units in 2-ish minutes
-        ringScript.ResizeRing(10, maxGameTime);
+        ringScript.ResizeRing(10, AppManager.app.gameSettings.fastRing ? maxGameTime / 2 : maxGameTime);
     }
 
     public void InitializeSpotlight()

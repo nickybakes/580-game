@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -7,18 +8,23 @@ using UnityEngine.UI;
 
 public class MenuToggle : MonoBehaviour
 {
-
     public bool value;
 
     public Image checkmarkImage;
 
-    public UnityEvent onValueChange;
+    public UnityEvent<bool> onValueChange;
 
+    public UnityEvent<MenuToggle> onAwake;
 
     // Start is called before the first frame update
     void Start()
     {
         UpdateImage();
+    }
+
+    private void Awake()
+    {
+        onAwake.Invoke(this);
     }
 
     public void UpdateImage()
@@ -30,6 +36,6 @@ public class MenuToggle : MonoBehaviour
     {
         value = !value;
         UpdateImage();
-        onValueChange.Invoke();
+        onValueChange.Invoke(value);
     }
 }

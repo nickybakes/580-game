@@ -141,8 +141,8 @@ public class CameraManager : MonoBehaviour
         {
             currentShakePercentage = magnitudePercentage;
         }
-        currentShakeOffsetCos = Random.value * 3f;
-        currentShakeOffsetSin = Random.value * 3f;
+        currentShakeOffsetCos = Random.value * 3f; // Replace 3f with AppManager.app.gameSettings.cameraShake?
+        currentShakeOffsetSin = Random.value * 3f; // Replace 3f with AppManager.app.gameSettings.cameraShake?
 
         float newShakeTimeMax = Mathf.Min(.1f + magnitudePercentage * .3f, .75f);
         currentShakeTime += newShakeTimeMax;

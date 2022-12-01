@@ -13,11 +13,50 @@ public enum Scenes
 
 public struct GameSettings
 {
+    // Basic Settings
     public int cameraShake;
+    public bool spotlight;
+    public int buffsBeforeHeelFire;
+    public bool fastRing;
 
-    public GameSettings(int cameraShake)
+    // Weapon Toggles
+    public bool baseballBat;
+    public bool boombox;
+    public bool boxingGlove;
+    public bool explosiveBarrel;
+    public bool ladder;
+    public bool leadPipe;
+    public bool sabre;
+    public bool steelChair;
+
+    public GameSettings(
+        int cameraShake,
+        bool spotlight,
+        int buffsBeforeHeelFire,
+        bool fastRing,
+        bool baseballBat,
+        bool boombox,
+        bool boxingGlove,
+        bool explosiveBarrel,
+        bool ladder,
+        bool leadPipe,
+        bool sabre,
+        bool steelChair
+        )
     {
         this.cameraShake = cameraShake;
+        this.spotlight = spotlight;
+        this.buffsBeforeHeelFire = buffsBeforeHeelFire;
+        this.fastRing = fastRing;
+
+        this.baseballBat = baseballBat;
+        this.boombox = boombox;
+        this.boxingGlove = boxingGlove;
+        this.explosiveBarrel = explosiveBarrel;
+        this.ladder = ladder;
+        this.leadPipe = leadPipe;
+        this.sabre = sabre;
+        this.steelChair = steelChair;
     }
 }
 
@@ -73,7 +112,7 @@ public class AppManager : MonoBehaviour
 
         playerTokens = new PlayerToken[8];
 
-        gameSettings = new GameSettings(5);
+        gameSettings = new GameSettings(5, true, 2, true, true, true, true, true, true, true, true, true);
 
 
         if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex((int)Scenes.MENU_InitApp))
@@ -159,5 +198,4 @@ public class AppManager : MonoBehaviour
             yield return null;
         }
     }
-
 }

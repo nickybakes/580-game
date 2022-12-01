@@ -21,6 +21,22 @@ public class ItemManager : MonoBehaviour
         {
             //SpawnRandomItemCenter(20);
         }
+
+        // Turn off disabled items
+        GameSettings itemSettings = AppManager.app.gameSettings;
+        List<GameObject> itemsToDisable = new List<GameObject>();
+        if (!itemSettings.sabre) itemsToDisable.Add(itemsToSpawn[0]);
+        if (!itemSettings.boxingGlove) itemsToDisable.Add(itemsToSpawn[1]);
+        if (!itemSettings.boombox) itemsToDisable.Add(itemsToSpawn[2]);
+        if (!itemSettings.baseballBat) itemsToDisable.Add(itemsToSpawn[3]);
+        if (!itemSettings.ladder) itemsToDisable.Add(itemsToSpawn[4]);
+        if (!itemSettings.steelChair) itemsToDisable.Add(itemsToSpawn[5]);
+        if (!itemSettings.explosiveBarrel) itemsToDisable.Add(itemsToSpawn[6]);
+        if (!itemSettings.leadPipe) itemsToDisable.Add(itemsToSpawn[7]);
+        foreach (GameObject item in itemsToDisable)
+        {
+            itemsToSpawn.Remove(item);
+        }
     }
 
     // Update is called once per frame
@@ -62,6 +78,7 @@ public class ItemManager : MonoBehaviour
 
     void SpawnRandomItem()
     {
+        if (itemsToSpawn.Count == 0) return;
         int randomItemIndex = Random.Range(0, itemsToSpawn.Count);
         //int randomXCoordinate = r.Next(-40, 40);
         //int randomZCoordinate = r.Next(-40, 40);

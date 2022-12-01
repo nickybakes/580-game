@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class MenuNumberInput : MonoBehaviour
 {
-
     public bool wrapAround = true;
 
     public int value = 5;
@@ -19,13 +19,19 @@ public class MenuNumberInput : MonoBehaviour
 
     public TextMeshProUGUI valueText;
 
-    public UnityEvent onValueChange;
+    public UnityEvent<int> onValueChange;
 
+    public UnityEvent<MenuNumberInput> onAwake;
 
     // Start is called before the first frame update
     void Start()
     {
         UpdateValueText();
+    }
+
+    private void Awake()
+    {
+        onAwake.Invoke(this);
     }
 
     public void UpdateValueText()
@@ -51,7 +57,7 @@ public class MenuNumberInput : MonoBehaviour
             }
         }
         UpdateValueText();
-        onValueChange.Invoke();
+        onValueChange.Invoke(value);
     }
 
     public void DecrementValue()
@@ -72,6 +78,6 @@ public class MenuNumberInput : MonoBehaviour
             }
         }
         UpdateValueText();
-        onValueChange.Invoke();
+        onValueChange.Invoke(value);
     }
 }

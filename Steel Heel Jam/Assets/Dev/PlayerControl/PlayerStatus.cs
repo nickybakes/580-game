@@ -142,7 +142,7 @@ public class PlayerStatus : MonoBehaviour
     // ******************************
     // Buff Values
     public bool[] buffs;
-    private int maxBuffs = 2;
+    //private int maxBuffs = 2;
     private int buffCount = 0;
 
     public float plotArmorAdditionalHeal = 8.0f;
@@ -671,7 +671,7 @@ public class PlayerStatus : MonoBehaviour
     public void GiveBuff()
     {
         // Heel Fire
-        if (buffCount == maxBuffs)
+        if (buffCount == AppManager.app.gameSettings.buffsBeforeHeelFire)//maxBuffs)
         {
             SetHeel();
             //buffs[(int)Buff.HeelFire] = true;

@@ -132,4 +132,103 @@ public class MenuManager : MonoBehaviour
         GoBack();
         GoToMenu(menuIndex);
     }
+
+    #region stuff for options controls
+    public void LoadCameraShake(MenuNumberInput setting)
+    {
+        setting.value = AppManager.app.gameSettings.cameraShake;
+    }
+    public void LoadSpotlight(MenuToggle setting)
+    {
+        setting.value = AppManager.app.gameSettings.spotlight;
+    }
+    public void LoadBuffsBeforeHeelFire(MenuNumberInput setting)
+    {
+        setting.value = AppManager.app.gameSettings.buffsBeforeHeelFire;
+    }
+    public void LoadFastRing(MenuToggle setting)
+    {
+        setting.value = AppManager.app.gameSettings.fastRing;
+    }
+    public void LoadBaseballBat(MenuToggle setting)
+    {
+        setting.value = AppManager.app.gameSettings.baseballBat;
+    }
+    public void LoadBoombox(MenuToggle setting)
+    {
+        setting.value = AppManager.app.gameSettings.boombox;
+    }
+    public void LoadBoxingGlove(MenuToggle setting)
+    {
+        setting.value = AppManager.app.gameSettings.boxingGlove;
+    }
+    public void LoadExplosiveBarrel(MenuToggle setting)
+    {
+        setting.value = AppManager.app.gameSettings.explosiveBarrel;
+    }
+    public void LoadLadder(MenuToggle setting)
+    {
+        setting.value = AppManager.app.gameSettings.ladder;
+    }
+    public void LoadLeadPipe(MenuToggle setting)
+    {
+        setting.value = AppManager.app.gameSettings.leadPipe;
+    }
+    public void LoadSabre(MenuToggle setting)
+    {
+        setting.value = AppManager.app.gameSettings.sabre;
+    }
+    public void LoadSteelChair(MenuToggle setting)
+    {
+        setting.value = AppManager.app.gameSettings.steelChair;
+    }
+    public void ChangeCameraShake(int value)
+    {
+        AppManager.app.gameSettings.cameraShake = value;
+    }
+    public void ToggleSpotlight(bool value)
+    {
+        AppManager.app.gameSettings.spotlight = value;
+    }
+    public void ChangeBuffsBeforeHeelFire(int value)
+    {
+        AppManager.app.gameSettings.buffsBeforeHeelFire = value;
+    }
+    public void ToggleFastRing(bool value)
+    {
+        AppManager.app.gameSettings.fastRing = value;
+    }
+    public void ToggleBaseballBat(bool value)
+    {
+        AppManager.app.gameSettings.baseballBat = value;
+    }
+    public void ToggleBoombox(bool value)
+    {
+        AppManager.app.gameSettings.boombox = value;
+    }
+    public void ToggleBoxingGlove(bool value)
+    {
+        AppManager.app.gameSettings.boxingGlove = value;
+    }
+    public void ToggleExplosiveBarrel(bool value)
+    {
+        AppManager.app.gameSettings.explosiveBarrel = value;
+    }
+    public void ToggleLadder(bool value)
+    {
+        AppManager.app.gameSettings.ladder = value;
+    }
+    public void ToggleLeadPipe(bool value)
+    {
+        AppManager.app.gameSettings.leadPipe = value;
+    }
+    public void ToggleSabre(bool value)
+    {
+        AppManager.app.gameSettings.sabre = value;
+    }
+    public void ToggleSteelChair(bool value)
+    {
+        AppManager.app.gameSettings.steelChair = value;
+    }
+    #endregion
 }
