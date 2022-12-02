@@ -698,6 +698,7 @@ public class PlayerStatus : MonoBehaviour
             AnnouncerManager.PlayLine(buffToGive.ToString(), Priority.Buff);
             AudioManager.aud.StartFade("cheer", 1.0f, 0.4f);
         }
+        AudioManager.aud.Play("orchestraHitPowerup");
         CameraManager.cam.ShakeCamera(.5f);
     }
 
