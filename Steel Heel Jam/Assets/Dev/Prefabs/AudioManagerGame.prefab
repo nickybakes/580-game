@@ -229,9 +229,9 @@ MonoBehaviour:
     name: crunch
     previousClip: -1
     clips:
-    - {fileID: 8300000, guid: 939d4411ee5344a48b1ee8ddfe346d0a, type: 3}
-    - {fileID: 8300000, guid: 31a653d72c45a5d4da184cc7f9e85eac, type: 3}
-    - {fileID: 8300000, guid: 09047bc51589b754a9ed3a9945e3abd9, type: 3}
+    - {fileID: 8300000, guid: 5b151eefd005d914b883ccfc4d0f1825, type: 3}
+    - {fileID: 8300000, guid: 6185886e4f7536b4f84e9673431b6adc, type: 3}
+    - {fileID: 8300000, guid: 214cb775cbe6608469ef1161814642ee, type: 3}
     volume: 1
     pitch: 1
     loop: 0
@@ -242,8 +242,21 @@ MonoBehaviour:
     name: landing
     previousClip: -1
     clips:
-    - {fileID: 8300000, guid: 5f379ab2b00830b4a9697cbbe2b03fdf, type: 3}
-    - {fileID: 8300000, guid: 2a4b80154fb11514d9e5de95709dc4f2, type: 3}
+    - {fileID: 8300000, guid: 23af2649576bd8b49b448dad6bd16838, type: 3}
+    - {fileID: 8300000, guid: 983aa9a3fbf2bcd46b35f82d118ff6f5, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    randStartPos: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - audioType: 1
+    name: debris
+    previousClip: -1
+    clips:
+    - {fileID: 8300000, guid: 007645392f5168a42b16a9bb1bfef803, type: 3}
+    - {fileID: 8300000, guid: c78dc6667e094f044b1d5275768edd55, type: 3}
+    - {fileID: 8300000, guid: e7a45da611f128548a580b2ba233b86b, type: 3}
     volume: 1
     pitch: 1
     loop: 0

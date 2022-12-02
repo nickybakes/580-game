@@ -56,6 +56,7 @@ public class SuplexDuration : BasicState
         AudioManager.aud.Play("crunch", vol / 3);
         AudioManager.aud.Play("punch", vol);
         AudioManager.aud.Play("landing", vol / 2);
+        AudioManager.aud.Play("debris", vol / 3);
         AudioManager.aud.Play("orchestraHitLong");
 
         GameObject decal = VisualsManager.SpawnDecal(DecalName.Crack_01, status.transform.position);

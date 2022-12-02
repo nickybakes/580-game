@@ -46,12 +46,6 @@ public class AttackAirDuration : BasicState
         {
             ((AttackAirRecovery)nextState).velocityYAirAttack = -status.movement.velocity.y;
 
-            // If traveling fast enough downwards, shakes camera.
-            if (-status.movement.velocity.y > 50)
-            {
-                CameraManager.cam.ShakeCamera(Mathf.Clamp01((-status.movement.velocity.y - 41f) / 70f) * .6f);
-            }
-
             GameObject decal = VisualsManager.SpawnDecal(DecalName.Crack_01, status.transform.position);
 
             float scale = Mathf.Clamp((-status.movement.velocity.y - 36f) / 53f, .3f, 1);
@@ -64,10 +58,19 @@ public class AttackAirDuration : BasicState
 
             // Play ground sound. Louder when moving faster.
             float vol = -status.movement.velocity.y / 100;
-
-            AudioManager.aud.Play("crunch", vol / 3);
-            AudioManager.aud.Play("punch", vol);
             AudioManager.aud.Play("landing", vol / 2);
+            AudioManager.aud.Play("crunch", vol / 2);
+
+            // If traveling fast enough downwards, shakes camera. Also adds debris sound.
+            if (-status.movement.velocity.y > 50)
+            {
+                CameraManager.cam.ShakeCamera(Mathf.Clamp01((-status.movement.velocity.y - 41f) / 70f) * .6f);
+                AudioManager.aud.Play("debris", vol / 3);
+            }
+            // Extra audio oompf for really big drops.
+            Debug.Log(-status.movement.velocity.y);
+            if (-status.movement.velocity.y > 70)
+                AudioManager.aud.Play("punch");
         }
     }
 }
