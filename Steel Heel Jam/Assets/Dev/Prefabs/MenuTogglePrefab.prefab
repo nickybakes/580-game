@@ -144,10 +144,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43551a24203b19140910b7b2c0211a07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  label: {fileID: 3026003934000812712}
   value: 1
   checkmarkImage: {fileID: 3026003933507217778}
   onValueChange:
+    m_PersistentCalls:
+      m_Calls: []
+  onAwake:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &3026003934000812714
@@ -254,7 +256,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
-  m_wordSpacing: 0
+  m_wordSpacing: 12
   m_lineSpacing: 0
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
