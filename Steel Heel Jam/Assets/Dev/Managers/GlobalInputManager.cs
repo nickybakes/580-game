@@ -68,6 +68,11 @@ public class GlobalInputManager : MonoBehaviour
 
                 audioManger.Play("controllerOn", 0.6f, 1.4f);
 
+                if (AppManager.app.TokenAmount == 1)
+                {
+                    MenuManager.menu.PassTitleScreen();
+                }
+
                 MenuManager.menu.SolidifyCharacterDisplay(playerNumber);
             }
             else

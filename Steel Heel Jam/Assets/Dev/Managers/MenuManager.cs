@@ -15,6 +15,8 @@ public class MenuManager : MonoBehaviour
 
     public MenuCustomizationPanel[] customizationPanels;
 
+    public GameObject titleLogo;
+
     [HideInInspector]
     public PlayerCursor[] cursors;
 
@@ -23,6 +25,8 @@ public class MenuManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        AppManager.app.ableToRemovePlayer = true;
+
         Shader.SetGlobalFloat("ringRadius", 3000);
 
         MenuManager.menu = this;
@@ -32,9 +36,35 @@ public class MenuManager : MonoBehaviour
             g.SetActive(false);
         }
 
+        if (AppManager.app.TokenAmount == 0)
+        {
+            ReturnToTitleScreen();
+        }
+        else
+        {
+            PassTitleScreen();
+        }
+    }
+
+    public void PassTitleScreen()
+    {
+        titleLogo.SetActive(false);
+        foreach (GameObject g in menuPanels)
+        {
+            g.SetActive(false);
+        }
         menuStack = new Stack<GameObject>();
         menuStack.Push(menuPanels[1]);
         menuStack.Peek().SetActive(true);
+    }
+
+    public void ReturnToTitleScreen()
+    {
+        titleLogo.SetActive(true);
+        foreach (GameObject g in menuPanels)
+        {
+            g.SetActive(false);
+        }
     }
 
     // Update is called once per frame
@@ -66,6 +96,7 @@ public class MenuManager : MonoBehaviour
 
     public void StartGame()
     {
+        AppManager.app.ableToRemovePlayer = false;
         AppManager.app.SwitchToScene(Scenes.MAP_Demo_01);
     }
 

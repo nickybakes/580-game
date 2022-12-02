@@ -72,6 +72,9 @@ public class AppManager : MonoBehaviour
     private Scenes previousScene;
 
     [HideInInspector]
+    public bool ableToRemovePlayer;
+
+    [HideInInspector]
     /// <summary>
     /// Player number of the current champion. -1 if no champion yet!
     /// </summary>
@@ -127,6 +130,9 @@ public class AppManager : MonoBehaviour
 
     public void RemovePlayerToken(PlayerToken token)
     {
+        if (!ableToRemovePlayer)
+            return;
+
         for (int i = 0; i < playerTokens.Length; i++)
         {
             if (playerTokens[i] == token)
@@ -140,7 +146,14 @@ public class AppManager : MonoBehaviour
 
     public void RemovePlayerToken(int playerNumber)
     {
+        if (!ableToRemovePlayer)
+            return;
+
         RemovePlayerToken(playerTokens[playerNumber - 1]);
+        if (TokenAmount == 0)
+        {
+            MenuManager.menu.ReturnToTitleScreen();
+        }
     }
 
     public void ClearPlayerTokens()
@@ -161,18 +174,7 @@ public class AppManager : MonoBehaviour
         }
 
         StartCoroutine(StartLoadProcess(s));
-        // CheckIfLoadingDone(SceneManager.LoadSceneAsync((int)s, LoadSceneMode.Single));
-        // if (currentScene == Scenes.MENU_InitApp)
-        // {
-        //     SceneManager.LoadScene((int)s, LoadSceneMode.Single);
-        // }
-        // else
-        // {
-        //     //we will need a proper async scene switch in order to have a good looking
-        //     //loading transition thing
-        //     SceneManager.LoadScene((int)s, LoadSceneMode.Single);
-        //     // SceneManager.UnloadSceneAsync((int)currentScene);
-        // }
+
         previousScene = currentScene;
         currentScene = s;
     }
