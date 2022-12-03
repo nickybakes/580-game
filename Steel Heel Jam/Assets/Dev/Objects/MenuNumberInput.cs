@@ -17,6 +17,8 @@ public class MenuNumberInput : MonoBehaviour
 
     public int interval = 1;
 
+    public int ID;
+
     public TextMeshProUGUI valueText;
 
     public UnityEvent<int> onValueChange;

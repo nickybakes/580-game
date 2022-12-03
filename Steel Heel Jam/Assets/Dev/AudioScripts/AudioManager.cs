@@ -23,6 +23,8 @@ public class AudioManager : MonoBehaviour
     {
         aud = this;
 
+        UpdateMixerVolume();
+
         //if (instance == null)
         //    instance = this;
         //else
@@ -73,7 +75,7 @@ public class AudioManager : MonoBehaviour
     /// Only one to use s.previousClip, useful for VO lines.
     /// </summary>
     /// <param name="name">Name of audioclip</param>
-    public void Play(string name)
+    public Sound Play(string name)
     {
         Sound s = Find(name);
 
@@ -98,6 +100,8 @@ public class AudioManager : MonoBehaviour
             s.source.time = UnityEngine.Random.Range(0, s.source.clip.length);
 
         s.source.Play();
+
+        return s;
     }
 
     /// <summary>
@@ -249,10 +253,10 @@ public class AudioManager : MonoBehaviour
 
     public void UpdateMixerVolume()
     {
-        masterMixerGroup.audioMixer.SetFloat("MasterVolume", Mathf.Log10(AudioOptionsManager.masterVolume) * 20);
-        musicMixerGroup.audioMixer.SetFloat("MusicVolume", Mathf.Log10(AudioOptionsManager.musicVolume) * 20);
-        soundEffectsMixerGroup.audioMixer.SetFloat("SoundEffectsVolume", Mathf.Log10(AudioOptionsManager.soundEffectsVolume) * 20);
-        voiceOverMixerGroup.audioMixer.SetFloat("VoiceOverVolume", Mathf.Log10(AudioOptionsManager.voiceOverVolume) * 20);
-        ambientMixerGroup.audioMixer.SetFloat("AmbientVolume", Mathf.Log10(AudioOptionsManager.ambientVolume) * 20);
+        masterMixerGroup.audioMixer.SetFloat("MasterVolume", Mathf.Log10(Mathf.Max((float)AppManager.app.audioSettings.master/10f, .0001f)) * 20);
+        musicMixerGroup.audioMixer.SetFloat("MusicVolume", Mathf.Log10(Mathf.Max((float)AppManager.app.audioSettings.music/10f, .0001f)) * 20);
+        soundEffectsMixerGroup.audioMixer.SetFloat("SoundEffectsVolume", Mathf.Log10(Mathf.Max((float)AppManager.app.audioSettings.sfx/10f, .0001f)) * 20);
+        voiceOverMixerGroup.audioMixer.SetFloat("VoiceOverVolume", Mathf.Log10(Mathf.Max((float)AppManager.app.audioSettings.announcer/10f, .0001f)) * 20);
+        ambientMixerGroup.audioMixer.SetFloat("AmbientVolume", Mathf.Log10(Mathf.Max((float)AppManager.app.audioSettings.ambience/10f, .0001f)) * 20);
     }
 }

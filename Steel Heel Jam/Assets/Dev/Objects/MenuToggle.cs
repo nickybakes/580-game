@@ -11,10 +11,12 @@ public class MenuToggle : MonoBehaviour
     public bool value;
 
     public Image checkmarkImage;
+    public Animator animator;
 
     public UnityEvent<bool> onValueChange;
 
     public UnityEvent<MenuToggle> onAwake;
+
 
     // Start is called before the first frame update
     void Start()
@@ -37,5 +39,6 @@ public class MenuToggle : MonoBehaviour
         value = !value;
         UpdateImage();
         onValueChange.Invoke(value);
+        animator.SetBool("Bouncing", value);
     }
 }

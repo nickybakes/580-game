@@ -71,6 +71,7 @@ public class GlobalInputManager : MonoBehaviour
                 if (AppManager.app.TokenAmount == 1)
                 {
                     MenuManager.menu.PassTitleScreen();
+                    AudioManager.aud.Play("firstJoined");
                 }
 
                 MenuManager.menu.SolidifyCharacterDisplay(playerNumber);

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3026003933507217779}
   - component: {fileID: 3026003933507217778}
   - component: {fileID: 5334126643446331365}
+  - component: {fileID: 6529115173253143745}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -92,6 +93,26 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
   m_EffectDistance: {x: 6, y: -12}
   m_UseGraphicAlpha: 1
+--- !u!95 &6529115173253143745
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3026003933507217780}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 95682c3236b59a147a624c5917319cfc, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &3026003933821694670
 GameObject:
   m_ObjectHideFlags: 0
@@ -146,6 +167,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   value: 1
   checkmarkImage: {fileID: 3026003933507217778}
+  animator: {fileID: 6529115173253143745}
   onValueChange:
     m_PersistentCalls:
       m_Calls: []
@@ -404,6 +426,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3834070726820874708, guid: c48be2c64539de849b015b56c949d1fb,
+        type: 3}
+      propertyPath: textBounceAnimator
+      value: 
+      objectReference: {fileID: 6529115173253143745}
     - target: {fileID: 3834070726820874708, guid: c48be2c64539de849b015b56c949d1fb,
         type: 3}
       propertyPath: submitAction.m_PersistentCalls.m_Calls.Array.size

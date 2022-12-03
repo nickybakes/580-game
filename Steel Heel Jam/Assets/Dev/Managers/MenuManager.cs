@@ -39,6 +39,7 @@ public class MenuManager : MonoBehaviour
         if (AppManager.app.TokenAmount == 0)
         {
             ReturnToTitleScreen();
+            AudioManager.aud.Play("VO_GameLaunch");
         }
         else
         {
@@ -65,6 +66,7 @@ public class MenuManager : MonoBehaviour
         {
             g.SetActive(false);
         }
+        menuPanels[0].SetActive(true);
     }
 
     // Update is called once per frame
@@ -82,6 +84,17 @@ public class MenuManager : MonoBehaviour
                 }
             }
         }
+    }
+
+
+    public void PlayAnnouncerAudioAdjustWithInterrupt()
+    {
+        AudioManager.aud.Play("VO_SettingAdjust");
+    }
+
+    public void PlaySoundEffectsAdjust()
+    {
+        AudioManager.aud.Play("SFX_Adjust");
     }
 
     public void SolidifyCharacterDisplay(int playerNumber)
@@ -160,6 +173,56 @@ public class MenuManager : MonoBehaviour
         GoBack();
         GoToMenu(menuIndex);
     }
+
+    #region audio controls
+    public void LoadAudioSetting(MenuNumberInput setting)
+    {
+        switch (setting.ID)
+        {
+            case (0):
+                setting.value = AppManager.app.audioSettings.master;
+                break;
+            case (1):
+                setting.value = AppManager.app.audioSettings.music;
+                break;
+            case (2):
+                setting.value = AppManager.app.audioSettings.announcer;
+                break;
+            case (3):
+                setting.value = AppManager.app.audioSettings.sfx;
+                break;
+            case (4):
+                setting.value = AppManager.app.audioSettings.ambience;
+                break;
+        }
+        setting.UpdateValueText();
+        AudioManager.aud.UpdateMixerVolume();
+    }
+
+    public void SaveAudioSetting(MenuNumberInput setting)
+    {
+        switch (setting.ID)
+        {
+            case (0):
+                AppManager.app.audioSettings.master = setting.value;
+                break;
+            case (1):
+                AppManager.app.audioSettings.music = setting.value;
+                break;
+            case (2):
+                AppManager.app.audioSettings.announcer = setting.value;
+                break;
+            case (3):
+                AppManager.app.audioSettings.sfx = setting.value;
+                break;
+            case (4):
+                AppManager.app.audioSettings.ambience = setting.value;
+                break;
+        }
+        AudioManager.aud.UpdateMixerVolume();
+    }
+
+    #endregion
 
     #region stuff for options controls
     public void LoadCameraShake(MenuNumberInput setting)

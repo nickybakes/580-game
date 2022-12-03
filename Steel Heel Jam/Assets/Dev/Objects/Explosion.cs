@@ -52,13 +52,15 @@ public class Explosion : MonoBehaviour
         knockbackHeight = knockbackHeight * knockbackScale;
         damage = damage * knockbackScale;
         timeInKnockback = timeInKnockback * knockbackScale;
-        
+
 
         VisualsManager.SpawnDecal(DecalName.Crack_01, tr.position);
 
         CameraManager.cam.ShakeCamera(.5f);
 
         AudioManager.aud.Play("explosion", 0.8f, 1.2f);
+        AudioManager.aud.Play("debris", .4f, 0.65f, 1.8f);
+        AudioManager.aud.Play("crunch", .2f, 0.4f, .65f);
     }
 
     private void OnTriggerEnter(Collider other)

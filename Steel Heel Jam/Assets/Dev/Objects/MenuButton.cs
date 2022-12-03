@@ -21,8 +21,7 @@ public class MenuButton : MonoBehaviour
     public MenuButton leftSelect;
     public MenuButton rightSelect;
 
-    [HideInInspector]
-    public new BoxCollider2D collider;
+    public Animator textBounceAnimator;
 
     public Vector2 LocalPosition
     {
@@ -44,7 +43,6 @@ public class MenuButton : MonoBehaviour
     void Start()
     {
         rect = GetComponent<RectTransform>();
-        collider = GetComponent<BoxCollider2D>();
         cursorsHoveringThisButton = new List<PlayerCursor>();
 
         buttonSelects = new MenuButton[4]
@@ -72,6 +70,7 @@ public class MenuButton : MonoBehaviour
 
         if (invokeSubmit)
         {
+            AudioManager.aud.Play("buttonClick");
             submitAction.Invoke();
         }
     }
@@ -82,6 +81,8 @@ public class MenuButton : MonoBehaviour
         {
             g.SetActive(true);
         }
+        AudioManager.aud.Play("buttonHover");
+        textBounceAnimator.SetBool("Bouncing", true);
         cursor.highlightedButton = this;
         cursorsHoveringThisButton.Add(cursor);
     }
@@ -97,6 +98,7 @@ public class MenuButton : MonoBehaviour
             {
                 g.SetActive(false);
             }
+            textBounceAnimator.SetBool("Bouncing", false);
         }
     }
 

@@ -53,14 +53,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c9c7c155bdf4bc4689a49ece32b7785, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  label: {fileID: 5967356811578338960}
   wrapAround: 1
   value: 5
   min: 0
   max: 10
   interval: 1
+  ID: 0
   valueText: {fileID: 5967356811471423660}
   onValueChange:
+    m_PersistentCalls:
+      m_Calls: []
+  onAwake:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &5967356811471423662
@@ -302,7 +305,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
-  m_wordSpacing: 0
+  m_wordSpacing: 23.9
   m_lineSpacing: 0
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
@@ -345,6 +348,7 @@ GameObject:
   - component: {fileID: 5967356811580390974}
   - component: {fileID: 5967356811580390969}
   - component: {fileID: 5967356811580390975}
+  - component: {fileID: 3137407465541251696}
   m_Layer: 5
   m_Name: Arrow
   m_TagString: Untagged
@@ -425,6 +429,26 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
   m_EffectDistance: {x: -4, y: -8}
   m_UseGraphicAlpha: 1
+--- !u!95 &3137407465541251696
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5967356811580390971}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 95682c3236b59a147a624c5917319cfc, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &5967356811583960143
 GameObject:
   m_ObjectHideFlags: 0
@@ -437,6 +461,7 @@ GameObject:
   - component: {fileID: 5967356811583960146}
   - component: {fileID: 5967356811583960141}
   - component: {fileID: 5967356811583960147}
+  - component: {fileID: 7628234311756693334}
   m_Layer: 5
   m_Name: Arrow
   m_TagString: Untagged
@@ -517,6 +542,26 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
   m_EffectDistance: {x: 4, y: 8}
   m_UseGraphicAlpha: 1
+--- !u!95 &7628234311756693334
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5967356811583960143}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 95682c3236b59a147a624c5917319cfc, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &5967356810091881573
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -654,6 +699,11 @@ PrefabInstance:
       propertyPath: leftSelect
       value: 
       objectReference: {fileID: 7486412375663162315}
+    - target: {fileID: 3834070726820874708, guid: c48be2c64539de849b015b56c949d1fb,
+        type: 3}
+      propertyPath: textBounceAnimator
+      value: 
+      objectReference: {fileID: 3137407465541251696}
     - target: {fileID: 3834070726820874708, guid: c48be2c64539de849b015b56c949d1fb,
         type: 3}
       propertyPath: submitAction.m_PersistentCalls.m_Calls.Array.size
@@ -856,6 +906,11 @@ PrefabInstance:
       propertyPath: rightSelect
       value: 
       objectReference: {fileID: 7486412375879921073}
+    - target: {fileID: 3834070726820874708, guid: c48be2c64539de849b015b56c949d1fb,
+        type: 3}
+      propertyPath: textBounceAnimator
+      value: 
+      objectReference: {fileID: 7628234311756693334}
     - target: {fileID: 3834070726820874708, guid: c48be2c64539de849b015b56c949d1fb,
         type: 3}
       propertyPath: submitAction.m_PersistentCalls.m_Calls.Array.size

@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1285489703509536206}
   - component: {fileID: 2728357844220918305}
-  - component: {fileID: 8454066521746509047}
   m_Layer: 0
   m_Name: AudioManagerMenu
   m_TagString: Untagged
@@ -75,7 +74,7 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     randStartPos: 0
-    playOnAwake: 1
+    playOnAwake: 0
     source: {fileID: 0}
   - audioType: 3
     name: market
@@ -92,7 +91,7 @@ MonoBehaviour:
     name: controllerOn
     previousClip: -1
     clips:
-    - {fileID: 8300000, guid: d79d794faa2950f4890cd7475560c416, type: 3}
+    - {fileID: 8300000, guid: a5c9215836d3bcb449f34af312ac5ecf, type: 3}
     volume: 1
     pitch: 1
     loop: 0
@@ -103,27 +102,96 @@ MonoBehaviour:
     name: controllerOff
     previousClip: -1
     clips:
-    - {fileID: 8300000, guid: c1aa1f5c6f4838946b73859bcf5fbb70, type: 3}
+    - {fileID: 8300000, guid: 80e9df1c8c8bb8649afec5cf0d255531, type: 3}
+    - {fileID: 8300000, guid: dc5c431c7aed38347b827495aec73238, type: 3}
+    - {fileID: 8300000, guid: a17922af139a8264cb8573bdb7e0b014, type: 3}
+    - {fileID: 8300000, guid: 0a2369bcf36534c47bdbc1d612c8e634, type: 3}
+    volume: 0.809
+    pitch: 1
+    loop: 0
+    randStartPos: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - audioType: 2
+    name: VO_GameLaunch
+    previousClip: -1
+    clips:
+    - {fileID: 8300000, guid: 4164153603df86a4693b7e1b1139d89e, type: 3}
+    - {fileID: 8300000, guid: 945c374e6c2d31b45807c5a9448df358, type: 3}
+    - {fileID: 8300000, guid: 4e1c7cac2c37b2246a9c0708c18fd56f, type: 3}
     volume: 1
     pitch: 1
     loop: 0
     randStartPos: 0
     playOnAwake: 0
     source: {fileID: 0}
---- !u!114 &8454066521746509047
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8705892428411434741}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 98d8463ae9bb4914cb4c30958666df60, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  masterSliderText: {fileID: 0}
-  musicSliderText: {fileID: 0}
-  soundEffectSliderText: {fileID: 0}
-  voiceOverSliderText: {fileID: 0}
-  ambientSliderText: {fileID: 0}
+  - audioType: 2
+    name: VO_SettingAdjust
+    previousClip: -1
+    clips:
+    - {fileID: 8300000, guid: e0382003d14d08640bbb2d47e5f86c04, type: 3}
+    - {fileID: 8300000, guid: 37025b047120d33498189444ef1985cf, type: 3}
+    - {fileID: 8300000, guid: 532acdd5726eb7341a022fa9ffc5c091, type: 3}
+    - {fileID: 8300000, guid: ced92e39418c04a45ae6300c88a1f3f5, type: 3}
+    - {fileID: 8300000, guid: e4c4c94a2d73dc1428608cecf95aed45, type: 3}
+    - {fileID: 8300000, guid: 698507ba790841245b61c4a38c2a9cbe, type: 3}
+    - {fileID: 8300000, guid: 3602c5e9d3162774787e741935d271a3, type: 3}
+    - {fileID: 8300000, guid: dc846f1dd1932eb4c958f42c70879e37, type: 3}
+    - {fileID: 8300000, guid: 7efb929b9e414384ea1ae075cfb30fce, type: 3}
+    - {fileID: 8300000, guid: ef80cab63f8bf144a85ce149f5d5d01b, type: 3}
+    - {fileID: 8300000, guid: 6c390507f2fa2e745a8405f7c0d26660, type: 3}
+    - {fileID: 8300000, guid: 013ffb47f0e447048b8820dff9857ab1, type: 3}
+    - {fileID: 8300000, guid: 14873f3ad8874f14fa312a85df4cde2d, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    randStartPos: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - audioType: 1
+    name: SFX_Adjust
+    previousClip: -1
+    clips:
+    - {fileID: 8300000, guid: a5c9215836d3bcb449f34af312ac5ecf, type: 3}
+    - {fileID: 8300000, guid: a5c9215836d3bcb449f34af312ac5ecf, type: 3}
+    - {fileID: 8300000, guid: a5c9215836d3bcb449f34af312ac5ecf, type: 3}
+    - {fileID: 8300000, guid: 895eb40289c9fd148932c05dc2d45a54, type: 3}
+    volume: 0.771
+    pitch: 1
+    loop: 0
+    randStartPos: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - audioType: 1
+    name: firstJoined
+    previousClip: -1
+    clips:
+    - {fileID: 8300000, guid: 895eb40289c9fd148932c05dc2d45a54, type: 3}
+    volume: 0.365
+    pitch: 1
+    loop: 0
+    randStartPos: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - audioType: 1
+    name: buttonClick
+    previousClip: -1
+    clips:
+    - {fileID: 8300000, guid: a5c9215836d3bcb449f34af312ac5ecf, type: 3}
+    volume: 0.408
+    pitch: 1.68
+    loop: 0
+    randStartPos: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - audioType: 1
+    name: buttonHover
+    previousClip: -1
+    clips:
+    - {fileID: 8300000, guid: a5c9215836d3bcb449f34af312ac5ecf, type: 3}
+    volume: 0.156
+    pitch: 2.68
+    loop: 0
+    randStartPos: 0
+    playOnAwake: 0
+    source: {fileID: 0}

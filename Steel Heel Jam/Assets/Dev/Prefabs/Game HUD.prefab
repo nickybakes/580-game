@@ -1251,6 +1251,7 @@ GameObject:
   - component: {fileID: 4725452824581047543}
   - component: {fileID: 7295816026854739878}
   - component: {fileID: 7188281423067833837}
+  - component: {fileID: 1900093037718066764}
   m_Layer: 5
   m_Name: Loading Text
   m_TagString: Untagged
@@ -1375,6 +1376,26 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!95 &1900093037718066764
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6336779603879098155}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: cf71fb189ec92b140bab9ced015c9ecb, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &7441339869832360100
 GameObject:
   m_ObjectHideFlags: 0
@@ -1521,6 +1542,7 @@ GameObject:
   - component: {fileID: 3730017978673725501}
   - component: {fileID: 729077662524264337}
   - component: {fileID: 6845437442541856799}
+  - component: {fileID: 5500019595107230065}
   m_Layer: 5
   m_Name: Loading Text
   m_TagString: Untagged
@@ -1645,6 +1667,26 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!95 &5500019595107230065
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7738909482818554087}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: cf71fb189ec92b140bab9ced015c9ecb, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &7809800869146010786
 GameObject:
   m_ObjectHideFlags: 0

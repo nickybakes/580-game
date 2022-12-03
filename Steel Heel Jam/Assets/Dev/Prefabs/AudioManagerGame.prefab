@@ -244,7 +244,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 6185886e4f7536b4f84e9673431b6adc, type: 3}
     - {fileID: 8300000, guid: 214cb775cbe6608469ef1161814642ee, type: 3}
     volume: 1
-    pitch: 1
+    pitch: 0.5
     loop: 0
     randStartPos: 0
     playOnAwake: 0
@@ -269,7 +269,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: c78dc6667e094f044b1d5275768edd55, type: 3}
     - {fileID: 8300000, guid: e7a45da611f128548a580b2ba233b86b, type: 3}
     volume: 1
-    pitch: 1
+    pitch: 0.72
     loop: 0
     randStartPos: 0
     playOnAwake: 0
@@ -732,6 +732,28 @@ MonoBehaviour:
     - {fileID: 8300000, guid: c0b534309e8aac941ad5df54d30b0b34, type: 3}
     volume: 1
     pitch: 1
+    loop: 0
+    randStartPos: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - audioType: 1
+    name: buttonClick
+    previousClip: -1
+    clips:
+    - {fileID: 8300000, guid: a5c9215836d3bcb449f34af312ac5ecf, type: 3}
+    volume: 0.408
+    pitch: 1.68
+    loop: 0
+    randStartPos: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - audioType: 1
+    name: buttonHover
+    previousClip: -1
+    clips:
+    - {fileID: 8300000, guid: a5c9215836d3bcb449f34af312ac5ecf, type: 3}
+    volume: 0.156
+    pitch: 2.68
     loop: 0
     randStartPos: 0
     playOnAwake: 0

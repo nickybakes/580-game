@@ -60,6 +60,24 @@ public struct GameSettings
     }
 }
 
+public struct AudioSettings
+{
+    public int master;
+    public int music;
+    public int announcer;
+    public int sfx;
+    public int ambience;
+
+    public AudioSettings(int master, int music, int announcer, int sfx, int ambience)
+    {
+        this.master = master;
+        this.music = music;
+        this.announcer = announcer;
+        this.sfx = sfx;
+        this.ambience = ambience;
+    }
+}
+
 
 public class AppManager : MonoBehaviour
 {
@@ -67,6 +85,7 @@ public class AppManager : MonoBehaviour
     public static AppManager app;
 
     public GameSettings gameSettings;
+    public AudioSettings audioSettings;
 
     private Scenes currentScene;
     private Scenes previousScene;
@@ -117,6 +136,8 @@ public class AppManager : MonoBehaviour
 
         gameSettings = new GameSettings(5, true, 2, false, true, true, true, true, true, true, true, true);
 
+        audioSettings = new AudioSettings(10, 10, 10, 10, 10);
+
 
         if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex((int)Scenes.MENU_InitApp))
             SwitchToScene(Scenes.MENU_TempJoinScreen);
@@ -132,6 +153,11 @@ public class AppManager : MonoBehaviour
     {
         if (!ableToRemovePlayer)
             return;
+
+        if (AudioManager.aud)
+        {
+            AudioManager.aud.Play("controllerOff");
+        }
 
         for (int i = 0; i < playerTokens.Length; i++)
         {
