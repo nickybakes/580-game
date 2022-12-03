@@ -204,7 +204,7 @@ public class PlayerCursor : MonoBehaviour
                 {
                     framesSpentTryingToSnap++;
 
-                    if (framesSpentTryingToSnap >= 8)
+                    if (framesSpentTryingToSnap >= 5)
                     {
                         foreach (PolygonCollider2D collider in snapColliders)
                         {
@@ -278,7 +278,7 @@ public class PlayerCursor : MonoBehaviour
         lerpToPosition = buttonNormalizedPosition;
         lerpStartPosition = normalizedPosition;
 
-        CalculateLerpTime(lerpToPosition, 50, .05f);
+        CalculateLerpTime(lerpToPosition, 50, .09f);
     }
 
     private void LerpToCustomizationPanel()
