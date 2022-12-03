@@ -96,6 +96,16 @@ public class PlayerHeader : MonoBehaviour
 
         spotlightMeterFillRect = spotlightMeterFill.GetComponent<RectTransform>();
         spotlightMeterBackgroundRect = spotlightMeterBackground.GetComponent<RectTransform>();
+
+        for (int i = 0; i < gottenBuffIcons.Length; i++)
+        {
+            gottenBuffIcons[i].gameObject.SetActive(false);
+        }
+
+        for (int i = 0; i < AppManager.app.gameSettings.buffsBeforeHeelFire; i++)
+        {
+            gottenBuffIcons[i].gameObject.SetActive(true);
+        }
     }
 
     public void UpdateSpotlightMeter()
@@ -214,7 +224,7 @@ public class PlayerHeader : MonoBehaviour
 
     public void SetWeaponText(string weaponName)
     {
-        if(weaponName == "")
+        if (weaponName == "")
         {
             weaponText.gameObject.SetActive(false);
         }

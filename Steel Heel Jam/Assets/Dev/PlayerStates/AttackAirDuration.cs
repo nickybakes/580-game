@@ -68,7 +68,6 @@ public class AttackAirDuration : BasicState
                 AudioManager.aud.Play("debris", vol / 3);
             }
             // Extra audio oompf for really big drops.
-            Debug.Log(-status.movement.velocity.y);
             if (-status.movement.velocity.y > 70)
                 AudioManager.aud.Play("punch");
         }

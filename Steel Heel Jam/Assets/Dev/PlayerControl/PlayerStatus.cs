@@ -415,7 +415,7 @@ public class PlayerStatus : MonoBehaviour
         recentDamageTakenMax = recentDamageTaken;
         recentDamageTimeCurrent = 6f;
 
-        if (forceActivateIFrames || recentDamageTaken >= 50f)
+        if (forceActivateIFrames || recentDamageTaken >= 45f)
         {
             IFrames = true;
         }
