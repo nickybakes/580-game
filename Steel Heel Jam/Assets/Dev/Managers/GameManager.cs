@@ -348,6 +348,10 @@ public class GameManager : MonoBehaviour
         AnnouncerManager.PlayLine("MatchEnd", Priority.MatchEnd);
         AudioManager.aud.Play("punch", 0.8f, 1.2f);
         AudioManager.aud.Play("orchestraHitLong");
+
+        // Fade audience cheers, also stops flexing sounds.
+        AudioManager.aud.StartFade("cheer", 5.0f, 0.0f);
+        AudioManager.aud.Stop("flexing");
     }
 
     public void InitializeCursors()
@@ -409,6 +413,11 @@ public class GameManager : MonoBehaviour
         Physics.autoSimulation = false;
         HUDManager.hud.pausePanel.gameObject.SetActive(true);
         game.SetCursorControlMap(1);
+
+        // Fade audience cheers, also stops flexing sounds.
+        AudioManager.aud.StartFade("cheer", 3.0f, 0.0f);
+        AudioManager.aud.Stop("flexing");
+        AudioManager.aud.UpdatePauseMusic(true);
     }
 
     public static void UnpauseGame()
@@ -417,16 +426,22 @@ public class GameManager : MonoBehaviour
         Physics.autoSimulation = true;
         HUDManager.hud.pausePanel.gameObject.SetActive(false);
         game.SetPlayerControlMap();
+
+        AudioManager.aud.UpdatePauseMusic(false);
     }
 
     public static void RestartGame()
     {
         AppManager.app.SwitchToScene(Scenes.MAP_Demo_01);
+
+        AudioManager.aud.UpdatePauseMusic(false);
     }
 
     public static void ExitToMenu()
     {
         AppManager.app.SwitchToScene(Scenes.MENU_TempJoinScreen);
+
+        AudioManager.aud.UpdatePauseMusic(false);
     }
 
     private void ShuffleArray<T>(T[] array)

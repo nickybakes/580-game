@@ -259,4 +259,24 @@ public class AudioManager : MonoBehaviour
         voiceOverMixerGroup.audioMixer.SetFloat("VoiceOverVolume", Mathf.Log10(Mathf.Max((float)AppManager.app.audioSettings.announcer/10f, .0001f)) * 20);
         ambientMixerGroup.audioMixer.SetFloat("AmbientVolume", Mathf.Log10(Mathf.Max((float)AppManager.app.audioSettings.ambience/10f, .0001f)) * 20);
     }
+
+    /// <summary>
+    /// On pause, EQs music with a lowpass. On unpause, sets back to normal.
+    /// </summary>
+    /// <param name="isPausing"></param>
+    public void UpdatePauseMusic(bool isPausing)
+    {
+        if (isPausing)
+        {
+            musicMixerGroup.audioMixer.SetFloat("MusicLowpass", 2000f);
+            ambientMixerGroup.audioMixer.SetFloat("AmbientLowpass", 1000f);
+            voiceOverMixerGroup.audioMixer.SetFloat("VoiceOverLowpass", 5000f);
+        }
+        else
+        {
+            musicMixerGroup.audioMixer.SetFloat("MusicLowpass", 22000f);
+            ambientMixerGroup.audioMixer.SetFloat("AmbientLowpass", 22000f);
+            voiceOverMixerGroup.audioMixer.SetFloat("VoiceOverLowpass", 22000f);
+        }
+    }
 }
