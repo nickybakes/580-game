@@ -58,18 +58,16 @@ public class AttackAirDuration : BasicState
 
             // Play ground sound. Louder when moving faster.
             float vol = -status.movement.velocity.y / 100;
-            AudioManager.aud.Play("landing", vol / 2);
-            AudioManager.aud.Play("crunch", vol / 6);
+            AudioManager.aud.Play("landing", vol / 1.5f);
+            AudioManager.aud.Play("punch", vol);
 
             // If traveling fast enough downwards, shakes camera. Also adds debris sound.
             if (-status.movement.velocity.y > 50)
             {
                 CameraManager.cam.ShakeCamera(Mathf.Clamp01((-status.movement.velocity.y - 41f) / 70f) * .6f);
-                AudioManager.aud.Play("debris", vol / 3);
+                AudioManager.aud.Play("debris", vol / 6);
+                AudioManager.aud.Play("crunch", vol / 4);
             }
-            // Extra audio oompf for really big drops.
-            if (-status.movement.velocity.y > 70)
-                AudioManager.aud.Play("punch");
         }
     }
 }
