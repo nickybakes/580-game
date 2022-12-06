@@ -12,6 +12,8 @@ public class UIMatchResults : MonoBehaviour
 
     public GameObject playerStatsPrefab;
 
+    public GameObject buttons;
+
     public void Init(int winningPlayerNumber)
     {
         playerName.text = "Player " + winningPlayerNumber;
@@ -34,5 +36,16 @@ public class UIMatchResults : MonoBehaviour
             stats.Init(currentRank, status.playerNumber, (int)status.totalDamageDealt, status.totalEliminations, (int)status.totalDamageTaken);
             currentRank++;
         }
+
+        buttons.SetActive(false);
+
+        StartCoroutine(ShowButtons());
+    }
+
+    IEnumerator ShowButtons()
+    {
+        yield return new WaitForSeconds(3f);
+
+        buttons.SetActive(true);
     }
 }
