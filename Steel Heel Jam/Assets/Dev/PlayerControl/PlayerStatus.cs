@@ -606,7 +606,12 @@ public class PlayerStatus : MonoBehaviour
                 string soundToPlay = attackingPlayerStatus.combat.equippedItem.name;
                 // Remove '(clone)' from end of string. (Sounds in AudioManager named same as weapons)
                 soundToPlay = soundToPlay.Remove(soundToPlay.Length - 7);
-                AudioManager.aud.Play(soundToPlay);
+
+                // If the item is LeadPipe && is second hit, play "crit". Else play normally.
+                if (soundToPlay == "LeadPipe" && combo > 0)
+                    AudioManager.aud.Play("LeadPipeCrit");
+                else
+                    AudioManager.aud.Play(soundToPlay);
             }
 
             AudioManager.aud.StartFade("cheer", 1.0f, knockback / 20); // Based on knockback (NOT distance sent).
