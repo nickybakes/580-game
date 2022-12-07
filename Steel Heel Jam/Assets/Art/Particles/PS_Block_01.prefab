@@ -169,7 +169,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 5
+      scalar: 11.44
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -662,7 +662,7 @@ ParticleSystem:
     serializedVersion: 6
     enabled: 1
     type: 4
-    angle: 20
+    angle: 11.3
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
     radiusThickness: 1
@@ -748,7 +748,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 1
+      value: 1.2
       mode: 0
       spread: 0
       speed:
@@ -977,8 +977,8 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 3
-        scalar: 4
-        minScalar: 2
+        scalar: 3
+        minScalar: 1
         maxCurve:
           serializedVersion: 2
           m_Curve:
@@ -4041,7 +4041,7 @@ ParticleSystem:
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
-    minVertexDistance: 0.2
+    minVertexDistance: 0.1
     textureMode: 0
     ribbonCount: 1
     shadowBias: 0.5
@@ -4060,8 +4060,8 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 0.25244206, g: 0.25490198, b: 0, a: 1}
-        key1: {r: 1, g: 1, b: 0, a: 1}
+        key0: {r: 1, g: 0.88124543, b: 0.13679248, a: 1}
+        key1: {r: 1, g: 0.93983227, b: 0.47450984, a: 1}
         key2: {r: 1, g: 0.8352941, b: 0, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}
@@ -4089,7 +4089,7 @@ ParticleSystem:
         m_NumAlphaKeys: 2
       minGradient:
         serializedVersion: 2
-        key0: {r: 0.5377358, g: 0.5377358, b: 0, a: 1}
+        key0: {r: 0.7830189, g: 0.535685, b: 0, a: 1}
         key1: {r: 0.8962264, g: 0.8758706, b: 0.08877714, a: 1}
         key2: {r: 1, g: 1, b: 0, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 0}
@@ -4126,7 +4126,7 @@ ParticleSystem:
         m_Curve:
         - serializedVersion: 3
           time: 0
-          value: 1
+          value: 0.6307697
           inSlope: 0
           outSlope: 0
           tangentMode: 0
@@ -4177,7 +4177,7 @@ ParticleSystem:
       maxGradient:
         serializedVersion: 2
         key0: {r: 0.990566, g: 0.990566, b: 0.990566, a: 1}
-        key1: {r: 1, g: 0.51538396, b: 0, a: 1}
+        key1: {r: 1, g: 0.8520418, b: 0, a: 1}
         key2: {r: 1, g: 0.8352941, b: 0, a: 0}
         key3: {r: 0.33333334, g: 0.2784314, b: 1, a: 0}
         key4: {r: 1, g: 1, b: 1, a: 0}
