@@ -169,7 +169,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 20
+      scalar: 5
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -285,8 +285,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 1.8
-      minScalar: 0.8
+      scalar: 1.5
+      minScalar: 0.5
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -601,7 +601,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     randomizeRotationDirection: 0
-    maxNumParticles: 60
+    maxNumParticles: 30
     customEmitterVelocity: {x: 0, y: 0, z: 0}
     size3D: 0
     rotation3D: 0
@@ -661,8 +661,8 @@ ParticleSystem:
   ShapeModule:
     serializedVersion: 6
     enabled: 1
-    type: 10
-    angle: 0
+    type: 4
+    angle: 20
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
     radiusThickness: 1
@@ -746,9 +746,9 @@ ParticleSystem:
     m_TextureBilinearFiltering: 0
     randomDirectionAmount: 0
     sphericalDirectionAmount: 0
-    randomPositionAmount: 0.3
+    randomPositionAmount: 0
     radius:
-      value: 1.4
+      value: 1
       mode: 0
       spread: 0
       speed:
@@ -977,8 +977,8 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 3
-        scalar: 7
-        minScalar: 4
+        scalar: 4
+        minScalar: 2
         maxCurve:
           serializedVersion: 2
           m_Curve:
@@ -1042,18 +1042,18 @@ ParticleSystem:
         m_Curve:
         - serializedVersion: 3
           time: 0
-          value: 0.74528503
-          inSlope: 0.7068946
-          outSlope: 0.7068946
+          value: 0
+          inSlope: 0
+          outSlope: 1
           tangentMode: 0
           weightedMode: 0
           inWeight: 0.33333334
-          outWeight: 0.07562234
+          outWeight: 0.33333334
         - serializedVersion: 3
           time: 1
           value: 1
           inSlope: 1
-          outSlope: 1
+          outSlope: 0
           tangentMode: 0
           weightedMode: 0
           inWeight: 0.33333334
@@ -1813,8 +1813,8 @@ ParticleSystem:
     orbitalZ:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0
-      minScalar: 0
+      scalar: 30
+      minScalar: -30
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -1919,7 +1919,7 @@ ParticleSystem:
     orbitalOffsetY:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.88
+      scalar: 0
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -1972,7 +1972,7 @@ ParticleSystem:
     orbitalOffsetZ:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: 10
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -2025,7 +2025,7 @@ ParticleSystem:
     radial:
       serializedVersion: 2
       minMaxState: 0
-      scalar: -80
+      scalar: -1.94
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -4060,7 +4060,7 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 0.25490198, g: 0.243128, b: 0, a: 1}
+        key0: {r: 0.25244206, g: 0.25490198, b: 0, a: 1}
         key1: {r: 1, g: 1, b: 0, a: 1}
         key2: {r: 1, g: 0.8352941, b: 0, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 0}
@@ -4089,8 +4089,8 @@ ParticleSystem:
         m_NumAlphaKeys: 2
       minGradient:
         serializedVersion: 2
-        key0: {r: 0.25490198, g: 0.2519293, b: 0, a: 1}
-        key1: {r: 0.2631524, g: 0.26666668, b: 0, a: 1}
+        key0: {r: 0.5377358, g: 0.5377358, b: 0, a: 1}
+        key1: {r: 0.8962264, g: 0.8758706, b: 0.08877714, a: 1}
         key2: {r: 1, g: 1, b: 0, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}
@@ -4177,7 +4177,7 @@ ParticleSystem:
       maxGradient:
         serializedVersion: 2
         key0: {r: 0.990566, g: 0.990566, b: 0.990566, a: 1}
-        key1: {r: 1, g: 1, b: 0, a: 1}
+        key1: {r: 1, g: 0.51538396, b: 0, a: 1}
         key2: {r: 1, g: 0.8352941, b: 0, a: 0}
         key3: {r: 0.33333334, g: 0.2784314, b: 1, a: 0}
         key4: {r: 1, g: 1, b: 1, a: 0}
