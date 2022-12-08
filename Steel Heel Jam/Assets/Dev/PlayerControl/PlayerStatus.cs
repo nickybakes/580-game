@@ -608,7 +608,7 @@ public class PlayerStatus : MonoBehaviour
                 soundToPlay = soundToPlay.Remove(soundToPlay.Length - 7);
 
                 // If the item is LeadPipe && is second hit, play "crit". Else play normally.
-                if (soundToPlay == "LeadPipe" && combo > 0)
+                if (soundToPlay == "LeadPipe" && combo > 1)
                     AudioManager.aud.Play("LeadPipeCrit");
                 else
                     AudioManager.aud.Play(soundToPlay);
