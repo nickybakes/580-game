@@ -94,7 +94,20 @@ public class MenuManager : MonoBehaviour
 
     public void PlaySoundEffectsAdjust()
     {
-        AudioManager.aud.Play("SFX_Adjust");
+        string soundName = "SFX_Adjust_0";
+
+        float rng = Random.value;
+        if (rng > .7f)
+        {
+            if (Random.value > .5f)
+                soundName += "2";
+            else
+                soundName += "3";
+        }
+        else
+            soundName += "1";
+            
+        AudioManager.aud.Play(soundName);
     }
 
     public void SolidifyCharacterDisplay(int playerNumber)

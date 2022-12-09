@@ -149,14 +149,35 @@ MonoBehaviour:
     playOnAwake: 0
     source: {fileID: 0}
   - audioType: 1
-    name: SFX_Adjust
+    name: SFX_Adjust_01
     previousClip: -1
     clips:
     - {fileID: 8300000, guid: a5c9215836d3bcb449f34af312ac5ecf, type: 3}
     - {fileID: 8300000, guid: a5c9215836d3bcb449f34af312ac5ecf, type: 3}
     - {fileID: 8300000, guid: a5c9215836d3bcb449f34af312ac5ecf, type: 3}
-    - {fileID: 8300000, guid: 895eb40289c9fd148932c05dc2d45a54, type: 3}
     volume: 0.771
+    pitch: 1
+    loop: 0
+    randStartPos: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - audioType: 1
+    name: SFX_Adjust_02
+    previousClip: -1
+    clips:
+    - {fileID: 8300000, guid: 0fb4be2983db8254eb9763725a2bfb03, type: 3}
+    volume: 0.361
+    pitch: 1
+    loop: 0
+    randStartPos: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - audioType: 1
+    name: SFX_Adjust_03
+    previousClip: -1
+    clips:
+    - {fileID: 8300000, guid: db24964515fffd842baa2eac04250a79, type: 3}
+    volume: 0.317
     pitch: 1
     loop: 0
     randStartPos: 0
