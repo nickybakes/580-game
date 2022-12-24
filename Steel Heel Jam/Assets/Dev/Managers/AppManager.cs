@@ -19,6 +19,8 @@ public struct GameSettings
     public int buffsBeforeHeelFire;
     public bool fastRing;
 
+    public int botAmount;
+
     // Weapon Toggles
     public bool baseballBat;
     public bool boombox;
@@ -34,6 +36,7 @@ public struct GameSettings
         bool spotlight,
         int buffsBeforeHeelFire,
         bool fastRing,
+        int botAmount,
         bool baseballBat,
         bool boombox,
         bool boxingGlove,
@@ -48,7 +51,7 @@ public struct GameSettings
         this.spotlight = spotlight;
         this.buffsBeforeHeelFire = buffsBeforeHeelFire;
         this.fastRing = fastRing;
-
+        this.botAmount = botAmount;
         this.baseballBat = baseballBat;
         this.boombox = boombox;
         this.boxingGlove = boxingGlove;
@@ -123,6 +126,14 @@ public class AppManager : MonoBehaviour
         }
     }
 
+    public int RequestedPlayerAmount
+    {
+        get
+        {
+            return Mathf.Min(8, TokenAmount + gameSettings.botAmount);
+        }
+    }
+
     public PlayerToken[] playerTokens;
 
     // Start is called before the first frame update
@@ -134,7 +145,7 @@ public class AppManager : MonoBehaviour
 
         playerTokens = new PlayerToken[8];
 
-        gameSettings = new GameSettings(5, true, 2, false, true, true, true, true, true, true, true, true);
+        gameSettings = new GameSettings(5, true, 2, false, 8, true, true, true, true, true, true, true, true);
 
         audioSettings = new AudioSettings(10, 10, 10, 10, 10);
 

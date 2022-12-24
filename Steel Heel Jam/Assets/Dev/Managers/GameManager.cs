@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
 
     public GameObject playerPrefab;
 
+    public GameObject botControllerPrefab;
+
     public GameObject ringPrefab;
 
     public GameObject spotlightPrefab;
@@ -69,6 +71,7 @@ public class GameManager : MonoBehaviour
     public bool playersInvincible;
 
 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -82,7 +85,7 @@ public class GameManager : MonoBehaviour
         InitializeCursors();
         hudManager.cursorPanel.gameObject.SetActive(false);
 
-        if (AppManager.app.TokenAmount == 1)
+        if (AppManager.app.RequestedPlayerAmount == 1)
             playersInvincible = true;
 
 
@@ -193,7 +196,7 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
-        
+
 
         // Lower audience volume to min.
         AudioManager.aud.UpdateFade("cheer", -0.1f, 0.0f);
@@ -201,7 +204,7 @@ public class GameManager : MonoBehaviour
 
     public void SpawnPlayerPrefabs()
     {
-        Transform spawnPoints = gameSceneSettings.transform.GetChild(Mathf.Max(0, AppManager.app.TokenAmount - 2));
+        Transform spawnPoints = gameSceneSettings.transform.GetChild(Mathf.Max(0, AppManager.app.RequestedPlayerAmount - 2));
         spawnPoints.gameObject.SetActive(true);
         int[] spawnPointOrder = new int[spawnPoints.childCount];
 
@@ -224,6 +227,24 @@ public class GameManager : MonoBehaviour
                 GameObject player = Instantiate(playerPrefab, spawnPoints.GetChild(spawnPointOrder[j]).position, spawnPoints.GetChild(spawnPointOrder[j]).rotation);
                 PlayerStatus status = token.SetUpPlayerPrefab(player);
                 j++;
+
+                allPlayerStatuses.Add(status);
+                alivePlayerStatuses.Add(status);
+
+                hudManager.CreatePlayerHeader(status);
+            }
+            else
+            {
+                //spawn bot to fill in the player slots
+
+                GameObject player = Instantiate(playerPrefab, spawnPoints.GetChild(spawnPointOrder[j]).position, spawnPoints.GetChild(spawnPointOrder[j]).rotation);
+                PlayerStatus status = PlayerToken.SetUpBotPlayerPrefab(player, i + 1);
+                j++;
+
+                GameObject bot = Instantiate(botControllerPrefab);
+
+                BotController botController = bot.GetComponent<BotController>();
+                botController.Init(status);
 
                 allPlayerStatuses.Add(status);
                 alivePlayerStatuses.Add(status);

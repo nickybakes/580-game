@@ -69,6 +69,25 @@ public class PlayerToken : MonoBehaviour
         return cursorScript;
     }
 
+    public static PlayerStatus SetUpBotPlayerPrefab(GameObject player, int playerNumber)
+    {
+        PlayerStatus status = player.GetComponent<PlayerStatus>();
+
+        OutlineSketchUpdate outline = player.GetComponentInChildren<OutlineSketchUpdate>();
+
+        outline.SetPlayerNumberIndex(playerNumber);
+        outline.SetSkinTone(Random.Range(0, 16));
+
+        PlayerHairController hairController = player.GetComponentInChildren<PlayerHairController>();
+        hairController.SetHairPrefs(Random.Range(0, 7), Random.Range(0, 16), playerNumber);
+
+        player.GetComponentInChildren<PlayerRingDecal>().SetTint(playerNumber);
+
+        status.playerNumber = playerNumber;
+
+        return status;
+    }
+
     public PlayerStatus SetUpPlayerPrefab(GameObject player)
     {
         playerPrefabInputsComp = player.GetComponent<StarterAssetsInputs>();
