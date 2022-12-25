@@ -88,7 +88,6 @@ public class GameManager : MonoBehaviour
         if (AppManager.app.RequestedPlayerAmount == 1)
             playersInvincible = true;
 
-
         SpawnPlayerPrefabs();
         MoveAllPlayersToGround();
         SpawnRing();

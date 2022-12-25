@@ -35,7 +35,7 @@ public class BotController : MonoBehaviour
 
         transform.position = tr.position;
 
-
+        transform.parent = tr;
     }
 
     // Update is called once per frame
@@ -44,8 +44,16 @@ public class BotController : MonoBehaviour
         if (status.eliminated || GameManager.game.dontUpdateGameplay)
             return;
 
-        transform.position = tr.position;
+        MoveToDestination();
+    }
 
+    public void PickStrategy()
+    {
+
+    }
+
+    public void MoveToDestination()
+    {
         if (!pathCreated)
         {
             SetDestination(GameManager.game.alivePlayerStatuses[0].transform.position);
@@ -55,6 +63,12 @@ public class BotController : MonoBehaviour
 
         if (path == null)
             return;
+
+        if (currentCorner >= path.corners.Length || Vector3.SqrMagnitude(destination - tr.position) < 1.2f)
+        {
+            SetDestination(GameManager.game.alivePlayerStatuses[0].transform.position);
+            return;
+        }
 
         Vector3 desiredVelocity = path.corners[currentCorner] - tr.position;
 
@@ -68,11 +82,6 @@ public class BotController : MonoBehaviour
         if (Vector3.SqrMagnitude(path.corners[currentCorner] - tr.position) < 1.2f)
         {
             currentCorner++;
-            if (currentCorner >= path.corners.Length)
-            {
-                Debug.Log("Completed path");
-                SetDestination(GameManager.game.alivePlayerStatuses[0].transform.position);
-            }
         }
     }
 
@@ -80,6 +89,7 @@ public class BotController : MonoBehaviour
     {
         destination = position;
         path = new NavMeshPath();
+        //randomly chose to use jump paths or not
         NavMesh.CalculatePath(transform.position, destination, NavMesh.AllAreas, path);
         currentCorner = 0;
     }
