@@ -54,7 +54,7 @@ public class BotController : MonoBehaviour
         transform.parent = tr;
 
         forceStratPickTimer = new Timer(7);
-        chaseRemakePathTimer = new Timer(1.5f);
+        chaseRemakePathTimer = new Timer(1);
     }
 
     // Update is called once per frame
@@ -102,6 +102,7 @@ public class BotController : MonoBehaviour
         }
 
         SetStrategy(BotStrat.ChasePlayer);
+        forceStratPickTimer.Restart();
     }
 
     public void SetStrategy(BotStrat strat)

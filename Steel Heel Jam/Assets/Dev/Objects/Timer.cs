@@ -7,16 +7,19 @@ public class Timer
 
     private float originalMaxTime;
 
+    private float maxTimeRandomizeRangeDefault;
+
     public float maxTime;
 
     public float currentTime;
 
     public bool activated;
 
-    public Timer(float _maxTime, bool _activated = true)
+    public Timer(float _maxTime, float _maxTimeRandomizeRangeDefault = 0, bool _activated = true)
     {
         maxTime = _maxTime;
         originalMaxTime = _maxTime;
+        maxTimeRandomizeRangeDefault = _maxTimeRandomizeRangeDefault;
         activated = _activated;
     }
 
@@ -29,7 +32,7 @@ public class Timer
 
     public bool Done()
     {
-        return currentTime >= Time.deltaTime;
+        return currentTime >= maxTime;
     }
 
     /// <summary>
@@ -38,9 +41,10 @@ public class Timer
     /// <param name="maxTimeRandomizeRange">takes the original max time and alters it for the next cycle 
     /// by a random amount: maxTime + Random(-range, range)</param>
     /// <returns>returns true if the timer is done, false if not</returns>
-    public bool DoneLoop(float maxTimeRandomizeRange = 0)
+    public bool DoneLoop(float maxTimeRandomizeRange = -1)
     {
-        if (currentTime >= Time.deltaTime)
+        Update();
+        if (currentTime >= maxTime)
         {
             Restart(maxTimeRandomizeRange);
             return true;
@@ -53,9 +57,11 @@ public class Timer
         return currentTime / maxTime;
     }
 
-    public void Restart(float maxTimeRandomizeRange = 0)
+    public void Restart(float maxTimeRandomizeRange = -1)
     {
         currentTime = 0;
+        if (maxTimeRandomizeRange == -1)
+            maxTimeRandomizeRange = maxTimeRandomizeRangeDefault;
         maxTime = originalMaxTime + Random.Range(-maxTimeRandomizeRange, maxTimeRandomizeRange);
     }
 }
