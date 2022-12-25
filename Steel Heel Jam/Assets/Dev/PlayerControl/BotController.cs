@@ -3,6 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+public enum BotStrat
+{
+    ReturnToCircle,
+    ChasePlayer,
+    ChaseItem,
+
+}
+
 public class BotController : MonoBehaviour
 {
 
@@ -25,6 +33,14 @@ public class BotController : MonoBehaviour
 
     private bool pathCreated;
 
+    private BotStrat currentStrat;
+
+    private Transform playerToChase;
+
+    private Timer forceStratPickTimer;
+    private Timer chaseRemakePathTimer;
+
+
     public void Init(PlayerStatus _status)
     {
         status = _status;
@@ -36,6 +52,9 @@ public class BotController : MonoBehaviour
         transform.position = tr.position;
 
         transform.parent = tr;
+
+        forceStratPickTimer = new Timer(7);
+        chaseRemakePathTimer = new Timer(1.5f);
     }
 
     // Update is called once per frame
@@ -45,19 +64,68 @@ public class BotController : MonoBehaviour
             return;
 
         MoveToDestination();
+
+        if (forceStratPickTimer.DoneLoop())
+        {
+            PickStrategy();
+        }
+
+        switch (currentStrat)
+        {
+            case (BotStrat.ChasePlayer):
+                if (chaseRemakePathTimer.DoneLoop())
+                {
+                    SetDestination(playerToChase.position);
+                }
+                break;
+        }
+    }
+
+    public bool IsCompleteTask()
+    {
+        switch (currentStrat)
+        {
+            case (BotStrat.ReturnToCircle):
+                if (AtDestination())
+                    return true;
+                break;
+        }
+
+        return false;
     }
 
     public void PickStrategy()
     {
+        if (status.IsOOB && status.stamina / PlayerStatus.defaultMaxStamina < .3f)
+        {
+            SetStrategy(BotStrat.ReturnToCircle);
+        }
 
+        SetStrategy(BotStrat.ChasePlayer);
+    }
+
+    public void SetStrategy(BotStrat strat)
+    {
+        switch (strat)
+        {
+            case (BotStrat.ReturnToCircle):
+                SetDestination(GameManager.game.ringScript.tr.position);
+                break;
+
+            case (BotStrat.ChasePlayer):
+                playerToChase = GameManager.game.alivePlayerStatuses[Random.Range(0, GameManager.game.alivePlayerStatuses.Count)].transform;
+                SetDestination(playerToChase.position);
+                break;
+        }
+
+        currentStrat = strat;
     }
 
     public void MoveToDestination()
     {
         if (!pathCreated)
         {
-            SetDestination(GameManager.game.alivePlayerStatuses[0].transform.position);
-
+            PickStrategy();
             pathCreated = true;
         }
 
@@ -66,7 +134,7 @@ public class BotController : MonoBehaviour
 
         if (currentCorner >= path.corners.Length || Vector3.SqrMagnitude(destination - tr.position) < 1.2f)
         {
-            SetDestination(GameManager.game.alivePlayerStatuses[0].transform.position);
+            PickStrategy();
             return;
         }
 
@@ -83,6 +151,16 @@ public class BotController : MonoBehaviour
         {
             currentCorner++;
         }
+    }
+
+    public bool AtDestination(float squaredRadius = 1.2f)
+    {
+        if (currentCorner >= path.corners.Length || Vector3.SqrMagnitude(destination - tr.position) < 1.2f)
+        {
+            return true;
+        }
+
+        return false;
     }
 
     public void SetDestination(Vector3 position)
