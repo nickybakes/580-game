@@ -145,7 +145,7 @@ public class BotController : MonoBehaviour
 
         MoveToDestination();
 
-        if (checkForClosePlayerTimer.DoneLoop())
+        if (checkForClosePlayerTimer.DoneLoop() || (GameManager.game.alivePlayerStatuses.Count < 5 ? checkForClosePlayerTimer.DoneLoop() : false))
         {
             CheckForClosePlayer();
         }
@@ -406,27 +406,32 @@ public class BotController : MonoBehaviour
             distanceToPlayerToChase = Vector3.SqrMagnitude(playerToChase.GetTransform.position - transform.position);
         }
 
+        float higherAttackPossibility = 0;
 
-        if (possibleStrats[(int)BotStrat.DoubleJump] && playerToChase != null && distanceToPlayerToChase < 36 && (status.buffs[(int)Buff.TopRopes] && Random.value > .4f))
+        if(GameManager.game.alivePlayerStatuses.Count < 5 && GameManager.game.alivePlayerStatuses.Count > 1)
+        higherAttackPossibility = .15f;
+
+
+        if (possibleStrats[(int)BotStrat.DoubleJump] && playerToChase != null && distanceToPlayerToChase < 36 && (status.buffs[(int)Buff.TopRopes] && Random.value > .4f - higherAttackPossibility))
         {
             SetStrategy(BotStrat.DoubleJump);
             return;
         }
 
-        if (possibleStrats[(int)BotStrat.Block] && playerToChase != null && distanceToPlayerToChase < 26 && (status.buffs[(int)Buff.MachoBlock] && Random.value > .77f))
+        if (possibleStrats[(int)BotStrat.Block] && playerToChase != null && distanceToPlayerToChase < 26 && (status.buffs[(int)Buff.MachoBlock] && Random.value > .7f - higherAttackPossibility))
         {
             SetStrategy(BotStrat.Block);
             return;
         }
 
-        if (possibleStrats[(int)BotStrat.Suplex] && playerToChase != null && distanceToPlayerToChase < 30 && Random.value > .4f)
+        if (possibleStrats[(int)BotStrat.Suplex] && playerToChase != null && distanceToPlayerToChase < 30 && Random.value > .4f - (higherAttackPossibility * .5))
         {
             SetStrategy(BotStrat.Suplex);
             return;
         }
 
 
-        if (possibleStrats[(int)BotStrat.Attack] && playerToChase != null && distanceToPlayerToChase < 26 && Random.value > .2f)
+        if (possibleStrats[(int)BotStrat.Attack] && playerToChase != null && distanceToPlayerToChase < 26 && Random.value > .2f - higherAttackPossibility)
         {
             SetStrategy(BotStrat.Attack);
             return;
@@ -686,7 +691,7 @@ public class BotController : MonoBehaviour
             if (p.playerNumber != status.playerNumber)
             {
                 float distance = Vector3.SqrMagnitude(p.GetTransform.position - transform.position);
-                if (distance < closestDistance && distance < 16)
+                if (distance < closestDistance && distance < (GameManager.game.alivePlayerStatuses.Count < 5 ? 60 : 36))
                 {
                     closestPlayer = p;
                     closestDistance = distance;
