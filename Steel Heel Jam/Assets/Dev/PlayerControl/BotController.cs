@@ -16,7 +16,7 @@ public enum BotStrat
     ThrowItem,
     ChaseSpotlight,
     Flex,
-    GoToElbowDropSpot,
+    DoubleJump,
     DoElbowDrop,
     Idle,
     ForceUnStuck,
@@ -27,7 +27,7 @@ public class BotController : MonoBehaviour
 {
 
     public static readonly bool[] allPossibleStrats = { true, true, true, true, true, true, true, true, true, true, true, true, true, true };
-    public static readonly bool[] allAttackStrats = { true, false, true, true, true, true, false, false, false, false, false, false, false, false };
+    public static readonly bool[] allAttackStrats = { true, false, true, true, true, true, false, false, false, false, false, true, false, false };
     public static readonly bool[] noItemStrats = { true, true, true, true, true, true, false, false, false, true, true, true, true, true };
 
     private PlayerStatus status;
@@ -66,11 +66,13 @@ public class BotController : MonoBehaviour
     private Timer idleTimer;
     private Timer flexTimer;
     private Timer throwTimer;
+    private Timer doubleJumpTimer;
 
     private Timer idleCooldownTimer;
 
     private Timer checkForClosePlayerTimer;
     private Timer checkForCloseItemTimer;
+    private Timer forceItemPickupCooldownTimer;
 
     private Vector3 previousPosition;
 
@@ -101,12 +103,14 @@ public class BotController : MonoBehaviour
         idleTimer = new Timer(.75f, .5f);
         idleCooldownTimer = new Timer(6, 2);
         flexTimer = new Timer(2.5f, 2);
-        throwTimer = new Timer(.75f, .7f);
+        throwTimer = new Timer(.75f, .5f);
+        doubleJumpTimer = new Timer(1f, .25f);
         checkForClosePlayerTimer = new Timer(1.5f, 1f);
         checkForCloseItemTimer = new Timer(4, 1.5f);
+        forceItemPickupCooldownTimer = new Timer(3, 1f);
 
         stuckTimer = new Timer(2.5f);
-        forceUnstuckTimer = new Timer(2);
+        forceUnstuckTimer = new Timer(1.5f);
 
         previousPosition = transform.position;
     }
@@ -151,6 +155,18 @@ public class BotController : MonoBehaviour
             if (Random.value > (status.combat.equippedItem != null ? .5 : 0))
             {
                 SetStrategy(BotStrat.ChaseItem);
+            }
+        }
+
+        forceItemPickupCooldownTimer.Update();
+
+        if (status.combat.NumberOfItemsWithinRange != 0)
+        {
+            if (forceItemPickupCooldownTimer.Done())
+            {
+                forceItemPickupCooldownTimer.Restart();
+                if (status.combat.equippedItem == null || Random.value > .5f)
+                    SetStrategy(BotStrat.PickupItem);
             }
         }
 
@@ -273,7 +289,11 @@ public class BotController : MonoBehaviour
                 break;
 
             case (BotStrat.ChaseItem):
-                if (transformToChase == null || !transformToChase.gameObject.activeSelf || AtDestination())
+                if (transformToChase == null || !transformToChase.gameObject.activeSelf)
+                {
+                    return true;
+                }
+                if (AtDestination())
                 {
                     SetStrategy(BotStrat.PickupItem);
                 }
@@ -291,6 +311,15 @@ public class BotController : MonoBehaviour
                 {
                     return true;
                 }
+                break;
+
+            case (BotStrat.DoubleJump):
+                if (doubleJumpTimer.DoneLoop())
+                {
+                    SetStrategy(BotStrat.Attack);
+                }
+                if (doubleJumpTimer.currentTime > .5f)
+                    inputs.JumpInput(true);
                 break;
 
             case (BotStrat.ChaseSpotlight):
@@ -377,6 +406,19 @@ public class BotController : MonoBehaviour
             distanceToPlayerToChase = Vector3.SqrMagnitude(playerToChase.GetTransform.position - transform.position);
         }
 
+
+        if (possibleStrats[(int)BotStrat.DoubleJump] && playerToChase != null && distanceToPlayerToChase < 36 && (status.buffs[(int)Buff.TopRopes] && Random.value > .4f))
+        {
+            SetStrategy(BotStrat.DoubleJump);
+            return;
+        }
+
+        if (possibleStrats[(int)BotStrat.Block] && playerToChase != null && distanceToPlayerToChase < 26 && (status.buffs[(int)Buff.MachoBlock] && Random.value > .77f))
+        {
+            SetStrategy(BotStrat.Block);
+            return;
+        }
+
         if (possibleStrats[(int)BotStrat.Suplex] && playerToChase != null && distanceToPlayerToChase < 30 && Random.value > .4f)
         {
             SetStrategy(BotStrat.Suplex);
@@ -384,13 +426,13 @@ public class BotController : MonoBehaviour
         }
 
 
-        if (possibleStrats[(int)BotStrat.Attack] && playerToChase != null && distanceToPlayerToChase < 20 && Random.value > .3f)
+        if (possibleStrats[(int)BotStrat.Attack] && playerToChase != null && distanceToPlayerToChase < 26 && Random.value > .2f)
         {
             SetStrategy(BotStrat.Attack);
             return;
         }
 
-        if (possibleStrats[(int)BotStrat.Block] && playerToChase != null && distanceToPlayerToChase < 26 && ((playerToChase.CurrentPlayerState is AttackGroundStartup && Random.value > .3f) || Random.value > .2f))
+        if ((possibleStrats[(int)BotStrat.Block] || possibleStrats[(int)BotStrat.DodgeRoll]) && playerToChase != null && distanceToPlayerToChase < 26 && ((playerToChase.CurrentPlayerState is AttackGroundStartup && Random.value > .3f) || Random.value > .2f))
         {
             if (Random.value > .5f - (status.buffs[(int)Buff.MachoBlock] ? .2f : 0))
             {
@@ -534,6 +576,10 @@ public class BotController : MonoBehaviour
                 inputs.PickUpInput(true);
                 break;
 
+            case (BotStrat.DoubleJump):
+                inputs.JumpInput(true);
+                break;
+
             case (BotStrat.Idle):
                 path = null;
                 idleCooldownTimer.Restart();
@@ -562,7 +608,10 @@ public class BotController : MonoBehaviour
 
         Vector3 desiredVelocity = path.corners[currentCorner] - tr.position;
 
-        if (desiredVelocity.y > 0)
+        float topDownDistance = Vector2.SqrMagnitude(new Vector2(path.corners[currentCorner].x - tr.position.x, path.corners[currentCorner].z - tr.position.z));
+
+
+        if (desiredVelocity.y > 0 && topDownDistance < 7)
         {
             inputs.JumpInput(true);
         }

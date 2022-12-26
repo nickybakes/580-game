@@ -59,7 +59,7 @@ public class ImpactStun : BasicState
     {
         base.Update(status);
 
-        if (moveVictimWithAttacker && attackingPlayer != null && (attackingPlayer.CurrentPlayerState is AttackGroundDuration || attackingPlayer.CurrentPlayerState is AttackGroundRecovery))
+        if (moveVictimWithAttacker && attackingPlayer != null)
             status.movement.velocity = attackingPlayer.movement.velocity;
         else
             status.movement.velocity = Vector3.zero;

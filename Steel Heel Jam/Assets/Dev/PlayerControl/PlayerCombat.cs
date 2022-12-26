@@ -16,7 +16,6 @@ public class PlayerCombat : MonoBehaviour
     [HideInInspector]
     public GrabHitbox grabHitbox;
 
-    private PickUpSphere _pickUpSphereScript;
 
     public DefaultState weaponState;
     private float timeHeld;
@@ -31,12 +30,19 @@ public class PlayerCombat : MonoBehaviour
 
     public GameObject equippedItem;
 
-    private GameManager gameManager;
 
     // -1 = 360 deg arc, 0 = 180 degree arc, 0.5 = 90 deg...
     [SerializeField]
     [Range(-1, 1)]
     private float targetAngle = 0.5f;
+
+    public int NumberOfItemsWithinRange
+    {
+        get
+        {
+            return _pickUpSphere.ItemCount;
+        }
+    }
 
     /// <summary>
     /// A boolean that represents if the player has attacked recently.
@@ -71,17 +77,11 @@ public class PlayerCombat : MonoBehaviour
     // Start is called before the first frame update
     public void Start()
     {
-        gameManager = FindObjectOfType<GameManager>();
-
         _input = GetComponent<StarterAssetsInputs>();
         _hitbox = transform.GetChild((int)PlayerChild.Hitbox).gameObject;
 
         _pickUpSphere = GetComponentInChildren<PickUpSphere>();
         grabHitbox = GetComponentInChildren<GrabHitbox>(true); // Set true for inactive objects.
-
-        _pickUpSphereScript = transform
-            .GetChild((int)PlayerChild.PickUpSphere)
-            .gameObject.GetComponent<PickUpSphere>();
 
         _status = GetComponent<PlayerStatus>();
 
@@ -369,7 +369,7 @@ public class PlayerCombat : MonoBehaviour
         List<PlayerStatus> potentialTargets = new List<PlayerStatus>();
 
         // Grab all players. (gameManager does this)
-        foreach (PlayerStatus s in gameManager.alivePlayerStatuses)
+        foreach (PlayerStatus s in GameManager.game.alivePlayerStatuses)
         {
             Vector3 vectorToCollider = (
                 s.transform.position - _status.transform.position

@@ -10,6 +10,14 @@ public class PickUpSphere : MonoBehaviour
 
     private List<GameObject> itemsWithinBounds;
 
+    public int ItemCount
+    {
+        get
+        {
+            return itemsWithinBounds.Count;
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
