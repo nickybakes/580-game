@@ -20,6 +20,7 @@ public struct GameSettings
     public bool fastRing;
 
     public int botAmount;
+    public bool botsOnly;
 
     // Weapon Toggles
     public bool baseballBat;
@@ -37,6 +38,7 @@ public struct GameSettings
         int buffsBeforeHeelFire,
         bool fastRing,
         int botAmount,
+        bool botsOnly,
         bool baseballBat,
         bool boombox,
         bool boxingGlove,
@@ -52,6 +54,7 @@ public struct GameSettings
         this.buffsBeforeHeelFire = buffsBeforeHeelFire;
         this.fastRing = fastRing;
         this.botAmount = botAmount;
+        this.botsOnly = botsOnly;
         this.baseballBat = baseballBat;
         this.boombox = boombox;
         this.boxingGlove = boxingGlove;
@@ -145,7 +148,7 @@ public class AppManager : MonoBehaviour
 
         playerTokens = new PlayerToken[8];
 
-        gameSettings = new GameSettings(5, true, 2, false, 8, true, true, true, true, true, true, true, true);
+        gameSettings = new GameSettings(5, true, 2, false, 0, false, true, true, true, true, true, true, true, true);
 
         audioSettings = new AudioSettings(10, 10, 10, 10, 10);
 

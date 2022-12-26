@@ -12,6 +12,7 @@ public class ItemPickUp : BasicState
         updateMovement = true;
         alternateFriction = true;
         animationState = AnimationState.Pickup_01;
+        botPickStrategyOnExit = true;
 
         stateToChangeTo = new Idle();
     }

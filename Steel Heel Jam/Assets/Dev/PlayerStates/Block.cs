@@ -15,6 +15,7 @@ public class Block : BasicState
         updateMovement = true;
         countBlockCooldown = false;
         stateToChangeTo = new BlockRecovery();
+        botPickStrategyOnExit = true;
 
         animationState = AnimationState.Block;
         visual = VisualChild.Block;

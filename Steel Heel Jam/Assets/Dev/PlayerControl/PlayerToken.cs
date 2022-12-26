@@ -69,17 +69,17 @@ public class PlayerToken : MonoBehaviour
         return cursorScript;
     }
 
-    public static PlayerStatus SetUpBotPlayerPrefab(GameObject player, int playerNumber)
+    public static PlayerStatus SetUpBotPlayerPrefab(GameObject player, int playerNumber, CharacterVisualPrefs botVisualPrefs)
     {
         PlayerStatus status = player.GetComponent<PlayerStatus>();
 
         OutlineSketchUpdate outline = player.GetComponentInChildren<OutlineSketchUpdate>();
 
         outline.SetPlayerNumberIndex(playerNumber);
-        outline.SetSkinTone(Random.Range(0, 16));
+        outline.SetSkinTone(botVisualPrefs.skinToneIndex);
 
         PlayerHairController hairController = player.GetComponentInChildren<PlayerHairController>();
-        hairController.SetHairPrefs(Random.Range(0, 7), Random.Range(0, 16), playerNumber);
+        hairController.SetHairPrefs(botVisualPrefs.hairStyleIndex, botVisualPrefs.hairColorIndex, playerNumber);
 
         player.GetComponentInChildren<PlayerRingDecal>().SetTint(playerNumber);
 
@@ -114,6 +114,14 @@ public class PlayerToken : MonoBehaviour
     public void OnPause(InputValue value)
     {
         playerPrefabInputsComp.OnPause(value);
+    }
+
+    public void OnSpectatorPause(InputValue value)
+    {
+        if (value.isPressed)
+        {
+            GameManager.PauseGame();
+        }
     }
 
     public void OnDebugRestartGame(InputValue value)

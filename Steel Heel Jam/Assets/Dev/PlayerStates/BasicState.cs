@@ -123,6 +123,8 @@ public class BasicState
 
     public VisualChild visual = VisualChild.None;
 
+    public bool botPickStrategyOnExit = false;
+
     public BasicState()
     {
         //if we need to set anything up for states to work, we can do it here
@@ -158,7 +160,8 @@ public class BasicState
     /// <param name="nextState">the state to come after this one</param>
     public virtual void OnExitThisState(BasicState nextState, PlayerStatus status)
     {
-
+        if (botPickStrategyOnExit)
+            status.PickBotStrategy();
     }
 
 

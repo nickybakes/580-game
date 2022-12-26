@@ -49,6 +49,10 @@ public class ImpactStun : BasicState
                 AnnouncerManager.PlayLine("elbowDrop", Priority.ElbowDrop);
             }
         }
+        if (moveVictimWithAttacker && attackingPlayer != null)
+        {
+            updateMovement = true;
+        }
     }
 
     public override void Update(PlayerStatus status)

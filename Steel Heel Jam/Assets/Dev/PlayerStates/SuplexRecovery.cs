@@ -17,5 +17,6 @@ public class SuplexRecovery : BasicState
         visual = VisualChild.Recovery;
         animationState = AnimationState.SuplexRecovery_01;
         stateToChangeTo = new Idle();
+        botPickStrategyOnExit = true;
     }
 }

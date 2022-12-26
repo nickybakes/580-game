@@ -245,6 +245,16 @@ public class MenuManager : MonoBehaviour
         setting.value = AppManager.app.gameSettings.fastRing;
         setting.UpdateImage();
     }
+    public void LoadBotAmount(MenuNumberInput setting)
+    {
+        setting.value = AppManager.app.gameSettings.botAmount;
+        setting.UpdateValueText();
+    }
+    public void LoadBotsOnly(MenuToggle setting)
+    {
+        setting.value = AppManager.app.gameSettings.botsOnly;
+        setting.UpdateImage();
+    }
     public void LoadBaseballBat(MenuToggle setting)
     {
         setting.value = AppManager.app.gameSettings.baseballBat;
@@ -300,6 +310,14 @@ public class MenuManager : MonoBehaviour
     public void ToggleFastRing(bool value)
     {
         AppManager.app.gameSettings.fastRing = value;
+    }
+    public void ChangeBotAmount(int value)
+    {
+        AppManager.app.gameSettings.botAmount = value;
+    }
+    public void ToggleBotsOnly(bool value)
+    {
+        AppManager.app.gameSettings.botsOnly = value;
     }
     public void ToggleBaseballBat(bool value)
     {

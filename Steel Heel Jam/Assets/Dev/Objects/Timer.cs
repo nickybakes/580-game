@@ -57,11 +57,13 @@ public class Timer
         return currentTime / maxTime;
     }
 
-    public void Restart(float maxTimeRandomizeRange = -1)
+    public void Restart(float maxTimeRandomizeRange = -1, float setMaxTime = -1)
     {
         currentTime = 0;
         if (maxTimeRandomizeRange == -1)
             maxTimeRandomizeRange = maxTimeRandomizeRangeDefault;
-        maxTime = originalMaxTime + Random.Range(-maxTimeRandomizeRange, maxTimeRandomizeRange);
+        if (setMaxTime == -1)
+            setMaxTime = originalMaxTime;
+        maxTime = setMaxTime + Random.Range(-maxTimeRandomizeRange, maxTimeRandomizeRange);
     }
 }

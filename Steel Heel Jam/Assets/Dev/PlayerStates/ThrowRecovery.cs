@@ -16,6 +16,7 @@ public class ThrowRecovery : BasicState
         moveSpeedMultiplier = 0.1f;
         countDodgeRollCooldown = false;
         visual = VisualChild.Recovery;
+        botPickStrategyOnExit = true;
 
         animationState = AnimationState.Throw_01;
         stateToChangeTo = new Idle();
