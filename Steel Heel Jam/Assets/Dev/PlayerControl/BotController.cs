@@ -199,7 +199,8 @@ public class BotController : MonoBehaviour
                 break;
 
             case (BotStrat.ThrowItem):
-                inputs.MoveInput(new Vector2(transformToChase.position.x - transform.position.x, transformToChase.position.z - transform.position.z));
+                if (transformToChase != null)
+                    inputs.MoveInput(new Vector2(transformToChase.position.x - transform.position.x, transformToChase.position.z - transform.position.z));
                 break;
 
             case (BotStrat.Attack):
@@ -408,8 +409,8 @@ public class BotController : MonoBehaviour
 
         float higherAttackPossibility = 0;
 
-        if(GameManager.game.alivePlayerStatuses.Count < 5 && GameManager.game.alivePlayerStatuses.Count > 1)
-        higherAttackPossibility = .15f;
+        if (GameManager.game.alivePlayerStatuses.Count < 5 && GameManager.game.alivePlayerStatuses.Count > 1)
+            higherAttackPossibility = .15f;
 
 
         if (possibleStrats[(int)BotStrat.DoubleJump] && playerToChase != null && distanceToPlayerToChase < 36 && (status.buffs[(int)Buff.TopRopes] && Random.value > .4f - higherAttackPossibility))
