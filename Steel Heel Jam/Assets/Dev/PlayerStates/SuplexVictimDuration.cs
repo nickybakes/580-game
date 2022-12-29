@@ -6,7 +6,7 @@ public class SuplexVictimDuration : BasicState
 {
     public SuplexVictimDuration()
     {
-        timeToChangeState = 7.5f; // Until parent grounded.
+        timeToChangeState = 6; // Until parent grounded.
         canPlayerControlMove = false;
         canPlayerControlRotate = false;
         canAttack = false;
