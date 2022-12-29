@@ -49,6 +49,9 @@ public class PickUpSphere : MonoBehaviour
 
         GameObject g = itemsWithinBounds[0];
 
+        if (g == null)
+            return;
+
         Item itemScript = g.GetComponent<Item>();
         switch (itemScript.itemType)
         {
