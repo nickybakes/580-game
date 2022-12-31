@@ -715,6 +715,7 @@ public class PlayerStatus : MonoBehaviour
         }
         AudioManager.aud.Play("orchestraHitPowerup");
         CameraManager.cam.ShakeCamera(.5f);
+        PickBotStrategy();
     }
 
     /// <summary>
