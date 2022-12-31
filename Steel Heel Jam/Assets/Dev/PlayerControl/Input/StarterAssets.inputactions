@@ -1117,6 +1117,56 @@
                     "isPartOfComposite": true
                 }
             ]
+        },
+        {
+            "name": "Spectator",
+            "id": "001810d2-5007-4864-8365-7cf2f91fa7cb",
+            "actions": [
+                {
+                    "name": "SpectatorPause",
+                    "type": "Button",
+                    "id": "206d447c-ed99-49d9-b973-184aa445a2de",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "96570c88-7fb4-4285-a33f-173d250c2c1e",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMouse",
+                    "action": "SpectatorPause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8efafaeb-0818-49df-a87e-ad96f5828f44",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "SpectatorPause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4f9eafa4-1423-47b4-9042-22ad4e8cb9df",
+                    "path": "<HID::Logitech Logitech Dual Action>/button10",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Joystick",
+                    "action": "SpectatorPause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [

@@ -78,6 +78,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Metalness_Map:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _Normal:
         m_Texture: {fileID: 2800000, guid: 6dee6e34ed0cb0848a8c732319b814b6, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -112,6 +116,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _AOness: 1
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -134,10 +139,12 @@ Material:
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _Roughness: 0.5
+    - _Roughness_Add: 0
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
+    - _Strength: 1
     - _Surface: 0
     - _WorkflowMode: 1
     - _ZWrite: 1

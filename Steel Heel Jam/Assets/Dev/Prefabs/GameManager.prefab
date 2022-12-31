@@ -44,10 +44,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dfa4075e8415464b8abff914228c150, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioManager: {fileID: 2728357844220918305, guid: f99391197842e964cac0f27d985cd793,
-    type: 3}
   gameSceneSettings: {fileID: 0}
   playerPrefab: {fileID: 1777015905490208814, guid: 0b9ee7085df612341ad6df4227583f65,
+    type: 3}
+  botControllerPrefab: {fileID: 4695164831148135103, guid: c7cc3912cad668e4ca908cb977d923de,
     type: 3}
   ringPrefab: {fileID: 5454069359185126400, guid: ffa75000cf828834c8dbe66e30049f93,
     type: 3}
@@ -57,6 +57,7 @@ MonoBehaviour:
   itemManager: {fileID: 0}
   cameraManager: {fileID: 0}
   introSequenceManager: {fileID: 0}
+  matchResultsView: {fileID: 0}
   ringScript: {fileID: 0}
   allPlayerStatuses: []
   alivePlayerStatuses: []
@@ -71,3 +72,4 @@ MonoBehaviour:
   spotlightRespawnCooldownMax: 0
   spotlightRespawnCooldown: 0
   dontUpdateGameplay: 1
+  playersInvincible: 0

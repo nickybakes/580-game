@@ -17,6 +17,7 @@ public class DodgeRoll : BasicState
         extraFallGravityMultiplier = .8f;
         countDodgeRollCooldown = false;
         isInvincibleToAttacks = true;
+        botPickStrategyOnExit = true;
 
         visual = VisualChild.DodgeRoll;
 

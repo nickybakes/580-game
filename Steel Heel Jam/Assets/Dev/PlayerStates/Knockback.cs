@@ -24,6 +24,7 @@ public class Knockback : BasicState
         animationState = AnimationState.Knockback;
         visual = VisualChild.Knockback;
         stateToChangeTo = new Idle();
+        botPickStrategyOnExit = true;
 
         velocity = _velocity;
     }

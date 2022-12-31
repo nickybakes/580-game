@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ItemManager : MonoBehaviour
 {
+    public static ItemManager itemManager;
     public List<GameObject> itemsOnGround;
     public List<GameObject> itemsToSpawn = new List<GameObject>();
     float spawnTimer;
@@ -13,6 +14,8 @@ public class ItemManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        itemManager = this;
+
         spawnTimer = 0f;
         spawnTimerMax = 5f;
         //spawnTimerMax = 1f;
@@ -36,6 +39,13 @@ public class ItemManager : MonoBehaviour
         foreach (GameObject item in itemsToDisable)
         {
             itemsToSpawn.Remove(item);
+        }
+
+        ItemTrajectory[] itemsStartingOnGround = FindObjectsOfType<ItemTrajectory>();
+        itemsOnGround = new List<GameObject>();
+        foreach (ItemTrajectory item in itemsStartingOnGround)
+        {
+            itemsOnGround.Add(item.gameObject);
         }
     }
 

@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
 
     public GameObject playerPrefab;
 
+    public GameObject botControllerPrefab;
+
     public GameObject ringPrefab;
 
     public GameObject spotlightPrefab;
@@ -68,6 +70,9 @@ public class GameManager : MonoBehaviour
     [HideInInspector]
     public bool playersInvincible;
 
+    public CharacterVisualPrefs[] botVisualPrefs;
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -82,9 +87,8 @@ public class GameManager : MonoBehaviour
         InitializeCursors();
         hudManager.cursorPanel.gameObject.SetActive(false);
 
-        if (AppManager.app.TokenAmount == 1)
+        if (AppManager.app.RequestedPlayerAmount == 1)
             playersInvincible = true;
-
 
         SpawnPlayerPrefabs();
         MoveAllPlayersToGround();
@@ -193,7 +197,7 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
-        
+
 
         // Lower audience volume to min.
         AudioManager.aud.UpdateFade("cheer", -0.1f, 0.0f);
@@ -201,7 +205,7 @@ public class GameManager : MonoBehaviour
 
     public void SpawnPlayerPrefabs()
     {
-        Transform spawnPoints = gameSceneSettings.transform.GetChild(Mathf.Max(0, AppManager.app.TokenAmount - 2));
+        Transform spawnPoints = gameSceneSettings.transform.GetChild(Mathf.Max(0, AppManager.app.RequestedPlayerAmount - 2));
         spawnPoints.gameObject.SetActive(true);
         int[] spawnPointOrder = new int[spawnPoints.childCount];
 
@@ -214,9 +218,15 @@ public class GameManager : MonoBehaviour
 
         int j = 0;
 
+        int botsAdded = 0;
+
+        int botAmountToAdd = AppManager.app.gameSettings.botsOnly ? Mathf.Max(AppManager.app.gameSettings.botAmount, 1) : AppManager.app.gameSettings.botAmount;
+
+        botVisualPrefs = new CharacterVisualPrefs[AppManager.app.RequestedPlayerAmount];
+
         for (int i = 0; i < AppManager.app.playerTokens.Length; i++)
         {
-            if (AppManager.app.playerTokens[i] != null)
+            if (AppManager.app.playerTokens[i] != null && !AppManager.app.gameSettings.botsOnly)
             {
                 PlayerToken token = AppManager.app.playerTokens[i];
                 token.input.SwitchCurrentActionMap("Player");
@@ -229,6 +239,35 @@ public class GameManager : MonoBehaviour
                 alivePlayerStatuses.Add(status);
 
                 hudManager.CreatePlayerHeader(status);
+            }
+            else if (botsAdded < botAmountToAdd)
+            {
+                //spawn bot to fill in the player slots
+                CharacterVisualPrefs visualPrefs = new CharacterVisualPrefs(Random.Range(0, 16), Random.Range(0, 7), Random.Range(0, 16));
+
+                GameObject player = Instantiate(playerPrefab, spawnPoints.GetChild(spawnPointOrder[j]).position, spawnPoints.GetChild(spawnPointOrder[j]).rotation);
+                PlayerStatus status = PlayerToken.SetUpBotPlayerPrefab(player, i + 1, visualPrefs);
+                j++;
+
+                botVisualPrefs[i] = visualPrefs;
+
+                GameObject bot = Instantiate(botControllerPrefab);
+
+                BotController botController = bot.GetComponent<BotController>();
+                botController.Init(status);
+
+                status.botController = botController;
+
+                allPlayerStatuses.Add(status);
+                alivePlayerStatuses.Add(status);
+
+                hudManager.CreatePlayerHeader(status);
+                botsAdded++;
+            }
+
+            if (AppManager.app.playerTokens[i] != null && AppManager.app.gameSettings.botsOnly)
+            {
+                AppManager.app.playerTokens[i].input.SwitchCurrentActionMap("Spectator");
             }
         }
     }
@@ -266,6 +305,36 @@ public class GameManager : MonoBehaviour
         }
 
         return status;
+    }
+
+    public PlayerStatus GetRandomAlivePlayerButNotThisOne(PlayerStatus notThisStatus)
+    {
+        int index = Random.Range(0, game.alivePlayerStatuses.Count);
+        PlayerStatus status = game.alivePlayerStatuses[index];
+        if (status.playerNumber == notThisStatus.playerNumber)
+        {
+            if (index == game.alivePlayerStatuses.Count - 1)
+            {
+                status = game.alivePlayerStatuses[0];
+            }
+            else
+            {
+                index++;
+                status = game.alivePlayerStatuses[index];
+            }
+        }
+        return status;
+    }
+
+    public bool PositionInsideRing(Vector3 position)
+    {
+        Vector2 ringPos = new Vector2(ringScript.tr.position.x, ringScript.tr.position.z);
+        Vector2 pos = new Vector2(position.x, position.z);
+        if (Vector2.SqrMagnitude(ringPos - pos) < Mathf.Pow(ringScript.tr.localScale.x, 2))
+        {
+            return true;
+        }
+        return false;
     }
 
     public void EliminatePlayer(PlayerStatus status)
@@ -342,7 +411,16 @@ public class GameManager : MonoBehaviour
 
         MenuCharacterDisplay characterDisplay = matchResultsView.GetComponentInChildren<MenuCharacterDisplay>();
         characterDisplay.playerNumber = alivePlayerStatuses[0].playerNumber;
-        characterDisplay.Init();
+        if (alivePlayerStatuses[0].botController == null)
+        {
+            characterDisplay.Init();
+        }
+        else
+        {
+            characterDisplay.Init();
+            characterDisplay.SetVisualPrefs(botVisualPrefs[alivePlayerStatuses[0].playerNumber - 1]);
+            characterDisplay.SolidDisplay();
+        }
 
         // Plays MatchEnd VO.
         AnnouncerManager.PlayLine("MatchEnd", Priority.MatchEnd);
@@ -396,9 +474,16 @@ public class GameManager : MonoBehaviour
         {
             if (token != null)
             {
-                token.input.SwitchCurrentActionMap("Player");
-                token.playerPrefabInputsComp.Jump = false;
-                token.playerPrefabInputsComp.jumpFrameDisable = 0;
+                if (!AppManager.app.gameSettings.botsOnly)
+                {
+                    token.input.SwitchCurrentActionMap("Player");
+                    token.playerPrefabInputsComp.Jump = false;
+                    token.playerPrefabInputsComp.jumpFrameDisable = 0;
+                }
+                else
+                {
+                    token.input.SwitchCurrentActionMap("Spectator");
+                }
             }
         }
         HUDManager.hud.cursorPanel.SetActive(false);

@@ -161,6 +161,16 @@ public class PlayerStatus : MonoBehaviour
 
     private bool iFrames;
 
+    public BotController botController;
+
+    public float StaminaPercentage
+    {
+        get
+        {
+            return stamina / defaultMaxStamina;
+        }
+    }
+
     public float ActivityScore
     {
         get
@@ -705,6 +715,7 @@ public class PlayerStatus : MonoBehaviour
         }
         AudioManager.aud.Play("orchestraHitPowerup");
         CameraManager.cam.ShakeCamera(.5f);
+        PickBotStrategy();
     }
 
     /// <summary>
@@ -804,5 +815,12 @@ public class PlayerStatus : MonoBehaviour
                 playerHeader.SetOutOfRing(true);
             }
         }
+    }
+
+
+    public void PickBotStrategy()
+    {
+        if (botController)
+            botController.PickStrategy();
     }
 }

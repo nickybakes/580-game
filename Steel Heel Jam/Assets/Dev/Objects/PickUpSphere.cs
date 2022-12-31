@@ -10,6 +10,14 @@ public class PickUpSphere : MonoBehaviour
 
     private List<GameObject> itemsWithinBounds;
 
+    public int ItemCount
+    {
+        get
+        {
+            return itemsWithinBounds.Count;
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -40,6 +48,9 @@ public class PickUpSphere : MonoBehaviour
             return;
 
         GameObject g = itemsWithinBounds[0];
+
+        if (g == null)
+            return;
 
         Item itemScript = g.GetComponent<Item>();
         switch (itemScript.itemType)

@@ -51,8 +51,6 @@ public class GrabDuration : BasicState
 
         status.movement.SetVelocityToMoveSpeedTimesFowardDirection();
 
-        status.combat.grabHitbox.TrySuplex();
-
         AudioManager.aud.Play("grab", 0.8f, 1.2f);
     }
 

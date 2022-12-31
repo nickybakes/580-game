@@ -17,6 +17,7 @@ public class GrabRecovery : BasicState
         countAttackCooldown = false;
         animationState = AnimationState.BlockRecovery;
         stateToChangeTo = new Idle();
+        botPickStrategyOnExit = true;
     }
 
     public override void Update(PlayerStatus status)
