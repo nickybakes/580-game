@@ -32,14 +32,14 @@ public class PlayerHairController : MonoBehaviour
 
     void Update()
     {
-        outlineTime += Time.deltaTime;
+        // outlineTime += Time.deltaTime;
 
-        if (outlineTime >= .2)
-        {
-            outlineTime = 0;
-            outlineMaterial.SetFloat("_PanX", Random.value);
-            outlineMaterial.SetFloat("_PanY", Random.value);
-        }
+        // if (outlineTime >= .2)
+        // {
+        //     outlineTime = 0;
+        //     outlineMaterial.SetFloat("_PanX", Random.value);
+        //     outlineMaterial.SetFloat("_PanY", Random.value);
+        // }
 
     }
 

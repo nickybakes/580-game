@@ -73,10 +73,10 @@ public class PlayerToken : MonoBehaviour
     {
         PlayerStatus status = player.GetComponent<PlayerStatus>();
 
-        OutlineSketchUpdate outline = player.GetComponentInChildren<OutlineSketchUpdate>();
+        // OutlineSketchUpdate outline = player.GetComponentInChildren<OutlineSketchUpdate>();
 
-        outline.SetPlayerNumberIndex(playerNumber);
-        outline.SetSkinTone(botVisualPrefs.skinToneIndex);
+        // outline.SetPlayerNumberIndex(playerNumber);
+        // outline.SetSkinTone(botVisualPrefs.skinToneIndex);
 
         PlayerHairController hairController = player.GetComponentInChildren<PlayerHairController>();
         hairController.SetHairPrefs(botVisualPrefs.hairStyleIndex, botVisualPrefs.hairColorIndex, playerNumber);
@@ -93,10 +93,10 @@ public class PlayerToken : MonoBehaviour
         playerPrefabInputsComp = player.GetComponent<StarterAssetsInputs>();
         PlayerStatus status = player.GetComponent<PlayerStatus>();
 
-        OutlineSketchUpdate outline = player.GetComponentInChildren<OutlineSketchUpdate>();
+        // OutlineSketchUpdate outline = player.GetComponentInChildren<OutlineSketchUpdate>();
 
-        outline.SetPlayerNumberIndex(playerNumber);
-        outline.SetSkinTone(visualPrefs.skinToneIndex);
+        // outline.SetPlayerNumberIndex(playerNumber);
+        // outline.SetSkinTone(visualPrefs.skinToneIndex);
 
         PlayerHairController hairController = player.GetComponentInChildren<PlayerHairController>();
         hairController.SetHairPrefs(visualPrefs.hairStyleIndex, visualPrefs.hairColorIndex, playerNumber);

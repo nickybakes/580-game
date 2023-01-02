@@ -109,19 +109,19 @@ public class MenuCharacterDisplay : MonoBehaviour
 
     void Update()
     {
-        outlineTime += Time.deltaTime;
+        // outlineTime += Time.deltaTime;
 
-        if (outlineTime >= .2)
-        {
-            outlineTime = 0;
-            for (int i = 0; i < hairOutlineMeshes.Length; i++)
-            {
-                hairOutlineMeshes[i].material.SetFloat("_PanX", Random.value);
-                hairOutlineMeshes[i].material.SetFloat("_PanY", Random.value);
-            }
-            outlineMesh.material.SetFloat("_PanX", Random.value);
-            outlineMesh.material.SetFloat("_PanY", Random.value);
-        }
+        // if (outlineTime >= .2)
+        // {
+        //     outlineTime = 0;
+        //     for (int i = 0; i < hairOutlineMeshes.Length; i++)
+        //     {
+        //         hairOutlineMeshes[i].material.SetFloat("_PanX", Random.value);
+        //         hairOutlineMeshes[i].material.SetFloat("_PanY", Random.value);
+        //     }
+        //     outlineMesh.material.SetFloat("_PanX", Random.value);
+        //     outlineMesh.material.SetFloat("_PanY", Random.value);
+        // }
 
     }
 

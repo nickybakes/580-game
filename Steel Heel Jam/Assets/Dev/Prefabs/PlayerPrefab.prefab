@@ -214,6 +214,7 @@ MonoBehaviour:
   canDoubleJump: 0
   isHeel: 0
   heelFireCooldown: 0
+  botController: {fileID: 0}
 --- !u!114 &1777015905490208810
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -733,7 +734,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5911376567294058970}
-  - component: {fileID: 7408484859731496070}
   m_Layer: 3
   m_Name: PlayerModel
   m_TagString: Untagged
@@ -757,21 +757,6 @@ Transform:
   m_Father: {fileID: 1777015905490208790}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7408484859731496070
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5709556288421197317}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19c6e0a81e44e4641b8677848fc02e35, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  innerOutlineMesh: {fileID: 7523473660029493633}
-  outerOutlineMesh: {fileID: 1558914782905801432}
-  maxFrameTime: 0.2
 --- !u!1 &6322034003779150571
 GameObject:
   m_ObjectHideFlags: 0
