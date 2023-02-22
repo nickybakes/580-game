@@ -11,8 +11,11 @@ public class UIMatchResults : MonoBehaviour
     public Transform playerStatsList;
 
     public GameObject playerStatsPrefab;
+    public GameObject loadingText;
 
-    public GameObject buttons;
+    public TextMeshProUGUI countdownText;
+
+    private int countdownTime = 8;
 
     public void Init(int winningPlayerNumber)
     {
@@ -37,15 +40,20 @@ public class UIMatchResults : MonoBehaviour
             currentRank++;
         }
 
-        buttons.SetActive(false);
-
-        StartCoroutine(ShowButtons());
+        StartCoroutine(CountdownToRestartMatch());
     }
 
-    IEnumerator ShowButtons()
+    IEnumerator CountdownToRestartMatch()
     {
-        yield return new WaitForSeconds(3f);
+        while (countdownTime > 0)
+        {
+            countdownText.text = countdownTime.ToString();
+            yield return new WaitForSeconds(1f);
+            countdownTime--;
+        }
 
-        buttons.SetActive(true);
+        countdownText.gameObject.SetActive(false);
+        loadingText.gameObject.SetActive(true);
+        GameManager.RestartGame();
     }
 }

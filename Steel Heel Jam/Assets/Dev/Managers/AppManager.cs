@@ -7,8 +7,8 @@ using UnityEngine.InputSystem;
 public enum Scenes
 {
     MENU_InitApp = 0,
-    MENU_TempJoinScreen = 1,
-    MAP_Demo_01 = 2
+    MENU_TempJoinScreen = -1,
+    MAP_Demo_01 = 1
 }
 
 public struct GameSettings
@@ -148,13 +148,13 @@ public class AppManager : MonoBehaviour
 
         playerTokens = new PlayerToken[8];
 
-        gameSettings = new GameSettings(5, true, 2, false, 0, false, true, true, true, true, true, true, true, true);
+        gameSettings = new GameSettings(5, true, 2, false, 8, true, true, true, true, true, true, true, true, true);
 
         audioSettings = new AudioSettings(10, 10, 10, 10, 10);
 
 
         if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex((int)Scenes.MENU_InitApp))
-            SwitchToScene(Scenes.MENU_TempJoinScreen);
+            SwitchToScene(Scenes.MAP_Demo_01);
     }
 
     // Update is called once per frame
